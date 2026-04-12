@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Peregrin — Your Pilgrim Passport</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#722F37">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Peregrin">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --burgundy:#722F37; --burgundy-dark:#5A1A22; --gold:#C5963A; --gold-light:#E8C97A;
+  --cream:#FDF5E6; --cream-dark:#F5E6CC; --brown:#3E2723; --brown-light:#6D4C41;
+  --white:#FFFFFF; --shadow:0 2px 16px rgba(62,39,35,0.15); --shadow-lg:0 8px 32px rgba(62,39,35,0.2);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);height:100vh;height:100dvh;overflow:hidden;display:flex;flex-direction:column;}
+
+/* AUTH */
+#auth-screen{position:fixed;inset:0;background:linear-gradient(160deg,var(--burgundy-dark),var(--burgundy));display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;padding:30px;}
+.auth-logo{font-family:'Crimson Pro',serif;font-size:48px;font-weight:700;color:var(--cream);letter-spacing:2px;margin-bottom:4px;}
+.auth-logo span{color:var(--gold-light);}
+.auth-subtitle{font-size:13px;color:rgba(253,245,230,0.7);margin-bottom:40px;letter-spacing:1px;}
+.auth-card{background:var(--white);border-radius:20px;padding:28px 24px;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
+.auth-tab-row{display:flex;margin-bottom:24px;background:var(--cream);border-radius:10px;padding:4px;gap:4px;}
+.auth-tab{flex:1;padding:8px;border:none;background:none;border-radius:8px;font-family:'Jost',sans-serif;font-size:13px;font-weight:500;cursor:pointer;color:var(--brown-light);transition:all 0.2s;}
+.auth-tab.active{background:var(--white);color:var(--burgundy);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,0.1);}
+.auth-input{width:100%;padding:12px 14px;border:2px solid var(--cream-dark);border-radius:10px;font-family:'Jost',sans-serif;font-size:14px;margin-bottom:12px;color:var(--brown);outline:none;transition:border 0.2s;}
+.auth-input:focus{border-color:var(--burgundy);}
+.auth-btn-primary{width:100%;padding:13px;background:var(--burgundy);color:var(--cream);border:none;border-radius:10px;font-family:'Jost',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;margin-bottom:10px;}
+.auth-btn-primary:hover{background:var(--burgundy-dark);}
+.auth-divider{text-align:center;font-size:12px;color:var(--brown-light);margin:6px 0 10px;}
+.auth-btn-google{width:100%;padding:12px;background:var(--white);color:var(--brown);border:2px solid var(--cream-dark);border-radius:10px;font-family:'Jost',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:10px;}
+.auth-btn-google:hover{border-color:var(--burgundy);}
+.auth-error{font-size:12px;color:#c62828;margin-bottom:8px;text-align:center;min-height:16px;}
+
+/* PREMIUM MODAL */
+#premium-modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:5000;display:none;align-items:flex-end;justify-content:center;}
+#premium-modal.open{display:flex;}
+.premium-card{background:var(--white);border-radius:24px 24px 0 0;width:100%;max-width:420px;padding:30px 24px 40px;text-align:center;}
+.premium-cross{font-size:40px;margin-bottom:8px;}
+.premium-title{font-family:'Crimson Pro',serif;font-size:26px;font-weight:700;color:var(--burgundy);margin-bottom:6px;}
+.premium-sub{font-size:13px;color:var(--brown-light);margin-bottom:24px;line-height:1.5;}
+.premium-feature{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--cream-dark);text-align:left;font-size:14px;}
+.premium-feature:last-of-type{border-bottom:none;}
+.premium-feature-icon{font-size:22px;width:32px;flex-shrink:0;}
+.premium-price{font-family:'Crimson Pro',serif;font-size:22px;font-weight:700;color:var(--burgundy);margin:20px 0 6px;}
+.premium-price-sub{font-size:12px;color:var(--brown-light);margin-bottom:20px;}
+.premium-cta{width:100%;padding:15px;background:linear-gradient(135deg,var(--gold),#b8842e);color:var(--brown);border:none;border-radius:14px;font-family:'Crimson Pro',serif;font-size:18px;font-weight:700;cursor:pointer;margin-bottom:10px;box-shadow:0 4px 16px rgba(197,150,58,0.4);}
+.premium-close{background:none;border:none;color:var(--brown-light);font-size:13px;cursor:pointer;padding:8px;}
+
+/* APP */
+#app-wrapper{display:none;flex-direction:column;height:100vh;height:100dvh;}
+.header{background:linear-gradient(135deg,var(--burgundy),var(--burgundy-dark));color:var(--cream);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;z-index:1000;flex-shrink:0;}
+.header h1{font-family:'Crimson Pro',serif;font-size:24px;font-weight:600;letter-spacing:1px;}
+.header h1 span{color:var(--gold-light);}
+.header-sub{font-size:11px;opacity:0.7;letter-spacing:0.5px;font-weight:300;}
+.header-right{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);padding:6px 12px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;}
+.main{flex:1;overflow:hidden;position:relative;}
+.screen{position:absolute;inset:0;overflow-y:auto;transition:opacity 0.3s,transform 0.3s;opacity:0;pointer-events:none;transform:translateY(8px);}
+.screen.active{opacity:1;pointer-events:all;transform:translateY(0);}
+.bottom-nav{display:flex;background:var(--white);border-top:1px solid var(--cream-dark);flex-shrink:0;z-index:1000;padding-bottom:env(safe-area-inset-bottom,0);}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 4px 10px;cursor:pointer;transition:all 0.2s;border:none;background:none;color:var(--brown-light);font-family:'Jost',sans-serif;font-size:10px;font-weight:500;gap:3px;position:relative;}
+.nav-item.active{color:var(--burgundy);}
+.nav-item.active::before{content:'';position:absolute;top:0;left:25%;right:25%;height:3px;background:var(--gold);border-radius:0 0 3px 3px;}
+.nav-item svg{width:22px;height:22px;}
+
+/* MAP */
+#map{width:100%;height:100%;}
+.leaflet-popup-content-wrapper{border-radius:12px!important;box-shadow:var(--shadow-lg)!important;padding:0!important;overflow:hidden;}
+.leaflet-popup-content{margin:0!important;width:260px!important;}
+.leaflet-popup-tip{box-shadow:none!important;}
+.popup-body{padding:14px;}
+.popup-type{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);font-weight:600;margin-bottom:4px;}
+.popup-name{font-family:'Crimson Pro',serif;font-size:18px;font-weight:600;color:var(--brown);margin-bottom:4px;}
+.popup-loc{font-size:12px;color:var(--brown-light);margin-bottom:10px;}
+.popup-desc{font-size:12.5px;line-height:1.5;color:var(--brown);margin-bottom:12px;}
+.popup-btn{width:100%;padding:10px;border:none;border-radius:8px;font-family:'Jost',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;}
+.popup-btn.visit{background:var(--burgundy);color:var(--cream);}
+.popup-btn.visited{background:var(--cream-dark);color:var(--gold);}
+.popup-btn.detail{background:none;color:var(--burgundy);text-decoration:underline;padding:6px;font-size:12px;}
+.popup-maps-link{display:block;text-align:center;color:var(--brown-light);font-size:11.5px;text-decoration:none;margin-top:6px;padding:4px;font-weight:500;}
+.popup-locked{background:var(--cream-dark);color:var(--brown-light);width:100%;padding:10px;border:none;border-radius:8px;font-family:'Jost',sans-serif;font-size:13px;font-weight:600;cursor:pointer;}
+.map-route-banner{position:absolute;top:10px;left:10px;right:52px;z-index:500;background:var(--burgundy);color:var(--cream);padding:10px 14px;border-radius:10px;font-size:13px;font-weight:500;display:none;align-items:center;justify-content:space-between;box-shadow:var(--shadow-lg);border-left:4px solid var(--gold);}
+.map-route-banner span{flex:1;}
+.map-route-banner button{background:none;border:none;color:var(--cream);font-size:18px;cursor:pointer;padding:0 0 0 12px;opacity:0.8;line-height:1;}
+
+/* MARKERS */
+.custom-marker{background:var(--burgundy);border:3px solid var(--gold);border-radius:50%;width:32px!important;height:32px!important;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 2px 8px rgba(0,0,0,0.35);position:relative;}
+.custom-marker.visited-marker{background:var(--gold);border:4px solid var(--burgundy-dark);width:42px!important;height:42px!important;font-size:19px;box-shadow:0 0 0 5px rgba(197,150,58,0.28),0 4px 14px rgba(0,0,0,0.4);}
+.custom-marker.route-highlight-marker{border-width:4px;box-shadow:0 0 0 5px rgba(197,150,58,0.45),0 4px 14px rgba(0,0,0,0.5);}
+.custom-marker.locked-marker{background:#9E9E9E;border-color:#757575;opacity:0.7;}
+.visited-check{position:absolute;top:-5px;right:-5px;background:#2E7D32;color:white;border-radius:50%;width:16px;height:16px;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid white;line-height:1;}
+.lock-badge{position:absolute;top:-5px;right:-5px;background:#757575;color:white;border-radius:50%;width:16px;height:16px;font-size:9px;display:flex;align-items:center;justify-content:center;border:2px solid white;}
+
+/* PASSPORT */
+.passport-screen{background:var(--cream);padding:20px;}
+.passport-header{text-align:center;padding:30px 20px;background:linear-gradient(135deg,var(--burgundy),var(--burgundy-dark));border-radius:16px;color:var(--cream);margin-bottom:24px;position:relative;overflow:hidden;}
+.passport-header::before{content:'✝';position:absolute;font-size:200px;opacity:0.05;top:-40px;right:-20px;}
+.passport-title{font-family:'Crimson Pro',serif;font-size:26px;font-weight:600;margin-bottom:4px;}
+.passport-subtitle{font-size:13px;opacity:0.7;}
+.passport-stats{display:flex;gap:16px;justify-content:center;margin-top:20px;}
+.stat-box{background:rgba(255,255,255,0.1);border-radius:10px;padding:12px 20px;text-align:center;}
+.stat-num{font-family:'Crimson Pro',serif;font-size:28px;font-weight:700;color:var(--gold-light);}
+.stat-label{font-size:10px;opacity:0.7;text-transform:uppercase;letter-spacing:1px;}
+.passport-section-title{font-family:'Crimson Pro',serif;font-size:20px;font-weight:600;margin-bottom:14px;color:var(--brown);}
+.stamp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px;}
+.stamp-card{background:var(--white);border-radius:12px;padding:16px;box-shadow:var(--shadow);position:relative;overflow:hidden;cursor:pointer;}
+.stamp-card::after{content:'✓';position:absolute;top:8px;right:10px;width:22px;height:22px;background:var(--gold);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.stamp-icon{font-size:28px;margin-bottom:8px;}
+.stamp-name{font-family:'Crimson Pro',serif;font-size:14px;font-weight:600;margin-bottom:2px;}
+.stamp-date{font-size:11px;color:var(--brown-light);}
+.empty-state{text-align:center;padding:40px 20px;color:var(--brown-light);}
+.empty-state-icon{font-size:48px;margin-bottom:12px;opacity:0.4;}
+.empty-state-text{font-size:14px;line-height:1.6;}
+.cert-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px;background:linear-gradient(135deg,var(--gold),#b8842e);color:var(--brown);border:none;border-radius:14px;font-family:'Crimson Pro',serif;font-size:17px;font-weight:700;cursor:pointer;margin-top:8px;margin-bottom:30px;box-shadow:0 4px 16px rgba(197,150,58,0.4);transition:all 0.2s;}
+.cert-btn:active{transform:scale(0.98);}
+
+/* ACHIEVEMENTS */
+.achievements-screen{background:var(--cream);padding:20px;}
+.achievement-card{background:var(--white);border-radius:14px;padding:18px;margin-bottom:12px;box-shadow:var(--shadow);display:flex;align-items:center;gap:16px;}
+.achievement-card.locked{opacity:0.5;}
+.achievement-card.unlocked{border-left:4px solid var(--gold);}
+.achievement-icon{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.achievement-card.unlocked .achievement-icon{background:linear-gradient(135deg,var(--gold),var(--gold-light));}
+.achievement-card.locked .achievement-icon{background:var(--cream-dark);}
+.achievement-info{flex:1;}
+.achievement-name{font-family:'Crimson Pro',serif;font-size:16px;font-weight:600;margin-bottom:2px;}
+.achievement-desc{font-size:12px;color:var(--brown-light);line-height:1.4;}
+.achievement-progress{height:4px;background:var(--cream-dark);border-radius:2px;margin-top:8px;overflow:hidden;}
+.achievement-progress-bar{height:100%;background:var(--gold);border-radius:2px;transition:width 0.5s ease;}
+
+/* ROUTES */
+.routes-screen{background:var(--cream);padding:20px;}
+.route-card{background:var(--white);border-radius:14px;overflow:hidden;margin-bottom:16px;box-shadow:var(--shadow);cursor:pointer;transition:transform 0.15s;}
+.route-card:active{transform:scale(0.98);}
+.route-banner{height:100px;display:flex;align-items:center;justify-content:center;font-size:40px;}
+.route-banner-1{background:linear-gradient(135deg,#2E7D32,#4CAF50);}
+.route-banner-2{background:linear-gradient(135deg,#1565C0,#42A5F5);}
+.route-banner-3{background:linear-gradient(135deg,#6A1B9A,#AB47BC);}
+.route-banner-4{background:linear-gradient(135deg,#E65100,#FF9800);}
+.route-banner-5{background:linear-gradient(135deg,#880E4F,#E91E63);}
+.route-body{padding:16px;}
+.route-name{font-family:'Crimson Pro',serif;font-size:18px;font-weight:600;margin-bottom:4px;}
+.route-meta{font-size:12px;color:var(--brown-light);margin-bottom:8px;}
+.route-desc{font-size:13px;line-height:1.5;color:var(--brown);margin-bottom:12px;}
+.route-stops{display:flex;gap:6px;flex-wrap:wrap;}
+.route-stop{font-size:11px;background:var(--cream);padding:4px 10px;border-radius:12px;color:var(--brown-light);}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:2000;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-content{background:var(--white);border-radius:20px 20px 0 0;width:100%;max-height:85vh;overflow-y:auto;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);}
+.modal-overlay.open .modal-content{transform:translateY(0);}
+.modal-handle{width:40px;height:4px;background:var(--cream-dark);border-radius:2px;margin:10px auto 0;}
+.modal-hero{width:100%;height:180px;background:var(--cream-dark);display:flex;align-items:center;justify-content:center;font-size:60px;position:relative;}
+.modal-body{padding:20px;}
+.modal-type{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--gold);font-weight:600;}
+.modal-title{font-family:'Crimson Pro',serif;font-size:26px;font-weight:700;margin:6px 0;color:var(--brown);}
+.modal-location{font-size:13px;color:var(--brown-light);margin-bottom:16px;}
+.modal-section{margin-bottom:20px;}
+.modal-section h3{font-family:'Crimson Pro',serif;font-size:16px;font-weight:600;color:var(--burgundy);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.modal-section p{font-size:13.5px;line-height:1.7;color:var(--brown);}
+.modal-prayer{background:var(--cream);border-left:3px solid var(--gold);padding:14px 16px;border-radius:0 10px 10px 0;font-family:'Crimson Pro',serif;font-size:15px;font-style:italic;line-height:1.7;color:var(--brown);}
+.modal-visit-btn{width:100%;padding:14px;border:none;border-radius:12px;font-family:'Jost',sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:10px;transition:all 0.2s;background:var(--burgundy);color:var(--cream);}
+.modal-visit-btn.visited-btn{background:var(--cream-dark);color:var(--gold);}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,0.4);color:white;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;}
+.modal-maps-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;border:2px solid var(--cream-dark);border-radius:12px;background:none;color:var(--brown-light);font-family:'Jost',sans-serif;font-size:14px;font-weight:500;text-decoration:none;margin-top:10px;cursor:pointer;transition:all 0.2s;}
+.modal-premium-btn{width:100%;padding:14px;border:none;border-radius:12px;font-family:'Jost',sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:10px;background:linear-gradient(135deg,var(--gold),#b8842e);color:var(--brown);}
+
+/* PROFILE */
+.screen-title{font-family:'Crimson Pro',serif;font-size:24px;font-weight:700;color:var(--brown);margin-bottom:20px;}
+.profile-screen{background:var(--cream);padding:20px;}
+.profile-card{background:var(--white);border-radius:16px;padding:30px 20px;text-align:center;box-shadow:var(--shadow);margin-bottom:20px;}
+.profile-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--burgundy),var(--gold));display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 12px;}
+.profile-name{font-family:'Crimson Pro',serif;font-size:22px;font-weight:600;}
+.profile-rank{font-size:13px;color:var(--gold);font-weight:500;margin-top:4px;}
+.profile-premium-badge{display:inline-block;background:linear-gradient(135deg,var(--gold),#b8842e);color:var(--brown);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:6px;letter-spacing:0.5px;}
+.profile-option{background:var(--white);border-radius:12px;padding:16px 18px;margin-bottom:8px;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;cursor:pointer;font-size:14px;font-weight:500;}
+.profile-option-icon{font-size:20px;}
+.premium-banner{background:linear-gradient(135deg,var(--burgundy),var(--burgundy-dark));border-radius:14px;padding:20px;margin-bottom:16px;color:var(--cream);text-align:center;}
+.premium-banner-title{font-family:'Crimson Pro',serif;font-size:20px;font-weight:700;margin-bottom:6px;}
+.premium-banner-sub{font-size:13px;opacity:0.8;margin-bottom:14px;line-height:1.5;}
+.premium-banner-btn{background:linear-gradient(135deg,var(--gold),#b8842e);color:var(--brown);border:none;border-radius:10px;padding:11px 24px;font-family:'Jost',sans-serif;font-size:14px;font-weight:700;cursor:pointer;}
+
+/* TOAST */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--burgundy);color:var(--cream);padding:12px 20px 12px 16px;border-radius:12px;font-size:14px;font-weight:500;z-index:3000;transition:transform 0.35s cubic-bezier(0.16,1,0.3,1),opacity 0.35s;box-shadow:var(--shadow-lg);white-space:nowrap;border-left:4px solid var(--gold);opacity:0;pointer-events:none;}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
+/* COUNTRY SELECTOR */
+.country-selector{background:var(--white);border-radius:14px;overflow:hidden;margin-bottom:16px;box-shadow:var(--shadow);}
+.country-item{display:flex;align-items:center;gap:14px;padding:14px 16px;border-bottom:1px solid var(--cream-dark);cursor:pointer;transition:background 0.15s;}
+.country-item:last-child{border-bottom:none;}
+.country-item:active{background:var(--cream);}
+.country-flag{font-size:24px;width:36px;text-align:center;}
+.country-info{flex:1;}
+.country-name{font-family:'Crimson Pro',serif;font-size:16px;font-weight:600;}
+.country-count{font-size:12px;color:var(--brown-light);}
+.country-lock{font-size:16px;color:var(--brown-light);}
+
+.screen::-webkit-scrollbar{width:0;}
+
+/* Language selector */
+.lang-selector{background:var(--white);border-radius:12px;padding:16px 18px;margin-bottom:8px;box-shadow:var(--shadow);}
+.lang-selector-label{font-size:11px;color:var(--brown-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-weight:600;}
+.lang-buttons{display:flex;gap:8px;}
+.lang-btn{flex:1;padding:10px 6px;border-radius:10px;border:2px solid var(--cream-dark);background:var(--cream);font-family:'Jost',sans-serif;font-size:13px;font-weight:500;cursor:pointer;text-align:center;transition:all 0.2s;color:var(--brown-light);}
+.lang-btn.active{border-color:var(--burgundy);background:var(--burgundy);color:var(--cream);font-weight:600;}
+@media(min-width:500px){body{max-width:420px;margin:0 auto;box-shadow:var(--shadow-lg);}}
+</style>
+</head>
+<body>
+
+<!-- Firebase initialised in main script below -->
+
+<!-- AUTH SCREEN -->
+<div id="auth-screen">
+  <div class="auth-logo">P<span>✝</span>REGRIN</div>
+  <div class="auth-subtitle">Your pilgrim passport</div>
+  <div class="auth-card">
+    <div class="auth-tab-row">
+      <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Sign in</button>
+      <button class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Register</button>
+    </div>
+    <div class="auth-error" id="auth-error"></div>
+    <input class="auth-input" type="email" id="auth-email" placeholder="Email address">
+    <input class="auth-input" type="password" id="auth-password" placeholder="Password">
+    <button class="auth-btn-primary" id="auth-submit" onclick="handleEmailAuth()">Sign in</button>
+    <div class="auth-divider">— or —</div>
+    <button class="auth-btn-google" onclick="handleGoogleAuth()">
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Continue with Google
+    </button>
+  </div>
+</div>
+
+<!-- PREMIUM MODAL -->
+<div id="premium-modal">
+  <div class="premium-card" id="premium-card-content">
+    <!-- populated by renderPremiumModal() -->
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app-wrapper">
+  <div class="header">
+    <div>
+      <h1>P<span>✝</span>REGRIN</h1>
+      <div class="header-sub" id="header-sub">Your pilgrim passport</div>
+    </div>
+    <div class="header-right" id="header-country" onclick="switchScreen('explore')">🌍 Europe</div>
+  </div>
+  <div class="main">
+    <div class="screen active" id="screen-map">
+      <div id="map"></div>
+      <div class="map-route-banner" id="map-route-banner">
+        <span id="map-route-name"></span>
+        <button onclick="clearRouteFilter()">✕</button>
+      </div>
+    </div>
+    <div class="screen" id="screen-explore"><div class="explore-screen" style="background:var(--cream);padding:20px;"></div></div>
+    <div class="screen" id="screen-passport"><div class="passport-screen"></div></div>
+    <div class="screen" id="screen-achievements"><div class="achievements-screen"></div></div>
+    <div class="screen" id="screen-routes"><div class="routes-screen"></div></div>
+    <div class="screen" id="screen-profile"><div class="profile-screen"></div></div>
+  </div>
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-screen="map">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      <span data-nav="navMap">Map</span>
+    </button>
+    <button class="nav-item" data-screen="explore">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      <span data-nav="navCountries">Countries</span>
+    </button>
+    <button class="nav-item" data-screen="passport">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><circle cx="12" cy="15" r="2"/></svg>
+      <span data-nav="navPassport">Passport</span>
+    </button>
+    <button class="nav-item" data-screen="routes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l4-4 4 4 4-4 4 4"/><path d="M3 7l4 4 4-4 4 4 4-4"/></svg>
+      <span data-nav="navRoutes">Routes</span>
+    </button>
+    <button class="nav-item" data-screen="profile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+      <span data-nav="navProfile">Profile</span>
+    </button>
+  </nav>
+</div>
+
+<div class="modal-overlay" id="modal"><div class="modal-content" id="modal-content"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ===================== FIREBASE INIT =====================
+firebase.initializeApp({
+  apiKey:"AIzaSyDfk9nZRXT6bc7UuCwX_YR_cgufkay5lEU",
+  authDomain:"peregrin-d7611.firebaseapp.com",
+  projectId:"peregrin-d7611",
+  storageBucket:"peregrin-d7611.firebasestorage.app",
+  messagingSenderId:"844223897807",
+  appId:"1:844223897807:web:fa7210925ea0a0aaa697ba"
+});
+const _auth = firebase.auth();
+const _db   = firebase.firestore();
+
+window._fbSignInEmail  = (e,p) => _auth.signInWithEmailAndPassword(e,p);
+window._fbCreateUser   = (e,p) => _auth.createUserWithEmailAndPassword(e,p);
+window._fbSignInGoogle = ()    => _auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+window._fbSignOut      = ()    => _auth.signOut();
+window._fbGetDoc       = (uid) => _db.collection('users').doc(uid).get();
+window._fbSetDoc       = (uid,d) => _db.collection('users').doc(uid).set(d,{merge:true});
+
+_auth.getRedirectResult().catch(()=>{});
+_auth.onAuthStateChanged(user=>{
+  window._currentUser=user||null;
+  if(user){
+    document.getElementById('auth-screen').style.display='none';
+    document.getElementById('app-wrapper').style.display='flex';
+    if(!map) initMap();
+    setTimeout(()=>{ if(map) map.invalidateSize(); },150);
+    window._loadUserData(user.uid);
+  } else {
+    document.getElementById('auth-screen').style.display='flex';
+    document.getElementById('app-wrapper').style.display='none';
+  }
+});
+
+// ===================== I18N =====================
+const i18n = {
+  en: {
+    appSubtitle:'Your pilgrim passport', navMap:'Map', navCountries:'Countries',
+    navPassport:'Passport', navRoutes:'Routes', navProfile:'Profile',
+    signIn:'Sign in', register:'Register', createAccount:'Create account',
+    emailPlaceholder:'Email address', passwordPlaceholder:'Password',
+    continueGoogle:'Continue with Google', signOut:'Sign out',
+    passportTitle:'Pilgrim Passport', visited:'Visited', remaining:'Remaining',
+    stampsCollected:'Stamps collected', noVisits:"You haven't registered any visits yet.\nExplore the map and begin your pilgrimage!",
+    achievementsTitle:'Pilgrim Achievements', routesTitle:'Pilgrimage Routes',
+    profileTitle:'My pilgrim profile', viewPassport:'View my passport',
+    myAchievements:'My achievements', pilgrimageRoutes:'Pilgrimage routes',
+    resetVisits:'Reset my visits', resetConfirm:t('resetConfirm'),
+    resetDone:'Visits reset', registerVisit:'Register visit', visited_btn:'Visited',
+    removeVisit:'Visited — Remove visit', viewDetails:'View full details',
+    howToGet:'How to get there', howToGetFull:'How to get there — Google Maps',
+    descLabel:'Description', histLabel:'History', prayerLabel:"Pilgrim's Prayer",
+    lockBtn:'Unlock with Premium', certBtn:'Download certificate',
+    certDownloaded:'Certificate downloaded', certTitle:'Pilgrimage Certificate',
+    certText1:'This is to certify that', certText2:'has completed the pilgrimage of all',
+    certText3:'Sanctuaries of', certIssued:'Issued on',
+    premiumTitle:'Peregrin Premium', premiumSub:'Unlock all of Catholic Europe and carry your pilgrimage further.',
+    premiumCountries:'All countries unlocked', premiumCert:'Pilgrimage certificate per country',
+    premiumRoutes:'All pilgrimage routes', premiumBadges:'All achievements',
+    premiumPrice:'€4.99', premiumPriceSub:'One-time payment · Yours forever',
+    premiumCta:'Unlock Premium ✝', premiumLater:'Maybe later',
+    premiumBannerTitle:'✝ Peregrin Premium', premiumBannerSub:'Unlock all 10 countries, certificates, all routes and all achievements.',
+    discoverPremium:'Discover Premium', certsAvailable:'Certificates available',
+    language:'Language', countriesTitle:'Countries',
+    unlockPremium:'Premium — unlock all countries',
+    rank0:'New Pilgrim', rank1:'First Step', rank5:'Walker of Faith',
+    rank10:'Devoted Pilgrim', rank30:'Advanced Pilgrim', rank50:'Master Pilgrim of Europe ✝️',
+    visitToast: n => `${n} registered`,
+    markerVisited:'Visited', markerLocked:'Locked',
+  },
+  es: {
+    appSubtitle:'Tu pasaporte peregrino', navMap:'Mapa', navCountries:'Países',
+    navPassport:'Pasaporte', navRoutes:'Rutas', navProfile:'Perfil',
+    signIn:'Iniciar sesión', register:'Registrarse', createAccount:'Crear cuenta',
+    emailPlaceholder:'Correo electrónico', passwordPlaceholder:'Contraseña',
+    continueGoogle:'Continuar con Google', signOut:'Cerrar sesión',
+    passportTitle:'Pasaporte Peregrino', visited:'Visitados', remaining:'Pendientes',
+    stampsCollected:'Sellos obtenidos', noVisits:"Aún no has registrado ninguna visita.\n¡Explora el mapa y comienza tu peregrinación!",
+    achievementsTitle:'Logros del peregrino', routesTitle:'Rutas de peregrinación',
+    profileTitle:'Mi perfil peregrino', viewPassport:'Ver mi pasaporte',
+    myAchievements:'Mis logros', pilgrimageRoutes:'Rutas de peregrinación',
+    resetVisits:'Reiniciar mis visitas', resetConfirm:'¿Seguro que quieres reiniciar todas tus visitas?',
+    resetDone:'Visitas reiniciadas', registerVisit:'Registrar visita', visited_btn:'Visitado',
+    removeVisit:'Visitado — Quitar visita', viewDetails:'Ver ficha completa',
+    howToGet:'Cómo llegar', howToGetFull:'Cómo llegar — Google Maps',
+    descLabel:'Descripción', histLabel:'Historia', prayerLabel:'Oración del peregrino',
+    lockBtn:'Desbloquear con Premium', certBtn:'Descargar certificado',
+    certDownloaded:'Certificado descargado', certTitle:'Certificado de Peregrinación',
+    certText1:'Se certifica que', certText2:'ha completado la peregrinación de los',
+    certText3:'Santuarios de', certIssued:'Emitido el',
+    premiumTitle:'Peregrin Premium', premiumSub:'Desbloquea toda la Europa católica y lleva más lejos tu peregrinación.',
+    premiumCountries:'Todos los países desbloqueados', premiumCert:'Certificado de peregrinación por país',
+    premiumRoutes:'Todas las rutas de peregrinación', premiumBadges:'Todos los logros',
+    premiumPrice:'4,99 €', premiumPriceSub:'Pago único · Tuyo para siempre',
+    premiumCta:'Desbloquear Premium ✝', premiumLater:'Quizás más adelante',
+    premiumBannerTitle:'✝ Peregrin Premium', premiumBannerSub:'Desbloquea los 10 países, certificados, todas las rutas y todos los logros.',
+    discoverPremium:'Descubrir Premium', certsAvailable:'Certificados disponibles',
+    language:'Idioma', countriesTitle:'Países',
+    unlockPremium:'Premium — desbloquea todos los países',
+    rank0:'Nuevo peregrino', rank1:'Primer paso', rank5:'Caminante de la fe',
+    rank10:'Peregrino devoto', rank30:'Peregrino avanzado', rank50:'Peregrino maestro de Europa ✝️',
+    visitToast: n => `${n} registrado`,
+    markerVisited:'Visitado', markerLocked:'Bloqueado',
+  }
+};
+
+function t(key){ return (i18n[currentLang]||i18n.en)[key] || i18n.en[key] || key; }
+function sd(s){ return (currentLang==='es' && s.es) ? s.es : s; }
+
+const countries = [
+  { id:'be', name:'Belgium', flag:'🇧🇪', free:true },
+  { id:'es', name:'Spain', flag:'🇪🇸', free:false },
+  { id:'pt', name:'Portugal', flag:'🇵🇹', free:false },
+  { id:'fr', name:'France', flag:'🇫🇷', free:false },
+  { id:'it', name:'Italy', flag:'🇮🇹', free:false },
+  { id:'pl', name:'Poland', flag:'🇵🇱', free:false },
+  { id:'ie', name:'Ireland', flag:'🇮🇪', free:false },
+  { id:'de', name:'Germany', flag:'🇩🇪', free:false },
+  { id:'at', name:'Austria', flag:'🇦🇹', free:false },
+  { id:'hr', name:'Croatia', flag:'🇭🇷', free:false },
+];
+
+const sanctuaries = [
+  // ===== BELGIUM =====
+  {id:1,country:'be',lat:50.979,lng:4.980,icon:'⛪',name:'Basilica of Scherpenheuvel',type:'Basilica',city:'Scherpenheuvel',province:'Flemish Brabant',description:'The most important Marian shrine in Belgium, drawing thousands of pilgrims each year. The circular Baroque basilica was built between 1609 and 1627 by Archdukes Albert and Isabella.',history:'The devotion dates back to the 14th century, when a small statue of the Virgin was placed in an oak tree. Miracles attributed to the statue attracted pilgrims from all over Europe. In 1922 the church was elevated to a minor basilica.',prayer:'Holy Mary of Scherpenheuvel, Mother of mercy, welcome your pilgrim children who come to you with faith and hope. Intercede for us before your Son. Amen.',feast:'Sunday after September 8',es:{name:'Basílica de Scherpenheuvel',type:'Basílica',city:'Scherpenheuvel',province:'Brabante Flamenco',description:'El santuario mariano más importante de Bélgica, que atrae a miles de peregrinos cada año. La basílica barroca de planta circular fue construida entre 1609 y 1627 por los archiduques Alberto e Isabel.',history:'La devoción se remonta al siglo XIV, cuando una pequeña estatua de la Virgen fue colocada en un roble. Los milagros atribuidos atrajeron peregrinos de toda Europa. En 1922 la iglesia fue elevada al rango de basílica menor.',prayer:'Santa María de Scherpenheuvel, Madre de misericordia, acoge a tus hijos peregrinos que venimos a ti con fe y esperanza. Intercede por nosotros ante tu Hijo. Amén.',feast:'Domingo después del 8 de septiembre'}},
+  {id:2,country:'be',lat:50.866,lng:4.321,icon:'🏛️',name:'Basilica of the Sacred Heart',type:'Basilica',city:'Koekelberg, Brussels',province:'Brussels',description:'The fifth largest church in the world. This impressive Art Deco basilica dominates the Brussels skyline. Construction began in 1905 under King Leopold II and was not completed until 1969.',history:'Leopold II laid the foundation stone in 1905 for the 75th anniversary of Belgian independence. Two World Wars delayed construction. Today it houses a museum and offers panoramic views from its dome.',prayer:'Sacred Heart of Jesus, in you I trust. May this temple be a sign of your immense love for your people. Pour out your grace upon all who seek you here. Amen.',feast:'Solemnity of the Sacred Heart',es:{name:'Basílica del Sagrado Corazón',type:'Basílica',city:'Koekelberg, Bruselas',province:'Bruselas',description:'La quinta iglesia más grande del mundo. Esta impresionante basílica Art Déco domina el horizonte de Bruselas. Su construcción comenzó en 1905 bajo el rey Leopoldo II y no se completó hasta 1969.',history:'Leopoldo II puso la primera piedra en 1905 con motivo del 75 aniversario de la independencia belga. Las dos guerras mundiales retrasaron su construcción. Hoy alberga un museo y ofrece vistas panorámicas desde su cúpula.',prayer:'Sagrado Corazón de Jesús, en ti confío. Que este templo sea signo de tu amor inmenso por tu pueblo. Derrama tu gracia sobre todos los que aquí te buscan. Amén.',feast:'Solemnidad del Sagrado Corazón'}},
+  {id:3,country:'be',lat:51.208,lng:3.227,icon:'🩸',name:'Basilica of the Holy Blood',type:'Basilica',city:'Bruges',province:'West Flanders',description:'It houses a relic of the Blood of Christ brought from the Holy Land during the Crusades. Each year the Procession of the Holy Blood is celebrated — a UNESCO Intangible Cultural Heritage.',history:'According to tradition, Thierry of Alsace brought the relic from Jerusalem in 1150. The lower chapel is Romanesque (12th c.), while the upper chapel was rebuilt in neo-Gothic style in the 19th c.',prayer:'Lord Jesus Christ, who shed your precious Blood for the salvation of the world, grant us the grace to venerate you with living faith and a contrite heart. Amen.',feast:'Ascension Day (Procession of the Holy Blood)',es:{name:'Basílica de la Santa Sangre',type:'Basílica',city:'Brujas',province:'Flandes Occidental',description:'Custodia una reliquia de la Sangre de Cristo traída de Tierra Santa durante las Cruzadas. Cada año se celebra la Procesión de la Santa Sangre, Patrimonio Inmaterial de la Humanidad por la UNESCO.',history:'Según la tradición, Thierry de Alsacia trajo la reliquia de Jerusalén en 1150. La capilla inferior es románica (s. XII), mientras que la superior fue reconstruida en estilo neogótico en el s. XIX.',prayer:'Señor Jesucristo, que derramaste tu preciosa Sangre por la salvación del mundo, concédenos la gracia de venerarte con fe viva y corazón contrito. Amén.',feast:'Día de la Ascensión (Procesión de la Santa Sangre)'}},
+  {id:4,country:'be',lat:50.110,lng:4.958,icon:'🌟',name:'Sanctuary of Beauraing',type:'Marian shrine',city:'Beauraing',province:'Namur',description:'Site of the 1932–1933 Marian apparitions officially recognized by the Church. The Virgin of the Golden Heart appeared 33 times to five children near a convent.',history:'Between November 1932 and January 1933, five children claimed to see the Virgin Mary. The apparitions were recognized by the Bishop of Namur in 1949. The shrine receives over 500,000 pilgrims a year.',prayer:'Our Lady of Beauraing, Virgin of the Golden Heart, show us your Immaculate Heart and always guide us toward your Son Jesus. Amen.',feast:'August 22',es:{name:'Santuario de Beauraing',type:'Santuario mariano',city:'Beauraing',province:'Namur',description:'Lugar de las apariciones marianas de 1932-1933, reconocidas oficialmente por la Iglesia. La Virgen del Corazón de Oro se apareció 33 veces a cinco niños junto a un convento.',history:'Entre noviembre de 1932 y enero de 1933, cinco niños afirmaron ver a la Virgen María. Las apariciones fueron reconocidas por el obispo de Namur en 1949. El santuario recibe más de 500.000 peregrinos al año.',prayer:'Nuestra Señora de Beauraing, Virgen del Corazón de Oro, muéstranos tu Corazón Inmaculado y guíanos siempre hacia tu Hijo Jesús. Amén.',feast:'22 de agosto'}},
+  {id:5,country:'be',lat:50.532,lng:5.768,icon:'💧',name:'Sanctuary of Banneux',type:'Marian shrine',city:'Banneux',province:'Liège',description:"Known as the Belgian Lourdes. In 1933 the Virgin of the Poor appeared eight times to 11-year-old Mariette Beco, pointing to a spring of water. Officially recognized in 1949.",history:"The apparitions took place between January and March 1933. The Virgin asked for a chapel and pointed to a spring saying: 'This spring is reserved for me'. Today it is one of Europe's most visited Marian shrines.",prayer:'Virgin of the Poor, you who come to relieve suffering and bring hope, intercede for us and for all who suffer. Lead us to Jesus, source of all grace. Amen.',feast:'January 15',es:{name:'Santuario de Banneux',type:'Santuario mariano',city:'Banneux',province:'Lieja',description:'Conocido como la Lourdes belga. En 1933 la Virgen de los Pobres se apareció ocho veces a Mariette Beco, una niña de 11 años, señalándole una fuente de agua. Reconocido oficialmente en 1949.',history:'Las apariciones tuvieron lugar entre enero y marzo de 1933. La Virgen pidió una capilla y señaló un manantial: Esta fuente está reservada para mí. Hoy es uno de los santuarios marianos más visitados de Europa.',prayer:'Virgen de los Pobres, tú que vienes a aliviar el sufrimiento y a llevar esperanza, intercede por nosotros y por todos los que sufren. Llévanos a Jesús, fuente de toda gracia. Amén.',feast:'15 de enero'}},
+  {id:6,country:'be',lat:49.638,lng:5.347,icon:'🍺',name:'Orval Abbey',type:'Abbey',city:'Villers-devant-Orval',province:'Luxembourg',description:'Trappist abbey founded in 1132, world-famous for its beer and cheese. The medieval ruins alongside the current monastery create an ensemble of great spiritual and architectural beauty.',history:'Founded by Benedictine monks from Calabria in 1070 and reformed as a Cistercian abbey in 1132. Destroyed during the French Revolution in 1793, it was rebuilt in 1926.',prayer:'Lord, may we find your presence in the silence of this place. Bless the monks who serve you here through prayer and work. Ora et labora. Amen.',feast:'Feast of Saint Bernard, August 20',es:{name:'Abadía de Orval',type:'Abadía',city:'Villers-devant-Orval',province:'Luxemburgo',description:'Abadía trapense fundada en 1132, famosa mundialmente por su cerveza y queso. Las ruinas medievales junto al monasterio actual crean un conjunto de gran belleza espiritual y arquitectónica.',history:'Fundada por monjes benedictinos de Calabria en 1070 y reformada como abadía cisterciense en 1132. Destruida durante la Revolución Francesa en 1793, fue reconstruida en 1926.',prayer:'Señor, que en el silencio de este lugar encontremos tu presencia. Bendice a los monjes que aquí te sirven con oración y trabajo. Ora et labora. Amén.',feast:'Fiesta de San Bernardo, 20 de agosto'}},
+
+  {id:8,country:'be',lat:50.734,lng:4.233,icon:'👑',name:'Basilica of Saint Martin',type:'Basilica',city:'Halle',province:'Flemish Brabant',description:'A great Marian tradition. The Black Virgin of Halle has been venerated since the 13th century and is attributed with numerous miracles, including protecting the city during several sieges.',history:'The statue of the Black Virgin was donated by Saint Elizabeth of Hungary in the 13th century. During the siege of 1489, legend says the Virgin gathered cannonballs in her lap.',prayer:'Our Lady of Halle, faithful protector of your people, cover us with your mantle and protect us from all evil. We come to you with filial trust. Amen.',feast:'Pentecost Sunday',es:{name:'Basílica de San Martín',type:'Basílica',city:'Halle',province:'Brabante Flamenco',description:'Gran tradición mariana. La Virgen Negra de Halle es venerada desde el siglo XIII y se le atribuyen numerosos milagros, incluida la protección de la ciudad durante varios asedios.',history:'La estatua de la Virgen Negra fue donada por Santa Isabel de Hungría en el siglo XIII. Durante el asedio de 1489, según la leyenda, la Virgen recogió las balas de cañón en su regazo.',prayer:'Nuestra Señora de Halle, protectora fiel de tu pueblo, cúbrenos con tu manto y líbranos de todo mal. A ti acudimos con confianza filial. Amén.',feast:'Domingo de Pentecostés'}},
+
+
+
+
+  {id:101,country:'es',lat:42.880,lng:-8.544,icon:'🌟',name:'Cathedral of Santiago de Compostela',type:'Cathedral',city:'Santiago de Compostela',province:'Galicia',description:'One of the most important pilgrimage sites in Christendom, housing the tomb of Saint James the Apostle. The end point of the famous Camino de Santiago, walked by millions each year.',history:'The tomb of Saint James was discovered in the 9th century. The current Romanesque cathedral was begun in 1075. The Plaza del Obradoiro and the Botafumeiro are iconic symbols of the pilgrimage tradition.',prayer:'Saint James, Apostle and patron of pilgrims, accompany us on the roads of life. Help us walk with faith, hope and charity toward the heavenly Jerusalem. Amen.',feast:'July 25 (Saint James)',es:{name:'Catedral de Santiago de Compostela',type:'Catedral',city:'Santiago de Compostela',province:'Galicia',description:'Uno de los lugares de peregrinación más importantes de la Cristiandad, que alberga la tumba del apóstol Santiago. Destino final del famoso Camino de Santiago, recorrido por millones cada año.',history:'La tumba del apóstol Santiago fue descubierta en el siglo IX. La actual catedral románica comenzó en 1075. La Plaza del Obradoiro y el Botafumeiro son símbolos icónicos de la tradición jacobea.',prayer:'Santiago apóstol, patrono de los peregrinos, acompáñanos en los caminos de la vida. Ayúdanos a caminar con fe, esperanza y caridad hacia la Jerusalén celestial. Amén.',feast:'25 de julio (Santiago Apóstol)'}},
+  {id:102,country:'es',lat:41.657,lng:0.522,icon:'💎',name:'Basilica of Our Lady of the Pillar',type:'Basilica',city:'Zaragoza',province:'Aragon',description:'One of the most venerated Marian shrines in the world. Legend holds that the Virgin Mary appeared to Saint James here, making it the first Marian shrine in history.',history:'The small chapel built by Saint James was replaced by successive churches over the centuries. The current basilica, with its distinctive towers and domes, was completed in the 18th century.',prayer:'Our Lady of the Pillar, Queen and Mistress of Aragon and all of Hispania, do not abandon those who invoke your name. Amen.',feast:'October 12',es:{name:'Basílica de Nuestra Señora del Pilar',type:'Basílica',city:'Zaragoza',province:'Aragón',description:'Uno de los santuarios marianos más venerados del mundo. La tradición cuenta que la Virgen María se apareció a Santiago aquí, siendo el primer santuario mariano de la historia.',history:'La pequeña capilla construida por Santiago fue reemplazada por sucesivas iglesias a lo largo de los siglos. La actual basílica, con sus distintivas torres y cúpulas, se completó en el siglo XVIII.',prayer:'Virgen del Pilar, Reina y Señora de Aragón y de toda Hispania, no abandones a quienes invocan tu nombre. Amén.',feast:'12 de octubre'}},
+  {id:103,country:'es',lat:41.591,lng:1.837,icon:'⛰️',name:'Sanctuary of Montserrat',type:'Monastery',city:'Montserrat',province:'Catalonia',description:'Perched dramatically on the Montserrat mountain, this Benedictine monastery houses La Moreneta, the Black Madonna of Catalonia, one of the most venerated images in Spain.',history:'The monastery was founded in the 11th century. La Moreneta is attributed with numerous miracles. Saint Ignatius of Loyola made his spiritual conversion here before founding the Jesuits.',prayer:'Our Lady of Montserrat, Black Virgin enthroned among the rocks, hear the prayers of those who climb to your sanctuary with faith. Amen.',feast:'April 27 (Our Lady of Montserrat)',es:{name:'Santuario de Montserrat',type:'Monasterio',city:'Montserrat',province:'Cataluña',description:'Encaramado dramáticamente en la montaña de Montserrat, este monasterio benedictino alberga a La Moreneta, la Virgen Negra de Cataluña, una de las imágenes más veneradas de España.',history:'El monasterio fue fundado en el siglo XI. A La Moreneta se le atribuyen numerosos milagros. San Ignacio de Loyola realizó aquí su conversión espiritual antes de fundar la Compañía de Jesús.',prayer:'Nuestra Señora de Montserrat, Virgen Negra entronizada entre las rocas, escucha las oraciones de quienes suben a tu santuario con fe. Amén.',feast:'27 de abril (Nuestra Señora de Montserrat)'}},
+  {id:104,country:'es',lat:39.454,lng:-6.082,icon:'🌿',name:'Monastery of Guadalupe',type:'Monastery',city:'Guadalupe',province:'Extremadura',description:'Home to the famous Black Madonna of Guadalupe, patron of Extremadura and the Hispanic world. A UNESCO World Heritage Site and one of the most important pilgrimage centres in Spain.',history:'The image was reportedly found in the 14th century. The monastery became a major cultural centre and Christopher Columbus visited after returning from America to give thanks.',prayer:'Our Lady of Guadalupe, Mother of the Hispanic world, intercede for all your children. May your mantle of mercy cover us always. Amen.',feast:'September 8',es:{name:'Monasterio de Guadalupe',type:'Monasterio',city:'Guadalupe',province:'Extremadura',description:'Sede de la famosa Virgen Negra de Guadalupe, patrona de Extremadura y del mundo hispánico. Patrimonio de la Humanidad de la UNESCO y uno de los centros de peregrinación más importantes de España.',history:'La imagen fue encontrada, según la tradición, en el siglo XIV. El monasterio se convirtió en un gran centro cultural y Cristóbal Colón lo visitó tras regresar de América para dar gracias.',prayer:'Nuestra Señora de Guadalupe, Madre del mundo hispánico, intercede por todos tus hijos. Que tu manto de misericordia nos cubra siempre. Amén.',feast:'8 de septiembre'}},
+  {id:105,country:'es',lat:36.534,lng:-4.882,icon:'🕯️',name:'Sanctuary of Our Lady of the Victory',type:'Basilica',city:'Málaga',province:'Andalusia',description:'Houses one of the most venerated images in Málaga, the Virgin of Victory, patroness of the city. A place of deep popular devotion and one of Andalusia\'s most visited shrines.',history:'The sanctuary was built by the Catholic Monarchs after the conquest of Málaga in 1487. The image of the Virgin was given to the Minimum Friars who have guarded it ever since.',prayer:'Virgin of Victory, Queen of Málaga, look upon your people with eyes of mercy. Give us strength in trials and joy in your love. Amen.',feast:'September 8',es:{name:'Santuario de Nuestra Señora de la Victoria',type:'Basílica',city:'Málaga',province:'Andalucía',description:'Alberga una de las imágenes más veneradas de Málaga, la Virgen de la Victoria, patrona de la ciudad. Lugar de profunda devoción popular y uno de los santuarios más visitados de Andalucía.',history:'El santuario fue construido por los Reyes Católicos tras la conquista de Málaga en 1487. La imagen de la Virgen fue entregada a los Frailes Mínimos, quienes la han custodiado desde entonces.',prayer:'Virgen de la Victoria, Reina de Málaga, mira a tu pueblo con ojos de misericordia. Danos fortaleza en las pruebas y alegría en tu amor. Amén.',feast:'8 de septiembre'}},
+  {id:106,country:'es',lat:40.416,lng:-3.700,icon:'🏰',name:'Cathedral of the Almudena',type:'Cathedral',city:'Madrid',province:'Madrid',description:'The main cathedral of Madrid, dedicated to the patroness of the city, Our Lady of the Almudena. Consecrated by Pope John Paul II in 1993, it faces the Royal Palace.',history:'Construction began in 1879 but was not completed until 1993 — over a century of building. The crypt houses one of the most ancient Marian images venerated in Madrid.',prayer:'Our Lady of the Almudena, patroness of Madrid, watch over this city and all who dwell in it. Bring us always closer to your Son Jesus. Amen.',feast:'November 9',es:{name:'Catedral de la Almudena',type:'Catedral',city:'Madrid',province:'Madrid',description:'La catedral principal de Madrid, dedicada a la patrona de la ciudad, Nuestra Señora de la Almudena. Consagrada por el Papa Juan Pablo II en 1993, se enfrenta al Palacio Real.',history:'La construcción comenzó en 1879 pero no se completó hasta 1993, más de un siglo de obras. La cripta alberga una de las imágenes marianas más antiguas veneradas en Madrid.',prayer:'Nuestra Señora de la Almudena, patrona de Madrid, vela por esta ciudad y por todos los que en ella habitan. Llévanos siempre más cerca de tu Hijo Jesús. Amén.',feast:'9 de noviembre'}},
+  {id:107,country:'es',lat:37.386,lng:-5.993,icon:'✨',name:'Cathedral of Seville',type:'Cathedral',city:'Seville',province:'Andalusia',description:'The largest Gothic cathedral in the world and a UNESCO World Heritage Site. It houses the tomb of Christopher Columbus and the Giralda tower, a symbol of Seville.',history:'Built between 1401 and 1519 on the site of a mosque. Its sheer scale was intended to show the wealth and power of Seville. The Giralda was originally a minaret.',prayer:'Lord, in this immense temple raised to your glory, may we find the silence of your presence and the warmth of your love. Amen.',feast:'August 15 (Assumption — Cathedral dedication)',es:{name:'Catedral de Sevilla',type:'Catedral',city:'Sevilla',province:'Andalucía',description:'La catedral gótica más grande del mundo y Patrimonio de la Humanidad. Alberga la tumba de Cristóbal Colón y la Giralda, símbolo de Sevilla.',history:'Construida entre 1401 y 1519 sobre el emplazamiento de una mezquita. Su escala monumental pretendía mostrar la riqueza y el poder de Sevilla. La Giralda fue originalmente un minarete.',prayer:'Señor, en este inmenso templo levantado a tu gloria, que encontremos el silencio de tu presencia y el calor de tu amor. Amén.',feast:'15 de agosto (Asunción — dedicación de la Catedral)'}},
+
+  // ===== PORTUGAL =====
+  {id:201,country:'pt',lat:39.629,lng:-8.659,icon:'🌸',name:'Sanctuary of Fatima',type:'Marian shrine',city:'Fátima',province:'Santarém',description:'One of the most visited Catholic pilgrimage sites in the world. In 1917 the Virgin Mary appeared six times to three shepherd children. Millions of pilgrims come each year, especially on May 13.',history:'The apparitions began on May 13, 1917. Our Lady asked for prayer, penance and consecration of Russia to her Immaculate Heart. The three seers were Lúcia, Francisco and Jacinta. Francisco and Jacinta were canonised in 2017.',prayer:'Our Lady of Fátima, you came to call us to prayer and conversion. Help us to respond generously to your message. Immaculate Heart of Mary, pray for us! Amen.',feast:'May 13 and October 13',es:{name:'Santuario de Fátima',type:'Santuario mariano',city:'Fátima',province:'Santarém',description:'Uno de los lugares de peregrinación católica más visitados del mundo. En 1917 la Virgen María se apareció seis veces a tres pastorcillos. Millones de peregrinos acuden cada año, especialmente el 13 de mayo.',history:'Las apariciones comenzaron el 13 de mayo de 1917. Nuestra Señora pidió oración, penitencia y la consagración de Rusia a su Inmaculado Corazón. Los tres videntes fueron Lucía, Francisco y Jacinta. Francisco y Jacinta fueron canonizados en 2017.',prayer:'Nuestra Señora de Fátima, viniste a llamarnos a la oración y la conversión. Ayúdanos a responder generosamente a tu mensaje. ¡Inmaculado Corazón de María, ruega por nosotros! Amén.',feast:'13 de mayo y 13 de octubre'}},
+  {id:202,country:'pt',lat:41.553,lng:-8.418,icon:'⛪',name:'Sanctuary of Bom Jesus do Monte',type:'Sanctuary',city:'Braga',province:'Braga',description:'A stunning hilltop sanctuary with a famous Baroque stairway representing the Via Crucis. One of Portugal\'s most iconic religious monuments and a UNESCO World Heritage Site.',history:'The sanctuary was founded in the 15th century. The famous zigzag stairway was built in the 18th century. Many pilgrims climb it on their knees as an act of penance and devotion.',prayer:'Lord Jesus, as we climb these steps in your name, may each step bring us closer to you. Purify our hearts and renew our faith. Amen.',feast:'Ascension Thursday',es:{name:'Santuario del Buen Jesús del Monte',type:'Santuario',city:'Braga',province:'Braga',description:'Un impresionante santuario en la cima de una colina con una famosa escalinata barroca que representa el Vía Crucis. Uno de los monumentos religiosos más icónicos de Portugal y Patrimonio de la Humanidad.',history:'El santuario fue fundado en el siglo XV. La famosa escalinata en zigzag fue construida en el siglo XVIII. Muchos peregrinos la suben de rodillas como acto de penitencia y devoción.',prayer:'Señor Jesús, al subir estos escalones en tu nombre, que cada paso nos acerque más a ti. Purifica nuestros corazones y renueva nuestra fe. Amén.',feast:'Jueves de la Ascensión'}},
+  {id:203,country:'pt',lat:38.699,lng:-9.206,icon:'🏛️',name:'Jerónimos Monastery',type:'Monastery',city:'Lisbon',province:'Lisbon',description:'A masterpiece of Manueline architecture and UNESCO World Heritage Site. Built to give thanks for Vasco da Gama\'s successful voyage to India, it houses his tomb and that of poet Luís de Camões.',history:'Construction began in 1501 under King Manuel I. The monastery was home to Hieronymite monks who prayed for seafarers. It survived the 1755 earthquake and remains largely intact.',prayer:'Lord, as sailors of old entrusted their journeys to you, we entrust our lives to your providence. Guide us safely to the port of eternal life. Amen.',feast:'June 13 (Saint Anthony of Lisbon)',es:{name:'Monasterio de los Jerónimos',type:'Monasterio',city:'Lisboa',province:'Lisboa',description:'Una obra maestra de la arquitectura manuelina y Patrimonio de la Humanidad. Construido para dar gracias por el exitoso viaje de Vasco da Gama a la India, alberga su tumba y la del poeta Luís de Camões.',history:'La construcción comenzó en 1501 bajo el rey Manuel I. El monasterio fue hogar de monjes jerónimos que rezaban por los marineros. Sobrevivió al terremoto de 1755 y permanece prácticamente intacto.',prayer:'Señor, como los marineros de antaño encomendaban sus travesías a tu cuidado, nosotros te confiamos nuestras vidas. Guíanos con seguridad al puerto de la vida eterna. Amén.',feast:'13 de junio (San Antonio de Lisboa)'}},
+  {id:204,country:'pt',lat:41.196,lng:-8.704,icon:'🌿',name:'Sanctuary of Our Lady of Sameiro',type:'Marian shrine',city:'Braga',province:'Braga',description:'One of the most important Marian shrines in Portugal, perched on a hill with panoramic views. The sanctuary attracts hundreds of thousands of pilgrims each year.',history:'The sanctuary was built in the 19th century after a vision reported by a local priest. Pope Pius IX granted it a Canonical Coronation in 1904. Pope John Paul II visited in 1982.',prayer:'Our Lady of Sameiro, Queen enthroned on the hill, extend your protection over all of Portugal. May your intercession draw us ever closer to God. Amen.',feast:'Sunday after Pentecost',es:{name:'Santuario de Nuestra Señora del Sameiro',type:'Santuario mariano',city:'Braga',province:'Braga',description:'Uno de los santuarios marianos más importantes de Portugal, enclavado en una colina con vistas panorámicas. Atrae a cientos de miles de peregrinos cada año.',history:'El santuario fue construido en el siglo XIX tras una visión relatada por un sacerdote local. El Papa Pío IX concedió la Coronación Canónica en 1904. El Papa Juan Pablo II visitó el lugar en 1982.',prayer:'Nuestra Señora del Sameiro, Reina entronizada en la colina, extiende tu protección sobre todo Portugal. Que tu intercesión nos acerque cada vez más a Dios. Amén.',feast:'Domingo de Pentecostés'}},
+  {id:205,country:'pt',lat:37.018,lng:-7.936,icon:'💫',name:'Cathedral of Faro',type:'Cathedral',city:'Faro',province:'Algarve',description:'The oldest cathedral in the Algarve, a deeply atmospheric place of worship combining Gothic, Renaissance and Baroque elements. The tower offers views over the Ria Formosa lagoon.',history:'Built in the 13th century on the site of a mosque, the cathedral was largely destroyed by Sir Francis Drake in 1596 and by the 1755 earthquake, and rebuilt each time.',prayer:'Lord, this ancient cathedral speaks of the faith of generations. May we too build our lives on the rock of your word. Amen.',feast:'August 15 (Assumption)',es:{name:'Catedral de Faro',type:'Catedral',city:'Faro',province:'Algarve',description:'La catedral más antigua del Algarve, un lugar de culto de gran atmósfera que combina elementos góticos, renacentistas y barrocos. La torre ofrece vistas sobre la laguna de la Ría Formosa.',history:'Construida en el siglo XIII sobre el emplazamiento de una mezquita, la catedral fue destruida en gran parte por Sir Francis Drake en 1596 y por el terremoto de 1755, y reconstruida en cada ocasión.',prayer:'Señor, esta antigua catedral habla de la fe de generaciones. Que nosotros también edifiquemos nuestras vidas sobre la roca de tu palabra. Amén.',feast:'15 de agosto (Asunción)'}},
+  {id:206,country:'pt',lat:39.736,lng:-8.818,icon:'🕊️',name:'Sanctuary of Our Lady of Nazaré',type:'Marian shrine',city:'Nazaré',province:'Leiria',description:'One of the most beloved Marian shrines in Portugal, set dramatically above the Atlantic Ocean. The Black Madonna of Nazaré has been venerated here for centuries.',history:'The devotion dates to the 8th century when a monk brought a statue of Our Lady from Nazareth. A medieval legend tells of a miraculous rescue of a horseman from the cliff edge.',prayer:'Our Lady of Nazaré, Star of the Sea, protect all sailors and pilgrims. Guide us through the storms of life to the safe harbour of eternal peace. Amen.',feast:'September 8',es:{name:'Santuario de Nuestra Señora de Nazaré',type:'Santuario mariano',city:'Nazaré',province:'Leiria',description:'Uno de los santuarios marianos más queridos de Portugal, situado dramáticamente sobre el Atlántico. La Virgen Negra de Nazaré ha sido venerada aquí durante siglos.',history:'La devoción se remonta al siglo VIII cuando un monje trajo una estatua de Nuestra Señora desde Nazaret. Una leyenda medieval cuenta el rescate milagroso de un jinete al borde del acantilado.',prayer:'Nuestra Señora de Nazaré, Estrella del Mar, protege a todos los marineros y peregrinos. Guíanos a través de las tormentas de la vida hasta el puerto seguro de la paz eterna. Amén.',feast:'8 de septiembre'}},
+
+  // ===== FRANCE =====
+  {id:301,country:'fr',lat:43.099,lng:-0.047,icon:'💧',name:'Sanctuary of Lourdes',type:'Marian shrine',city:'Lourdes',province:'Hautes-Pyrénées',description:'One of the world\'s greatest pilgrimage sites. In 1858 the Virgin Mary appeared 18 times to Bernadette Soubirous. Millions come each year seeking healing at the miraculous spring.',history:'The apparitions occurred between February and July 1858. Our Lady identified herself as the Immaculate Conception. Bernadette was canonised in 1933. The spring has produced thousands of reported cures.',prayer:'Our Lady of Lourdes, you appeared to the humble Bernadette and revealed the spring of healing. Intercede for the sick, the suffering and all pilgrims who come to you with faith. Amen.',feast:'February 11 (Our Lady of Lourdes)',es:{name:'Santuario de Lourdes',type:'Santuario mariano',city:'Lourdes',province:'Altos Pirineos',description:'Uno de los grandes lugares de peregrinación del mundo. En 1858 la Virgen María se apareció 18 veces a Bernadette Soubirous. Millones acuden cada año buscando curación en el manantial milagroso.',history:'Las apariciones ocurrieron entre febrero y julio de 1858. Nuestra Señora se identificó como la Inmaculada Concepción. Bernadette fue canonizada en 1933. El manantial ha producido miles de curaciones registradas.',prayer:'Nuestra Señora de Lourdes, te apareciste a la humilde Bernadette y revelaste el manantial de curación. Intercede por los enfermos, los que sufren y todos los peregrinos que acuden a ti con fe. Amén.',feast:'11 de febrero (Nuestra Señora de Lourdes)'}},
+  {id:302,country:'fr',lat:49.897,lng:2.301,icon:'⚔️',name:'Sanctuary of Our Lady of Amiens',type:'Cathedral',city:'Amiens',province:'Hauts-de-France',description:'The largest Gothic cathedral in France and a UNESCO World Heritage Site. Its soaring nave is the tallest of any complete French cathedral, a masterpiece of High Gothic architecture.',history:'Construction began in 1220 and was largely complete by 1270 — remarkably fast for a cathedral of this scale. It houses the relic of Saint John the Baptist\'s head.',prayer:'Lord, in this cathedral raised so high toward heaven, may our hearts too rise toward you in prayer and praise. Amen.',feast:'August 15 (Assumption — Cathedral dedication)',es:{name:'Catedral de Nuestra Señora de Amiens',type:'Catedral',city:'Amiens',province:'Altos de Francia',description:'La catedral gótica más grande de Francia y Patrimonio de la Humanidad. Su nave es la más alta de cualquier catedral francesa completa, una obra maestra del gótico radiante.',history:'La construcción comenzó en 1220 y estaba prácticamente completa en 1270, una velocidad notable para una catedral de esta escala. Alberga la reliquia de la cabeza de San Juan Bautista.',prayer:'Señor, en esta catedral elevada tan alto hacia el cielo, que nuestros corazones también se eleven hacia ti en oración y alabanza. Amén.',feast:'15 de agosto (Asunción — dedicación)'}},
+  {id:303,country:'fr',lat:48.447,lng:1.489,icon:'🌹',name:'Chartres Cathedral',type:'Cathedral',city:'Chartres',province:'Eure-et-Loir',description:'One of the finest examples of French Gothic architecture. A UNESCO World Heritage Site, famous for its extraordinary stained glass windows and ancient Marian devotion.',history:'The current cathedral was built in just 26 years after a fire in 1194. It houses the Veil of the Virgin, a relic venerated since the 9th century. Its labyrinth is used for walking meditation.',prayer:'Our Lady of Chartres, Star under whose mantle generations have sought refuge, hear our prayers and intercede for us before your Son. Amen.',feast:'August 15 (Assumption)',es:{name:'Catedral de Chartres',type:'Catedral',city:'Chartres',province:'Eure y Loir',description:'Uno de los mejores ejemplos de arquitectura gótica francesa. Patrimonio de la Humanidad, famosa por sus extraordinarias vidrieras y la antigua devoción mariana.',history:'La catedral actual fue construida en tan solo 26 años tras un incendio en 1194. Alberga el Velo de la Virgen, reliquia venerada desde el siglo IX. Su laberinto se usa para meditación caminada.',prayer:'Nuestra Señora de Chartres, Estrella bajo cuyo manto generaciones han buscado refugio, escucha nuestras oraciones e intercede por nosotros ante tu Hijo. Amén.',feast:'15 de agosto (Asunción)'}},
+  {id:304,country:'fr',lat:47.902,lng:1.909,icon:'🏛️',name:'Cathedral of Our Lady of Cléry',type:'Basilica',city:'Cléry-Saint-André',province:'Loiret',description:'A royal pilgrimage church that was the favourite sanctuary of King Louis XI, who is buried here. The statue of Our Lady of Cléry is one of the oldest Marian images in France.',history:'The statue was discovered in the 13th century. Louis XI had the church rebuilt in the 15th century and made it his burial place. He visited dozens of times throughout his reign.',prayer:'Our Lady of Cléry, beloved of kings and pilgrims, we come to you with our needs. Present them to your Son who can refuse you nothing. Amen.',feast:'September 8',es:{name:'Basílica de Nuestra Señora de Cléry',type:'Basílica',city:'Cléry-Saint-André',province:'Loiret',description:'Iglesia de peregrinación real, lugar favorito del rey Luis XI, quien está enterrado aquí. La estatua de Nuestra Señora de Cléry es una de las imágenes marianas más antiguas de Francia.',history:'La estatua fue descubierta en el siglo XIII. Luis XI hizo reconstruir la iglesia en el siglo XV y eligió este lugar como su sepultura. La visitó decenas de veces a lo largo de su reinado.',prayer:'Nuestra Señora de Cléry, amada de reyes y peregrinos, venimos a ti con nuestras necesidades. Preséntalas a tu Hijo, que no puede negarte nada. Amén.',feast:'8 de septiembre'}},
+  {id:305,country:'fr',lat:45.439,lng:4.387,icon:'🕯️',name:'Sanctuary of Our Lady of Le Puy',type:'Cathedral',city:'Le Puy-en-Velay',province:'Haute-Loire',description:'One of the great medieval pilgrimage destinations, perched dramatically on volcanic peaks. The starting point of one of the main routes of the Camino de Santiago.',history:'The Marian devotion at Le Puy dates to the 3rd century. The medieval cathedral complex includes a Black Madonna, a Romanesque cloister, and chapels built on volcanic rocks.',prayer:'Our Lady of Le Puy, ancient guide of pilgrims and travellers, bless all who begin their journey here and bring them safely to Santiago and beyond. Amen.',feast:'August 15 (Assumption)',es:{name:'Santuario de Nuestra Señora de Le Puy',type:'Catedral',city:'Le Puy-en-Velay',province:'Alto Loira',description:'Uno de los grandes destinos de peregrinación medievales, enclavado dramáticamente en cimas volcánicas. Punto de partida de una de las principales rutas del Camino de Santiago.',history:'La devoción mariana en Le Puy se remonta al siglo III. El complejo catedralicio medieval incluye una Virgen Negra, un claustro románico y capillas construidas sobre rocas volcánicas.',prayer:'Nuestra Señora de Le Puy, antigua guía de peregrinos y viajeros, bendice a todos los que aquí inician su camino y condúcelos sanos y salvos a Santiago y más allá. Amén.',feast:'15 de agosto (Asunción)'}},
+  {id:306,country:'fr',lat:48.887,lng:2.343,icon:'💒',name:'Sacré-Cœur Basilica',type:'Basilica',city:'Paris',province:'Île-de-France',description:'Perched atop Montmartre, the highest point in Paris, this white Romano-Byzantine basilica is a symbol of faith and one of the most visited monuments in France.',history:'Built as an act of national penance after the Franco-Prussian War (1871), construction began in 1875 and the basilica was consecrated in 1919. Perpetual adoration has been maintained since 1885.',prayer:'Sacred Heart of Jesus, to you we consecrate ourselves and our nation. May your love reign in every heart and your kingdom of peace embrace the world. Amen.',feast:'Solemnity of the Sacred Heart',es:{name:'Basílica del Sagrado Corazón',type:'Basílica',city:'París',province:'Isla de Francia',description:'Encaramada en lo alto de Montmartre, el punto más alto de París, esta basílica blanca romano-bizantina es un símbolo de fe y uno de los monumentos más visitados de Francia.',history:'Construida como acto de penitencia nacional tras la guerra franco-prusiana (1871), la construcción comenzó en 1875 y la basílica fue consagrada en 1919. La adoración perpetua se mantiene desde 1885.',prayer:'Sagrado Corazón de Jesús, a ti nos consagramos a nosotros mismos y a nuestra nación. Que tu amor reine en cada corazón y tu reino de paz abrace al mundo. Amén.',feast:'Solemnidad del Sagrado Corazón'}},
+
+  // ===== ITALY =====
+  {id:401,country:'it',lat:41.902,lng:12.453,icon:'✝️',name:'Saint Peter\'s Basilica',type:'Basilica',city:'Vatican City',province:'Vatican',description:'The heart of Christendom. Built over the tomb of Saint Peter the Apostle, it is the largest church in the world. The centre of the Catholic faith for over a billion faithful.',history:'The first basilica was built by Emperor Constantine in 320 AD. The current basilica was designed by Michelangelo and completed in 1626. The dome remains the tallest in the world.',prayer:'Lord, on this rock you built your Church. Strengthen our faith, deepen our love, and make us worthy witnesses of the Gospel in our time. Amen.',feast:'June 29 (Saints Peter and Paul)',es:{name:'Basílica de San Pedro',type:'Basílica',city:'Ciudad del Vaticano',province:'Vaticano',description:'El corazón de la Cristiandad. Construida sobre la tumba del apóstol San Pedro, es la iglesia más grande del mundo. Centro de la fe católica para más de mil millones de fieles.',history:'La primera basílica fue construida por el emperador Constantino en el año 320 d.C. La basílica actual fue diseñada por Miguel Ángel y completada en 1626. La cúpula sigue siendo la más alta del mundo.',prayer:'Señor, sobre esta roca edificaste tu Iglesia. Fortalece nuestra fe, profundiza nuestro amor y haznos dignos testigos del Evangelio en nuestro tiempo. Amén.',feast:'29 de junio (Santos Pedro y Pablo)'}},
+  {id:402,country:'it',lat:43.070,lng:12.614,icon:'🕊️',name:'Basilica of Saint Francis',type:'Basilica',city:'Assisi',province:'Umbria',description:'The spiritual home of Saint Francis of Assisi. This magnificent double basilica, decorated by Giotto and Cimabue, is one of Italy\'s greatest artistic and spiritual treasures.',history:'Built immediately after Francis\'s canonisation in 1228, the basilica houses his tomb. The famous frescoes by Giotto illustrate the life of the saint. It is a UNESCO World Heritage Site.',prayer:'Lord, make me an instrument of your peace. Where there is hatred let me sow love, where there is doubt, faith, where there is darkness, light. Amen. (Prayer of Saint Francis)',feast:'October 4 (Saint Francis)',es:{name:'Basílica de San Francisco de Asís',type:'Basílica',city:'Asís',province:'Umbría',description:'El hogar espiritual de San Francisco de Asís. Esta magnífica doble basílica, decorada por Giotto y Cimabue, es uno de los mayores tesoros artísticos y espirituales de Italia.',history:'Construida inmediatamente después de la canonización de Francisco en 1228, la basílica alberga su tumba. Los famosos frescos de Giotto ilustran la vida del santo. Es Patrimonio de la Humanidad.',prayer:'Señor, hazme instrumento de tu paz. Donde haya odio, que yo ponga amor; donde haya duda, fe; donde haya oscuridad, luz. Amén. (Oración de San Francisco)',feast:'4 de octubre (San Francisco)'}},
+  {id:403,country:'it',lat:43.723,lng:10.396,icon:'🏛️',name:'Cathedral of Pisa',type:'Cathedral',city:'Pisa',province:'Tuscany',description:'A masterpiece of Romanesque architecture forming part of the famous Piazza dei Miracoli. Together with the Baptistery, Cemetery and Leaning Tower, it is a UNESCO World Heritage Site.',history:'Construction began in 1063 after a naval victory over Saracens. The cathedral\'s architect Buscheto introduced the Pisan Romanesque style that influenced churches across Tuscany and Sardinia.',prayer:'Lord, this cathedral built in thanksgiving for victory reminds us that all our achievements are gifts from you. May we always return glory to you alone. Amen.',feast:'August 15 (Assumption)',es:{name:'Catedral de Pisa',type:'Catedral',city:'Pisa',province:'Toscana',description:'Obra maestra del románico que forma parte de la famosa Piazza dei Miracoli. Junto al Baptisterio, el Camposanto y la Torre Inclinada, es Patrimonio de la Humanidad de la UNESCO.',history:'La construcción comenzó en 1063 tras una victoria naval sobre los sarracenos. El arquitecto Buschetto introdujo el estilo románico pisano que influyó en iglesias de toda la Toscana y Cerdeña.',prayer:'Señor, esta catedral construida en acción de gracias por una victoria nos recuerda que todos nuestros logros son dones tuyos. Que siempre te devolvamos la gloria. Amén.',feast:'15 de agosto (Asunción)'}},
+  {id:404,country:'it',lat:45.437,lng:12.336,icon:'🌊',name:'Basilica of Santa Maria della Salute',type:'Basilica',city:'Venice',province:'Veneto',description:'One of Venice\'s most iconic buildings, built as a votive offering for the city\'s deliverance from a devastating plague in 1630. Its imposing dome dominates the entrance to the Grand Canal.',history:'Built between 1631 and 1687 by architect Baldassare Longhena. Every November 21st, Venetians walk across a pontoon bridge to give thanks at the Feast of the Madonna della Salute.',prayer:'Our Lady of Health, you interceded for Venice in its hour of plague. Intercede for us in our hour of need, and bring healing to all who are sick. Amen.',feast:'November 21',es:{name:'Basílica de Santa María della Salute',type:'Basílica',city:'Venecia',province:'Véneto',description:'Uno de los edificios más icónicos de Venecia, construido como ofrenda votiva por la liberación de la ciudad de una devastadora peste en 1630. Su imponente cúpula domina la entrada al Gran Canal.',history:'Construida entre 1631 y 1687 por el arquitecto Baldassare Longhena. Cada 21 de noviembre los venecianos cruzan un puente flotante para dar gracias en la Fiesta de la Madonna della Salute.',prayer:'Nuestra Señora de la Salud, intercediste por Venecia en su hora de la peste. Intercede por nosotros en nuestra hora de necesidad y trae curación a todos los enfermos. Amén.',feast:'21 de noviembre'}},
+  {id:405,country:'it',lat:41.477,lng:13.826,icon:'🌿',name:'Abbey of Monte Cassino',type:'Abbey',city:'Monte Cassino',province:'Lazio',description:'The mother monastery of Western monasticism, founded by Saint Benedict of Nursia around 529 AD. Largely destroyed in World War II, it has been faithfully rebuilt as a symbol of peace.',history:'Saint Benedict founded the monastery and wrote his Rule here, which became the foundation of monastic life in the West. The abbey was destroyed and rebuilt four times. The war cemetery below holds thousands of soldiers.',prayer:'Saint Benedict, father of Western monks, teach us to seek God above all things, to receive all guests as Christ, and to work and pray in holy balance. Amen.',feast:'July 11 (Saint Benedict)',es:{name:'Abadía de Monte Cassino',type:'Abadía',city:'Monte Cassino',province:'Lacio',description:'El monasterio madre del monacato occidental, fundado por San Benito de Nursia hacia el año 529 d.C. Destruido en la Segunda Guerra Mundial, ha sido fielmente reconstruido como símbolo de paz.',history:'San Benito fundó el monasterio y escribió aquí su Regla, que se convirtió en el fundamento de la vida monástica en Occidente. La abadía fue destruida y reconstruida cuatro veces. El cementerio de guerra alberga a miles de soldados.',prayer:'San Benito, padre de los monjes occidentales, enséñanos a buscar a Dios sobre todas las cosas, a recibir a todos los huéspedes como a Cristo y a trabajar y orar en santa armonía. Amén.',feast:'11 de julio (San Benito)'}},
+  {id:406,country:'it',lat:41.173,lng:15.555,icon:'💒',name:'Sanctuary of San Giovanni Rotondo',type:'Sanctuary',city:'San Giovanni Rotondo',province:'Puglia',description:'Home of Padre Pio of Pietrelcina, one of the most popular saints of the 20th century. Millions of pilgrims visit each year to pray at his tomb.',history:'Padre Pio lived here from 1916 until his death in 1968. He bore the stigmata for 50 years, was renowned for reading souls and miracles of healing. He was canonised by John Paul II in 2002.',prayer:'Padre Pio, faithful servant of God who bore in your body the wounds of Christ, pray for us. Obtain for us from God the grace we need and draw us closer to the Sacred Heart of Jesus. Amen.',feast:'September 23 (Padre Pio)',es:{name:'Santuario de San Giovanni Rotondo',type:'Santuario',city:'San Giovanni Rotondo',province:'Apulia',description:'Hogar del Padre Pío de Pietrelcina, uno de los santos más populares del siglo XX. Millones de peregrinos visitan cada año su tumba.',history:'El Padre Pío vivió aquí desde 1916 hasta su muerte en 1968. Llevó los estigmas durante 50 años, y fue famoso por leer las almas y los milagros de curación. Fue canonizado por Juan Pablo II en 2002.',prayer:'Padre Pío, fiel servidor de Dios que llevaste en tu cuerpo las llagas de Cristo, ruega por nosotros. Obten de Dios la gracia que necesitamos y llévanos más cerca del Sagrado Corazón de Jesús. Amén.',feast:'23 de septiembre (Padre Pío)'}},
+  {id:407,country:'it',lat:40.850,lng:14.268,icon:'🩸',name:'Cathedral of Naples',type:'Cathedral',city:'Naples',province:'Campania',description:'Home to the liquefaction miracle of the blood of Saint Januarius, patron of Naples. Three times a year, the dried blood liquefies — an event witnessed by thousands for centuries.',history:'The cathedral was built in the 13th century. The Chapel of San Gennaro houses the relics of the martyr. The liquefaction miracle has been recorded since 1389 and is the subject of intense popular devotion.',prayer:'Saint Januarius, martyr and patron of Naples, intercede for this city and its people. May the miracle of your blood be a sign of God\'s faithfulness to his people. Amen.',feast:'September 19 (Saint Januarius)',es:{name:'Catedral de Nápoles',type:'Catedral',city:'Nápoles',province:'Campania',description:'Sede del milagro de la licuefacción de la sangre de San Jenaro, patrón de Nápoles. Tres veces al año la sangre seca se licúa, un acontecimiento presenciado por miles desde hace siglos.',history:'La catedral fue construida en el siglo XIII. La Capilla de San Jenaro alberga las reliquias del mártir. El milagro de la licuefacción está documentado desde 1389 y es objeto de intensa devoción popular.',prayer:'San Jenaro, mártir y patrón de Nápoles, intercede por esta ciudad y su pueblo. Que el milagro de tu sangre sea signo de la fidelidad de Dios hacia su pueblo. Amén.',feast:'19 de septiembre (San Jenaro)'}},
+
+  // ===== POLAND =====
+  {id:501,country:'pl',lat:50.814,lng:19.097,icon:'👑',name:'Jasna Góra Monastery',type:'Monastery',city:'Częstochowa',province:'Silesia',description:'The spiritual capital of Poland, home to the Black Madonna of Częstochowa — one of the most venerated Marian images in the world. The monastery has never been conquered.',history:'Founded in 1382, the monastery survived the Swedish Deluge of 1655 — a miracle attributed to the Black Madonna. King John II Casimir consecrated Poland to the Virgin Mary here. Pope John Paul II visited multiple times.',prayer:'Our Lady of Częstochowa, Black Madonna, Queen of Poland, be our refuge and strength. Under your protection we place our nation, our families and ourselves. Amen.',feast:'August 26',es:{name:'Monasterio de Jasna Góra',type:'Monasterio',city:'Częstochowa',province:'Silesia',description:'La capital espiritual de Polonia, hogar de la Virgen Negra de Częstochowa, una de las imágenes marianas más veneradas del mundo. El monasterio nunca ha sido conquistado.',history:'Fundado en 1382, el monasterio sobrevivió al Diluvio Sueco de 1655, milagro atribuido a la Virgen Negra. El rey Juan II Casimiro consagró Polonia a la Virgen María aquí. El Papa Juan Pablo II lo visitó varias veces.',prayer:'Nuestra Señora de Częstochowa, Virgen Negra, Reina de Polonia, sé nuestro refugio y fortaleza. Bajo tu protección ponemos nuestra nación, nuestras familias y a nosotros mismos. Amén.',feast:'26 de agosto'}},
+  {id:502,country:'pl',lat:50.044,lng:19.966,icon:'⛪',name:'Divine Mercy Sanctuary',type:'Sanctuary',city:'Kraków',province:'Lesser Poland',description:'The global centre of the Divine Mercy devotion, based on the visions of Saint Faustina Kowalska. Millions of pilgrims come to venerate the famous Divine Mercy image.',history:'Sister Faustina received her visions here in the 1930s. Pope John Paul II, a native of Kraków, was devoted to Divine Mercy and canonised Faustina in 2000. He proclaimed the second Sunday of Easter as Divine Mercy Sunday.',prayer:'Jesus, I trust in you. For the sake of your sorrowful Passion, have mercy on us and on the whole world. Amen.',feast:'Second Sunday of Easter (Divine Mercy Sunday)',es:{name:'Santuario de la Divina Misericordia',type:'Santuario',city:'Cracovia',province:'Pequeña Polonia',description:'El centro mundial de la devoción a la Divina Misericordia, basada en las visiones de Santa Faustina Kowalska. Millones de peregrinos vienen a venerar la famosa imagen de la Divina Misericordia.',history:'La hermana Faustina recibió sus visiones aquí en los años 1930. El Papa Juan Pablo II, natural de Cracovia, era devoto de la Divina Misericordia y canonizó a Faustina en 2000. Proclamó el segundo domingo de Pascua como Domingo de la Divina Misericordia.',prayer:'Jesús, en ti confío. Por tu dolorosa Pasión, ten misericordia de nosotros y del mundo entero. Amén.',feast:'Segundo domingo de Pascua (Domingo de la Divina Misericordia)'}},
+  {id:503,country:'pl',lat:52.302,lng:18.143,icon:'🌊',name:'Basilica of Our Lady of Licheń',type:'Basilica',city:'Licheń Stary',province:'Greater Poland',description:'The largest church in Poland and one of the largest in the world. An extraordinary place of pilgrimage dedicated to Our Lady of Licheń, Sorrowful Queen of Poland.',history:'The devotion to Our Lady of Licheń began in the 19th century. The enormous new basilica was built between 1994 and 2004, financed entirely by donations from Polish faithful worldwide.',prayer:'Our Lady of Licheń, Sorrowful Queen of Poland, wipe away the tears of your children, give strength to the afflicted and hope to the despairing. Amen.',feast:'September 12',es:{name:'Basílica de Nuestra Señora de Licheń',type:'Basílica',city:'Licheń Stary',province:'Gran Polonia',description:'La iglesia más grande de Polonia y una de las más grandes del mundo. Un extraordinario lugar de peregrinación dedicado a Nuestra Señora de Licheń, Reina Dolorosa de Polonia.',history:'La devoción a Nuestra Señora de Licheń comenzó en el siglo XIX. La enorme basílica nueva fue construida entre 1994 y 2004, financiada íntegramente por donativos de fieles polacos de todo el mundo.',prayer:'Nuestra Señora de Licheń, Reina Dolorosa de Polonia, enjuga las lágrimas de tus hijos, da fuerza a los afligidos y esperanza a los desesperados. Amén.',feast:'12 de septiembre'}},
+  {id:504,country:'pl',lat:50.054,lng:19.935,icon:'🏰',name:'Wawel Cathedral',type:'Cathedral',city:'Kraków',province:'Lesser Poland',description:'The royal cathedral of Poland, burial place of kings, saints and national heroes. The Sigismund Bell and the relics of Saint Stanislaus make it the spiritual heart of the Polish nation.',history:'The current Gothic cathedral was completed in 1364. It contains 18 chapels including the golden Sigismund Chapel. Among those buried here are Saint Jadwiga, King John III Sobieski and President Lech Kaczyński.',prayer:'Saint Stanislaus, patron of Poland and bishop and martyr, intercede for this nation. May Poland always remain faithful to Christ and to his Church. Amen.',feast:'May 8 (Saint Stanislaus)',es:{name:'Catedral del Wawel',type:'Catedral',city:'Cracovia',province:'Pequeña Polonia',description:'La catedral real de Polonia, lugar de sepultura de reyes, santos y héroes nacionales. La Campana Segismundo y las reliquias de San Estanislao la convierten en el corazón espiritual de la nación polaca.',history:'La actual catedral gótica se completó en 1364. Contiene 18 capillas, incluida la dorada Capilla Segismundo. Entre los aquí enterrados se encuentran Santa Jadwiga, el rey Juan III Sobieski y el presidente Lech Kaczyński.',prayer:'San Estanislao, patrón de Polonia y obispo mártir, intercede por esta nación. Que Polonia permanezca siempre fiel a Cristo y a su Iglesia. Amén.',feast:'8 de mayo (San Estanislao)'}},
+  {id:505,country:'pl',lat:51.764,lng:19.456,icon:'🌿',name:'Sanctuary of Our Lady of Łódź',type:'Sanctuary',city:'Łódź',province:'Łódź',description:'One of the most important Marian sanctuaries in central Poland, housing an ancient image of Our Lady venerated for centuries of miracles and answered prayers.',history:'The sanctuary has been a place of pilgrimage since the 17th century. The image of Our Lady has been venerated through wars, partitions and communist persecution, standing as a symbol of hope.',prayer:'Our Lady of Łódź, gentle mother who has watched over this city through its joys and sorrows, continue to pray for us and lead us to your Son. Amen.',feast:'August 15 (Assumption)',es:{name:'Santuario de Nuestra Señora de Łódź',type:'Santuario',city:'Łódź',province:'Łódź',description:'Uno de los santuarios marianos más importantes del centro de Polonia, que alberga una antigua imagen de Nuestra Señora venerada durante siglos por sus milagros y plegarias atendidas.',history:'El santuario ha sido lugar de peregrinación desde el siglo XVII. La imagen de Nuestra Señora ha sido venerada a través de guerras, particiones y la persecución comunista, como símbolo de esperanza.',prayer:'Nuestra Señora de Łódź, madre gentil que has velado por esta ciudad en sus alegrías y tristezas, continúa rezando por nosotros y llévanos a tu Hijo. Amén.',feast:'15 de agosto (Asunción)'}},
+
+  // ===== IRELAND =====
+  {id:601,country:'ie',lat:53.778,lng:-8.918,icon:'🕊️',name:'Knock Shrine',type:'Marian shrine',city:'Knock',province:'County Mayo',description:'Ireland\'s national Marian shrine. On August 21, 1879, an apparition of Our Lady, Saint Joseph and Saint John the Evangelist was witnessed by 15 people on the gable of the village church.',history:'The apparition lasted two hours in rain. The witnesses — ranging from children to elderly — were consistent in their accounts. Pope John Paul II visited in 1979 for the centenary. One million pilgrims visit annually.',prayer:'Our Lady of Knock, Queen of Ireland, you gave hope to our people in a time of famine and despair. Be with us still as we face the challenges of our time. Amen.',feast:'August 21 (Knock Apparition)',es:{name:'Santuario de Knock',type:'Santuario mariano',city:'Knock',province:'Condado de Mayo',description:'El santuario mariano nacional de Irlanda. El 21 de agosto de 1879, una aparición de Nuestra Señora, San José y San Juan Evangelista fue presenciada por 15 personas en el frontón de la iglesia del pueblo.',history:'La aparición duró dos horas bajo la lluvia. Los testigos, de niños a ancianos, fueron consistentes en sus relatos. El Papa Juan Pablo II visitó el lugar en 1979 para el centenario. Un millón de peregrinos visitan anualmente.',prayer:'Nuestra Señora de Knock, Reina de Irlanda, diste esperanza a tu pueblo en un tiempo de hambre y desesperación. Permanece con nosotros mientras afrontamos los retos de nuestro tiempo. Amén.',feast:'21 de agosto (Aparición de Knock)'}},
+  {id:602,country:'ie',lat:53.339,lng:-6.269,icon:'🏛️',name:'Saint Patrick\'s Cathedral',type:'Cathedral',city:'Dublin',province:'County Dublin',description:'Ireland\'s largest cathedral, built on the site where Saint Patrick is said to have baptised converts in the 5th century. An imposing Gothic landmark in the heart of Dublin.',history:'Founded in 1191 and elevated to cathedral status in 1213. Jonathan Swift, author of Gulliver\'s Travels, served as Dean here. The cathedral has been a place of worship for over 800 years.',prayer:'Saint Patrick, Apostle of Ireland, you drove out the darkness of paganism and brought the light of Christ to our shores. May Ireland remain ever faithful to your legacy. Amen.',feast:'March 17 (Saint Patrick)',es:{name:'Catedral de San Patricio',type:'Catedral',city:'Dublín',province:'Condado de Dublín',description:'La catedral más grande de Irlanda, construida en el lugar donde se dice que San Patricio bautizó a conversos en el siglo V. Un imponente monumento gótico en el corazón de Dublín.',history:'Fundada en 1191 y elevada al rango de catedral en 1213. Jonathan Swift, autor de Los viajes de Gulliver, fue deán aquí. La catedral ha sido lugar de culto durante más de 800 años.',prayer:'San Patricio, apóstol de Irlanda, alejaste las tinieblas del paganismo y trajiste la luz de Cristo a estas tierras. Que Irlanda permanezca siempre fiel a tu legado. Amén.',feast:'17 de marzo (San Patricio)'}},
+  {id:603,country:'ie',lat:53.760,lng:-9.659,icon:'⛰️',name:'Croagh Patrick',type:'Pilgrimage site',city:'Westport',province:'County Mayo',description:'Ireland\'s holy mountain, where Saint Patrick fasted for 40 days in 441 AD. Each year on Reek Sunday, tens of thousands climb the 764-metre summit, many barefoot.',history:'The mountain has been a place of pilgrimage since pre-Christian times. Patrick\'s fast on the summit is one of Ireland\'s foundational spiritual narratives. The small oratory at the top is a modern replacement of successive earlier chapels.',prayer:'Lord, as we climb this holy mountain in the footsteps of your servant Patrick, purify our hearts and strengthen our resolve to follow you. Amen.',feast:'Last Sunday of July (Reek Sunday)',es:{name:'Croagh Patrick',type:'Lugar de peregrinación',city:'Westport',province:'Condado de Mayo',description:'La montaña sagrada de Irlanda, donde San Patricio ayunó durante 40 días en el año 441 d.C. Cada año el Domingo del Reek, decenas de miles suben a la cima de 764 metros, muchos descalzos.',history:'La montaña ha sido lugar de peregrinación desde tiempos precristianos. El ayuno de Patricio en la cumbre es una de las narraciones espirituales fundacionales de Irlanda. El pequeño oratorio en la cima es un reemplazo moderno de sucesivas capillas anteriores.',prayer:'Señor, al subir esta montaña sagrada siguiendo los pasos de tu siervo Patricio, purifica nuestros corazones y fortalece nuestra determinación de seguirte. Amén.',feast:'Último domingo de julio (Domingo del Reek)'}},
+  {id:604,country:'ie',lat:51.896,lng:-8.468,icon:'💒',name:'Shandon Church',type:'Church',city:'Cork',province:'County Cork',description:'Saint Anne\'s Church, known as Shandon, is one of Cork\'s most beloved landmarks. Visitors can ring the famous Shandon Bells, an experience unique in Irish religious heritage.',history:'Built in 1722 on the site of a church destroyed by Williamite forces. The famous steeple has four clock faces that were historically known as the four-faced liar because they showed different times.',prayer:'Lord, as these bells have called generations of Cork people to prayer, may their sound call us too to lift our hearts to you in gratitude and praise. Amen.',feast:'July 26 (Saint Anne)',es:{name:'Iglesia de Shandon',type:'Iglesia',city:'Cork',province:'Condado de Cork',description:'La Iglesia de Santa Ana, conocida como Shandon, es uno de los monumentos más queridos de Cork. Los visitantes pueden tocar las famosas Campanas de Shandon, una experiencia única en el patrimonio religioso irlandés.',history:'Construida en 1722 sobre el emplazamiento de una iglesia destruida por las fuerzas williamitas. El famoso campanario tiene cuatro esferas de reloj que históricamente se conocían como el mentiroso de cuatro caras porque marcaban horas distintas.',prayer:'Señor, así como estas campanas han llamado a generaciones de habitantes de Cork a la oración, que su sonido nos llame también a nosotros a elevar nuestros corazones hacia ti con gratitud y alabanza. Amén.',feast:'26 de julio (Santa Ana)'}},
+  {id:605,country:'ie',lat:51.656,lng:-8.630,icon:'✝️',name:'Timoleague Abbey',type:'Abbey',city:'Timoleague',province:'County Cork',description:'Hauntingly beautiful ruins of a Franciscan friary founded in 1240, set beside a tidal estuary. One of the most atmospheric medieval religious sites in Ireland.',history:'Founded by the MacCarthy family, Timoleague was one of the largest Franciscan houses in medieval Ireland. It was suppressed during the Reformation in the 16th century. The ruins include the church, cloister and tower.',prayer:'Lord, though these walls are ruined, the faith that built them endures. May we too build on the rock of your love, withstanding every storm. Amen.',feast:'October 4 (Saint Francis)',es:{name:'Abadía de Timoleague',type:'Abadía',city:'Timoleague',province:'Condado de Cork',description:'Ruinas de una sobrecogedora belleza de un convento franciscano fundado en 1240, junto a un estuario de marea. Uno de los lugares religiosos medievales más atmosféricos de Irlanda.',history:'Fundada por la familia MacCarthy, Timoleague fue una de las casas franciscanas más grandes de la Irlanda medieval. Fue suprimida durante la Reforma en el siglo XVI. Las ruinas incluyen la iglesia, el claustro y la torre.',prayer:'Señor, aunque estas paredes estén en ruinas, la fe que las construyó permanece. Que nosotros también edifiquemos sobre la roca de tu amor, resistiendo todas las tempestades. Amén.',feast:'4 de octubre (San Francisco)'}},
+
+  // ===== GERMANY =====
+  {id:701,country:'de',lat:47.770,lng:10.302,icon:'🙏',name:'Wieskirche',type:'Church',city:'Steingaden',province:'Bavaria',description:'The Pilgrimage Church of Wies, a UNESCO World Heritage Site. This extraordinary Rococo church in the Bavarian foothills is considered one of the finest examples of Rococo art in the world.',history:'Built between 1745 and 1754 by Dominikus Zimmermann after a miraculous image of the Scourged Christ wept. Pilgrims immediately began flocking to the site and the church was built to accommodate them.',prayer:'Lord Jesus, Scourged Saviour, you shed tears for our sins. Touch our hearts with true contrition and renew in us the joy of your salvation. Amen.',feast:'Sunday after Pentecost',es:{name:'Wieskirche',type:'Iglesia',city:'Steingaden',province:'Baviera',description:'La Iglesia de Peregrinación de Wies, Patrimonio de la Humanidad de la UNESCO. Esta extraordinaria iglesia rococó en las estribaciones bávaras es considerada uno de los mejores ejemplos de arte rococó del mundo.',history:'Construida entre 1745 y 1754 por Dominikus Zimmermann, tras relatos de que una imagen del Cristo Flagelado derramó lágrimas. Los peregrinos comenzaron a acudir inmediatamente y la iglesia fue construida para acogerlos.',prayer:'Señor Jesús, Salvador Flagelado, derramaste lágrimas por nuestros pecados. Toca nuestros corazones con verdadero arrepentimiento y renueva en nosotros el gozo de tu salvación. Amén.',feast:'Domingo de Pentecostés'}},
+  {id:702,country:'de',lat:48.137,lng:11.575,icon:'⛪',name:'Frauenkirche Munich',type:'Cathedral',city:'Munich',province:'Bavaria',description:'The Cathedral of Our Dear Lady, symbol of Munich. Its twin towers are iconic landmarks of the Bavarian capital. A place of Marian devotion at the heart of the city.',history:'Built in a mere 20 years (1468–1488), a remarkable feat for a cathedral of this size. According to legend, the Devil left a footprint in the doorway when he found no windows from inside — an optical illusion still visible today.',prayer:'Our Lady of Munich, gentle mother under whose patronage this city has lived for centuries, watch over us and lead us to your Son. Amen.',feast:'August 15 (Assumption)',es:{name:'Frauenkirche de Múnich',type:'Catedral',city:'Múnich',province:'Baviera',description:'La Catedral de Nuestra Querida Señora, símbolo de Múnich. Sus torres gemelas son monumentos icónicos de la capital bávara. Lugar de devoción mariana en el corazón de la ciudad.',history:'Construida en solo 20 años (1468-1488), un logro notable para una catedral de este tamaño. Según la leyenda, el diablo dejó una huella en el umbral cuando descubrió que no se veían ventanas desde dentro, una ilusión óptica aún visible hoy.',prayer:'Nuestra Señora de Múnich, madre gentil bajo cuyo patrocinio esta ciudad ha vivido durante siglos, vela por nosotros y llévanos a tu Hijo. Amén.',feast:'15 de agosto (Asunción)'}},
+  {id:703,country:'de',lat:47.557,lng:10.751,icon:'💒',name:'Ettal Abbey',type:'Abbey',city:'Ettal',province:'Bavaria',description:'A Benedictine monastery in the Bavarian Alps, founded in 1330, housing a miraculous marble image of Our Lady. Famous for its distillery and as a centre of learning and culture.',history:'Founded by Emperor Louis IV, the abbey was largely rebuilt in the 18th century after a fire. It runs one of Germany\'s top boarding schools. The Baroque church is one of the finest in Bavaria.',prayer:'Our Lady of Ettal, Queen enthroned in the mountains, may your alpine home remind us of the heights to which God calls each of us. Amen.',feast:'December 8 (Immaculate Conception)',es:{name:'Abadía de Ettal',type:'Abadía',city:'Ettal',province:'Baviera',description:'Un monasterio benedictino en los Alpes bávaros, fundado en 1330, que alberga una milagrosa imagen de mármol de Nuestra Señora. Famoso por su destilería y como centro de aprendizaje y cultura.',history:'Fundada por el emperador Luis IV, la abadía fue reconstruida en gran parte en el siglo XVIII tras un incendio. Gestiona uno de los mejores internados de Alemania. La iglesia barroca es una de las más bellas de Baviera.',prayer:'Nuestra Señora de Ettal, Reina entronizada en las montañas, que tu hogar alpino nos recuerde las alturas a las que Dios llama a cada uno de nosotros. Amén.',feast:'8 de diciembre (Inmaculada Concepción)'}},
+  {id:704,country:'de',lat:48.223,lng:12.676,icon:'🌟',name:'Sanctuary of Altötting',type:'Sanctuary',city:'Altötting',province:'Bavaria',description:'Bavaria\'s most important Marian pilgrimage site, home to the Black Madonna of Altötting. The Chapel of Grace is the heart of this ancient shrine visited by millions.',history:'Miracles were reported here as early as 1489. Bavaria\'s royal House of Wittelsbach gave special patronage to the shrine. Joseph Ratzinger (later Pope Benedict XVI) was baptised nearby and maintained lifelong devotion to Our Lady of Altötting.',prayer:'Our Lady of Altötting, Black Madonna of Bavaria, you have heard the prayers of millions. Hear ours too, and bring them to your Son Jesus. Amen.',feast:'August 15 (Assumption)',es:{name:'Santuario de Altötting',type:'Santuario',city:'Altötting',province:'Baviera',description:'El lugar de peregrinación mariana más importante de Baviera, hogar de la Virgen Negra de Altötting. La Capilla de la Gracia es el corazón de este antiguo santuario visitado por millones.',history:'Los milagros aquí fueron reportados ya en 1489. La casa real bávara de los Wittelsbach dio especial patronazgo al santuario. Joseph Ratzinger (luego Papa Benedicto XVI) fue bautizado cerca y mantuvo devoción de por vida a Nuestra Señora de Altötting.',prayer:'Nuestra Señora de Altötting, Virgen Negra de Baviera, has escuchado las oraciones de millones. Escucha también las nuestras y llévalas a tu Hijo Jesús. Amén.',feast:'15 de agosto (Asunción)'}},
+  {id:705,country:'de',lat:50.939,lng:6.957,icon:'🏰',name:'Cologne Cathedral',type:'Cathedral',city:'Cologne',province:'North Rhine-Westphalia',description:'A UNESCO World Heritage Site and one of the greatest Gothic cathedrals in the world. It houses the Shrine of the Three Kings, the largest medieval reliquary in the Western world.',history:'Construction began in 1248 and was not completed until 1880 — over 600 years. The cathedral survived World War II bombing while surrounding Cologne was devastated. It remains Germany\'s most visited landmark.',prayer:'Lord, the Three Magi came from afar seeking you and offered their finest gifts. May we too seek you with the same determination and offer you the gift of our lives. Amen.',feast:'January 6 (Epiphany)',es:{name:'Catedral de Colonia',type:'Catedral',city:'Colonia',province:'Renania del Norte-Westfalia',description:'Patrimonio de la Humanidad de la UNESCO y una de las mayores catedrales góticas del mundo. Alberga el Relicario de los Reyes Magos, el relicario medieval más grande del mundo occidental.',history:'La construcción comenzó en 1248 y no se completó hasta 1880, más de 600 años. La catedral sobrevivió a los bombardeos de la Segunda Guerra Mundial mientras el Colonia circundante quedaba devastado. Sigue siendo el monumento más visitado de Alemania.',prayer:'Señor, los Tres Magos vinieron de lejos buscándote y ofrecieron sus mejores dones. Que nosotros también te busquemos con la misma determinación y te ofrezcamos el don de nuestras vidas. Amén.',feast:'6 de enero (Epifanía)'}},
+
+  // ===== AUSTRIA =====
+  {id:801,country:'at',lat:47.772,lng:15.323,icon:'🏔️',name:'Mariazell Basilica',type:'Basilica',city:'Mariazell',province:'Styria',description:'The most important pilgrimage destination in Central Europe, drawing pilgrims from Austria, Hungary, Czech Republic, Slovakia and beyond. Home to the miraculous statue of the Madonna of Mariazell.',history:'Founded in 1157 when Benedictine monk Magnus placed a linden wood statue of the Madonna on a rock. The basilica was rebuilt in Baroque style in the 17th century. Fourteen Habsburg emperors visited.',prayer:'Mother of Mercy, Gate of Heaven, help of those who call upon you, we come to lay our needs before your throne. Take them to the heart of your Son Jesus. Amen.',feast:'September 8',es:{name:'Basílica de Mariazell',type:'Basílica',city:'Mariazell',province:'Estiria',description:'El destino de peregrinación más importante de Europa Central, que atrae peregrinos de Austria, Hungría, República Checa, Eslovaquia y más allá. Hogar de la milagrosa imagen de la Madonna de Mariazell.',history:'Fundada en 1157 cuando el monje benedictino Magnus colocó una estatua de madera de tilo de la Madonna sobre una roca. La basílica fue reconstruida en estilo barroco en el siglo XVII. Catorce emperadores habsburgo la visitaron.',prayer:'Madre de Misericordia, Puerta del Cielo, auxilio de quienes te invocan, venimos a depositar nuestras necesidades ante tu trono. Llévalas al corazón de tu Hijo Jesús. Amén.',feast:'8 de septiembre'}},
+  {id:802,country:'at',lat:48.208,lng:16.373,icon:'🎵',name:'Saint Stephen\'s Cathedral',type:'Cathedral',city:'Vienna',province:'Vienna',description:'The mother church of the Archdiocese of Vienna and one of Europe\'s greatest Gothic cathedrals. The multicoloured tile roof and soaring South Tower are symbols of Vienna.',history:'Built between 1137 and 1511. The famous Pummerin bell was recast from Ottoman cannons captured at the 1683 Battle of Vienna. Mozart\'s funeral was held here. The Habsburg catacombs lie beneath.',prayer:'Lord, in this cathedral where emperors prayed and saints were honoured, may we too find you present in the beauty of your house. Amen.',feast:'August 15 (Assumption — Cathedral dedication)',es:{name:'Catedral de San Esteban',type:'Catedral',city:'Viena',province:'Viena',description:'La iglesia madre de la Archidiócesis de Viena y una de las mayores catedrales góticas de Europa. El tejado de tejas multicolores y la imponente Torre Sur son símbolos de Viena.',history:'Construida entre 1137 y 1511. La famosa campana Pummerin fue refundida con cañones otomanos capturados en la batalla de Viena de 1683. El funeral de Mozart se celebró aquí. Las catacumbas de los Habsburgo se encuentran debajo.',prayer:'Señor, en esta catedral donde rezaron emperadores y se honró a los santos, que nosotros también te encontremos presente en la belleza de tu templo. Amén.',feast:'15 de agosto (Asunción — dedicación)'}},
+  {id:803,country:'at',lat:47.803,lng:13.045,icon:'✝️',name:'Nonnberg Abbey',type:'Abbey',city:'Salzburg',province:'Salzburg',description:'The oldest convent in the German-speaking world, founded around 714 AD by Saint Rupert. It overlooks Salzburg from its rocky perch and was immortalised in The Sound of Music.',history:'Founded by Saint Rupert and his niece Saint Erentrudis, the first abbess. The Romanesque church dates from the 12th century. The convent has been continuously inhabited by Benedictine nuns for over 1,300 years.',prayer:'Lord, in this place consecrated to your praise for over thirteen centuries, may the prayers of the nuns of Nonnberg rise with ours to you as a sweet fragrance. Amen.',feast:'June 30 (Saint Erentrudis)',es:{name:'Abadía de Nonnberg',type:'Abadía',city:'Salzburgo',province:'Salzburgo',description:'El convento más antiguo del mundo de habla alemana, fundado hacia el año 714 d.C. por San Ruperto. Domina Salzburgo desde su emplazamiento rocoso y fue inmortalizado en Sonrisas y lágrimas.',history:'Fundada por San Ruperto y su sobrina Santa Erentruda, la primera abadesa. La iglesia románica data del siglo XII. El convento ha sido habitado de forma continua por monjas benedictinas durante más de 1.300 años.',prayer:'Señor, en este lugar consagrado a tu alabanza durante más de trece siglos, que las oraciones de las monjas de Nonnberg se unan a las nuestras hacia ti como suave fragancia. Amén.',feast:'30 de junio (Santa Erentruda)'}},
+  {id:804,country:'at',lat:47.279,lng:11.393,icon:'⛰️',name:'Wilten Basilica',type:'Basilica',city:'Innsbruck',province:'Tyrol',description:'A stunning yellow Baroque basilica in the Tyrolian capital, housing a revered 14th-century statue of Our Lady known as the Patroness of Tyrol, Magna Mater Austriae.',history:'The basilica was built between 1751 and 1756. The statue of Our Lady was already venerated in the 14th century. Emperor Franz Joseph visited in 1883 and elevated it to the status of basilica.',prayer:'Our Lady, Great Mother of Austria, under your mantle this Alpine land has sheltered for centuries. Continue to watch over us and our families. Amen.',feast:'September 8',es:{name:'Basílica de Wilten',type:'Basílica',city:'Innsbruck',province:'Tirol',description:'Una impresionante basílica barroca amarilla en la capital tirolesa, que alberga una venerada estatua del siglo XIV de Nuestra Señora, conocida como la Patrona del Tirol, Magna Mater Austriae.',history:'La basílica fue construida entre 1751 y 1756. La estatua de Nuestra Señora ya era venerada en el siglo XIV. El emperador Francisco José la visitó en 1883 y la elevó al rango de basílica.',prayer:'Nuestra Señora, Gran Madre de Austria, bajo tu manto esta tierra alpina ha encontrado cobijo durante siglos. Continúa velando por nosotros y nuestras familias. Amén.',feast:'8 de septiembre'}},
+  {id:805,country:'at',lat:48.361,lng:14.513,icon:'📿',name:'Kremsmünster Abbey',type:'Abbey',city:'Kremsmünster',province:'Upper Austria',description:'One of Austria\'s oldest and most magnificent Benedictine abbeys, founded in 777 AD by Duke Tassilo III. Its fish ponds, observatory and library make it a remarkable cultural and spiritual landmark.',history:'Founded as a memorial to Duke Tassilo\'s son killed in a hunting accident. The abbey has operated continuously for over 1,200 years and houses the Tassilo Chalice, one of the finest pieces of early medieval art.',prayer:'Lord, like Duke Tassilo who gave his grief to God, may we too transform our sorrows into offerings of love and build something lasting for your glory. Amen.',feast:'October 11 (Saint Gunther)',es:{name:'Abadía de Kremsmünster',type:'Abadía',city:'Kremsmünster',province:'Alta Austria',description:'Una de las abadías benedictinas más antiguas y magníficas de Austria, fundada en el año 777 d.C. por el duque Tasilo III. Sus estanques de peces, observatorio y biblioteca la convierten en un notable hito cultural y espiritual.',history:'Fundada en memoria del hijo del duque Tasilo, muerto en una cacería. La abadía ha funcionado de forma continua durante más de 1.200 años y alberga el Cáliz de Tasilo, una de las mejores piezas del arte medieval temprano.',prayer:'Señor, como el duque Tasilo que entregó su dolor a Dios, que nosotros también transformemos nuestros sufrimientos en ofrendas de amor y construyamos algo duradero para tu gloria. Amén.',feast:'11 de octubre (San Günther)'}},
+
+  // ===== CROATIA =====
+  {id:901,country:'hr',lat:43.194,lng:17.677,icon:'🌟',name:'Shrine of Our Lady of Medjugorje',type:'Marian shrine',city:'Međugorje',province:'Herzegovina',description:'One of the most visited pilgrimage sites in the world, where six visionaries have reported apparitions of the Virgin Mary since 1981. Millions of pilgrims come each year seeking peace and conversion.',history:'The first apparition occurred on June 24, 1981. The messages emphasise prayer, fasting, conversion, peace and faith. The Church is still investigating the apparitions. An estimated 40 million pilgrims have visited.',prayer:'Our Lady of Medjugorje, Queen of Peace, you call us to prayer, fasting and conversion. Help us to respond to your messages and become apostles of your peace. Amen.',feast:'June 25 (Anniversary of the apparitions)',es:{name:'Santuario de Nuestra Señora de Medjugorje',type:'Santuario mariano',city:'Medjugorje',province:'Herzegovina',description:'Uno de los lugares de peregrinación más visitados del mundo, donde seis videntes han relatado apariciones de la Virgen María desde 1981. Millones de peregrinos acuden cada año buscando paz y conversión.',history:'La primera aparición ocurrió el 24 de junio de 1981. Los mensajes enfatizan la oración, el ayuno, la conversión, la paz y la fe. La Iglesia sigue investigando las apariciones. Se estima que 40 millones de peregrinos han visitado el lugar.',prayer:'Nuestra Señora de Medjugorje, Reina de la Paz, nos llamas a la oración, el ayuno y la conversión. Ayúdanos a responder a tus mensajes y a convertirnos en apóstoles de tu paz. Amén.',feast:'25 de junio (Aniversario de las apariciones)'}},
+  {id:902,country:'hr',lat:43.508,lng:16.440,icon:'⛪',name:'Cathedral of Saint Domnius',type:'Cathedral',city:'Split',province:'Dalmatia',description:'The world\'s oldest cathedral in continuous use, converted from the mausoleum of Roman Emperor Diocletian — the very emperor who persecuted Saint Domnius, whose relics it now houses.',history:'Built as Diocletian\'s mausoleum in the 4th century, it was converted to a Christian cathedral in the 7th century. The ancient columns and peristyle of the original Roman palace still surround it.',prayer:'Saint Domnius, martyr of Salona, whose relics rest in the tomb of the very emperor who condemned you — a remarkable reversal! Help us to trust in God\'s ultimate victory. Amen.',feast:'May 7 (Saint Domnius)',es:{name:'Catedral de San Doymo',type:'Catedral',city:'Split',province:'Dalmacia',description:'La catedral del mundo en uso continuo más antigua, convertida del mausoleo del emperador romano Diocleciano, el mismo que persiguió a San Doymo, cuyas reliquias alberga ahora.',history:'Construida como mausoleo de Diocleciano en el siglo IV, fue convertida en catedral cristiana en el siglo VII. Las antiguas columnas y el peristilo del palacio romano original aún la rodean.',prayer:'San Doymo, mártir de Salona, cuyas reliquias reposan en la tumba del mismo emperador que te condenó, ¡una notable inversión! Ayúdanos a confiar en la victoria final de Dios. Amén.',feast:'7 de mayo (San Doymo)'}},
+  {id:903,country:'hr',lat:45.814,lng:15.977,icon:'🏛️',name:'Zagreb Cathedral',type:'Cathedral',city:'Zagreb',province:'Zagreb',description:'The tallest building in Croatia and the most monumental building of Gothic style in southeastern Europe. It dominates the Zagreb skyline with its twin neo-Gothic spires.',history:'The first cathedral was consecrated in 1217. Destroyed by the Mongols in 1242 and rebuilt. The current neo-Gothic appearance results from extensive rebuilding after the 1880 earthquake. It houses the tomb of Cardinal Alojzije Stepinac.',prayer:'Blessed Cardinal Stepinac, you defended human dignity and the rights of your people at the cost of your freedom. Pray for Croatia and all those who suffer for justice. Amen.',feast:'February 10 (Blessed Alojzije Stepinac)',es:{name:'Catedral de Zagreb',type:'Catedral',city:'Zagreb',province:'Zagreb',description:'El edificio más alto de Croacia y el más monumental en estilo gótico del sureste de Europa. Domina el horizonte de Zagreb con sus dos agujas neogóticas.',history:'La primera catedral fue consagrada en 1217. Destruida por los mongoles en 1242 y reconstruida. El aspecto neogótico actual es el resultado de una amplia reconstrucción tras el terremoto de 1880. Alberga la tumba del cardenal Alojzije Stepinac.',prayer:'Beato cardenal Stepinac, defendiste la dignidad humana y los derechos de tu pueblo al precio de tu libertad. Ruega por Croacia y por todos los que sufren por la justicia. Amén.',feast:'10 de febrero (Beato Alojzije Stepinac)'}},
+  {id:904,country:'hr',lat:45.327,lng:14.442,icon:'🌊',name:'Sanctuary of Our Lady of Trsat',type:'Sanctuary',city:'Rijeka',province:'Primorje',description:'Perched on a cliff above Rijeka, Trsat is one of the oldest and most visited Marian shrines in Croatia. Legend holds that the Holy House of Nazareth stopped here on its way to Loreto.',history:'The shrine dates to the 13th century. A 13th-century chapel was built by Prince Nicholas Frankopan after miraculous cures were reported. The current church was rebuilt in Baroque style. A monumental staircase of 561 steps leads up to it.',prayer:'Our Lady of Trsat, who rested on this cliff above the sea, give rest to our hearts too. Be our companion on every journey and bring us safely home. Amen.',feast:'May 10 (Our Lady of Trsat)',es:{name:'Santuario de Nuestra Señora de Trsat',type:'Santuario',city:'Rijeka',province:'Primorje',description:'Enclavado en un acantilado sobre Rijeka, Trsat es uno de los santuarios marianos más antiguos y visitados de Croacia. La leyenda cuenta que la Santa Casa de Nazaret se detuvo aquí de camino a Loreto.',history:'El santuario data del siglo XIII. El príncipe Nicolás Frankopan construyó una capilla del siglo XIII tras relatarse curaciones milagrosas. La actual iglesia fue reconstruida en estilo barroco. Una escalinata monumental de 561 escalones sube hasta ella.',prayer:'Nuestra Señora de Trsat, que reposaste en este acantilado sobre el mar, da también descanso a nuestros corazones. Sé nuestra compañera en cada viaje y llévanos sanos a casa. Amén.',feast:'10 de mayo (Nuestra Señora de Trsat)'}},
+  {id:905,country:'hr',lat:43.509,lng:17.000,icon:'💒',name:'Cathedral of Saint James',type:'Cathedral',city:'Šibenik',province:'Dalmatia',description:'A UNESCO World Heritage Site and one of the most significant architectural monuments of the Renaissance period. Built entirely of stone without any brick or wood, a remarkable engineering achievement.',history:'Construction spanned 105 years (1431–1536). Three architects oversaw the building. The innovative all-stone construction technique developed here influenced architecture across the Mediterranean.',prayer:'Saint James, patron of pilgrims, may your cathedral inspire us with the perseverance of its builders, who worked across generations for the glory of God. Amen.',feast:'July 25 (Saint James)',es:{name:'Catedral de Santiago',type:'Catedral',city:'Šibenik',province:'Dalmacia',description:'Patrimonio de la Humanidad de la UNESCO y uno de los monumentos arquitectónicos más significativos del período renacentista. Construida íntegramente en piedra, sin ladrillo ni madera, un notable logro de ingeniería.',history:'La construcción se prolongó 105 años (1431-1536). Tres arquitectos supervisaron las obras. La innovadora técnica de construcción en piedra desarrollada aquí influyó en la arquitectura de todo el Mediterráneo.',prayer:'Santiago apóstol, patrón de los peregrinos, que tu catedral nos inspire con la perseverancia de sus constructores, que trabajaron a lo largo de generaciones para la gloria de Dios. Amén.',feast:'25 de julio (Santiago Apóstol)'}}
+];
+
+const routes = [
+  {id:'camino',name:'The Camino de Santiago',stops:[103,101],banner:1,distance:'800+ km',days:'30+ days',country:'es',desc:'The iconic pilgrimage route from the Pyrenees to the tomb of Saint James. The Camino Francés, starting in Saint-Jean-Pied-de-Port, is the most walked path in Christendom.'},
+  {id:'belgium',name:'Belgian Marian Route',stops:[1,8,4,5],banner:2,distance:'320 km',days:'2-3 days',country:'be',desc:'Visit the four great Marian shrines of Belgium: from Scherpenheuvel in Flanders to Banneux in the Ardennes, passing through Halle and Beauraing.'},
+  {id:'fatima-lourdes',name:'Iberian Pilgrimage',stops:[201,101,301],banner:3,distance:'1,200 km',days:'7-10 days',country:'multi',desc:'The great pilgrimage triangle of Western Europe: Fátima, Santiago de Compostela and Lourdes — three of the world\'s most visited Marian shrines.'},
+  {id:'italy',name:'Heart of Italy',stops:[401,402,406],banner:4,distance:'450 km',days:'4-5 days',country:'it',desc:'From Saint Peter\'s Basilica in Rome to the Basilica of Saint Francis in Assisi and the sanctuary of Padre Pio — the spiritual heartland of Italy.'},
+  {id:'poland',name:'Polish Pilgrimage',stops:[501,502,504],banner:5,distance:'280 km',days:'2-3 days',country:'pl',desc:'The sacred heart of Poland: the Black Madonna of Częstochowa, the Divine Mercy sanctuary and the royal Wawel Cathedral in Kraków.'}
+];
+
+const achievements = [
+  {id:'first',icon:'🥾',name:'First Step',desc:'Register your first visit',condition:v=>v>=1,total:1},
+  {id:'five',icon:'🕯️',name:'Walker of Faith',desc:'Visit 5 sanctuaries',condition:v=>v>=5,total:5},
+  {id:'ten',icon:'🌿',name:'Devoted Pilgrim',desc:'Visit 10 sanctuaries',condition:v=>v>=10,total:10},
+  {id:'belgium',icon:'🇧🇪',name:'Pilgrim of Belgium',desc:'Visit all 12 sanctuaries in Belgium',ids:[1,2,3,4,5,6,8],total:7},
+  {id:'spain',icon:'🇪🇸',name:'Pilgrim of Spain',desc:'Visit all sanctuaries in Spain',ids:[101,102,103,104,105,106,107],total:7},
+  {id:'marian',icon:'🌹',name:'Marian Pilgrim',desc:'Visit Fátima, Lourdes, Banneux and Knock',ids:[201,301,5,601],total:4},
+  {id:'monastic',icon:'📿',name:'Monastic Route',desc:'Visit 5 abbeys or monasteries',ids:[6,402,405,703,803,805],total:5},
+  {id:'europe',icon:'✝️',name:'Pilgrim of Europe',desc:'Visit sanctuaries in 5 different countries',special:'countries5'},
+];
+
+// ===================== STATE =====================
+let visits={}, isPremium=false, currentLang='en', currentScreen='map', currentCountry='be', map=null, markers={}, activeRouteFilter=null;
+
+// ===================== FIREBASE =====================
+window._loadUserData = async function(uid){
+  try{
+    const snap=await window._fbGetDoc(uid);
+    if(snap.exists()){
+      const d=snap.data();
+      visits=d.visits||{};
+      isPremium=d.isPremium||false;
+      if(d.lang) currentLang=d.lang;
+    }else{visits={};isPremium=false;}
+  }catch(e){visits={};isPremium=false;}
+  applyLang();
+  refreshAll();
+  if(map) updateMarkerStyles();
+};
+
+async function saveVisits(){
+  try{
+    if(window._currentUser) await window._fbSetDoc(window._currentUser.uid,{visits});
+  }catch(e){}
+}
+
+async function setLang(lang){
+  currentLang=lang;
+  try{ if(window._currentUser) await window._fbSetDoc(window._currentUser.uid,{lang}); }catch(e){}
+  applyLang();
+  refreshAll();
+  rebindMapPopups();
+}
+
+function applyLang(){
+  document.getElementById('header-sub').textContent = t('appSubtitle');
+  document.querySelectorAll('[data-nav]').forEach(el=>{
+    el.textContent = t(el.dataset.nav);
+  });
+  // Update auth screen
+  const tabLogin = document.getElementById('tab-login');
+  const tabReg = document.getElementById('tab-register');
+  const btnSubmit = document.getElementById('auth-submit');
+  const emailEl = document.getElementById('auth-email');
+  const passEl = document.getElementById('auth-password');
+  if(tabLogin) tabLogin.textContent = t('signIn');
+  if(tabReg) tabReg.textContent = t('register');
+  if(btnSubmit) btnSubmit.textContent = currentAuthTab==='login'?t('signIn'):t('createAccount');
+  if(emailEl) emailEl.placeholder = t('emailPlaceholder');
+  if(passEl) passEl.placeholder = t('passwordPlaceholder');
+  // Update Google button
+  const gBtn = document.querySelector('.auth-btn-google');
+  if(gBtn) gBtn.lastChild.textContent = ' '+t('continueGoogle');
+}
+
+// ===================== AUTH =====================
+let currentAuthTab='login';
+function switchAuthTab(tab){
+  currentAuthTab=tab;
+  document.getElementById('tab-login').classList.toggle('active',tab==='login');
+  document.getElementById('tab-register').classList.toggle('active',tab==='register');
+  document.getElementById('auth-submit').textContent=tab==='login'?'Sign in':'Create account';
+  document.getElementById('auth-error').textContent='';
+}
+async function handleEmailAuth(){
+  const email=document.getElementById('auth-email').value.trim();
+  const pass=document.getElementById('auth-password').value;
+  const errEl=document.getElementById('auth-error');
+  errEl.textContent='';
+  if(!email||!pass){errEl.textContent='Please fill in all fields.';return;}
+  try{
+    if(currentAuthTab==='login') await window._fbSignInEmail(email,pass);
+    else await window._fbCreateUser(email,pass);
+  }catch(e){
+    const msgs={'auth/user-not-found':'User not found.','auth/wrong-password':'Incorrect password.','auth/email-already-in-use':'This email is already registered.','auth/weak-password':'Password must be at least 6 characters.','auth/invalid-email':'Invalid email.','auth/invalid-credential':'Incorrect email or password.'};
+    errEl.textContent=msgs[e.code]||'Sign in error. Please try again.';
+  }
+}
+async function handleGoogleAuth(){
+  document.getElementById('auth-error').textContent='';
+  try{await window._fbSignInGoogle();}
+  catch(e){document.getElementById('auth-error').textContent='Google sign-in error.';}
+}
+async function handleSignOut(){
+  await window._fbSignOut();
+  visits={};isPremium=false;
+}
+
+// ===================== PREMIUM =====================
+function openPremiumModal(){
+  document.getElementById('premium-card-content').innerHTML=`
+    <div class="premium-cross">✝</div>
+    <div class="premium-title">${t('premiumTitle')}</div>
+    <div class="premium-sub">${t('premiumSub')}</div>
+    <div class="premium-feature"><span class="premium-feature-icon">🌍</span><span><strong>${t('premiumCountries')}</strong> — Spain, Portugal, France, Italy, Poland, Ireland, Germany, Austria, Croatia</span></div>
+    <div class="premium-feature"><span class="premium-feature-icon">📜</span><span><strong>${t('premiumCert')}</strong></span></div>
+    <div class="premium-feature"><span class="premium-feature-icon">🗺️</span><span><strong>${t('premiumRoutes')}</strong></span></div>
+    <div class="premium-feature"><span class="premium-feature-icon">🏅</span><span><strong>${t('premiumBadges')}</strong></span></div>
+    <div class="premium-price">${t('premiumPrice')}</div>
+    <div class="premium-price-sub">${t('premiumPriceSub')}</div>
+    <button class="premium-cta" onclick="handlePremiumPurchase()">${t('premiumCta')}</button>
+    <button class="premium-close" onclick="closePremiumModal()">${t('premiumLater')}</button>`;
+  document.getElementById('premium-modal').classList.add('open');
+}
+function closePremiumModal(){document.getElementById('premium-modal').classList.remove('open');}
+function handlePremiumPurchase(){
+  // Payment integration comes with Capacitor + RevenueCat
+  // For now simulate premium for testing
+  showToast(currentLang==='es'?'💳 Pago disponible próximamente':'💳 Payment coming soon');
+  closePremiumModal();
+}
+
+// ===================== VISITS =====================
+function isVisited(id){return !!visits[id];}
+function getVisitCount(){return Object.keys(visits).length;}
+function isCountryUnlocked(cid){return countries.find(c=>c.id===cid)?.free||isPremium;}
+
+function toggleVisit(id){
+  const s=sanctuaries.find(x=>x.id===id);
+  if(!isCountryUnlocked(s.country)){openPremiumModal();return;}
+  if(visits[id]){delete visits[id];}
+  else{visits[id]=new Date().toISOString().split('T')[0];showToast(t('visitToast')(sd(s).name));}
+  saveVisits();refreshAll();updateMarkerStyles();
+}
+
+function getRank(){
+  const c=getVisitCount();
+  if(c>=50) return t('rank50');
+  if(c>=30) return t('rank30');
+  if(c>=15) return t('rank10');
+  if(c>=5)  return t('rank5');
+  if(c>=1)  return t('rank1');
+  return t('rank0');
+}
+
+// ===================== NAVIGATION =====================
+document.querySelectorAll('.nav-item').forEach(btn=>btn.addEventListener('click',()=>switchScreen(btn.dataset.screen)));
+function switchScreen(screen){
+  currentScreen=screen;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+screen).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelector(`[data-screen="${screen}"]`).classList.add('active');
+  if(screen==='map'&&map){
+    setTimeout(()=>map.invalidateSize(),50);
+  }
+}
+
+// ===================== MAP =====================
+function createMarkerIcon(s,visited,highlight){
+  const locked=!isCountryUnlocked(s.country);
+  let cls='custom-marker';
+  if(visited) cls+=' visited-marker';
+  else if(locked) cls+=' locked-marker';
+  if(highlight) cls+=' route-highlight-marker';
+  const badge=visited?'<span class="visited-check">✓</span>':locked?'<span class="lock-badge">🔒</span>':'';
+  return L.divIcon({className:'',html:`<div class="${cls}">${s.icon}${badge}</div>`,
+    iconSize:visited?[42,42]:[32,32],iconAnchor:visited?[21,21]:[16,16],popupAnchor:[0,visited?-24:-18]});
+}
+
+function buildPopupContent(s){
+  const d=sd(s), visited=isVisited(s.id), locked=!isCountryUnlocked(s.country);
+  return `<div class="popup-body">
+    <div class="popup-type">${d.type}</div>
+    <div class="popup-name">${d.name}</div>
+    <div class="popup-loc">📍 ${d.city}, ${d.province}</div>
+    <div class="popup-desc">${d.description.substring(0,120)}...</div>
+    ${locked
+      ? `<button class="popup-locked" onclick="openPremiumModal();map.closePopup();">${t('lockBtn')}</button>`
+      : `<button class="popup-btn ${visited?'visited':'visit'}" onclick="toggleVisit(${s.id});map.closePopup();">${visited?t('visited_btn'):'🥾 '+t('registerVisit')}</button>`}
+    <button class="popup-btn detail" onclick="openModal(${s.id});map.closePopup();">${t('viewDetails')}</button>
+    <a class="popup-maps-link" href="https://www.google.com/maps/search/${encodeURIComponent(d.name+' '+d.city)}/@${s.lat},${s.lng},17z" target="_blank">🗺️ ${t('howToGet')}</a>
+  </div>`
+}
+
+function initMap(){
+  map=L.map('map',{zoomControl:false,tap:false,tapTolerance:15}).setView([48,12],5);
+  L.control.zoom({position:'topright'}).addTo(map);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'© OpenStreetMap © CARTO',maxZoom:18}).addTo(map);
+  sanctuaries.forEach(s=>{
+    const marker=L.marker([s.lat,s.lng],{icon:createMarkerIcon(s,false,false)}).addTo(map);
+    markers[s.id]=marker;
+    marker.bindPopup(buildPopupContent(s),{maxWidth:280,closeButton:true});
+  });
+}
+
+function updateMarkerStyles(){
+  sanctuaries.forEach(s=>{
+    const visited=isVisited(s.id);
+    const inRoute=!activeRouteFilter||activeRouteFilter.includes(s.id);
+    const highlight=!!activeRouteFilter&&inRoute;
+    markers[s.id].setIcon(createMarkerIcon(s,visited,highlight));
+    markers[s.id].setOpacity(inRoute?1:0.25);
+    markers[s.id].unbindPopup();
+    markers[s.id].bindPopup(buildPopupContent(s),{maxWidth:280,closeButton:true});
+  });
+}
+
+function showRouteOnMap(idx){
+  const r=routes[idx];
+  activeRouteFilter=r.stops;
+  switchScreen('map');
+  updateMarkerStyles();
+  document.getElementById('map-route-name').textContent='🗺️ '+r.name;
+  document.getElementById('map-route-banner').style.display='flex';
+}
+function clearRouteFilter(){activeRouteFilter=null;updateMarkerStyles();document.getElementById('map-route-banner').style.display='none';}
+
+function rebindMapPopups(){
+  if(!map) return;
+  sanctuaries.forEach(s=>{
+    if(markers[s.id]){
+      markers[s.id].unbindPopup();
+      markers[s.id].bindPopup(buildPopupContent(s),{maxWidth:280,closeButton:true});
+    }
+  });
+}
+
+function focusCountry(cid){
+  currentCountry=cid;
+  const cs=sanctuaries.filter(s=>s.country===cid);
+  if(cs.length&&map){
+    const lats=cs.map(s=>s.lat),lngs=cs.map(s=>s.lng);
+    map.fitBounds([[Math.min(...lats)-0.5,Math.min(...lngs)-0.5],[Math.max(...lats)+0.5,Math.max(...lngs)+0.5]]);
+  }
+  switchScreen('map');
+}
+
+// ===================== MODAL =====================
+function openModal(id){
+  const s=sanctuaries.find(x=>x.id===id);if(!s)return;
+  const d=sd(s), visited=isVisited(s.id), locked=!isCountryUnlocked(s.country);
+  document.getElementById('modal-content').innerHTML=`
+    <div class="modal-handle"></div>
+    <div class="modal-hero" style="position:relative">${s.icon}<button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="modal-type">${d.type}</div>
+      <div class="modal-title">${d.name}</div>
+      <div class="modal-location">📍 ${d.city}, ${d.province} · 🎉 ${d.feast}</div>
+      <div class="modal-section"><h3>📖 ${t('descLabel')}</h3><p>${d.description}</p></div>
+      <div class="modal-section"><h3>🏛️ ${t('histLabel')}</h3><p>${d.history}</p></div>
+      <div class="modal-section"><h3>🙏 ${t('prayerLabel')}</h3><div class="modal-prayer">${d.prayer}</div></div>
+      ${locked
+        ? `<button class="modal-premium-btn" onclick="openPremiumModal()">🔒 ${t('lockBtn')}</button>`
+        : `<button class="modal-visit-btn ${visited?'visited-btn':''}" onclick="toggleVisit(${s.id});openModal(${s.id});">${visited?t('removeVisit'):'🥾 '+t('registerVisit')}</button>`}
+      <a class="modal-maps-btn" href="https://www.google.com/maps/search/${encodeURIComponent(d.name+' '+d.city)}/@${s.lat},${s.lng},17z" target="_blank">🗺️ ${t('howToGetFull')}</a>
+    </div>`;
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal'))closeModal();});
+
+// ===================== TOAST =====================
+let toastTimeout=null;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.innerHTML=msg;
+  if(toastTimeout)clearTimeout(toastTimeout);
+  t.classList.add('show');
+  toastTimeout=setTimeout(()=>{t.classList.remove('show');toastTimeout=null;},3000);
+}
+
+// ===================== RENDER =====================
+function refreshAll(){renderExplore();renderPassport();renderAchievements();renderRoutes();renderProfile();}
+
+function renderExplore(){
+  const container=document.querySelector('.explore-screen');
+  container.innerHTML=`
+    <div class="screen-title">${t('countriesTitle')}</div>
+    <div class="country-selector">
+      ${countries.map(c=>{
+        const cs=sanctuaries.filter(s=>s.country===c.id);
+        const vc=cs.filter(s=>isVisited(s.id)).length;
+        const unlocked=c.free||isPremium;
+        return `<div class="country-item" onclick="${unlocked?`focusCountry('${c.id}')`:'openPremiumModal()'}">
+          <span class="country-flag">${c.flag}</span>
+          <div class="country-info">
+            <div class="country-name">${c.name}</div>
+            <div class="country-count">${unlocked?`${vc}/${cs.length} ${t('visited').toLowerCase()}`:t('unlockPremium')}</div>
+          </div>
+          <span class="country-lock">${unlocked?'›':'🔒'}</span>
+        </div>`;
+      }).join('')}
+    </div>`;
+}
+
+function renderPassport(){
+  const visitedList=sanctuaries.filter(s=>isVisited(s.id));
+  const container=document.querySelector('.passport-screen');
+  const completedCountries=countries.filter(c=>{
+    const cs=sanctuaries.filter(s=>s.country===c.id);
+    return cs.length>0&&cs.every(s=>isVisited(s.id));
+  });
+  container.innerHTML=`
+    <div class="passport-header">
+      <div class="passport-title">${t('passportTitle')}</div>
+      <div class="passport-subtitle">Europe · ${new Date().getFullYear()}</div>
+      <div class="passport-stats">
+        <div class="stat-box"><div class="stat-num">${getVisitCount()}</div><div class="stat-label">${t('visited')}</div></div>
+        <div class="stat-box"><div class="stat-num">${sanctuaries.length-getVisitCount()}</div><div class="stat-label">${t('remaining')}</div></div>
+      </div>
+    </div>
+    ${completedCountries.length>0?`
+      <div class="passport-section-title">${t('certsAvailable')}</div>
+      ${completedCountries.map(c=>`
+        <button class="cert-btn" onclick="generateCertificate('${c.id}')">📜 ${t('certBtn')} — ${c.name}</button>
+      `).join('')}
+    `:''}
+    ${visitedList.length>0?`
+      <div class="passport-section-title">${t('stampsCollected')}</div>
+      <div class="stamp-grid">
+        ${visitedList.map(s=>`
+          <div class="stamp-card" onclick="openModal(${s.id})">
+            <div class="stamp-icon">${s.icon}</div>
+            <div class="stamp-name">${sd(s).name}</div>
+            <div class="stamp-date">${visits[s.id]}</div>
+          </div>`).join('')}
+      </div>`:`
+      <div class="empty-state">
+        <div class="empty-state-icon">🥾</div>
+        <div class="empty-state-text">${t('noVisits').replace('\\n','<br>')}</div>
+      </div>`}`;
+}
+
+function renderAchievements(){
+  const vc=getVisitCount();
+  const visitedCountries=new Set(sanctuaries.filter(s=>isVisited(s.id)).map(s=>s.country));
+  const container=document.querySelector('.achievements-screen');
+  container.innerHTML=`
+    <div class="screen-title">${t('achievementsTitle')}</div>
+    ${achievements.map(a=>{
+      let progress=0,unlocked=false;
+      if(a.special==='countries5'){const n=visitedCountries.size;progress=Math.min(n/5,1);unlocked=n>=5;}
+      else if(a.condition){progress=Math.min(vc/a.total,1);unlocked=a.condition(vc);}
+      else if(a.ids){const done=a.ids.filter(id=>isVisited(id)).length;progress=done/a.total;unlocked=done>=a.total;}
+      return `<div class="achievement-card ${unlocked?'unlocked':'locked'}">
+        <div class="achievement-icon">${a.icon}</div>
+        <div class="achievement-info">
+          <div class="achievement-name">${a.name}</div>
+          <div class="achievement-desc">${a.desc}</div>
+          <div class="achievement-progress"><div class="achievement-progress-bar" style="width:${progress*100}%"></div></div>
+        </div>
+      </div>`;
+    }).join('')}`;
+}
+
+function renderRoutes(){
+  const container=document.querySelector('.routes-screen');
+  container.innerHTML=`
+    <div class="screen-title">${t('routesTitle')}</div>
+    ${routes.map((r,idx)=>{
+      const stops=r.stops.map(id=>sanctuaries.find(s=>s.id===id)).filter(Boolean);
+      const vc=r.stops.filter(id=>isVisited(id)).length;
+      return `<div class="route-card" onclick="showRouteOnMap(${idx})">
+        <div class="route-banner route-banner-${r.banner}">${stops.map(s=>s.icon).join(' → ')}</div>
+        <div class="route-body">
+          <div class="route-name">${r.name}</div>
+          <div class="route-meta">📏 ${r.distance} · 📅 ${r.days} · ✓ ${vc}/${r.stops.length}</div>
+          <div class="route-desc">${r.desc}</div>
+          <div class="route-stops">${stops.map(s=>`<span class="route-stop" style="${isVisited(s.id)?'background:var(--gold-light);color:var(--brown);font-weight:600':''}">${s.icon} ${s.city}</span>`).join('')}</div>
+        </div>
+      </div>`;
+    }).join('')}`;
+}
+
+function renderProfile(){
+  const unlockedCount=achievements.filter(a=>{
+    const vc=getVisitCount();
+    const visitedCountries=new Set(sanctuaries.filter(s=>isVisited(s.id)).map(s=>s.country));
+    if(a.special==='countries5') return visitedCountries.size>=5;
+    if(a.condition) return a.condition(vc);
+    if(a.ids) return a.ids.filter(id=>isVisited(id)).length>=a.total;
+    return false;
+  }).length;
+  const user=window._currentUser;
+  const container=document.querySelector('.profile-screen');
+  container.innerHTML=`
+    <div class="profile-card">
+      <div class="profile-avatar">🚶</div>
+      <div class="profile-name">${user?.displayName||user?.email?.split('@')[0]||'Pilgrim'}</div>
+      <div class="profile-rank">${getRank()}</div>
+      ${isPremium?'<div class="profile-premium-badge">✝ PREMIUM</div>':''}
+    </div>
+    ${!isPremium?`
+      <div class="premium-banner">
+        <div class="premium-banner-title">${t('premiumBannerTitle')}</div>
+        <div class="premium-banner-sub">${t('premiumBannerSub')}</div>
+        <button class="premium-banner-btn" onclick="openPremiumModal()">${t('discoverPremium')}</button>
+      </div>`:''}
+    <div class="profile-option" onclick="switchScreen('passport')"><span class="profile-option-icon">📋</span>${t('viewPassport')}</div>
+    <div class="profile-option" onclick="switchScreen('achievements')"><span class="profile-option-icon">🏅</span>${t('myAchievements')} (${unlockedCount}/${achievements.length})</div>
+    <div class="profile-option" onclick="switchScreen('routes')"><span class="profile-option-icon">🗺️</span>${t('pilgrimageRoutes')}</div>
+    <div class="profile-option" onclick="if(confirm(t('resetConfirm'))){visits={};saveVisits();refreshAll();updateMarkerStyles();showToast(t('resetDone'));}"><span class="profile-option-icon">🔄</span>${t('resetVisits')}</div>
+    <div class="profile-option" onclick="handleSignOut()" style="color:var(--burgundy);"><span class="profile-option-icon">🚪</span>${t('signOut')}</div>
+    <div class="lang-selector">
+      <div class="lang-selector-label">${t('language')}</div>
+      <div class="lang-buttons">
+        <button class="lang-btn ${currentLang==='en'?'active':''}" onclick="setLang('en')">🇬🇧 English</button>
+        <button class="lang-btn ${currentLang==='es'?'active':''}" onclick="setLang('es')">🇪🇸 Español</button>
+      </div>
+    </div>
+    <div style="background:var(--white);border-radius:14px;padding:20px;margin-bottom:8px;box-shadow:var(--shadow);text-align:center;">
+      <div style="font-size:13px;color:var(--brown-light);margin-bottom:6px;">${currentLang==='es'?'Creado con fe por':'Created with faith by'}</div>
+      <div style="font-family:'Crimson Pro',serif;font-size:18px;font-weight:600;color:var(--burgundy);margin-bottom:4px;">Santiago · Brussels</div>
+      <div style="font-size:12px;color:var(--brown-light);margin-bottom:8px;">${currentLang==='es'?'Sugerencias y comentarios siempre bienvenidos':'Suggestions and feedback always welcome'}</div>
+      <a href="mailto:elnuevoeuropeo@gmail.com" style="display:inline-block;background:var(--cream);border:1px solid var(--gold);color:var(--burgundy);font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;text-decoration:none;">elnuevoeuropeo@gmail.com</a>
+    </div>
+    <div style="text-align:center;margin-top:16px;margin-bottom:20px;opacity:0.35;font-size:11px;font-style:italic;" id="dev-tap" onclick="handleDevTap()">
+      Peregrin v2.0 · Europe<br>${currentLang==='es'?'«Caminante, no hay camino, se hace camino al andar»':'«Traveller, there is no path, the path is made by walking»'}
+    </div>`;
+}
+
+// ===================== CERTIFICATE =====================
+function generateCertificate(countryId){
+  const country = countries.find(c => c.id === countryId);
+  const cs = sanctuaries.filter(s => s.country === countryId);
+  const {jsPDF} = window.jspdf;
+  const doc = new jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
+  const W = 210, H = 297;
+  const BURG  = [114, 47, 55];
+  const GOLD  = [197, 150, 58];
+  const GOLDL = [232, 201, 122];
+  const CREAM = [253, 245, 230];
+  const CREAMD= [240, 228, 210];
+  const BROWN = [62, 39, 35];
+  const BROWNL= [109, 76, 65];
+  const WHITE = [255, 255, 255];
+
+  // BACKGROUND
+  doc.setFillColor(...CREAM);
+  doc.rect(0, 0, W, H, 'F');
+
+  // OUTER BURGUNDY FRAME
+  doc.setFillColor(...BURG);
+  doc.rect(0, 0, W, 10, 'F');
+  doc.rect(0, H-10, W, 10, 'F');
+  doc.rect(0, 0, 10, H, 'F');
+  doc.rect(W-10, 0, 10, H, 'F');
+
+  // GOLD CORNERS
+  doc.setFillColor(...GOLD);
+  [[0,0],[W-18,0],[0,H-18],[W-18,H-18]].forEach(([x,y])=>doc.rect(x,y,18,18,'F'));
+  doc.setFillColor(...BURG);
+  [[9,9],[W-9,9],[9,H-9],[W-9,H-9]].forEach(([cx,cy])=>doc.rect(cx-2,cy-2,4,4,'F'));
+
+  // INNER GOLD BORDER
+  doc.setDrawColor(...GOLD);
+  doc.setLineWidth(0.7);
+  doc.rect(13, 13, W-26, H-26);
+
+  // HEADER
+  doc.setFillColor(...BURG);
+  doc.rect(13, 13, W-26, 70, 'F');
+  doc.setFillColor(...GOLD);
+  doc.rect(13, 83, W-26, 2, 'F');
+
+  // CROSS
+  doc.setFillColor(...GOLD);
+  doc.rect(W/2-2, 22, 4, 22, 'F');
+  doc.rect(W/2-9, 30, 18, 4, 'F');
+
+  // PEREGRIN
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(26);
+  doc.setTextColor(...WHITE);
+  doc.text('PEREGRIN', W/2, 58, {align:'center'});
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(8);
+  doc.setTextColor(...GOLDL);
+  doc.text(currentLang==='es'?'EL PASAPORTE DIGITAL DEL PEREGRINO CAT\u00d3LICO':'THE DIGITAL PASSPORT OF THE CATHOLIC PILGRIM', W/2, 67, {align:'center'});
+
+  // CERTIFICATE TITLE
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(16);
+  doc.setTextColor(...BURG);
+  doc.text('PILGRIMAGE CERTIFICATE', W/2, 98, {align:'center'});
+  doc.setDrawColor(...GOLD);
+  doc.setLineWidth(0.4);
+  doc.line(20, 94, 65, 94);
+  doc.line(145, 94, W-20, 94);
+
+  // COUNTRY
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(11);
+  doc.setTextColor(...BROWN);
+  doc.text(country.name.toUpperCase() + '   \u2022   ' + new Date().getFullYear(), W/2, 107, {align:'center'});
+  doc.setDrawColor(...GOLDL);
+  doc.setLineWidth(0.25);
+  doc.line(25, 111, W-25, 111);
+
+  // PILGRIM NAME
+  const user = window._currentUser;
+  const raw = user?.displayName || user?.email?.split('@')[0] || 'Pilgrim';
+  const name = raw.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\x20-\x7E]/g,'').trim()||'Pilgrim';
+
+  doc.setFont('helvetica','italic');
+  doc.setFontSize(10);
+  doc.setTextColor(...BROWNL);
+  doc.text(t('certText1'), W/2, 121, {align:'center'});
+
+  doc.setFont('times','bolditalic');
+  doc.setFontSize(22);
+  doc.setTextColor(...BURG);
+  doc.text(name, W/2, 133, {align:'center'});
+  const nw = doc.getTextWidth(name);
+  doc.setDrawColor(...GOLD);
+  doc.setLineWidth(0.5);
+  doc.line(W/2-nw/2, 136, W/2+nw/2, 136);
+
+  doc.setFont('helvetica','italic');
+  doc.setFontSize(10);
+  doc.setTextColor(...BROWNL);
+  doc.text(t('certText2'), W/2, 145, {align:'center'});
+  doc.setFont('helvetica','bolditalic');
+  doc.setFontSize(12);
+  doc.setTextColor(...BURG);
+  doc.text(cs.length + ' ' + t('certText3') + ' ' + country.name, W/2, 154, {align:'center'});
+
+  // SANCTUARY LIST — single column, names only
+  const listY = 163;
+  const rowH = 10;
+  const listH = cs.length * rowH + 8;
+
+  doc.setFillColor(...CREAMD);
+  doc.roundedRect(25, listY, W-50, listH, 2, 2, 'F');
+  doc.setDrawColor(...GOLD);
+  doc.setLineWidth(0.25);
+  doc.roundedRect(25, listY, W-50, listH, 2, 2);
+
+  cs.forEach((s, i) => {
+    const y = listY + 7 + i * rowH;
+    if (i % 2 === 0) {
+      doc.setFillColor(246, 236, 218);
+      doc.rect(26, y-6, W-52, rowH, 'F');
+    }
+    // Gold bullet
+    doc.setFillColor(...GOLD);
+    doc.circle(33, y-1.5, 1.2, 'F');
+    // Name
+    doc.setFont('helvetica', i%2===0 ? 'normal' : 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(...BROWN);
+    const maxW = W - 50 - 20;
+    let sname = s.name;
+    while(doc.getTextWidth(sname) > maxW && sname.length > 8) sname = sname.slice(0,-1);
+    if(sname !== s.name) sname = sname.slice(0,-2)+'..';
+    doc.text(sname, 37, y);
+  });
+
+  // FOOTER
+  const footY = listY + listH + 12;
+  doc.setDrawColor(...GOLD);
+  doc.setLineWidth(0.4);
+  doc.line(25, footY, W-25, footY);
+
+  const locale = currentLang==='es'?'es-ES':'en-GB';
+  const issued = new Date().toLocaleDateString(locale,{day:'numeric',month:'long',year:'numeric'});
+  doc.setFont('helvetica','italic');
+  doc.setFontSize(9);
+  doc.setTextColor(...BROWN);
+  doc.text(t('certIssued') + ' ' + issued, W/2, footY+9, {align:'center'});
+
+  doc.setFont('helvetica','bolditalic');
+  doc.setFontSize(8);
+  doc.setTextColor(...BURG);
+  doc.text(currentLang==='es'?'"Caminante, no hay camino, se hace camino al andar"':'"Traveller, there is no path \u2014 the path is made by walking"', W/2, footY+17, {align:'center'});
+
+  // SEAL
+  const sx = W-38, sy = footY+9;
+  doc.setDrawColor(...GOLD);
+  doc.setLineWidth(0.7);
+  doc.circle(sx, sy, 12);
+  doc.setLineWidth(0.2);
+  doc.circle(sx, sy, 9.5);
+  doc.setFillColor(...BURG);
+  doc.circle(sx, sy, 8, 'F');
+  doc.setFillColor(...GOLD);
+  doc.rect(sx-1, sy-5, 2, 10, 'F');
+  doc.rect(sx-4, sy-1, 8, 2, 'F');
+
+  // FOOTER BAR
+  doc.setFillColor(...BURG);
+  doc.rect(0, H-10, W, 10, 'F');
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(7);
+  doc.setTextColor(...GOLDL);
+  doc.text(currentLang==='es'?'PEREGRIN  \u2014  EL PASAPORTE DIGITAL DEL PEREGRINO CAT\u00d3LICO  \u2014  EUROPA':'PEREGRIN  \u2014  THE DIGITAL PASSPORT OF THE CATHOLIC PILGRIM  \u2014  EUROPE', W/2, H-3.5, {align:'center'});
+
+  doc.save('Peregrin_' + country.name + '_' + new Date().getFullYear() + '.pdf');
+  showToast(t('certDownloaded'));
+}
+
+// ===================== DEV MODE =====================
+let devTapCount=0, devTapTimer=null;
+function handleDevTap(){
+  devTapCount++;
+  if(devTapTimer) clearTimeout(devTapTimer);
+  devTapTimer=setTimeout(()=>devTapCount=0, 2000);
+  if(devTapCount>=5){
+    devTapCount=0;
+    isPremium=!isPremium;
+    if(window._currentUser) window._fbSetDoc(window._currentUser.uid,{isPremium});
+    showToast(isPremium?'🔓 Premium activated (test)':'🔒 Premium deactivated');
+    refreshAll();
+    updateMarkerStyles();
+  }
+}
+
+// ===================== SERVICE WORKER =====================
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+
+// ===================== INIT =====================
+// Map initialises after login to avoid Leaflet rendering on hidden div
+</script>
+</body>
+</html>
