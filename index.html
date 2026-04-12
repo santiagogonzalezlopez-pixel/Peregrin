@@ -303,40 +303,6 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 <div class="toast" id="toast"></div>
 
 <script>
-// ===================== FIREBASE INIT =====================
-firebase.initializeApp({
-  apiKey:"AIzaSyDfk9nZRXT6bc7UuCwX_YR_cgufkay5lEU",
-  authDomain:"peregrin-d7611.firebaseapp.com",
-  projectId:"peregrin-d7611",
-  storageBucket:"peregrin-d7611.firebasestorage.app",
-  messagingSenderId:"844223897807",
-  appId:"1:844223897807:web:fa7210925ea0a0aaa697ba"
-});
-const _auth = firebase.auth();
-const _db   = firebase.firestore();
-
-window._fbSignInEmail  = (e,p) => _auth.signInWithEmailAndPassword(e,p);
-window._fbCreateUser   = (e,p) => _auth.createUserWithEmailAndPassword(e,p);
-window._fbSignInGoogle = ()    => _auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
-window._fbSignOut      = ()    => _auth.signOut();
-window._fbGetDoc       = (uid) => _db.collection('users').doc(uid).get();
-window._fbSetDoc       = (uid,d) => _db.collection('users').doc(uid).set(d,{merge:true});
-
-_auth.getRedirectResult().catch(()=>{});
-_auth.onAuthStateChanged(user=>{
-  window._currentUser=user||null;
-  if(user){
-    document.getElementById('auth-screen').style.display='none';
-    document.getElementById('app-wrapper').style.display='flex';
-    if(!map) initMap();
-    setTimeout(()=>{ if(map) map.invalidateSize(); },150);
-    window._loadUserData(user.uid);
-  } else {
-    document.getElementById('auth-screen').style.display='flex';
-    document.getElementById('app-wrapper').style.display='none';
-  }
-});
-
 // ===================== I18N =====================
 const i18n = {
   en: {
@@ -1139,6 +1105,40 @@ if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch
 
 // ===================== INIT =====================
 // Map initialises after login to avoid Leaflet rendering on hidden div
+
+// ===================== FIREBASE INIT =====================
+firebase.initializeApp({
+  apiKey:"AIzaSyDfk9nZRXT6bc7UuCwX_YR_cgufkay5lEU",
+  authDomain:"peregrin-d7611.firebaseapp.com",
+  projectId:"peregrin-d7611",
+  storageBucket:"peregrin-d7611.firebasestorage.app",
+  messagingSenderId:"844223897807",
+  appId:"1:844223897807:web:fa7210925ea0a0aaa697ba"
+});
+const _auth = firebase.auth();
+const _db   = firebase.firestore();
+
+window._fbSignInEmail  = (e,p) => _auth.signInWithEmailAndPassword(e,p);
+window._fbCreateUser   = (e,p) => _auth.createUserWithEmailAndPassword(e,p);
+window._fbSignInGoogle = ()    => _auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+window._fbSignOut      = ()    => _auth.signOut();
+window._fbGetDoc       = (uid) => _db.collection('users').doc(uid).get();
+window._fbSetDoc       = (uid,d) => _db.collection('users').doc(uid).set(d,{merge:true});
+
+_auth.getRedirectResult().catch(()=>{});
+_auth.onAuthStateChanged(user=>{
+  window._currentUser=user||null;
+  if(user){
+    document.getElementById('auth-screen').style.display='none';
+    document.getElementById('app-wrapper').style.display='flex';
+    if(!map) initMap();
+    setTimeout(()=>{ if(map) map.invalidateSize(); },150);
+    window._loadUserData(user.uid);
+  } else {
+    document.getElementById('auth-screen').style.display='flex';
+    document.getElementById('app-wrapper').style.display='none';
+  }
+});
 </script>
 </body>
 </html>
