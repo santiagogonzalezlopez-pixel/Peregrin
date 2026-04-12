@@ -374,16 +374,16 @@ function t(key){ return (i18n[currentLang]||i18n.en)[key] || i18n.en[key] || key
 function sd(s){ return (currentLang==='es' && s.es) ? s.es : s; }
 
 const countries = [
-  { id:'be', name:'Belgium', flag:'🇧🇪', free:true },
-  { id:'es', name:'Spain', flag:'🇪🇸', free:false },
-  { id:'pt', name:'Portugal', flag:'🇵🇹', free:false },
-  { id:'fr', name:'France', flag:'🇫🇷', free:false },
-  { id:'it', name:'Italy', flag:'🇮🇹', free:false },
-  { id:'pl', name:'Poland', flag:'🇵🇱', free:false },
-  { id:'ie', name:'Ireland', flag:'🇮🇪', free:false },
-  { id:'de', name:'Germany', flag:'🇩🇪', free:false },
-  { id:'at', name:'Austria', flag:'🇦🇹', free:false },
-  { id:'hr', name:'Croatia', flag:'🇭🇷', free:false },
+  { id:'be', name:'Belgium', nameEs:'Bélgica', flag:'🇧🇪', free:true },
+  { id:'es', name:'Spain', nameEs:'España', flag:'🇪🇸', free:false },
+  { id:'pt', name:'Portugal', nameEs:'Portugal', flag:'🇵🇹', free:false },
+  { id:'fr', name:'France', nameEs:'Francia', flag:'🇫🇷', free:false },
+  { id:'it', name:'Italy', nameEs:'Italia', flag:'🇮🇹', free:false },
+  { id:'pl', name:'Poland', nameEs:'Polonia', flag:'🇵🇱', free:false },
+  { id:'ie', name:'Ireland', nameEs:'Irlanda', flag:'🇮🇪', free:false },
+  { id:'de', name:'Germany', nameEs:'Alemania', flag:'🇩🇪', free:false },
+  { id:'at', name:'Austria', nameEs:'Austria', flag:'🇦🇹', free:false },
+  { id:'hr', name:'Croatia', nameEs:'Croacia', flag:'🇭🇷', free:false },
 ];
 
 const sanctuaries = [
@@ -470,22 +470,50 @@ const sanctuaries = [
 ];
 
 const routes = [
-  {id:'camino',name:'The Camino de Santiago',stops:[103,101],banner:1,distance:'800+ km',days:'30+ days',country:'es',desc:'The iconic pilgrimage route from the Pyrenees to the tomb of Saint James. The Camino Francés, starting in Saint-Jean-Pied-de-Port, is the most walked path in Christendom.'},
-  {id:'belgium',name:'Belgian Marian Route',stops:[1,8,4,5],banner:2,distance:'320 km',days:'2-3 days',country:'be',desc:'Visit the four great Marian shrines of Belgium: from Scherpenheuvel in Flanders to Banneux in the Ardennes, passing through Halle and Beauraing.'},
-  {id:'fatima-lourdes',name:'Iberian Pilgrimage',stops:[201,101,301],banner:3,distance:'1,200 km',days:'7-10 days',country:'multi',desc:'The great pilgrimage triangle of Western Europe: Fátima, Santiago de Compostela and Lourdes — three of the world\'s most visited Marian shrines.'},
-  {id:'italy',name:'Heart of Italy',stops:[401,402,406],banner:4,distance:'450 km',days:'4-5 days',country:'it',desc:'From Saint Peter\'s Basilica in Rome to the Basilica of Saint Francis in Assisi and the sanctuary of Padre Pio — the spiritual heartland of Italy.'},
-  {id:'poland',name:'Polish Pilgrimage',stops:[501,502,504],banner:5,distance:'280 km',days:'2-3 days',country:'pl',desc:'The sacred heart of Poland: the Black Madonna of Częstochowa, the Divine Mercy sanctuary and the royal Wawel Cathedral in Kraków.'}
+  {id:'camino',stops:[103,101],banner:1,distance:'800+ km',
+    en:{name:'The Camino de Santiago',days:'30+ days',desc:"The iconic pilgrimage route from the Pyrenees to the tomb of Saint James. The Camino Francés, starting in Saint-Jean-Pied-de-Port, is the most walked path in Christendom."},
+    es:{name:'El Camino de Santiago',days:'30+ días',desc:"La icónica ruta de peregrinación desde los Pirineos hasta la tumba del apóstol Santiago. El Camino Francés, que parte de Saint-Jean-Pied-de-Port, es el camino más recorrido de la Cristiandad."}},
+  {id:'belgium',stops:[1,8,4,5],banner:2,distance:'320 km',
+    en:{name:'Belgian Marian Route',days:'2-3 days',desc:'Visit the four great Marian shrines of Belgium: from Scherpenheuvel in Flanders to Banneux in the Ardennes, passing through Halle and Beauraing.'},
+    es:{name:'Ruta Mariana de Bélgica',days:'2-3 días',desc:'Visita los cuatro grandes santuarios marianos de Bélgica: desde Scherpenheuvel en Flandes hasta Banneux en las Ardenas, pasando por Halle y Beauraing.'}},
+  {id:'fatima',stops:[201,101,301],banner:3,distance:'1,200 km',
+    en:{name:'Iberian Pilgrimage',days:'7-10 days',desc:"The great pilgrimage triangle of Western Europe: Fátima, Santiago de Compostela and Lourdes — three of the world's most visited Marian shrines."},
+    es:{name:'Peregrinación Ibérica',days:'7-10 días',desc:'El gran triángulo de peregrinación de Europa occidental: Fátima, Santiago de Compostela y Lourdes — tres de los santuarios marianos más visitados del mundo.'}},
+  {id:'italy',stops:[401,402,406],banner:4,distance:'450 km',
+    en:{name:'Heart of Italy',days:'4-5 days',desc:"From Saint Peter's Basilica in Rome to the Basilica of Saint Francis in Assisi and the sanctuary of Padre Pio — the spiritual heartland of Italy."},
+    es:{name:'Corazón de Italia',days:'4-5 días',desc:'Desde la Basílica de San Pedro en Roma hasta la Basílica de San Francisco en Asís y el santuario del Padre Pío — el corazón espiritual de Italia.'}},
+  {id:'poland',stops:[501,502,504],banner:5,distance:'280 km',
+    en:{name:'Polish Pilgrimage',days:'2-3 days',desc:'The sacred heart of Poland: the Black Madonna of Częstochowa, the Divine Mercy sanctuary and the royal Wawel Cathedral in Kraków.'},
+    es:{name:'Peregrinación Polaca',days:'2-3 días',desc:'El corazón sagrado de Polonia: la Virgen Negra de Częstochowa, el santuario de la Divina Misericordia y la Catedral del Wawel en Cracovia.'}}
 ];
 
+
+
 const achievements = [
-  {id:'first',icon:'🥾',name:'First Step',desc:'Register your first visit',condition:v=>v>=1,total:1},
-  {id:'five',icon:'🕯️',name:'Walker of Faith',desc:'Visit 5 sanctuaries',condition:v=>v>=5,total:5},
-  {id:'ten',icon:'🌿',name:'Devoted Pilgrim',desc:'Visit 10 sanctuaries',condition:v=>v>=10,total:10},
-  {id:'belgium',icon:'🇧🇪',name:'Pilgrim of Belgium',desc:'Visit all 12 sanctuaries in Belgium',ids:[1,2,3,4,5,6,8],total:7},
-  {id:'spain',icon:'🇪🇸',name:'Pilgrim of Spain',desc:'Visit all sanctuaries in Spain',ids:[101,102,103,104,105,106,107],total:7},
-  {id:'marian',icon:'🌹',name:'Marian Pilgrim',desc:'Visit Fátima, Lourdes, Banneux and Knock',ids:[201,301,5,601],total:4},
-  {id:'monastic',icon:'📿',name:'Monastic Route',desc:'Visit 5 abbeys or monasteries',ids:[6,402,405,703,803,805],total:5},
-  {id:'europe',icon:'✝️',name:'Pilgrim of Europe',desc:'Visit sanctuaries in 5 different countries',special:'countries5'},
+  {id:'first',icon:'🥾',condition:v=>v>=1,total:1,
+    en:{name:'First Step',desc:'Register your first visit'},
+    es:{name:'Primer paso',desc:'Registra tu primera visita'}},
+  {id:'five',icon:'🕯️',condition:v=>v>=5,total:5,
+    en:{name:'Walker of Faith',desc:'Visit 5 sanctuaries'},
+    es:{name:'Caminante de la fe',desc:'Visita 5 santuarios'}},
+  {id:'ten',icon:'🌿',condition:v=>v>=10,total:10,
+    en:{name:'Devoted Pilgrim',desc:'Visit 10 sanctuaries'},
+    es:{name:'Peregrino devoto',desc:'Visita 10 santuarios'}},
+  {id:'belgium',icon:'🇧🇪',ids:[1,2,3,4,5,6,8],total:7,
+    en:{name:'Pilgrim of Belgium',desc:'Visit all 7 sanctuaries in Belgium'},
+    es:{name:'Peregrino de Bélgica',desc:'Visita los 7 santuarios de Bélgica'}},
+  {id:'spain',icon:'🇪🇸',ids:[101,102,103,104,105,106,107],total:7,
+    en:{name:'Pilgrim of Spain',desc:'Visit all sanctuaries in Spain'},
+    es:{name:'Peregrino de España',desc:'Visita todos los santuarios de España'}},
+  {id:'marian',icon:'🌹',ids:[201,301,5,601],total:4,
+    en:{name:'Marian Pilgrim',desc:'Visit Fátima, Lourdes, Banneux and Knock'},
+    es:{name:'Peregrino mariano',desc:'Visita Fátima, Lourdes, Banneux y Knock'}},
+  {id:'monastic',icon:'📿',ids:[6,402,405,703,803,805],total:5,
+    en:{name:'Monastic Route',desc:'Visit 5 abbeys or monasteries'},
+    es:{name:'Ruta monástica',desc:'Visita 5 abadías o monasterios'}},
+  {id:'europe',icon:'✝️',special:'countries5',
+    en:{name:'Pilgrim of Europe',desc:'Visit sanctuaries in 5 different countries'},
+    es:{name:'Peregrino de Europa',desc:'Visita santuarios en 5 países distintos'}},
 ];
 
 // ===================== STATE =====================
@@ -574,7 +602,7 @@ function openPremiumModal(){
     <div class="premium-cross">✝</div>
     <div class="premium-title">${t('premiumTitle')}</div>
     <div class="premium-sub">${t('premiumSub')}</div>
-    <div class="premium-feature"><span class="premium-feature-icon">🌍</span><span><strong>${t('premiumCountries')}</strong> — Spain, Portugal, France, Italy, Poland, Ireland, Germany, Austria, Croatia</span></div>
+    <div class="premium-feature"><span class="premium-feature-icon">🌍</span><span><strong>${t('premiumCountries')}</strong> — ${currentLang==='es'?'España, Portugal, Francia, Italia, Polonia, Irlanda, Alemania, Austria, Croacia':'Spain, Portugal, France, Italy, Poland, Ireland, Germany, Austria, Croatia'}</span></div>
     <div class="premium-feature"><span class="premium-feature-icon">📜</span><span><strong>${t('premiumCert')}</strong></span></div>
     <div class="premium-feature"><span class="premium-feature-icon">🗺️</span><span><strong>${t('premiumRoutes')}</strong></span></div>
     <div class="premium-feature"><span class="premium-feature-icon">🏅</span><span><strong>${t('premiumBadges')}</strong></span></div>
@@ -683,7 +711,7 @@ function showRouteOnMap(idx){
   activeRouteFilter=r.stops;
   switchScreen('map');
   updateMarkerStyles();
-  document.getElementById('map-route-name').textContent='🗺️ '+r.name;
+  document.getElementById('map-route-name').textContent='🗺️ '+(r[currentLang]||r.en).name;
   document.getElementById('map-route-banner').style.display='flex';
 }
 function clearRouteFilter(){activeRouteFilter=null;updateMarkerStyles();document.getElementById('map-route-banner').style.display='none';}
@@ -757,7 +785,7 @@ function renderExplore(){
         return `<div class="country-item" onclick="${unlocked?`focusCountry('${c.id}')`:'openPremiumModal()'}">
           <span class="country-flag">${c.flag}</span>
           <div class="country-info">
-            <div class="country-name">${c.name}</div>
+            <div class="country-name">${currentLang==='es'&&c.nameEs?c.nameEs:c.name}</div>
             <div class="country-count">${unlocked?`${vc}/${cs.length} ${t('visited').toLowerCase()}`:t('unlockPremium')}</div>
           </div>
           <span class="country-lock">${unlocked?'›':'🔒'}</span>
@@ -776,7 +804,7 @@ function renderPassport(){
   container.innerHTML=`
     <div class="passport-header">
       <div class="passport-title">${t('passportTitle')}</div>
-      <div class="passport-subtitle">Europe · ${new Date().getFullYear()}</div>
+      <div class="passport-subtitle">${currentLang==='es'?'Europa':'Europe'} · ${new Date().getFullYear()}</div>
       <div class="passport-stats">
         <div class="stat-box"><div class="stat-num">${getVisitCount()}</div><div class="stat-label">${t('visited')}</div></div>
         <div class="stat-box"><div class="stat-num">${sanctuaries.length-getVisitCount()}</div><div class="stat-label">${t('remaining')}</div></div>
@@ -785,7 +813,7 @@ function renderPassport(){
     ${completedCountries.length>0?`
       <div class="passport-section-title">${t('certsAvailable')}</div>
       ${completedCountries.map(c=>`
-        <button class="cert-btn" onclick="generateCertificate('${c.id}')">📜 ${t('certBtn')} — ${c.name}</button>
+        <button class="cert-btn" onclick="generateCertificate('${c.id}')">📜 ${t('certBtn')} — ${currentLang==='es'&&c.nameEs?c.nameEs:c.name}</button>
       `).join('')}
     `:''}
     ${visitedList.length>0?`
@@ -818,8 +846,8 @@ function renderAchievements(){
       return `<div class="achievement-card ${unlocked?'unlocked':'locked'}">
         <div class="achievement-icon">${a.icon}</div>
         <div class="achievement-info">
-          <div class="achievement-name">${a.name}</div>
-          <div class="achievement-desc">${a.desc}</div>
+          <div class="achievement-name">${(a[currentLang]||a.en).name}</div>
+          <div class="achievement-desc">${(a[currentLang]||a.en).desc}</div>
           <div class="achievement-progress"><div class="achievement-progress-bar" style="width:${progress*100}%"></div></div>
         </div>
       </div>`;
@@ -831,15 +859,16 @@ function renderRoutes(){
   container.innerHTML=`
     <div class="screen-title">${t('routesTitle')}</div>
     ${routes.map((r,idx)=>{
+      const rd=r[currentLang]||r.en;
       const stops=r.stops.map(id=>sanctuaries.find(s=>s.id===id)).filter(Boolean);
       const vc=r.stops.filter(id=>isVisited(id)).length;
       return `<div class="route-card" onclick="showRouteOnMap(${idx})">
         <div class="route-banner route-banner-${r.banner}">${stops.map(s=>s.icon).join(' → ')}</div>
         <div class="route-body">
-          <div class="route-name">${r.name}</div>
-          <div class="route-meta">📏 ${r.distance} · 📅 ${r.days} · ✓ ${vc}/${r.stops.length}</div>
-          <div class="route-desc">${r.desc}</div>
-          <div class="route-stops">${stops.map(s=>`<span class="route-stop" style="${isVisited(s.id)?'background:var(--gold-light);color:var(--brown);font-weight:600':''}">${s.icon} ${s.city}</span>`).join('')}</div>
+          <div class="route-name">${rd.name}</div>
+          <div class="route-meta">📏 ${r.distance} · 📅 ${rd.days} · ✓ ${vc}/${r.stops.length}</div>
+          <div class="route-desc">${rd.desc}</div>
+          <div class="route-stops">${stops.map(s=>`<span class="route-stop" style="${isVisited(s.id)?'background:var(--gold-light);color:var(--brown);font-weight:600':''}">${s.icon} ${sd(s).city}</span>`).join('')}</div>
         </div>
       </div>`;
     }).join('')}`;
@@ -965,7 +994,7 @@ function generateCertificate(countryId){
   doc.setFont('helvetica','normal');
   doc.setFontSize(11);
   doc.setTextColor(...BROWN);
-  doc.text(country.name.toUpperCase() + '   \u2022   ' + new Date().getFullYear(), W/2, 107, {align:'center'});
+  doc.text((currentLang==='es'&&country.nameEs?country.nameEs:country.name).toUpperCase() + '   \u2022   ' + new Date().getFullYear(), W/2, 107, {align:'center'});
   doc.setDrawColor(...GOLDL);
   doc.setLineWidth(0.25);
   doc.line(25, 111, W-25, 111);
@@ -996,7 +1025,7 @@ function generateCertificate(countryId){
   doc.setFont('helvetica','bolditalic');
   doc.setFontSize(12);
   doc.setTextColor(...BURG);
-  doc.text(cs.length + ' ' + t('certText3') + ' ' + country.name, W/2, 154, {align:'center'});
+  doc.text(cs.length + ' ' + t('certText3') + ' ' + (currentLang==='es'&&country.nameEs?country.nameEs:country.name), W/2, 154, {align:'center'});
 
   // SANCTUARY LIST — single column, names only
   const listY = 163;
