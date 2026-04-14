@@ -254,7 +254,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 <!-- AUTH SCREEN -->
 <div id="auth-screen">
   <div class="auth-logo">P<span>✝</span>REGRIN</div>
-  <div class="auth-subtitle">Your pilgrim passport</div>
+  <div class="auth-subtitle" id="auth-subtitle">Your pilgrim passport</div>
   <div class="auth-card">
     <div class="auth-tab-row">
       <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Sign in</button>
@@ -381,7 +381,7 @@ const i18n = {
     authErrInvalidEmail:'Invalid email.', authErrInvalidCred:'Incorrect email or password.',
     authErrGeneric:'Sign in error. Please try again.',
     onbStep1:'1 of 3',onbStep2:'2 of 3',onbStep3:'3 of 3',onbIcon1:'🗺️',onbIcon2:'📋',onbIcon3:'📜',onbTitle1:'Discover sacred places',onbTitle2:'Collect pilgrim stamps',onbTitle3:'Earn your certificate',onbDesc1:'Explore an interactive map of Catholic sanctuaries across Europe, the Americas and Asia.',onbDesc2:'Register your visits and build your personal pilgrim passport with stamps from every sanctuary.',onbDesc3:'Complete a country and download a beautiful pilgrimage certificate with your name.',onbNext:'Next',onbStart:'Begin my pilgrimage ✝',onbSkip:'Skip',
-    editName:'Edit my name', editNamePrompt:'Enter your pilgrim name:', createdBy:'Created with faith by', feedbackMsg:'Suggestions and feedback always welcome',
+    navWorld:'World',editName:'Edit my name', editNamePrompt:'Enter your pilgrim name:', createdBy:'Created with faith by', feedbackMsg:'Suggestions and feedback always welcome',
   },
   es: {
     appSubtitle:'Tu pasaporte peregrino', navMap:'Mapa', navCountries:'Países',
@@ -425,7 +425,7 @@ const i18n = {
     authErrInvalidEmail:'Correo electrónico no válido.', authErrInvalidCred:'Correo o contraseña incorrectos.',
     authErrGeneric:'Error al iniciar sesión. Inténtalo de nuevo.',
     onbStep1:'1 de 3',onbStep2:'2 de 3',onbStep3:'3 de 3',onbIcon1:'🗺️',onbIcon2:'📋',onbIcon3:'📜',onbTitle1:'Descubre lugares sagrados',onbTitle2:'Colecciona sellos peregrinos',onbTitle3:'Consigue tu certificado',onbDesc1:'Explora un mapa interactivo de santuarios católicos en Europa, América y Asia.',onbDesc2:'Registra tus visitas y construye tu pasaporte peregrino personal con sellos de cada santuario.',onbDesc3:'Completa un país y descarga un hermoso certificado de peregrinación con tu nombre.',onbNext:'Siguiente',onbStart:'Comenzar mi peregrinación ✝',onbSkip:'Saltar',
-    editName:'Editar mi nombre', editNamePrompt:'Introduce tu nombre de peregrino:', createdBy:'Creado con fe por', feedbackMsg:'Sugerencias y comentarios siempre bienvenidos',
+    navWorld:'Mundo',editName:'Editar mi nombre', editNamePrompt:'Introduce tu nombre de peregrino:', createdBy:'Creado con fe por', feedbackMsg:'Sugerencias y comentarios siempre bienvenidos',
   },
   fr: {
     appSubtitle:'Votre passeport de pèlerin', navMap:'Carte', navCountries:'Pays',
@@ -469,7 +469,7 @@ const i18n = {
     authErrInvalidEmail:'Adresse e-mail invalide.', authErrInvalidCred:'E-mail ou mot de passe incorrect.',
     authErrGeneric:'Erreur de connexion. Veuillez réessayer.',
     onbStep1:'1 sur 3',onbStep2:'2 sur 3',onbStep3:'3 sur 3',onbIcon1:'🗺️',onbIcon2:'📋',onbIcon3:'📜',onbTitle1:'Découvrez des lieux sacrés',onbTitle2:'Collectionnez les tampons',onbTitle3:'Obtenez votre certificat',onbDesc1:'Explorez une carte interactive des sanctuaires catholiques en Europe, Amériques et Asie.',onbDesc2:'Enregistrez vos visites et construisez votre passeport de pèlerin avec les tampons de chaque sanctuaire.',onbDesc3:'Complétez un pays et téléchargez un magnifique certificat de pèlerinage à votre nom.',onbNext:'Suivant',onbStart:'Commencer mon pèlerinage ✝',onbSkip:'Passer',
-    editName:'Modifier mon nom', editNamePrompt:'Entrez votre nom de pèlerin :', createdBy:'Créé avec foi par', feedbackMsg:'Suggestions et commentaires toujours bienvenus',
+    navWorld:'Monde',editName:'Modifier mon nom', editNamePrompt:'Entrez votre nom de pèlerin :', createdBy:'Créé avec foi par', feedbackMsg:'Suggestions et commentaires toujours bienvenus',
   },
   it: {
     appSubtitle:'Il tuo passaporto del pellegrino', navMap:'Mappa', navCountries:'Paesi',
@@ -513,7 +513,7 @@ const i18n = {
     authErrInvalidEmail:'Indirizzo e-mail non valido.', authErrInvalidCred:'E-mail o password errati.',
     authErrGeneric:'Errore di accesso. Riprova.',
     onbStep1:'1 di 3',onbStep2:'2 di 3',onbStep3:'3 di 3',onbIcon1:'🗺️',onbIcon2:'📋',onbIcon3:'📜',onbTitle1:'Scopri luoghi sacri',onbTitle2:'Colleziona timbri del pellegrino',onbTitle3:'Ottieni il tuo certificato',onbDesc1:'Esplora una mappa interattiva dei santuari cattolici in Europa, Americhe e Asia.',onbDesc2:'Registra le tue visite e costruisci il tuo passaporto del pellegrino con i timbri di ogni santuario.',onbDesc3:'Completa un paese e scarica un bellissimo certificato di pellegrinaggio con il tuo nome.',onbNext:'Avanti',onbStart:'Iniziare il mio pellegrinaggio ✝',onbSkip:'Salta',
-    editName:'Modifica il mio nome', editNamePrompt:'Inserisci il tuo nome di pellegrino:', createdBy:'Creato con fede da', feedbackMsg:'Suggerimenti e commenti sempre benvenuti',
+    navWorld:'Mondo',editName:'Modifica il mio nome', editNamePrompt:'Inserisci il tuo nome di pellegrino:', createdBy:'Creato con fede da', feedbackMsg:'Suggerimenti e commenti sempre benvenuti',
   },
   pt: {
     appSubtitle:'O seu passaporte de peregrino', navMap:'Mapa', navCountries:'Países',
@@ -557,13 +557,13 @@ const i18n = {
     authErrInvalidEmail:'Endereço de e-mail inválido.', authErrInvalidCred:'E-mail ou palavra-passe incorretos.',
     authErrGeneric:'Erro ao entrar. Tente novamente.',
     onbStep1:'1 de 3',onbStep2:'2 de 3',onbStep3:'3 de 3',onbIcon1:'🗺️',onbIcon2:'📋',onbIcon3:'📜',onbTitle1:'Descubra lugares sagrados',onbTitle2:'Colecione selos de peregrino',onbTitle3:'Obtenha o seu certificado',onbDesc1:'Explore um mapa interativo de santuários católicos na Europa, Américas e Ásia.',onbDesc2:'Registe as suas visitas e construa o seu passaporte de peregrino com selos de cada santuário.',onbDesc3:'Complete um país e descarregue um belo certificado de peregrinação com o seu nome.',onbNext:'Seguinte',onbStart:'Começar a minha peregrinação ✝',onbSkip:'Saltar',
-    editName:'Editar o meu nome', editNamePrompt:'Introduza o seu nome de peregrino:', createdBy:'Criado com fé por', feedbackMsg:'Sugestões e comentários sempre bem-vindos',
+    navWorld:'Mundo',editName:'Editar o meu nome', editNamePrompt:'Introduza o seu nome de peregrino:', createdBy:'Criado com fé por', feedbackMsg:'Sugestões e comentários sempre bem-vindos',
   }
 };
 
 function t(key){ return (i18n[currentLang]||i18n.en)[key] || i18n.en[key] || key; }
 function sd(s){ return (currentLang==='es' && s.es) ? s.es : (currentLang==='fr' && s.fr) ? s.fr : (currentLang==='it' && s.it) ? s.it : (currentLang==='pt' && s.pt) ? s.pt : s; }
-function cn(c){ return c['name'+currentLang.charAt(0).toUpperCase()+currentLang.slice(1)] || c.nameEs || c.name; }
+function cn(c){ if(currentLang==='en') return c.name; return c['name'+currentLang.charAt(0).toUpperCase()+currentLang.slice(1)] || c.name; }
 
 const countries = [
   { id:'be', namePt:'Bélgica', name:'Belgium', nameEs:'Bélgica', nameFr:'Belgique', nameIt:'Belgio', flag:'🇧🇪', free:true },
@@ -891,6 +891,10 @@ async function setLang(lang){
 
 function applyLang(){
   document.getElementById('header-sub').textContent = t('appSubtitle');
+  const authSub = document.getElementById('auth-subtitle');
+  if(authSub) authSub.textContent = t('appSubtitle');
+  const headerCountry = document.getElementById('header-country');
+  if(headerCountry) headerCountry.textContent = '🌍 ' + t('navWorld');
   document.querySelectorAll('[data-nav]').forEach(el=>{
     el.textContent = t(el.dataset.nav);
   });
