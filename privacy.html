@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peregrin — Privacy Policy</title>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--burgundy:#722F37;--burgundy-dark:#5A1A22;--gold:#C5963A;--gold-light:#E8C97A;--cream:#FDF5E6;--brown:#3E2723;--brown-light:#6D4C41;--white:#FFFFFF;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);line-height:1.8;}
+.header{background:linear-gradient(135deg,var(--burgundy),var(--burgundy-dark));color:var(--cream);padding:40px 20px;text-align:center;}
+.header h1{font-family:'Crimson Pro',serif;font-size:32px;font-weight:700;letter-spacing:1px;margin-bottom:4px;}
+.header h1 span{color:var(--gold-light);}
+.header p{font-size:13px;opacity:0.7;letter-spacing:0.5px;}
+.content{max-width:700px;margin:0 auto;padding:30px 24px 60px;}
+h2{font-family:'Crimson Pro',serif;font-size:22px;font-weight:600;color:var(--burgundy);margin:30px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--gold-light);}
+h3{font-family:'Crimson Pro',serif;font-size:17px;font-weight:600;color:var(--brown);margin:20px 0 8px;}
+p,li{font-size:14px;color:var(--brown);margin-bottom:10px;}
+ul{padding-left:20px;margin-bottom:16px;}
+li{margin-bottom:6px;}
+a{color:var(--burgundy);text-decoration:none;font-weight:500;}
+a:hover{text-decoration:underline;}
+.date{text-align:center;font-size:13px;color:var(--brown-light);margin:20px 0 10px;font-style:italic;}
+.contact-box{background:var(--white);border-radius:14px;padding:20px;margin:24px 0;border-left:4px solid var(--gold);box-shadow:0 2px 12px rgba(62,39,35,0.1);}
+.contact-box p{margin-bottom:4px;}
+.footer{text-align:center;padding:20px;font-size:12px;color:var(--brown-light);border-top:1px solid var(--gold-light);margin-top:40px;}
+.lang-nav{display:flex;justify-content:center;gap:10px;margin:20px 0;flex-wrap:wrap;}
+.lang-link{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;border:2px solid var(--burgundy);color:var(--burgundy);cursor:pointer;transition:all 0.2s;text-decoration:none;}
+.lang-link.active,.lang-link:hover{background:var(--burgundy);color:var(--cream);}
+.section[data-lang]{display:none;}
+.section.active{display:block;}
+@media(min-width:500px){.content{padding:40px 30px 60px;}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>P<span>✝</span>REGRIN</h1>
+  <p>Privacy Policy · Política de Privacidad · Politique de confidentialité</p>
+</div>
+
+<div class="content">
+  <div class="lang-nav">
+    <a class="lang-link active" onclick="switchLang('en')">🇬🇧 English</a>
+    <a class="lang-link" onclick="switchLang('es')">🇪🇸 Español</a>
+    <a class="lang-link" onclick="switchLang('fr')">🇫🇷 Français</a>
+    <a class="lang-link" onclick="switchLang('it')">🇮🇹 Italiano</a>
+    <a class="lang-link" onclick="switchLang('pt')">🇵🇹 Português</a>
+  </div>
+
+  <!-- ENGLISH -->
+  <div class="section active" data-lang="en">
+    <p class="date">Last updated: April 2026</p>
+
+    <h2>1. Introduction</h2>
+    <p>Peregrin ("the App") is a Catholic pilgrimage companion app created by Santiago González López, based in Brussels, Belgium. This Privacy Policy explains how we collect, use and protect your personal data when you use the App.</p>
+    <p>We respect your privacy and are committed to protecting your personal data in accordance with the General Data Protection Regulation (GDPR) and other applicable data protection laws.</p>
+
+    <h2>2. Data we collect</h2>
+    <h3>Account data</h3>
+    <p>When you create an account, we collect:</p>
+    <ul>
+      <li>Your email address (used for authentication)</li>
+      <li>Your name (if you provide it)</li>
+      <li>Your password (stored securely by Firebase Authentication — we never have access to it in plain text)</li>
+    </ul>
+    <h3>Usage data</h3>
+    <p>When you use the App, we store:</p>
+    <ul>
+      <li>Your sanctuary visit records (which sanctuaries you have visited and the date)</li>
+      <li>Your language preference</li>
+      <li>Your premium purchase status (which regions you have unlocked)</li>
+    </ul>
+    <h3>Data we do NOT collect</h3>
+    <ul>
+      <li>We do not collect your location data</li>
+      <li>We do not collect analytics or tracking data</li>
+      <li>We do not use cookies for advertising</li>
+      <li>We do not collect or store photos</li>
+    </ul>
+
+    <h2>3. How we use your data</h2>
+    <p>Your data is used exclusively to:</p>
+    <ul>
+      <li>Authenticate your account and keep you signed in</li>
+      <li>Save your pilgrimage progress (visits, stamps, achievements)</li>
+      <li>Generate your personalised pilgrimage certificates</li>
+      <li>Remember your language preference</li>
+      <li>Manage your premium purchases</li>
+    </ul>
+    <p>We do not use your data for marketing, advertising, profiling or any purpose other than providing the App's core functionality.</p>
+
+    <h2>4. Data storage and security</h2>
+    <p>Your data is stored securely using Google Firebase (Firestore and Authentication), hosted on Google Cloud infrastructure in the European Union. Firebase complies with GDPR and implements industry-standard security measures including encryption in transit and at rest.</p>
+    <p>Each user's data is isolated — you can only access your own data. No other user or third party can see your pilgrimage records.</p>
+
+    <h2>5. Third-party services</h2>
+    <p>The App uses the following third-party services:</p>
+    <ul>
+      <li><strong>Google Firebase</strong> — for authentication and data storage (<a href="https://firebase.google.com/support/privacy" target="_blank">Firebase Privacy Policy</a>)</li>
+      <li><strong>OpenStreetMap / CARTO</strong> — for map tiles (no personal data is shared)</li>
+      <li><strong>Google Maps</strong> — only when you choose to open directions to a sanctuary (opens in a new tab)</li>
+    </ul>
+    <p>We do not share, sell or transfer your personal data to any other third parties.</p>
+
+    <h2>6. Your rights (GDPR)</h2>
+    <p>Under the GDPR, you have the right to:</p>
+    <ul>
+      <li><strong>Access</strong> your personal data</li>
+      <li><strong>Rectify</strong> inaccurate data (you can edit your name in the App)</li>
+      <li><strong>Delete</strong> your data (contact us and we will delete your account and all associated data)</li>
+      <li><strong>Export</strong> your data in a portable format</li>
+      <li><strong>Withdraw consent</strong> at any time by deleting your account</li>
+    </ul>
+    <p>To exercise any of these rights, contact us at the email address below.</p>
+
+    <h2>7. Data retention</h2>
+    <p>We retain your data for as long as your account is active. If you request deletion of your account, all your data will be permanently removed within 30 days.</p>
+
+    <h2>8. Children's privacy</h2>
+    <p>The App is not directed at children under 13. We do not knowingly collect data from children under 13. If you believe a child has provided us with personal data, please contact us.</p>
+
+    <h2>9. Changes to this policy</h2>
+    <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated date. We encourage you to review this page periodically.</p>
+
+    <h2>10. Contact</h2>
+    <div class="contact-box">
+      <p><strong>Data Controller:</strong> Santiago González López</p>
+      <p><strong>Location:</strong> Brussels, Belgium</p>
+      <p><strong>Email:</strong> <a href="mailto:elnuevoeuropeo@gmail.com">elnuevoeuropeo@gmail.com</a></p>
+    </div>
+  </div>
+
+  <!-- SPANISH -->
+  <div class="section" data-lang="es">
+    <p class="date">Última actualización: abril de 2026</p>
+
+    <h2>1. Introducción</h2>
+    <p>Peregrin ("la App") es una aplicación de acompañamiento para peregrinos católicos creada por Santiago González López, con sede en Bruselas, Bélgica. Esta Política de Privacidad explica cómo recogemos, usamos y protegemos tus datos personales al usar la App.</p>
+    <p>Respetamos tu privacidad y nos comprometemos a proteger tus datos personales de acuerdo con el Reglamento General de Protección de Datos (RGPD) y otras leyes aplicables.</p>
+
+    <h2>2. Datos que recogemos</h2>
+    <h3>Datos de cuenta</h3>
+    <p>Al crear una cuenta, recogemos:</p>
+    <ul>
+      <li>Tu dirección de correo electrónico (para autenticación)</li>
+      <li>Tu nombre (si lo proporcionas)</li>
+      <li>Tu contraseña (almacenada de forma segura por Firebase Authentication — nunca tenemos acceso a ella en texto plano)</li>
+    </ul>
+    <h3>Datos de uso</h3>
+    <p>Al usar la App, almacenamos:</p>
+    <ul>
+      <li>Tus registros de visitas a santuarios (cuáles has visitado y la fecha)</li>
+      <li>Tu preferencia de idioma</li>
+      <li>Tu estado de compra premium (qué regiones has desbloqueado)</li>
+    </ul>
+    <h3>Datos que NO recogemos</h3>
+    <ul>
+      <li>No recogemos datos de ubicación</li>
+      <li>No recogemos datos de analítica ni seguimiento</li>
+      <li>No usamos cookies publicitarias</li>
+      <li>No recogemos ni almacenamos fotos</li>
+    </ul>
+
+    <h2>3. Cómo usamos tus datos</h2>
+    <p>Tus datos se usan exclusivamente para:</p>
+    <ul>
+      <li>Autenticar tu cuenta y mantener tu sesión</li>
+      <li>Guardar tu progreso de peregrinación (visitas, sellos, logros)</li>
+      <li>Generar tus certificados personalizados de peregrinación</li>
+      <li>Recordar tu preferencia de idioma</li>
+      <li>Gestionar tus compras premium</li>
+    </ul>
+    <p>No usamos tus datos para marketing, publicidad, perfilado ni ningún otro propósito que no sea la funcionalidad principal de la App.</p>
+
+    <h2>4. Almacenamiento y seguridad</h2>
+    <p>Tus datos se almacenan de forma segura mediante Google Firebase (Firestore y Authentication), alojado en infraestructura de Google Cloud en la Unión Europea. Firebase cumple con el RGPD e implementa medidas de seguridad estándar del sector, incluyendo cifrado en tránsito y en reposo.</p>
+    <p>Los datos de cada usuario están aislados — solo puedes acceder a tus propios datos.</p>
+
+    <h2>5. Servicios de terceros</h2>
+    <p>La App utiliza los siguientes servicios de terceros:</p>
+    <ul>
+      <li><strong>Google Firebase</strong> — para autenticación y almacenamiento de datos (<a href="https://firebase.google.com/support/privacy" target="_blank">Política de privacidad de Firebase</a>)</li>
+      <li><strong>OpenStreetMap / CARTO</strong> — para los mosaicos del mapa (no se comparten datos personales)</li>
+      <li><strong>Google Maps</strong> — solo cuando eliges abrir indicaciones a un santuario (se abre en una pestaña nueva)</li>
+    </ul>
+    <p>No compartimos, vendemos ni transferimos tus datos personales a ningún otro tercero.</p>
+
+    <h2>6. Tus derechos (RGPD)</h2>
+    <p>Bajo el RGPD, tienes derecho a:</p>
+    <ul>
+      <li><strong>Acceder</strong> a tus datos personales</li>
+      <li><strong>Rectificar</strong> datos inexactos (puedes editar tu nombre en la App)</li>
+      <li><strong>Suprimir</strong> tus datos (contáctanos y eliminaremos tu cuenta y todos los datos asociados)</li>
+      <li><strong>Exportar</strong> tus datos en formato portátil</li>
+      <li><strong>Retirar el consentimiento</strong> en cualquier momento eliminando tu cuenta</li>
+    </ul>
+    <p>Para ejercer cualquiera de estos derechos, contáctanos en el correo electrónico indicado abajo.</p>
+
+    <h2>7. Conservación de datos</h2>
+    <p>Conservamos tus datos mientras tu cuenta esté activa. Si solicitas la eliminación de tu cuenta, todos tus datos se eliminarán permanentemente en un plazo de 30 días.</p>
+
+    <h2>8. Privacidad de menores</h2>
+    <p>La App no está dirigida a menores de 13 años. No recogemos conscientemente datos de menores de 13 años. Si crees que un menor nos ha proporcionado datos personales, contáctanos.</p>
+
+    <h2>9. Cambios en esta política</h2>
+    <p>Podemos actualizar esta Política de Privacidad periódicamente. Los cambios se publicarán en esta página con la fecha actualizada.</p>
+
+    <h2>10. Contacto</h2>
+    <div class="contact-box">
+      <p><strong>Responsable del tratamiento:</strong> Santiago González López</p>
+      <p><strong>Ubicación:</strong> Bruselas, Bélgica</p>
+      <p><strong>Correo:</strong> <a href="mailto:elnuevoeuropeo@gmail.com">elnuevoeuropeo@gmail.com</a></p>
+    </div>
+  </div>
+
+  <!-- FRENCH -->
+  <div class="section" data-lang="fr">
+    <p class="date">Dernière mise à jour : avril 2026</p>
+
+    <h2>1. Introduction</h2>
+    <p>Peregrin (« l'Application ») est une application d'accompagnement pour pèlerins catholiques créée par Santiago González López, basé à Bruxelles, Belgique. Cette Politique de confidentialité explique comment nous collectons, utilisons et protégeons vos données personnelles.</p>
+
+    <h2>2. Données collectées</h2>
+    <p>Lors de la création d'un compte : adresse e-mail, nom (facultatif), mot de passe (stocké de manière sécurisée par Firebase). Lors de l'utilisation : registres de visites de sanctuaires, préférence linguistique, statut d'achat premium. Nous ne collectons pas de données de localisation, d'analyse, de cookies publicitaires ni de photos.</p>
+
+    <h2>3. Utilisation des données</h2>
+    <p>Vos données sont utilisées exclusivement pour : authentification, sauvegarde de votre progression, génération de certificats, préférence linguistique et gestion des achats premium. Aucune utilisation à des fins de marketing ou de publicité.</p>
+
+    <h2>4. Stockage et sécurité</h2>
+    <p>Données stockées via Google Firebase (infrastructure Google Cloud dans l'UE), conforme au RGPD avec chiffrement en transit et au repos.</p>
+
+    <h2>5. Services tiers</h2>
+    <p>Google Firebase (authentification et stockage), OpenStreetMap/CARTO (tuiles de carte), Google Maps (directions uniquement). Aucune donnée personnelle n'est vendue ou transférée à des tiers.</p>
+
+    <h2>6. Vos droits (RGPD)</h2>
+    <p>Vous avez le droit d'accéder, rectifier, supprimer et exporter vos données, et de retirer votre consentement à tout moment. Contactez-nous à l'adresse ci-dessous.</p>
+
+    <h2>7. Contact</h2>
+    <div class="contact-box">
+      <p><strong>Responsable du traitement :</strong> Santiago González López</p>
+      <p><strong>Lieu :</strong> Bruxelles, Belgique</p>
+      <p><strong>E-mail :</strong> <a href="mailto:elnuevoeuropeo@gmail.com">elnuevoeuropeo@gmail.com</a></p>
+    </div>
+  </div>
+
+  <!-- ITALIAN -->
+  <div class="section" data-lang="it">
+    <p class="date">Ultimo aggiornamento: aprile 2026</p>
+
+    <h2>1. Introduzione</h2>
+    <p>Peregrin ("l'App") è un'applicazione di accompagnamento per pellegrini cattolici creata da Santiago González López, con sede a Bruxelles, Belgio. Questa Informativa sulla privacy spiega come raccogliamo, utilizziamo e proteggiamo i vostri dati personali.</p>
+
+    <h2>2. Dati raccolti</h2>
+    <p>Alla creazione dell'account: indirizzo e-mail, nome (facoltativo), password (conservata in modo sicuro da Firebase). Durante l'uso: registri di visite ai santuari, preferenza linguistica, stato degli acquisti premium. Non raccogliamo dati di localizzazione, analisi, cookie pubblicitari né foto.</p>
+
+    <h2>3. Utilizzo dei dati</h2>
+    <p>I vostri dati vengono utilizzati esclusivamente per: autenticazione, salvataggio dei progressi, generazione di certificati, preferenza linguistica e gestione degli acquisti premium. Nessun utilizzo per marketing o pubblicità.</p>
+
+    <h2>4. Archiviazione e sicurezza</h2>
+    <p>Dati conservati tramite Google Firebase (infrastruttura Google Cloud nell'UE), conforme al GDPR con crittografia in transito e a riposo.</p>
+
+    <h2>5. Servizi di terze parti</h2>
+    <p>Google Firebase (autenticazione e archiviazione), OpenStreetMap/CARTO (riquadri mappa), Google Maps (solo indicazioni). Nessun dato personale viene venduto o trasferito a terzi.</p>
+
+    <h2>6. I vostri diritti (GDPR)</h2>
+    <p>Avete il diritto di accedere, rettificare, cancellare ed esportare i vostri dati, e di revocare il consenso in qualsiasi momento. Contattateci all'indirizzo sottostante.</p>
+
+    <h2>7. Contatto</h2>
+    <div class="contact-box">
+      <p><strong>Titolare del trattamento:</strong> Santiago González López</p>
+      <p><strong>Sede:</strong> Bruxelles, Belgio</p>
+      <p><strong>E-mail:</strong> <a href="mailto:elnuevoeuropeo@gmail.com">elnuevoeuropeo@gmail.com</a></p>
+    </div>
+  </div>
+
+  <!-- PORTUGUESE -->
+  <div class="section" data-lang="pt">
+    <p class="date">Última atualização: abril de 2026</p>
+
+    <h2>1. Introdução</h2>
+    <p>Peregrin ("a App") é uma aplicação de acompanhamento para peregrinos católicos criada por Santiago González López, com sede em Bruxelas, Bélgica. Esta Política de Privacidade explica como recolhemos, utilizamos e protegemos os seus dados pessoais.</p>
+
+    <h2>2. Dados recolhidos</h2>
+    <p>Na criação da conta: endereço de e-mail, nome (opcional), palavra-passe (armazenada de forma segura pelo Firebase). Durante a utilização: registos de visitas a santuários, preferência de idioma, estado de compra premium. Não recolhemos dados de localização, análise, cookies publicitários nem fotos.</p>
+
+    <h2>3. Utilização dos dados</h2>
+    <p>Os seus dados são utilizados exclusivamente para: autenticação, guardar o progresso, gerar certificados, preferência de idioma e gestão de compras premium. Sem utilização para marketing ou publicidade.</p>
+
+    <h2>4. Armazenamento e segurança</h2>
+    <p>Dados armazenados via Google Firebase (infraestrutura Google Cloud na UE), conforme o RGPD com encriptação em trânsito e em repouso.</p>
+
+    <h2>5. Serviços de terceiros</h2>
+    <p>Google Firebase (autenticação e armazenamento), OpenStreetMap/CARTO (mosaicos do mapa), Google Maps (apenas direções). Nenhum dado pessoal é vendido ou transferido a terceiros.</p>
+
+    <h2>6. Os seus direitos (RGPD)</h2>
+    <p>Tem o direito de aceder, retificar, apagar e exportar os seus dados, e de retirar o consentimento a qualquer momento. Contacte-nos no endereço abaixo.</p>
+
+    <h2>7. Contacto</h2>
+    <div class="contact-box">
+      <p><strong>Responsável pelo tratamento:</strong> Santiago González López</p>
+      <p><strong>Localização:</strong> Bruxelas, Bélgica</p>
+      <p><strong>E-mail:</strong> <a href="mailto:elnuevoeuropeo@gmail.com">elnuevoeuropeo@gmail.com</a></p>
+    </div>
+  </div>
+
+  <div class="footer">Peregrin · The Digital Passport of the Catholic Pilgrim<br>© 2026 Santiago González López</div>
+</div>
+
+<script>
+function switchLang(lang){
+  document.querySelectorAll('.section[data-lang]').forEach(s=>s.classList.remove('active'));
+  document.querySelector(`.section[data-lang="${lang}"]`).classList.add('active');
+  document.querySelectorAll('.lang-link').forEach(l=>l.classList.remove('active'));
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
