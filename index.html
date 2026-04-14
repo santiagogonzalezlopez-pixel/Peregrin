@@ -249,8 +249,8 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 /* Language selector */
 .lang-selector{background:var(--white);border-radius:12px;padding:16px 18px;margin-bottom:8px;box-shadow:var(--shadow);}
 .lang-selector-label{font-size:11px;color:var(--brown-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-weight:600;}
-.lang-buttons{display:flex;gap:8px;}
-.lang-btn{flex:1;padding:10px 6px;border-radius:10px;border:2px solid var(--cream-dark);background:var(--cream);font-family:'Jost',sans-serif;font-size:13px;font-weight:500;cursor:pointer;text-align:center;transition:all 0.2s;color:var(--brown-light);}
+.lang-buttons{display:flex;gap:6px;flex-wrap:wrap;}
+.lang-btn{flex:1 1 auto;min-width:52px;padding:10px 4px;border-radius:10px;border:2px solid var(--cream-dark);background:var(--cream);font-family:'Jost',sans-serif;font-size:12px;font-weight:500;cursor:pointer;text-align:center;transition:all 0.2s;color:var(--brown-light);white-space:nowrap;}
 .lang-btn.active{border-color:var(--burgundy);background:var(--burgundy);color:var(--cream);font-weight:600;}
 @media(min-width:500px){body{max-width:420px;margin:0 auto;box-shadow:var(--shadow-lg);}}
 </style>
@@ -893,8 +893,10 @@ window._loadUserData = async function(uid){
 
 async function saveVisits(){
   try{
-    if(window._currentUser) await window._fbSetDoc(window._currentUser.uid,{visits});
-  }catch(e){}
+    if(window._currentUser){
+      await window._fbSetDoc(window._currentUser.uid,{visits});
+    }
+  }catch(e){console.error('saveVisits failed:',e);}
 }
 
 async function setLang(lang){
@@ -1576,10 +1578,6 @@ function showOnboarding(){
 function closeOnboarding(){
   document.getElementById('onboarding').classList.remove('open');
   localStorage.setItem('peregrin_onb_seen','1');
-  if(window._currentUser) window._fbSetDoc(window._currentUser.uid,{onboardingSeen:true});
-}
-function closeOnboarding(){
-  document.getElementById('onboarding').classList.remove('open');
   if(window._currentUser) window._fbSetDoc(window._currentUser.uid,{onboardingSeen:true});
 }
 
