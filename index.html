@@ -876,7 +876,7 @@ function isRegionUnlocked(region){ return unlockedRegions.includes('all')||unloc
 window._loadUserData = async function(uid){
   try{
     const snap=await window._fbGetDoc(uid);
-    if(snap.exists()){
+    if(snap.exists){
       const d=snap.data();
       visits=d.visits||{};
       if(d.isPremium===true) unlockedRegions=['all'];
