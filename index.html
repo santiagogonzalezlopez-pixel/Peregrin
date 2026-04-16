@@ -881,6 +881,7 @@ window._loadUserData = async function(uid){
       visits=d.visits||{};
       if(d.isPremium===true) unlockedRegions=['all'];
       else unlockedRegions=d.unlockedRegions||[];
+      console.log('[Peregrin] isPremium:', d.isPremium, '| unlockedRegions:', unlockedRegions);
       if(d.lang) currentLang=d.lang;
       if(d.displayName) pilgrimName=d.displayName;
     }else{visits={};unlockedRegions=[];}
@@ -1662,9 +1663,11 @@ _auth.onAuthStateChanged(user=>{
     const params=new URLSearchParams(window.location.search);
     if(params.get('payment')==='success'){
       history.replaceState({},'',window.location.pathname);
-      window._loadUserData(user.uid).then(()=>{
-        showToast({en:'✅ Premium activated! Thank you.',es:'✅ ¡Premium activado! Gracias.',fr:'✅ Premium activé ! Merci.',it:'✅ Premium attivato! Grazie.',pt:'✅ Premium ativado! Obrigado.'}[currentLang]||'✅ Premium activated!');
-      });
+      setTimeout(()=>{
+        window._loadUserData(user.uid).then(()=>{
+          showToast({en:'✅ Premium activated! Thank you.',es:'✅ ¡Premium activado! Gracias.',fr:'✅ Premium activé ! Merci.',it:'✅ Premium attivato! Grazie.',pt:'✅ Premium ativado! Obrigado.'}[currentLang]||'✅ Premium activated!');
+        });
+      }, 1500);
     } else {
       window._loadUserData(user.uid);
     }
