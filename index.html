@@ -1000,9 +1000,23 @@ function openPremiumModal(){
 }
 function closePremiumModal(){document.getElementById('premium-modal').classList.remove('open');}
 function handleRegionPurchase(region){
-  // Payment integration comes with Capacitor + RevenueCat
-  showToast({en:'💳 Payment coming soon',es:'💳 Pago disponible próximamente',fr:'💳 Paiement bientôt disponible',it:'💳 Pagamento disponibile a breve',pt:'💳 Pagamento disponível em breve'}[currentLang]||'💳 Payment coming soon');
+  if(!window._currentUser){
+    showToast({en:'Please sign in first',es:'Inicia sesión primero',fr:'Connecte-toi d'abord',it:'Accedi prima',pt:'Inicia sessão primeiro'}[currentLang]||'Please sign in first');
+    return;
+  }
+  showToast({en:'⏳ Redirecting to payment...',es:'⏳ Redirigiendo al pago...',fr:'⏳ Redirection...',it:'⏳ Reindirizzamento...',pt:'⏳ A redirecionar...'}[currentLang]||'⏳ Redirecting...');
   closePremiumModal();
+  fetch('https://createcheckoutsession-mbdckllzga-uc.a.run.app',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({userId:window._currentUser.uid, region})
+  })
+  .then(r=>r.json())
+  .then(data=>{
+    if(data.url) window.location.href=data.url;
+    else showToast('❌ Error: '+(data.error||'Unknown error'));
+  })
+  .catch(()=>showToast({en:'❌ Connection error',es:'❌ Error de conexión',fr:'❌ Erreur de connexion',it:'❌ Errore di connessione',pt:'❌ Erro de ligação'}[currentLang]||'❌ Error'));
 }
 
 // ===================== VISITS =====================
@@ -1650,8 +1664,6 @@ _auth.onAuthStateChanged(user=>{
       history.replaceState({},'',window.location.pathname);
       window._loadUserData(user.uid).then(()=>{
         showToast({en:'✅ Premium activated! Thank you.',es:'✅ ¡Premium activado! Gracias.',fr:'✅ Premium activé ! Merci.',it:'✅ Premium attivato! Grazie.',pt:'✅ Premium ativado! Obrigado.'}[currentLang]||'✅ Premium activated!');
-        refreshAll();
-        updateMarkerStyles();
       });
     } else {
       window._loadUserData(user.uid);
