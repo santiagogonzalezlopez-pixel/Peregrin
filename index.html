@@ -998,8 +998,8 @@ function openPremiumModal(){
 }
 function closePremiumModal(){document.getElementById('premium-modal').classList.remove('open');}
 // ===================== STRIPE PAYMENT LINK =====================
-// Pega aquí la URL de tu Payment Link de Stripe (test o live):
-const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/test_cNicMY3nn97C5dFbJhfIs00'; // Peregrin Premium 4,99€ (TEST)
+// URL del Payment Link de Stripe (LIVE — cobros reales):
+const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/4gM9AV1NT8Rt2ptfOkfEk00'; // Peregrin Premium 4,99€ (LIVE)
 
 function handleRegionPurchase(region){
   if(!STRIPE_PAYMENT_LINK){
