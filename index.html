@@ -873,23 +873,31 @@ function getRegion(cid){ for(const [r,ids] of Object.entries(regionMap)) if(ids.
 function isRegionUnlocked(region){ return unlockedRegions.includes('all')||unlockedRegions.includes(region); }
 
 // ===================== FIREBASE =====================
-window._loadUserData = async function(uid){
-  try{
-    const snap=await window._fbGetDoc(uid);
-    if(snap.exists()){
-      const d=snap.data();
-      visits=d.visits||{};
-      if(d.isPremium===true) unlockedRegions=['all'];
-      else unlockedRegions=d.unlockedRegions||[];
-      console.log('[Peregrin] isPremium:', d.isPremium, '| unlockedRegions:', unlockedRegions);
-      if(d.lang) currentLang=d.lang;
-      if(d.displayName) pilgrimName=d.displayName;
-    }else{visits={};unlockedRegions=[];}
-  }catch(e){visits={};unlockedRegions=[];}
-  if(!pilgrimName && window._currentUser?.displayName) pilgrimName=window._currentUser.displayName;
-  applyLang();
-  refreshAll();
-  if(map) updateMarkerStyles();
+let _userUnsubscribe = null;
+
+window._loadUserData = function(uid){
+  if(_userUnsubscribe) _userUnsubscribe();
+  return new Promise((resolve)=>{
+    _userUnsubscribe = _db.collection('users').doc(uid).onSnapshot(snap=>{
+      if(snap.exists()){
+        const d=snap.data();
+        visits=d.visits||{};
+        if(d.isPremium===true) unlockedRegions=['all'];
+        else unlockedRegions=d.unlockedRegions||[];
+        if(d.lang) currentLang=d.lang;
+        if(d.displayName) pilgrimName=d.displayName;
+      }else{visits={};unlockedRegions=[];}
+      if(!pilgrimName && window._currentUser?.displayName) pilgrimName=window._currentUser.displayName;
+      applyLang();
+      refreshAll();
+      if(map) updateMarkerStyles();
+      resolve();
+    }, err=>{
+      console.error('onSnapshot error:', err);
+      visits={};unlockedRegions=[];
+      resolve();
+    });
+  });
 };
 
 async function saveVisits(){
@@ -1002,7 +1010,7 @@ function openPremiumModal(){
 function closePremiumModal(){document.getElementById('premium-modal').classList.remove('open');}
 function handleRegionPurchase(region){
   if(!window._currentUser){
-    showToast({en:'Please sign in first',es:'Inicia sesión primero',fr:'Connecte-toi d'abord',it:'Accedi prima',pt:'Inicia sessão primeiro'}[currentLang]||'Please sign in first');
+    showToast({en:'Please sign in first',es:'Inicia sesión primero',fr:'Connecte-toi d\'abord',it:'Accedi prima',pt:'Inicia sessão primeiro'}[currentLang]||'Please sign in first');
     return;
   }
   showToast({en:'⏳ Redirecting to payment...',es:'⏳ Redirigiendo al pago...',fr:'⏳ Redirection...',it:'⏳ Reindirizzamento...',pt:'⏳ A redirecionar...'}[currentLang]||'⏳ Redirecting...');
@@ -1655,6 +1663,7 @@ window._fbSetDoc       = (uid,d) => _db.collection('users').doc(uid).set(d,{merg
 _auth.getRedirectResult().catch(()=>{});
 _auth.onAuthStateChanged(user=>{
   window._currentUser=user||null;
+  if(_userUnsubscribe && !user){ _userUnsubscribe(); _userUnsubscribe=null; }
   if(user){
     document.getElementById('auth-screen').style.display='none';
     document.getElementById('app-wrapper').style.display='flex';
@@ -1663,11 +1672,9 @@ _auth.onAuthStateChanged(user=>{
     const params=new URLSearchParams(window.location.search);
     if(params.get('payment')==='success'){
       history.replaceState({},'',window.location.pathname);
-      setTimeout(()=>{
-        window._loadUserData(user.uid).then(()=>{
-          showToast({en:'✅ Premium activated! Thank you.',es:'✅ ¡Premium activado! Gracias.',fr:'✅ Premium activé ! Merci.',it:'✅ Premium attivato! Grazie.',pt:'✅ Premium ativado! Obrigado.'}[currentLang]||'✅ Premium activated!');
-        });
-      }, 1500);
+      window._loadUserData(user.uid).then(()=>{
+        showToast({en:'✅ Premium activated! Thank you.',es:'✅ ¡Premium activado! Gracias.',fr:'✅ Premium activé ! Merci.',it:'✅ Premium attivato! Grazie.',pt:'✅ Premium ativado! Obrigado.'}[currentLang]||'✅ Premium activated!');
+      });
     } else {
       window._loadUserData(user.uid);
     }
