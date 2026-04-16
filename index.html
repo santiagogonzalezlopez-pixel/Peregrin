@@ -877,7 +877,7 @@ window._loadUserData = async function(uid){
   try{
     console.log('[Peregrin] → Leyendo datos del usuario uid:', uid);
     const snap=await window._fbGetDoc(uid);
-    if(snap.exists()){
+    if(snap.exists){
       const d=snap.data();
       console.log('[Peregrin] ✓ Documento existe. Campos:', Object.keys(d), '| visits keys:', d.visits ? Object.keys(d.visits).length : 'SIN CAMPO visits');
       visits=d.visits||{};
@@ -1653,7 +1653,7 @@ const _db   = firebase.firestore();
 window._fbSignInEmail  = (e,p) => _auth.signInWithEmailAndPassword(e,p);
 window._fbCreateUser   = (e,p) => _auth.createUserWithEmailAndPassword(e,p);
 window._fbSignOut      = ()    => _auth.signOut();
-window._fbGetDoc       = (uid) => _db.collection('users').doc(uid).get({source:'server'}).catch(()=>_db.collection('users').doc(uid).get());
+window._fbGetDoc       = (uid) => _db.collection('users').doc(uid).get();
 window._fbSetDoc       = (uid,d) => _db.collection('users').doc(uid).set(d,{merge:true});
 
 _auth.getRedirectResult().catch(()=>{});
