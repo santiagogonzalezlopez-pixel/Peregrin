@@ -873,31 +873,23 @@ function getRegion(cid){ for(const [r,ids] of Object.entries(regionMap)) if(ids.
 function isRegionUnlocked(region){ return unlockedRegions.includes('all')||unlockedRegions.includes(region); }
 
 // ===================== FIREBASE =====================
-let _userUnsubscribe = null;
-
-window._loadUserData = function(uid){
-  if(_userUnsubscribe) _userUnsubscribe();
-  return new Promise((resolve)=>{
-    _userUnsubscribe = _db.collection('users').doc(uid).onSnapshot(snap=>{
-      if(snap.exists()){
-        const d=snap.data();
-        visits=d.visits||{};
-        if(d.isPremium===true) unlockedRegions=['all'];
-        else unlockedRegions=d.unlockedRegions||[];
-        if(d.lang) currentLang=d.lang;
-        if(d.displayName) pilgrimName=d.displayName;
-      }else{visits={};unlockedRegions=[];}
-      if(!pilgrimName && window._currentUser?.displayName) pilgrimName=window._currentUser.displayName;
-      applyLang();
-      refreshAll();
-      if(map) updateMarkerStyles();
-      resolve();
-    }, err=>{
-      console.error('onSnapshot error:', err);
-      visits={};unlockedRegions=[];
-      resolve();
-    });
-  });
+window._loadUserData = async function(uid){
+  try{
+    const snap=await window._fbGetDoc(uid);
+    if(snap.exists()){
+      const d=snap.data();
+      visits=d.visits||{};
+      if(d.isPremium===true) unlockedRegions=['all'];
+      else unlockedRegions=d.unlockedRegions||[];
+      console.log('[Peregrin] isPremium:', d.isPremium, '| unlockedRegions:', unlockedRegions);
+      if(d.lang) currentLang=d.lang;
+      if(d.displayName) pilgrimName=d.displayName;
+    }else{visits={};unlockedRegions=[];}
+  }catch(e){visits={};unlockedRegions=[];}
+  if(!pilgrimName && window._currentUser?.displayName) pilgrimName=window._currentUser.displayName;
+  applyLang();
+  refreshAll();
+  if(map) updateMarkerStyles();
 };
 
 async function saveVisits(){
@@ -1657,13 +1649,12 @@ const _db   = firebase.firestore();
 window._fbSignInEmail  = (e,p) => _auth.signInWithEmailAndPassword(e,p);
 window._fbCreateUser   = (e,p) => _auth.createUserWithEmailAndPassword(e,p);
 window._fbSignOut      = ()    => _auth.signOut();
-window._fbGetDoc       = (uid) => _db.collection('users').doc(uid).get();
+window._fbGetDoc       = (uid) => _db.collection('users').doc(uid).get({ source: 'server' });
 window._fbSetDoc       = (uid,d) => _db.collection('users').doc(uid).set(d,{merge:true});
 
 _auth.getRedirectResult().catch(()=>{});
 _auth.onAuthStateChanged(user=>{
   window._currentUser=user||null;
-  if(_userUnsubscribe && !user){ _userUnsubscribe(); _userUnsubscribe=null; }
   if(user){
     document.getElementById('auth-screen').style.display='none';
     document.getElementById('app-wrapper').style.display='flex';
@@ -1672,9 +1663,11 @@ _auth.onAuthStateChanged(user=>{
     const params=new URLSearchParams(window.location.search);
     if(params.get('payment')==='success'){
       history.replaceState({},'',window.location.pathname);
-      window._loadUserData(user.uid).then(()=>{
-        showToast({en:'✅ Premium activated! Thank you.',es:'✅ ¡Premium activado! Gracias.',fr:'✅ Premium activé ! Merci.',it:'✅ Premium attivato! Grazie.',pt:'✅ Premium ativado! Obrigado.'}[currentLang]||'✅ Premium activated!');
-      });
+      setTimeout(()=>{
+        window._loadUserData(user.uid).then(()=>{
+          showToast({en:'✅ Premium activated! Thank you.',es:'✅ ¡Premium activado! Gracias.',fr:'✅ Premium activé ! Merci.',it:'✅ Premium attivato! Grazie.',pt:'✅ Premium ativado! Obrigado.'}[currentLang]||'✅ Premium activated!');
+        });
+      }, 1500);
     } else {
       window._loadUserData(user.uid);
     }
