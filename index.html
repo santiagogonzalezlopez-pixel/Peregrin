@@ -875,16 +875,24 @@ function isRegionUnlocked(region){ return unlockedRegions.includes('all')||unloc
 // ===================== FIREBASE =====================
 window._loadUserData = async function(uid){
   try{
+    console.log('[Peregrin] → Leyendo datos del usuario uid:', uid);
     const snap=await window._fbGetDoc(uid);
     if(snap.exists()){
       const d=snap.data();
+      console.log('[Peregrin] ✓ Documento existe. Campos:', Object.keys(d), '| visits keys:', d.visits ? Object.keys(d.visits).length : 'SIN CAMPO visits');
       visits=d.visits||{};
       if(d.isPremium===true) unlockedRegions=['all'];
       else unlockedRegions=d.unlockedRegions||[];
       if(d.lang) currentLang=d.lang;
       if(d.displayName) pilgrimName=d.displayName;
-    }else{visits={};unlockedRegions=[];}
-  }catch(e){visits={};unlockedRegions=[];}
+    }else{
+      console.warn('[Peregrin] ⚠ Documento NO existe para uid:', uid);
+      visits={};unlockedRegions=[];
+    }
+  }catch(e){
+    console.error('[Peregrin] ✗ _loadUserData FALLÓ:', e);
+    visits={};unlockedRegions=[];
+  }
   if(!pilgrimName && window._currentUser?.displayName) pilgrimName=window._currentUser.displayName;
   applyLang();
   refreshAll();
@@ -894,9 +902,13 @@ window._loadUserData = async function(uid){
 async function saveVisits(){
   try{
     if(window._currentUser){
+      console.log('[Peregrin] → Guardando visitas:', Object.keys(visits).length, 'para uid:', window._currentUser.uid);
       await window._fbSetDoc(window._currentUser.uid,{visits});
+      console.log('[Peregrin] ✓ Visitas guardadas OK');
+    } else {
+      console.warn('[Peregrin] ⚠ saveVisits llamado sin usuario');
     }
-  }catch(e){console.error('saveVisits failed:',e);}
+  }catch(e){console.error('[Peregrin] ✗ saveVisits FALLÓ:',e);}
 }
 
 async function setLang(lang){
