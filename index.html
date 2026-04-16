@@ -385,7 +385,7 @@ const i18n = {
     premiumPriceEurope:'€4.99', premiumPriceAmericas:'€3.99', premiumPriceAsia:'€2.99', premiumPriceAll:'€4.99',
     premiumLabelEurope:'Europe', premiumLabelAmericas:'Americas', premiumLabelAsia:'Asia', premiumLabelAll:'All countries',
     premiumSubEurope:'10 countries · 58 sanctuaries', premiumSubAmericas:'5 countries · 21 sanctuaries', premiumSubAsia:'4 countries · 17 sanctuaries', premiumSubAll:'19 countries · 96 sanctuaries · Best value',
-    premiumOnetime:'One-time payment · Yours forever', premiumAlreadyUnlocked:'Unlocked ✓',
+    premiumOnetime:'One-time payment · Yours forever', premiumAlreadyUnlocked:'Unlocked ✓', premiumActivatedToast:'✝ Premium activated. Thank you!',
     premiumBannerTitle:'✝ Peregrin Premium', premiumBannerSub:'Unlock all countries, certificates, all routes and all achievements.',
     discoverPremium:'Discover Premium', certsAvailable:'Certificates available',
     language:'Language', countriesTitle:'Countries',
@@ -429,7 +429,7 @@ const i18n = {
     premiumPriceEurope:'4,99 €', premiumPriceAmericas:'3,99 €', premiumPriceAsia:'2,99 €', premiumPriceAll:'4,99 €',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'América', premiumLabelAsia:'Asia', premiumLabelAll:'Todos los países',
     premiumSubEurope:'10 países · 58 santuarios', premiumSubAmericas:'5 países · 21 santuarios', premiumSubAsia:'4 países · 17 santuarios', premiumSubAll:'19 países · 96 santuarios · Mejor valor',
-    premiumOnetime:'Pago único · Tuyo para siempre', premiumAlreadyUnlocked:'Desbloqueado ✓',
+    premiumOnetime:'Pago único · Tuyo para siempre', premiumAlreadyUnlocked:'Desbloqueado ✓', premiumActivatedToast:'✝ Premium activado. ¡Gracias!',
     premiumBannerTitle:'✝ Peregrin Premium', premiumBannerSub:'Desbloquea todos los países, certificados, todas las rutas y todos los logros.',
     discoverPremium:'Descubrir Premium', certsAvailable:'Certificados disponibles',
     language:'Idioma', countriesTitle:'Países',
@@ -473,7 +473,7 @@ const i18n = {
     premiumPriceEurope:'4,99 €', premiumPriceAmericas:'3,99 €', premiumPriceAsia:'2,99 €', premiumPriceAll:'4,99 €',
     premiumLabelEurope:'Europe', premiumLabelAmericas:'Amériques', premiumLabelAsia:'Asie', premiumLabelAll:'Tous les pays',
     premiumSubEurope:'10 pays · 58 sanctuaires', premiumSubAmericas:'5 pays · 21 sanctuaires', premiumSubAsia:'4 pays · 17 sanctuaires', premiumSubAll:'19 pays · 96 sanctuaires · Meilleure offre',
-    premiumOnetime:'Paiement unique · À vous pour toujours', premiumAlreadyUnlocked:'Débloqué ✓',
+    premiumOnetime:'Paiement unique · À vous pour toujours', premiumAlreadyUnlocked:'Débloqué ✓', premiumActivatedToast:'✝ Premium activé. Merci !',
     premiumBannerTitle:'✝ Peregrin Premium', premiumBannerSub:'Débloquez tous les pays, certificats, tous les itinéraires et toutes les réalisations.',
     discoverPremium:'Découvrir Premium', certsAvailable:'Certificats disponibles',
     language:'Langue', countriesTitle:'Pays',
@@ -517,7 +517,7 @@ const i18n = {
     premiumPriceEurope:'€ 4,99', premiumPriceAmericas:'€ 3,99', premiumPriceAsia:'€ 2,99', premiumPriceAll:'€ 4,99',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'Americhe', premiumLabelAsia:'Asia', premiumLabelAll:'Tutti i paesi',
     premiumSubEurope:'10 paesi · 58 santuari', premiumSubAmericas:'5 paesi · 21 santuari', premiumSubAsia:'4 paesi · 17 santuari', premiumSubAll:'19 paesi · 96 santuari · Miglior valore',
-    premiumOnetime:'Pagamento unico · Tuo per sempre', premiumAlreadyUnlocked:'Sbloccato ✓',
+    premiumOnetime:'Pagamento unico · Tuo per sempre', premiumAlreadyUnlocked:'Sbloccato ✓', premiumActivatedToast:'✝ Premium attivato. Grazie!',
     premiumBannerTitle:'✝ Peregrin Premium', premiumBannerSub:'Sblocca tutti i paesi, certificati, tutti gli itinerari e tutti i traguardi.',
     discoverPremium:'Scopri Premium', certsAvailable:'Certificati disponibili',
     language:'Lingua', countriesTitle:'Paesi',
@@ -561,7 +561,7 @@ const i18n = {
     premiumPriceEurope:'€4,99', premiumPriceAmericas:'€3,99', premiumPriceAsia:'€2,99', premiumPriceAll:'€4,99',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'Américas', premiumLabelAsia:'Ásia', premiumLabelAll:'Todos os países',
     premiumSubEurope:'10 países · 58 santuários', premiumSubAmericas:'5 países · 21 santuários', premiumSubAsia:'4 países · 17 santuários', premiumSubAll:'19 países · 96 santuários · Melhor valor',
-    premiumOnetime:'Pagamento único · Seu para sempre', premiumAlreadyUnlocked:'Desbloqueado ✓',
+    premiumOnetime:'Pagamento único · Seu para sempre', premiumAlreadyUnlocked:'Desbloqueado ✓', premiumActivatedToast:'✝ Premium ativado. Obrigado!',
     premiumBannerTitle:'✝ Peregrin Premium', premiumBannerSub:'Desbloqueie todos os países, certificados, todas as rotas e todas as conquistas.',
     discoverPremium:'Descobrir Premium', certsAvailable:'Certificados disponíveis',
     language:'Idioma', countriesTitle:'Países',
@@ -1655,18 +1655,28 @@ _auth.onAuthStateChanged(async user=>{
 
     // ===== DETECCIÓN DE PAGO COMPLETADO =====
     const urlParams = new URLSearchParams(window.location.search);
-    if(urlParams.get('payment') === 'success'){
+    const paymentSuccess = urlParams.get('payment') === 'success';
+    if(paymentSuccess){
       try{
         await window._fbSetDoc(user.uid, {isPremium:true, unlockedRegions:['all']});
         console.log('[Peregrin] Pago detectado → Premium activado');
         // Limpiar la URL para que no se reactive al recargar
         history.replaceState({}, document.title, window.location.pathname);
-        showToast('✝ Premium activado. ¡Gracias!');
       }catch(e){ console.error('[Peregrin] Error activando Premium:', e); }
     }
     // ========================================
 
     await window._loadUserData(user.uid);
+
+    // Si venimos de pago, forzar unlockedRegions localmente
+    // (la lectura de Firestore puede devolver caché antes de propagar el cambio)
+    if(paymentSuccess){
+      unlockedRegions = ['all'];
+      refreshAll();
+      if(map) updateMarkerStyles();
+      showToast(t('premiumActivatedToast'));
+    }
+
     console.log('[Peregrin] Visitas cargadas:', Object.keys(visits).length, '| Regiones:', unlockedRegions);
   } else {
     document.getElementById('auth-screen').style.display='flex';
