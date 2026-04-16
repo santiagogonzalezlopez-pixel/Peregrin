@@ -875,24 +875,16 @@ function isRegionUnlocked(region){ return unlockedRegions.includes('all')||unloc
 // ===================== FIREBASE =====================
 window._loadUserData = async function(uid){
   try{
-    console.log('[Peregrin] → Leyendo datos del usuario uid:', uid);
     const snap=await window._fbGetDoc(uid);
     if(snap.exists){
       const d=snap.data();
-      console.log('[Peregrin] ✓ Documento existe. Campos:', Object.keys(d), '| visits keys:', d.visits ? Object.keys(d.visits).length : 'SIN CAMPO visits');
       visits=d.visits||{};
       if(d.isPremium===true) unlockedRegions=['all'];
       else unlockedRegions=d.unlockedRegions||[];
       if(d.lang) currentLang=d.lang;
       if(d.displayName) pilgrimName=d.displayName;
-    }else{
-      console.warn('[Peregrin] ⚠ Documento NO existe para uid:', uid);
-      visits={};unlockedRegions=[];
-    }
-  }catch(e){
-    console.error('[Peregrin] ✗ _loadUserData FALLÓ:', e);
-    visits={};unlockedRegions=[];
-  }
+    }else{visits={};unlockedRegions=[];}
+  }catch(e){visits={};unlockedRegions=[];}
   if(!pilgrimName && window._currentUser?.displayName) pilgrimName=window._currentUser.displayName;
   applyLang();
   refreshAll();
@@ -902,13 +894,9 @@ window._loadUserData = async function(uid){
 async function saveVisits(){
   try{
     if(window._currentUser){
-      console.log('[Peregrin] → Guardando visitas:', Object.keys(visits).length, 'para uid:', window._currentUser.uid);
       await window._fbSetDoc(window._currentUser.uid,{visits});
-      console.log('[Peregrin] ✓ Visitas guardadas OK');
-    } else {
-      console.warn('[Peregrin] ⚠ saveVisits llamado sin usuario');
     }
-  }catch(e){console.error('[Peregrin] ✗ saveVisits FALLÓ:',e);}
+  }catch(e){console.error('saveVisits failed:',e);}
 }
 
 async function setLang(lang){
@@ -1052,9 +1040,11 @@ document.querySelectorAll('.nav-item').forEach(btn=>btn.addEventListener('click'
 function switchScreen(screen){
   currentScreen=screen;
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen-'+screen).classList.add('active');
+  const screenEl=document.getElementById('screen-'+screen);
+  if(screenEl) screenEl.classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.querySelector(`[data-screen="${screen}"]`).classList.add('active');
+  const navEl=document.querySelector(`[data-screen="${screen}"]`);
+  if(navEl) navEl.classList.add('active');
   if(screen==='map'&&map){
     setTimeout(()=>map.invalidateSize(),50);
   }
@@ -1665,31 +1655,23 @@ _auth.onAuthStateChanged(async user=>{
     if(!map) initMap();
     setTimeout(()=>{ if(map) map.invalidateSize(); },150);
 
-    // ===== DETECCIÓN DE PAGO COMPLETADO =====
     const urlParams = new URLSearchParams(window.location.search);
     const paymentSuccess = urlParams.get('payment') === 'success';
     if(paymentSuccess){
       try{
         await window._fbSetDoc(user.uid, {isPremium:true, unlockedRegions:['all']});
-        console.log('[Peregrin] Pago detectado → Premium activado');
-        // Limpiar la URL para que no se reactive al recargar
         history.replaceState({}, document.title, window.location.pathname);
-      }catch(e){ console.error('[Peregrin] Error activando Premium:', e); }
+      }catch(e){}
     }
-    // ========================================
 
     await window._loadUserData(user.uid);
 
-    // Si venimos de pago, forzar unlockedRegions localmente
-    // (la lectura de Firestore puede devolver caché antes de propagar el cambio)
     if(paymentSuccess){
       unlockedRegions = ['all'];
       refreshAll();
       if(map) updateMarkerStyles();
       showToast(t('premiumActivatedToast'));
     }
-
-    console.log('[Peregrin] Visitas cargadas:', Object.keys(visits).length, '| Regiones:', unlockedRegions);
   } else {
     document.getElementById('auth-screen').style.display='flex';
     document.getElementById('app-wrapper').style.display='none';
