@@ -382,7 +382,7 @@ const i18n = {
     premiumCountries:'All countries unlocked', premiumCert:'Pilgrimage certificate per country',
     premiumRoutes:'All pilgrimage routes', premiumBadges:'All achievements',
     premiumLater:'Maybe later', premiumUnlockRegion:'Unlock', premiumUnlockAll:'Unlock everything',
-    premiumPriceEurope:'€4.99', premiumPriceAmericas:'€3.99', premiumPriceAsia:'€2.99', premiumPriceAll:'€9.99',
+    premiumPriceEurope:'€4.99', premiumPriceAmericas:'€3.99', premiumPriceAsia:'€2.99', premiumPriceAll:'€4.99',
     premiumLabelEurope:'Europe', premiumLabelAmericas:'Americas', premiumLabelAsia:'Asia', premiumLabelAll:'All countries',
     premiumSubEurope:'10 countries · 58 sanctuaries', premiumSubAmericas:'5 countries · 21 sanctuaries', premiumSubAsia:'4 countries · 17 sanctuaries', premiumSubAll:'19 countries · 96 sanctuaries · Best value',
     premiumOnetime:'One-time payment · Yours forever', premiumAlreadyUnlocked:'Unlocked ✓',
@@ -426,7 +426,7 @@ const i18n = {
     premiumCountries:'Todos los países desbloqueados', premiumCert:'Certificado de peregrinación por país',
     premiumRoutes:'Todas las rutas de peregrinación', premiumBadges:'Todos los logros',
     premiumLater:'Quizás más adelante', premiumUnlockRegion:'Desbloquear', premiumUnlockAll:'Desbloquear todo',
-    premiumPriceEurope:'4,99 €', premiumPriceAmericas:'3,99 €', premiumPriceAsia:'2,99 €', premiumPriceAll:'9,99 €',
+    premiumPriceEurope:'4,99 €', premiumPriceAmericas:'3,99 €', premiumPriceAsia:'2,99 €', premiumPriceAll:'4,99 €',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'América', premiumLabelAsia:'Asia', premiumLabelAll:'Todos los países',
     premiumSubEurope:'10 países · 58 santuarios', premiumSubAmericas:'5 países · 21 santuarios', premiumSubAsia:'4 países · 17 santuarios', premiumSubAll:'19 países · 96 santuarios · Mejor valor',
     premiumOnetime:'Pago único · Tuyo para siempre', premiumAlreadyUnlocked:'Desbloqueado ✓',
@@ -470,7 +470,7 @@ const i18n = {
     premiumCountries:'Tous les pays débloqués', premiumCert:'Certificat de pèlerinage par pays',
     premiumRoutes:'Tous les itinéraires de pèlerinage', premiumBadges:'Toutes les réalisations',
     premiumLater:'Peut-être plus tard', premiumUnlockRegion:'Débloquer', premiumUnlockAll:'Tout débloquer',
-    premiumPriceEurope:'4,99 €', premiumPriceAmericas:'3,99 €', premiumPriceAsia:'2,99 €', premiumPriceAll:'9,99 €',
+    premiumPriceEurope:'4,99 €', premiumPriceAmericas:'3,99 €', premiumPriceAsia:'2,99 €', premiumPriceAll:'4,99 €',
     premiumLabelEurope:'Europe', premiumLabelAmericas:'Amériques', premiumLabelAsia:'Asie', premiumLabelAll:'Tous les pays',
     premiumSubEurope:'10 pays · 58 sanctuaires', premiumSubAmericas:'5 pays · 21 sanctuaires', premiumSubAsia:'4 pays · 17 sanctuaires', premiumSubAll:'19 pays · 96 sanctuaires · Meilleure offre',
     premiumOnetime:'Paiement unique · À vous pour toujours', premiumAlreadyUnlocked:'Débloqué ✓',
@@ -514,7 +514,7 @@ const i18n = {
     premiumCountries:'Tutti i paesi sbloccati', premiumCert:'Certificato di pellegrinaggio per paese',
     premiumRoutes:'Tutti gli itinerari di pellegrinaggio', premiumBadges:'Tutti i traguardi',
     premiumLater:'Forse più tardi', premiumUnlockRegion:'Sblocca', premiumUnlockAll:'Sblocca tutto',
-    premiumPriceEurope:'€ 4,99', premiumPriceAmericas:'€ 3,99', premiumPriceAsia:'€ 2,99', premiumPriceAll:'€ 9,99',
+    premiumPriceEurope:'€ 4,99', premiumPriceAmericas:'€ 3,99', premiumPriceAsia:'€ 2,99', premiumPriceAll:'€ 4,99',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'Americhe', premiumLabelAsia:'Asia', premiumLabelAll:'Tutti i paesi',
     premiumSubEurope:'10 paesi · 58 santuari', premiumSubAmericas:'5 paesi · 21 santuari', premiumSubAsia:'4 paesi · 17 santuari', premiumSubAll:'19 paesi · 96 santuari · Miglior valore',
     premiumOnetime:'Pagamento unico · Tuo per sempre', premiumAlreadyUnlocked:'Sbloccato ✓',
@@ -558,7 +558,7 @@ const i18n = {
     premiumCountries:'Todos os países desbloqueados', premiumCert:'Certificado de peregrinação por país',
     premiumRoutes:'Todas as rotas de peregrinação', premiumBadges:'Todas as conquistas',
     premiumLater:'Talvez mais tarde', premiumUnlockRegion:'Desbloquear', premiumUnlockAll:'Desbloquear tudo',
-    premiumPriceEurope:'€4,99', premiumPriceAmericas:'€3,99', premiumPriceAsia:'€2,99', premiumPriceAll:'€9,99',
+    premiumPriceEurope:'€4,99', premiumPriceAmericas:'€3,99', premiumPriceAsia:'€2,99', premiumPriceAll:'€4,99',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'Américas', premiumLabelAsia:'Ásia', premiumLabelAll:'Todos os países',
     premiumSubEurope:'10 países · 58 santuários', premiumSubAmericas:'5 países · 21 santuários', premiumSubAsia:'4 países · 17 santuários', premiumSubAll:'19 países · 96 santuários · Melhor valor',
     premiumOnetime:'Pagamento único · Seu para sempre', premiumAlreadyUnlocked:'Desbloqueado ✓',
@@ -881,7 +881,6 @@ window._loadUserData = async function(uid){
       visits=d.visits||{};
       if(d.isPremium===true) unlockedRegions=['all'];
       else unlockedRegions=d.unlockedRegions||[];
-      console.log('[Peregrin] isPremium:', d.isPremium, '| unlockedRegions:', unlockedRegions);
       if(d.lang) currentLang=d.lang;
       if(d.displayName) pilgrimName=d.displayName;
     }else{visits={};unlockedRegions=[];}
@@ -989,35 +988,28 @@ function openPremiumModal(){
     <div class="premium-cross">✝</div>
     <div class="premium-title">${t('premiumTitle')}</div>
     <div class="premium-sub">${t('premiumSub')}</div>
-    <div style="margin:20px 0 8px;">
-      ${renderRegionOption('europe','🌍','premiumLabelEurope','premiumSubEurope','premiumPriceEurope')}
-      ${renderRegionOption('americas','🌎','premiumLabelAmericas','premiumSubAmericas','premiumPriceAmericas')}
-      ${renderRegionOption('asia','🌏','premiumLabelAsia','premiumSubAsia','premiumPriceAsia')}
-    </div>
-    ${!allUnlocked?`<div style="position:relative;text-align:center;margin:12px 0 8px;"><div style="position:absolute;top:50%;left:0;right:0;height:1px;background:var(--cream-dark);"></div><span style="position:relative;background:var(--white);padding:0 12px;font-size:11px;color:var(--brown-light);">${t('premiumOnetime')}</span></div>
-    <button class="premium-cta" onclick="handleRegionPurchase('all')" style="margin-bottom:10px;">🌐 ${t('premiumUnlockAll')} — ${t('premiumPriceAll')}</button>`:''}
+    ${allUnlocked
+      ? `<div style="margin:24px 0;padding:18px;background:var(--cream);border-radius:12px;text-align:center;color:#2E7D32;font-weight:600;font-size:15px;">✓ ${t('premiumAlreadyUnlocked')}</div>`
+      : `<div style="text-align:center;margin:18px 0 6px;font-size:12px;color:var(--brown-light);">${t('premiumOnetime')}</div>
+         <button class="premium-cta" onclick="handleRegionPurchase('all')" style="margin:6px 0 10px;">✝ ${t('premiumUnlockAll')} — ${t('premiumPriceAll')}</button>`
+    }
     <button class="premium-close" onclick="closePremiumModal()">${t('premiumLater')}</button>`;
   document.getElementById('premium-modal').classList.add('open');
 }
 function closePremiumModal(){document.getElementById('premium-modal').classList.remove('open');}
+// ===================== STRIPE PAYMENT LINK =====================
+// Pega aquí la URL de tu Payment Link de Stripe (test o live):
+const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/test_cNicMY3nn97C5dFbJhfIs00'; // Peregrin Premium 4,99€ (TEST)
+
 function handleRegionPurchase(region){
-  if(!window._currentUser){
-    showToast({en:'Please sign in first',es:'Inicia sesión primero',fr:'Connecte-toi d\'abord',it:'Accedi prima',pt:'Inicia sessão primeiro'}[currentLang]||'Please sign in first');
+  if(!STRIPE_PAYMENT_LINK){
+    showToast({en:'💳 Payment system being configured',es:'💳 Sistema de pago en configuración',fr:'💳 Système de paiement en configuration',it:'💳 Sistema di pagamento in configurazione',pt:'💳 Sistema de pagamento em configuração'}[currentLang]||'💳 Payment system being configured');
     return;
   }
-  showToast({en:'⏳ Redirecting to payment...',es:'⏳ Redirigiendo al pago...',fr:'⏳ Redirection...',it:'⏳ Reindirizzamento...',pt:'⏳ A redirecionar...'}[currentLang]||'⏳ Redirecting...');
-  closePremiumModal();
-  fetch('https://createcheckoutsession-mbdckllzga-uc.a.run.app',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({userId:window._currentUser.uid, region})
-  })
-  .then(r=>r.json())
-  .then(data=>{
-    if(data.url) window.location.href=data.url;
-    else showToast('❌ Error: '+(data.error||'Unknown error'));
-  })
-  .catch(()=>showToast({en:'❌ Connection error',es:'❌ Error de conexión',fr:'❌ Erreur de connexion',it:'❌ Errore di connessione',pt:'❌ Erro de ligação'}[currentLang]||'❌ Error'));
+  const uid = window._currentUser?.uid || '';
+  const sep = STRIPE_PAYMENT_LINK.includes('?') ? '&' : '?';
+  // client_reference_id viaja a Stripe y vuelve en el webhook si algún día se añade
+  window.location.href = STRIPE_PAYMENT_LINK + sep + 'client_reference_id=' + encodeURIComponent(uid);
 }
 
 // ===================== VISITS =====================
@@ -1649,28 +1641,33 @@ const _db   = firebase.firestore();
 window._fbSignInEmail  = (e,p) => _auth.signInWithEmailAndPassword(e,p);
 window._fbCreateUser   = (e,p) => _auth.createUserWithEmailAndPassword(e,p);
 window._fbSignOut      = ()    => _auth.signOut();
-window._fbGetDoc       = (uid) => _db.collection('users').doc(uid).get({ source: 'server' });
+window._fbGetDoc       = (uid) => _db.collection('users').doc(uid).get({source:'server'}).catch(()=>_db.collection('users').doc(uid).get());
 window._fbSetDoc       = (uid,d) => _db.collection('users').doc(uid).set(d,{merge:true});
 
 _auth.getRedirectResult().catch(()=>{});
-_auth.onAuthStateChanged(user=>{
+_auth.onAuthStateChanged(async user=>{
   window._currentUser=user||null;
   if(user){
     document.getElementById('auth-screen').style.display='none';
     document.getElementById('app-wrapper').style.display='flex';
     if(!map) initMap();
     setTimeout(()=>{ if(map) map.invalidateSize(); },150);
-    const params=new URLSearchParams(window.location.search);
-    if(params.get('payment')==='success'){
-      history.replaceState({},'',window.location.pathname);
-      setTimeout(()=>{
-        window._loadUserData(user.uid).then(()=>{
-          showToast({en:'✅ Premium activated! Thank you.',es:'✅ ¡Premium activado! Gracias.',fr:'✅ Premium activé ! Merci.',it:'✅ Premium attivato! Grazie.',pt:'✅ Premium ativado! Obrigado.'}[currentLang]||'✅ Premium activated!');
-        });
-      }, 1500);
-    } else {
-      window._loadUserData(user.uid);
+
+    // ===== DETECCIÓN DE PAGO COMPLETADO =====
+    const urlParams = new URLSearchParams(window.location.search);
+    if(urlParams.get('payment') === 'success'){
+      try{
+        await window._fbSetDoc(user.uid, {isPremium:true, unlockedRegions:['all']});
+        console.log('[Peregrin] Pago detectado → Premium activado');
+        // Limpiar la URL para que no se reactive al recargar
+        history.replaceState({}, document.title, window.location.pathname);
+        showToast('✝ Premium activado. ¡Gracias!');
+      }catch(e){ console.error('[Peregrin] Error activando Premium:', e); }
     }
+    // ========================================
+
+    await window._loadUserData(user.uid);
+    console.log('[Peregrin] Visitas cargadas:', Object.keys(visits).length, '| Regiones:', unlockedRegions);
   } else {
     document.getElementById('auth-screen').style.display='flex';
     document.getElementById('app-wrapper').style.display='none';
