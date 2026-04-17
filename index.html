@@ -946,10 +946,48 @@ const achievements = [
 
 // ===================== STATE =====================
 let visits={}, unlockedRegions=[], currentLang='en', currentScreen='map', currentCountry='be', map=null, markers={}, activeRouteFilter=null, pilgrimName='';
+let markerDisplayPositions=null;
 
 const regionMap = {europe:['be','es','pt','fr','it','pl','ie','de','at','hr','ba'], americas:['mx','br','ar','pe','co','bo','us','ca'], asia:['ph','in','kr','jp']};
 function getRegion(cid){ for(const [r,ids] of Object.entries(regionMap)) if(ids.includes(cid)) return r; return null; }
 function isRegionUnlocked(region){ return hasTesterAccess() || unlockedRegions.includes('all')||unlockedRegions.includes(region); }
+
+function getMarkerDisplayPositions(){
+  if(markerDisplayPositions) return markerDisplayPositions;
+  const threshold = 0.012;
+  const offsetRadius = 0.008;
+  markerDisplayPositions = {};
+  const ordered = [...sanctuaries].sort((a,b)=>a.id-b.id);
+  const assigned = new Set();
+
+  ordered.forEach(seed => {
+    if(assigned.has(seed.id)) return;
+    const cluster = ordered.filter(candidate =>
+      !assigned.has(candidate.id) &&
+      Math.abs(candidate.lat-seed.lat) <= threshold &&
+      Math.abs(candidate.lng-seed.lng) <= threshold
+    );
+
+    cluster.forEach(item => assigned.add(item.id));
+
+    if(cluster.length===1){
+      markerDisplayPositions[seed.id] = {lat:seed.lat, lng:seed.lng};
+      return;
+    }
+
+    const centerLat = cluster.reduce((sum,item)=>sum+item.lat,0)/cluster.length;
+    const centerLng = cluster.reduce((sum,item)=>sum+item.lng,0)/cluster.length;
+    cluster.forEach((item,index)=>{
+      const angle = (Math.PI*2*index)/cluster.length;
+      markerDisplayPositions[item.id] = {
+        lat:centerLat + Math.sin(angle)*offsetRadius,
+        lng:centerLng + Math.cos(angle)*offsetRadius
+      };
+    });
+  });
+
+  return markerDisplayPositions;
+}
 
 // ===================== FIREBASE =====================
 window._loadUserData = async function(uid){
@@ -1189,8 +1227,10 @@ function initMap(){
   map=L.map('map',{zoomControl:false,tap:false,tapTolerance:15}).setView([25,15],3);
   L.control.zoom({position:'topright'}).addTo(map);
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'© OpenStreetMap © CARTO',maxZoom:18}).addTo(map);
+  const displayPositions = getMarkerDisplayPositions();
   sanctuaries.forEach(s=>{
-    const marker=L.marker([s.lat,s.lng],{icon:createMarkerIcon(s,false,false)}).addTo(map);
+    const pos = displayPositions[s.id] || {lat:s.lat,lng:s.lng};
+    const marker=L.marker([pos.lat,pos.lng],{icon:createMarkerIcon(s,false,false)}).addTo(map);
     markers[s.id]=marker;
     marker.bindPopup(buildPopupContent(s),{maxWidth:280,closeButton:true});
   });
@@ -1277,9 +1317,9 @@ function refreshAll(){renderExplore();renderPassport();renderAchievements();rend
 
 function renderExplore(){
   const container=document.querySelector('.explore-screen');
-  const europeCountries = countries.filter(x=>!['mx','br','ar','pe','co','ph','in','kr','jp'].includes(x.id));
-  const americaCountries = countries.filter(x=>['mx','br','ar','pe','co'].includes(x.id));
-  const asiaCountries = countries.filter(x=>['ph','in','kr','jp'].includes(x.id));
+  const europeCountries = countries.filter(x=>getRegion(x.id)==='europe');
+  const americaCountries = countries.filter(x=>getRegion(x.id)==='americas');
+  const asiaCountries = countries.filter(x=>getRegion(x.id)==='asia');
   const renderCountryList = list => list.map(c=>{
     const cs=sanctuaries.filter(s=>s.country===c.id);
     const vc=cs.filter(s=>isVisited(s.id)).length;
@@ -1446,7 +1486,8 @@ function generateCertificate(countryId){
   const cs = sanctuaries.filter(s => s.country === countryId);
   const {jsPDF} = window.jspdf;
   const doc = new jsPDF({orientation:'landscape', unit:'mm', format:'a4'});
-  const W = 297, H = 210;
+  const W = doc.internal.pageSize.getWidth();
+  const H = doc.internal.pageSize.getHeight();
   const BURG  = [114, 47, 55];
   const GOLD  = [197, 150, 58];
   const GOLDL = [232, 201, 122];
