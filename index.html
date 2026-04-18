@@ -110,7 +110,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 /* PASSPORT */
 .passport-screen{background:var(--cream);padding:20px;}
 .passport-header{text-align:center;padding:30px 20px;background:linear-gradient(135deg,var(--burgundy),var(--burgundy-dark));border-radius:16px;color:var(--cream);margin-bottom:24px;position:relative;overflow:hidden;}
-.passport-header::before{content:'?';position:absolute;font-size:200px;opacity:0.05;top:-40px;right:-20px;}
+.passport-header::before{content:'✝';position:absolute;font-size:200px;opacity:0.05;top:-40px;right:-20px;}
 .passport-title{font-family:'Crimson Pro',serif;font-size:26px;font-weight:600;margin-bottom:4px;}
 .passport-subtitle{font-size:13px;opacity:0.7;}
 .passport-stats{display:flex;gap:16px;justify-content:center;margin-top:20px;}
@@ -120,7 +120,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .passport-section-title{font-family:'Crimson Pro',serif;font-size:20px;font-weight:600;margin-bottom:14px;color:var(--brown);}
 .stamp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px;}
 .stamp-card{background:var(--white);border-radius:12px;padding:16px;box-shadow:var(--shadow);position:relative;overflow:hidden;cursor:pointer;}
-.stamp-card::after{content:'?';position:absolute;top:8px;right:10px;width:22px;height:22px;background:var(--gold);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+.stamp-card::after{content:'✓';position:absolute;top:8px;right:10px;width:22px;height:22px;background:var(--gold);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
 .stamp-icon{font-size:28px;margin-bottom:8px;}
 .stamp-name{font-family:'Crimson Pro',serif;font-size:14px;font-weight:600;margin-bottom:2px;}
 .stamp-date{font-size:11px;color:var(--brown-light);}
@@ -168,7 +168,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .modal-overlay.open .modal-content{transform:translateY(0);}
 .modal-handle{width:40px;height:4px;background:var(--cream-dark);border-radius:2px;margin:10px auto 0;}
 .modal-hero{width:100%;height:200px;display:flex;align-items:center;justify-content:center;font-size:70px;position:relative;overflow:hidden;}
-.modal-hero::before{content:'?';position:absolute;font-size:180px;opacity:0.07;top:-20px;right:-10px;color:white;}
+.modal-hero::before{content:'✝';position:absolute;font-size:180px;opacity:0.07;top:-20px;right:-10px;color:white;}
 .modal-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(transparent,rgba(0,0,0,0.15));}
 .hero-be{background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);}.hero-es{background:linear-gradient(135deg,#8B1A1A,#C41E3A,#E8A317);}
 .hero-pt{background:linear-gradient(135deg,#006600,#009900,#CC0000);}.hero-fr{background:linear-gradient(135deg,#002654,#2B4570,#C8102E);}
@@ -616,11 +616,19 @@ function t(key){ return (i18n[currentLang]||i18n.en)[key] || i18n.en[key] || key
 function sd(s){ return (currentLang==='es' && s.es) ? s.es : (currentLang==='fr' && s.fr) ? s.fr : (currentLang==='it' && s.it) ? s.it : (currentLang==='pt' && s.pt) ? s.pt : s; }
 function cn(c){ if(currentLang==='en') return c.name; return c['name'+currentLang.charAt(0).toUpperCase()+currentLang.slice(1)] || c.name; }
 
-// Temporary private beta access. Remove before public launch.
+// Temporary private beta access. Limited to localhost during development.
 const TESTER_ACCESS_FLAG = 'peregrin_beta_tester_access';
 const TESTER_ACCESS_CODE = 'PEREGRIN-FAMILIA-2026';
 
+function canUseTesterAccess(){
+  return ['localhost','127.0.0.1'].includes(window.location.hostname);
+}
+
 function hasTesterAccess(){
+  if(!canUseTesterAccess()){
+    try{ localStorage.removeItem(TESTER_ACCESS_FLAG); }catch(e){}
+    return false;
+  }
   try{ return localStorage.getItem(TESTER_ACCESS_FLAG)==='enabled'; }catch(e){ return false; }
 }
 
@@ -1138,6 +1146,7 @@ function renderRegionOption(region, icon, labelKey, subKey, priceKey){
 }
 
 function handleTesterAccessToggle(){
+  if(!canUseTesterAccess()) return;
   if(hasTesterAccess()){
     try{ localStorage.removeItem(TESTER_ACCESS_FLAG); }catch(e){}
     refreshAll();
@@ -1161,7 +1170,8 @@ function handleTesterAccessToggle(){
 
 function openPremiumModal(){
   const allUnlocked = hasFullPremiumAccess() || (isRegionUnlocked('europe')&&isRegionUnlocked('americas')&&isRegionUnlocked('asia'));
-  const testerEnabled = hasTesterAccess();
+  const testerAccessAvailable = canUseTesterAccess();
+  const testerEnabled = testerAccessAvailable && hasTesterAccess();
   document.getElementById('premium-card-content').innerHTML=`
     <div class="premium-cross">✦</div>
     <div class="premium-title">${t('premiumTitle')}</div>
@@ -1171,10 +1181,13 @@ function openPremiumModal(){
       : `<div style="text-align:center;margin:18px 0 6px;font-size:12px;color:var(--brown-light);">${t('premiumOnetime')}</div>
          <button class="premium-cta" onclick="handleRegionPurchase('all')" style="margin:6px 0 10px;">✨ ${t('premiumUnlockAll')} — ${t('premiumPriceAll')}</button>`
     }
-    <div style="margin-top:10px;padding-top:12px;border-top:1px solid var(--cream-dark);">
-      <div style="font-size:12px;color:var(--brown-light);margin-bottom:8px;">${t('testerAccessLabel')} · ${t('testerAccessHint')}</div>
-      <button class="premium-close" onclick="handleTesterAccessToggle()" style="margin-bottom:8px;">${testerEnabled?t('testerDisableBtn'):t('testerUnlockBtn')}</button>
-    </div>
+    ${testerAccessAvailable
+      ? `<div style="margin-top:10px;padding-top:12px;border-top:1px solid var(--cream-dark);">
+           <div style="font-size:12px;color:var(--brown-light);margin-bottom:8px;">${t('testerAccessLabel')} · ${t('testerAccessHint')}</div>
+           <button class="premium-close" onclick="handleTesterAccessToggle()" style="margin-bottom:8px;">${testerEnabled?t('testerDisableBtn'):t('testerUnlockBtn')}</button>
+         </div>`
+      : ''
+    }
     <button class="premium-close" onclick="closePremiumModal()">${t('premiumLater')}</button>`;
   document.getElementById('premium-modal').classList.add('open');
 }
