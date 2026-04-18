@@ -36,7 +36,10 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .auth-tab-row{display:flex;margin-bottom:24px;background:var(--cream);border-radius:10px;padding:4px;gap:4px;}
 .auth-tab{flex:1;padding:8px;border:none;background:none;border-radius:8px;font-family:'Jost',sans-serif;font-size:13px;font-weight:500;cursor:pointer;color:var(--brown-light);transition:all 0.2s;}
 .auth-tab.active{background:var(--white);color:var(--burgundy);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,0.1);}
+.auth-field{margin-bottom:12px;}
+.auth-label{display:block;font-size:12px;font-weight:600;color:var(--brown);margin:0 0 6px 2px;letter-spacing:0.2px;}
 .auth-input{width:100%;padding:12px 14px;border:2px solid var(--cream-dark);border-radius:10px;font-family:'Jost',sans-serif;font-size:14px;margin-bottom:12px;color:var(--brown);outline:none;transition:border 0.2s;}
+.auth-field .auth-input{margin-bottom:0;}
 .auth-input:focus{border-color:var(--burgundy);}
 .auth-btn-primary{width:100%;padding:13px;background:var(--burgundy);color:var(--cream);border:none;border-radius:10px;font-family:'Jost',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;margin-bottom:10px;}
 .auth-btn-primary:hover{background:var(--burgundy-dark);}
@@ -269,9 +272,18 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
       <button class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Register</button>
     </div>
     <div class="auth-error" id="auth-error"></div>
-    <input class="auth-input" type="text" id="auth-name" placeholder="Your full name" style="display:none;">
-    <input class="auth-input" type="email" id="auth-email" placeholder="Email address">
-    <input class="auth-input" type="password" id="auth-password" placeholder="Password">
+    <div class="auth-field" id="auth-name-field" style="display:none;">
+      <label class="auth-label" id="auth-name-label" for="auth-name">Your full name</label>
+      <input class="auth-input" type="text" id="auth-name" placeholder="Your full name" autocomplete="name">
+    </div>
+    <div class="auth-field">
+      <label class="auth-label" id="auth-email-label" for="auth-email">Email address</label>
+      <input class="auth-input" type="email" id="auth-email" placeholder="Email address" autocomplete="email">
+    </div>
+    <div class="auth-field">
+      <label class="auth-label" id="auth-password-label" for="auth-password">Password</label>
+      <input class="auth-input" type="password" id="auth-password" placeholder="Password" autocomplete="current-password">
+    </div>
     <button class="auth-btn-primary" id="auth-submit" onclick="handleEmailAuth()">Sign in</button>
   </div>
 </div>
@@ -362,6 +374,7 @@ const i18n = {
     appSubtitle:'Your pilgrim passport', navMap:'Map', navCountries:'Countries',
     navPassport:'Passport', navRoutes:'Routes', navProfile:'Profile',
     signIn:'Sign in', register:'Register', createAccount:'Create account',
+    emailLabel:'Email address', passwordLabel:'Password', nameLabel:'Your full name',
     emailPlaceholder:'Email address', passwordPlaceholder:'Password', namePlaceholder:'Your full name',
     continueGoogle:'Continue with Google', signOut:'Sign out',
     passportTitle:'Pilgrim Passport', visited:'Visited', remaining:'Remaining',
@@ -409,6 +422,7 @@ const i18n = {
     appSubtitle:'Tu pasaporte peregrino', navMap:'Mapa', navCountries:'Países',
     navPassport:'Pasaporte', navRoutes:'Rutas', navProfile:'Perfil',
     signIn:'Iniciar sesión', register:'Registrarse', createAccount:'Crear cuenta',
+    emailLabel:'Correo electrónico', passwordLabel:'Contraseña', nameLabel:'Nombre completo',
     emailPlaceholder:'Correo electrónico', passwordPlaceholder:'Contraseña', namePlaceholder:'Tu nombre completo',
     continueGoogle:'Continuar con Google', signOut:'Cerrar sesión',
     passportTitle:'Pasaporte Peregrino', visited:'Visitados', remaining:'Pendientes',
@@ -456,6 +470,7 @@ const i18n = {
     appSubtitle:'Votre passeport de pèlerin', navMap:'Carte', navCountries:'Pays',
     navPassport:'Passeport', navRoutes:'Itinéraires', navProfile:'Profil',
     signIn:'Se connecter', register:"S'inscrire", createAccount:'Créer un compte',
+    emailLabel:'Adresse e-mail', passwordLabel:'Mot de passe', nameLabel:'Nom complet',
     emailPlaceholder:'Adresse e-mail', passwordPlaceholder:'Mot de passe', namePlaceholder:'Votre nom complet',
     continueGoogle:'Continuer avec Google', signOut:'Se déconnecter',
     passportTitle:'Passeport du Pèlerin', visited:'Visités', remaining:'Restants',
@@ -503,6 +518,7 @@ const i18n = {
     appSubtitle:'Il tuo passaporto del pellegrino', navMap:'Mappa', navCountries:'Paesi',
     navPassport:'Passaporto', navRoutes:'Itinerari', navProfile:'Profilo',
     signIn:'Accedi', register:'Registrati', createAccount:'Crea account',
+    emailLabel:'Indirizzo e-mail', passwordLabel:'Password', nameLabel:'Nome completo',
     emailPlaceholder:'Indirizzo e-mail', passwordPlaceholder:'Password', namePlaceholder:'Il tuo nome completo',
     continueGoogle:'Continua con Google', signOut:'Esci',
     passportTitle:'Passaporto del Pellegrino', visited:'Visitati', remaining:'Rimanenti',
@@ -550,6 +566,7 @@ const i18n = {
     appSubtitle:'O seu passaporte de peregrino', navMap:'Mapa', navCountries:'Países',
     navPassport:'Passaporte', navRoutes:'Rotas', navProfile:'Perfil',
     signIn:'Entrar', register:'Registar', createAccount:'Criar conta',
+    emailLabel:'Endereço de e-mail', passwordLabel:'Palavra-passe', nameLabel:'Nome completo',
     emailPlaceholder:'Endereço de e-mail', passwordPlaceholder:'Palavra-passe', namePlaceholder:'O seu nome completo',
     continueGoogle:'Continuar com Google', signOut:'Sair',
     passportTitle:'Passaporte do Peregrino', visited:'Visitados', remaining:'Restantes',
@@ -947,6 +964,17 @@ const achievements = [
 // ===================== STATE =====================
 let visits={}, unlockedRegions=[], currentLang='en', currentScreen='map', currentCountry='be', map=null, markers={}, activeRouteFilter=null, pilgrimName='';
 let markerDisplayPositions=null;
+let shouldReturnHomeOnResume=false;
+let explicitAuthAction=false;
+let shouldBlockRestoredSession=false;
+let didRunRestoreSessionGate=false;
+const RUNTIME_SESSION_FLAG='peregrin_runtime_session';
+try{
+  shouldBlockRestoredSession = sessionStorage.getItem(RUNTIME_SESSION_FLAG)!=='1';
+  sessionStorage.setItem(RUNTIME_SESSION_FLAG,'1');
+}catch(e){
+  shouldBlockRestoredSession = false;
+}
 
 const regionMap = {europe:['be','es','pt','fr','it','pl','ie','de','at','hr','ba'], americas:['mx','br','ar','pe','co','bo','us','ca'], asia:['ph','in','kr','jp']};
 function getRegion(cid){ for(const [r,ids] of Object.entries(regionMap)) if(ids.includes(cid)) return r; return null; }
@@ -1037,15 +1065,22 @@ function applyLang(){
   const tabLogin = document.getElementById('tab-login');
   const tabReg = document.getElementById('tab-register');
   const btnSubmit = document.getElementById('auth-submit');
+  const nameLabel = document.getElementById('auth-name-label');
+  const emailLabel = document.getElementById('auth-email-label');
+  const passLabel = document.getElementById('auth-password-label');
   const emailEl = document.getElementById('auth-email');
   const passEl = document.getElementById('auth-password');
   if(tabLogin) tabLogin.textContent = t('signIn');
   if(tabReg) tabReg.textContent = t('register');
   if(btnSubmit) btnSubmit.textContent = currentAuthTab==='login'?t('signIn'):t('createAccount');
+  if(nameLabel) nameLabel.textContent = t('nameLabel');
+  if(emailLabel) emailLabel.textContent = t('emailLabel');
+  if(passLabel) passLabel.textContent = t('passwordLabel');
   if(emailEl) emailEl.placeholder = t('emailPlaceholder');
   if(passEl) passEl.placeholder = t('passwordPlaceholder');
   const nameEl = document.getElementById('auth-name');
   if(nameEl) nameEl.placeholder = t('namePlaceholder');
+  if(passEl) passEl.autocomplete = currentAuthTab==='login' ? 'current-password' : 'new-password';
 }
 
 // ===================== AUTH =====================
@@ -1055,7 +1090,8 @@ function switchAuthTab(tab){
   document.getElementById('tab-login').classList.toggle('active',tab==='login');
   document.getElementById('tab-register').classList.toggle('active',tab==='register');
   document.getElementById('auth-submit').textContent=tab==='login'?t('signIn'):t('createAccount');
-  document.getElementById('auth-name').style.display=tab==='register'?'block':'none';
+  document.getElementById('auth-name-field').style.display=tab==='register'?'block':'none';
+  document.getElementById('auth-password').autocomplete=tab==='login'?'current-password':'new-password';
   document.getElementById('auth-error').textContent='';
 }
 async function handleEmailAuth(){
@@ -1066,6 +1102,7 @@ async function handleEmailAuth(){
   errEl.textContent='';
   if(!email||!pass){errEl.textContent=t('authErrFields');return;}
   if(currentAuthTab==='register'&&!nameVal){errEl.textContent=t('authErrName');return;}
+  explicitAuthAction=true;
   try{
     if(currentAuthTab==='login') await window._fbSignInEmail(email,pass);
     else {
@@ -1080,6 +1117,7 @@ async function handleEmailAuth(){
 }
 
 async function handleSignOut(){
+  explicitAuthAction=false;
   await window._fbSignOut();
   visits={};unlockedRegions=[];pilgrimName='';
 }
@@ -1195,6 +1233,25 @@ function switchScreen(screen){
     setTimeout(()=>map.invalidateSize(),50);
   }
 }
+function returnToMainView(){
+  switchScreen('map');
+  clearRouteFilter();
+  closeModal();
+  if(map){
+    map.closePopup();
+    setTimeout(()=>map.invalidateSize(),50);
+  }
+}
+document.addEventListener('visibilitychange', ()=>{
+  if(document.hidden){
+    shouldReturnHomeOnResume = !!window._currentUser;
+    return;
+  }
+  if(shouldReturnHomeOnResume){
+    shouldReturnHomeOnResume = false;
+    if(window._currentUser) returnToMainView();
+  }
+});
 
 // ===================== MAP =====================
 function createMarkerIcon(s,visited,highlight){
@@ -1492,7 +1549,7 @@ function generateCertificate(countryId){
   const country = countries.find(c => c.id === countryId);
   const cs = sanctuaries.filter(s => s.country === countryId);
   const {jsPDF} = window.jspdf;
-  const doc = new jsPDF({orientation:'landscape', unit:'mm', format:'a4'});
+  const doc = new jsPDF({orientation:'landscape', unit:'mm', format:[297,210], compress:true});
   const W = doc.internal.pageSize.getWidth();
   const H = doc.internal.pageSize.getHeight();
   const BURG  = [114, 47, 55];
@@ -1526,10 +1583,30 @@ function generateCertificate(countryId){
     it:'PEREGRIN  \u2014  IL PASSAPORTO DIGITALE DEL PELLEGRINO CATTOLICO',
     pt:'PEREGRIN  \u2014  O PASSAPORTE DIGITAL DO PEREGRINO CATÓLICO'
   };
+  const meta = {
+    en:{completed:'Completed pilgrimage', sanctuaries:'SANCTUARIES', issuedBy:'Issued by Peregrin', certNo:'Certificate No.'},
+    es:{completed:'Peregrinación completada', sanctuaries:'SANTUARIOS', issuedBy:'Emitido por Peregrin', certNo:'Certificado n.º'},
+    fr:{completed:'Pèlerinage accompli', sanctuaries:'SANCTUAIRES', issuedBy:'Émis par Peregrin', certNo:'Certificat n°'},
+    it:{completed:'Pellegrinaggio compiuto', sanctuaries:'SANTUARI', issuedBy:'Emesso da Peregrin', certNo:'Certificato n.'},
+    pt:{completed:'Peregrinação concluída', sanctuaries:'SANTUÁRIOS', issuedBy:'Emitido por Peregrin', certNo:'Certificado n.º'}
+  };
+  const metaText = meta[currentLang]||meta.en;
+  const user = window._currentUser;
+  const raw = pilgrimName || user?.displayName || user?.email?.split('@')[0] || 'Pilgrim';
+  const name = raw.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\x20-\x7E]/g,'').trim()||'Pilgrim';
+  const year = new Date().getFullYear().toString();
+  const certNo = `${countryId.toUpperCase()}-${year}-${String(cs.length).padStart(2,'0')}`;
+  const panelW = 82;
+  const gapW = 6;
+  const rLeft = 14 + panelW + gapW + 10;
+  const rWidth = W - rLeft - 18;
+  const rCenter = rLeft + rWidth/2;
 
   // === BACKGROUND ===
   doc.setFillColor(...CREAM);
   doc.rect(0, 0, W, H, 'F');
+  doc.setFillColor(248, 239, 224);
+  doc.roundedRect(rLeft-4, 18, rWidth+8, H-36, 6, 6, 'F');
 
   // === BURGUNDY BORDER FRAME ===
   doc.setFillColor(...BURG);
@@ -1544,6 +1621,8 @@ function generateCertificate(countryId){
   doc.rect(11, 11, W-22, H-22);
   doc.setLineWidth(0.3);
   doc.rect(14, 14, W-28, H-28);
+  doc.setDrawColor(...GOLDL);
+  doc.roundedRect(rLeft-4, 18, rWidth+8, H-36, 6, 6);
 
   // === CORNER DECORATIONS ===
   [[14,14],[W-14,14],[14,H-14],[W-14,H-14]].forEach(([x,y])=>{
@@ -1556,47 +1635,47 @@ function generateCertificate(countryId){
   });
 
   // === LEFT PANEL (burgundy) ===
-  const panelW = 85;
   doc.setFillColor(...BURG);
-  doc.rect(14, 14, panelW, H-28, 'F');
+  doc.roundedRect(14, 14, panelW, H-28, 5, 5, 'F');
   doc.setFillColor(...GOLD);
-  doc.rect(14+panelW, 14, 2, H-28, 'F');
+  doc.roundedRect(14+panelW+2, 14, 3, H-28, 2, 2, 'F');
 
   // Cross on panel
   const cx = 14 + panelW/2;
   doc.setFillColor(...GOLD);
-  doc.rect(cx-2.5, 30, 5, 30, 'F');
-  doc.rect(cx-12, 42, 24, 5, 'F');
+  doc.rect(cx-2.5, 26, 5, 32, 'F');
+  doc.rect(cx-12, 38, 24, 5, 'F');
   doc.setFillColor(...BURG);
-  doc.rect(cx-0.8, 33, 1.6, 24, 'F');
-  doc.rect(cx-9.5, 43.5, 19, 2, 'F');
+  doc.rect(cx-0.8, 29, 1.6, 26, 'F');
+  doc.rect(cx-9.5, 39.5, 19, 2, 'F');
 
   // PEREGRIN title
   doc.setFont('helvetica','bold');
-  doc.setFontSize(28);
+  doc.setFontSize(27);
   doc.setTextColor(...WHITE);
-  doc.text('PEREGRIN', cx, 78, {align:'center'});
+  doc.text('PEREGRIN', cx, 72, {align:'center'});
 
   // Subtitle
   doc.setFont('helvetica','normal');
   doc.setFontSize(6.5);
   doc.setTextColor(...GOLDL);
   const subLines = doc.splitTextToSize(subtitles[currentLang]||subtitles.en, panelW-16);
-  doc.text(subLines, cx, 86, {align:'center'});
+  doc.text(subLines, cx, 80, {align:'center'});
 
   // Decorative line
   doc.setDrawColor(...GOLD);
   doc.setLineWidth(0.4);
-  doc.line(cx-25, 94, cx+25, 94);
+  doc.line(cx-25, 89, cx+25, 89);
 
   // Country name
   doc.setFont('helvetica','bold');
-  doc.setFontSize(14);
+  doc.setFontSize(13);
   doc.setTextColor(...GOLDL);
-  doc.text(cn(country).toUpperCase(), cx, 105, {align:'center'});
+  const countryLines = doc.splitTextToSize(cn(country).toUpperCase(), panelW-16);
+  doc.text(countryLines, cx, 100, {align:'center'});
   doc.setFontSize(10);
   doc.setTextColor(...WHITE);
-  doc.text(new Date().getFullYear().toString(), cx, 114, {align:'center'});
+  doc.text(year, cx, 112, {align:'center'});
 
   // Seal
   const sy = 145;
@@ -1626,20 +1705,37 @@ function generateCertificate(countryId){
   doc.text(qLines, cx, H-32, {align:'center'});
 
   // === RIGHT SIDE ===
-  const rLeft = 14 + panelW + 2 + 12;
-  const rWidth = W - rLeft - 20;
-  const rCenter = rLeft + rWidth/2;
+  doc.setDrawColor(238, 223, 193);
+  doc.setLineWidth(0.5);
+  doc.circle(rCenter, 131, 34);
+  doc.circle(rCenter, 131, 24);
+  doc.line(rCenter, 104, rCenter, 158);
+  doc.line(rCenter-16, 131, rCenter+16, 131);
+
+  const badgeW = 40;
+  const badgeH = 18;
+  const badgeX = rLeft + rWidth - badgeW;
+  const badgeY = 24;
+  doc.setFillColor(...BURG);
+  doc.roundedRect(badgeX, badgeY, badgeW, badgeH, 4, 4, 'F');
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(15);
+  doc.setTextColor(...GOLDL);
+  doc.text(String(cs.length).padStart(2,'0'), badgeX + badgeW/2, badgeY + 7, {align:'center'});
+  doc.setFontSize(4.5);
+  doc.setTextColor(...CREAM);
+  doc.text(metaText.sanctuaries, badgeX + badgeW/2, badgeY + 12.5, {align:'center'});
 
   // Certificate title
   doc.setFont('helvetica','bold');
   doc.setFontSize(11);
   doc.setTextColor(...GOLD);
-  doc.text(t('certTitle').toUpperCase(), rCenter, 30, {align:'center'});
+  doc.text(t('certTitle').toUpperCase(), rCenter, 31, {align:'center'});
   const titleW = doc.getTextWidth(t('certTitle').toUpperCase());
   doc.setDrawColor(...GOLD);
   doc.setLineWidth(0.3);
-  doc.line(rLeft, 32, rCenter-titleW/2-6, 32);
-  doc.line(rCenter+titleW/2+6, 32, rLeft+rWidth, 32);
+  doc.line(rLeft, 33, rCenter-titleW/2-6, 33);
+  doc.line(rCenter+titleW/2+6, 33, rLeft+rWidth, 33);
 
   // Certify text
   doc.setFont('helvetica','italic');
@@ -1648,48 +1744,56 @@ function generateCertificate(countryId){
   doc.text(t('certText1'), rCenter, 44, {align:'center'});
 
   // Pilgrim name
-  const user = window._currentUser;
-  const raw = pilgrimName || user?.displayName || user?.email?.split('@')[0] || 'Pilgrim';
-  const name = raw.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\x20-\x7E]/g,'').trim()||'Pilgrim';
   doc.setFont('times','bolditalic');
-  doc.setFontSize(26);
+  let nameSize = 26;
+  doc.setFontSize(nameSize);
+  while(doc.getTextWidth(name) > rWidth-24 && nameSize > 18){
+    nameSize -= 1;
+    doc.setFontSize(nameSize);
+  }
   doc.setTextColor(...BURG);
-  doc.text(name, rCenter, 56, {align:'center'});
+  doc.text(name, rCenter, 58, {align:'center'});
   const nw = doc.getTextWidth(name);
   doc.setDrawColor(...GOLD);
   doc.setLineWidth(0.5);
-  doc.line(rCenter-nw/2-4, 59, rCenter+nw/2+4, 59);
+  doc.line(rCenter-nw/2-4, 61, rCenter+nw/2+4, 61);
 
   // Completed text
   doc.setFont('helvetica','italic');
   doc.setFontSize(10);
   doc.setTextColor(...BROWNL);
-  doc.text(t('certText2'), rCenter, 68, {align:'center'});
+  doc.text(t('certText2'), rCenter, 71, {align:'center'});
   doc.setFont('helvetica','bold');
-  doc.setFontSize(13);
+  doc.setFontSize(11.5);
   doc.setTextColor(...BURG);
-  doc.text(cs.length + ' ' + t('certText3') + ' ' + cn(country), rCenter, 77, {align:'center'});
+  doc.text(metaText.completed.toUpperCase(), rCenter, 80, {align:'center'});
+  doc.setFillColor(250, 244, 233);
+  doc.setDrawColor(...GOLD);
+  doc.setLineWidth(0.25);
+  doc.roundedRect(rLeft+18, 85, rWidth-36, 12, 3, 3, 'FD');
+  doc.setFontSize(12);
+  doc.text(cs.length + ' ' + t('certText3') + ' ' + cn(country), rCenter, 92.5, {align:'center'});
 
   // Divider
   doc.setDrawColor(...GOLD);
   doc.setLineWidth(0.3);
-  doc.line(rLeft+10, 82, rLeft+rWidth-10, 82);
+  doc.line(rLeft+10, 101, rLeft+rWidth-10, 101);
 
   // === SANCTUARY LIST ===
-  const listStartY = 88;
-  const rowH = Math.min(10, (H - 60 - listStartY) / cs.length);
-  const listH = cs.length * rowH + 6;
+  const listStartY = 104;
+  const rowH = Math.min(9.2, Math.max(8.2, 56 / Math.max(cs.length,1)));
+  const listH = cs.length * rowH + 4;
   doc.setFillColor(...WHITE);
-  doc.roundedRect(rLeft+4, listStartY-2, rWidth-8, listH+2, 2, 2, 'F');
+  doc.roundedRect(rLeft+4, listStartY-3, rWidth-8, listH+4, 3, 3, 'F');
   doc.setDrawColor(...GOLDL);
   doc.setLineWidth(0.2);
-  doc.roundedRect(rLeft+4, listStartY-2, rWidth-8, listH+2, 2, 2);
+  doc.roundedRect(rLeft+4, listStartY-3, rWidth-8, listH+4, 3, 3);
 
   cs.forEach((s, i) => {
     const y = listStartY + 5 + i * rowH;
     if (i % 2 === 0) {
       doc.setFillColor(246, 236, 218);
-      doc.rect(rLeft+5, y-5.5, rWidth-10, rowH, 'F');
+      doc.roundedRect(rLeft+6, y-5.5, rWidth-12, rowH, 1.6, 1.6, 'F');
     }
     doc.setFillColor(...GOLD);
     doc.circle(rLeft+10, y-1, 1.2, 'F');
@@ -1720,7 +1824,11 @@ function generateCertificate(countryId){
   doc.setFont('helvetica','italic');
   doc.setFontSize(9);
   doc.setTextColor(...BROWN);
-  doc.text(t('certIssued') + ' ' + issued, rCenter, footY+8, {align:'center'});
+  doc.text(t('certIssued') + ' ' + issued, rLeft+8, footY+8);
+  doc.text(metaText.certNo + ' ' + certNo, rLeft+rWidth-8, footY+8, {align:'right'});
+  doc.setFont('times','italic');
+  doc.setTextColor(...BURG);
+  doc.text(metaText.issuedBy, rCenter, footY+16, {align:'center'});
 
   // Bottom bar
   doc.setFillColor(...BURG);
@@ -1730,7 +1838,8 @@ function generateCertificate(countryId){
   doc.setTextColor(...GOLDL);
   doc.text(footers[currentLang]||footers.en, W/2, H-3, {align:'center'});
 
-  doc.save('Peregrin_' + country.name + '_' + new Date().getFullYear() + '.pdf');
+  const safeCountryName = country.name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
+  doc.save('Peregrin_' + safeCountryName + '_' + year + '.pdf');
   showToast(t('certDownloaded'));
 }
 
@@ -1799,6 +1908,7 @@ firebase.initializeApp({
 });
 const _auth = firebase.auth();
 const _db   = firebase.firestore();
+_auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).catch(()=>{});
 
 window._fbSignInEmail  = (e,p) => _auth.signInWithEmailAndPassword(e,p);
 window._fbCreateUser   = (e,p) => _auth.createUserWithEmailAndPassword(e,p);
@@ -1808,6 +1918,14 @@ window._fbSetDoc       = (uid,d) => _db.collection('users').doc(uid).set(d,{merg
 
 _auth.getRedirectResult().catch(()=>{});
 _auth.onAuthStateChanged(async user=>{
+  const urlParams = new URLSearchParams(window.location.search);
+  const paymentSuccess = urlParams.get('payment') === 'success';
+  if(user && !didRunRestoreSessionGate && shouldBlockRestoredSession && !explicitAuthAction && !paymentSuccess){
+    didRunRestoreSessionGate = true;
+    await _auth.signOut().catch(()=>{});
+    return;
+  }
+  didRunRestoreSessionGate = true;
   window._currentUser=user||null;
   if(user){
     document.getElementById('auth-screen').style.display='none';
@@ -1815,8 +1933,6 @@ _auth.onAuthStateChanged(async user=>{
     if(!map) initMap();
     setTimeout(()=>{ if(map) map.invalidateSize(); },150);
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const paymentSuccess = urlParams.get('payment') === 'success';
     let paymentIntent = null;
     try{
       paymentIntent = JSON.parse(sessionStorage.getItem(PAYMENT_INTENT_FLAG) || 'null');
@@ -1834,6 +1950,7 @@ _auth.onAuthStateChanged(async user=>{
     try{ if(paymentSuccess) sessionStorage.removeItem(PAYMENT_INTENT_FLAG); }catch(e){}
 
     await window._loadUserData(user.uid);
+    returnToMainView();
 
     if(paymentSuccess && canTrustReturn){
       unlockedRegions = ['all'];
@@ -1842,6 +1959,9 @@ _auth.onAuthStateChanged(async user=>{
       showToast(t('premiumActivatedToast'));
     }
   } else {
+    switchAuthTab('login');
+    returnToMainView();
+    document.getElementById('auth-password').value='';
     document.getElementById('auth-screen').style.display='flex';
     document.getElementById('app-wrapper').style.display='none';
   }
