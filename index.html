@@ -1216,10 +1216,12 @@ function buildPopupContent(s){
     <div class="popup-loc">📍 ${d.city}, ${d.province}</div>
     <div class="popup-desc">${d.description.substring(0,120)}...</div>
     ${locked
-      ? `<button class="popup-locked" onclick="openPremiumModal();map.closePopup();">${t('lockBtn')}</button>`
-      : `<button class="popup-btn ${visited?'visited':'visit'}" onclick="toggleVisit(${s.id});map.closePopup();">${visited?t('visited_btn'):'📝 '+t('registerVisit')}</button>`}
-    <button class="popup-btn detail" onclick="openModal(${s.id});map.closePopup();">${t('viewDetails')}</button>
-    <a class="popup-maps-link" href="https://www.google.com/maps/search/${encodeURIComponent(d.name+' '+d.city)}/@${s.lat},${s.lng},17z" target="_blank">🗺️ ${t('howToGet')}</a>
+      ? `<button class="popup-locked" onclick="openPremiumModal();map.closePopup();">${t('lockBtn')}</button>
+         <button class="popup-btn detail" onclick="openPremiumModal();map.closePopup();">🔒 ${t('viewDetails')}</button>
+         <button class="popup-btn detail" onclick="openPremiumModal();map.closePopup();">🔒 ${t('howToGet')}</button>`
+      : `<button class="popup-btn ${visited?'visited':'visit'}" onclick="toggleVisit(${s.id});map.closePopup();">${visited?t('visited_btn'):'📝 '+t('registerVisit')}</button>
+         <button class="popup-btn detail" onclick="openModal(${s.id});map.closePopup();">${t('viewDetails')}</button>
+         <a class="popup-maps-link" href="https://www.google.com/maps/search/${encodeURIComponent(d.name+' '+d.city)}/@${s.lat},${s.lng},17z" target="_blank">🗺️ ${t('howToGet')}</a>`}
   </div>`
 }
 
@@ -1281,7 +1283,12 @@ function focusCountry(cid){
 // ===================== MODAL =====================
 function openModal(id){
   const s=sanctuaries.find(x=>x.id===id);if(!s)return;
-  const d=sd(s), visited=isVisited(s.id), locked=!isCountryUnlocked(s.country);
+  const locked=!isCountryUnlocked(s.country);
+  if(locked){
+    openPremiumModal();
+    return;
+  }
+  const d=sd(s), visited=isVisited(s.id);
   document.getElementById('modal-content').innerHTML=`
     <div class="modal-handle"></div>
     <div class="modal-hero hero-${s.country}"><span class="modal-hero-flag">${countries.find(x=>x.id===s.country)?.flag||''}</span>${s.icon}<span class="modal-hero-country">${cn(countries.find(x=>x.id===s.country))}</span><button class="modal-close" onclick="closeModal()">✕</button></div>
