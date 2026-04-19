@@ -1,0 +1,12 @@
+node_modules/
+www/index_backup.html
+android/.gradle/
+android/.idea/
+android/build/
+android/app/build/
+android/app/release/
+android/capacitor-cordova-android-plugins/build/
+android/local.properties
+android/keystore.properties
+*.keystore
+*.jks

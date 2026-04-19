@@ -346,8 +346,8 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
   <div class="onb-hero">
     <div class="onb-glow"></div>
     <div class="onb-orb"></div>
-    <div class="onb-float-card onb-float-card-left">✨ Sacred routes</div>
-    <div class="onb-float-card onb-float-card-right">📜 Beautiful certificates</div>
+    <div class="onb-float-card onb-float-card-left" id="onb-badge-routes">✨ Sacred routes</div>
+    <div class="onb-float-card onb-float-card-right" id="onb-badge-certificates">📜 Beautiful certificates</div>
     <div class="onb-scene">
       <div class="onb-hill-back"></div>
       <div class="onb-path"></div>
@@ -358,17 +358,17 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
     </div>
   </div>
   <div class="onb-logo">P<span>✦</span>REGRIN</div>
-  <div class="onb-tagline">The Pilgrim Passport</div>
-  <p class="onb-copy">Sacred places, living routes and beautifully kept milestones for every pilgrim journey.</p>
+  <div class="onb-tagline" id="onb-tagline">The Pilgrim Passport</div>
+  <p class="onb-copy" id="onb-copy">Sacred places, living routes and beautifully kept milestones for every pilgrim journey.</p>
   <div class="onb-stats">
-    <div class="onb-stat"><div class="onb-stat-num">111</div><div class="onb-stat-label">Sanctuaries</div></div>
+    <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-sanctuaries-count">111</div><div class="onb-stat-label" id="onb-stat-sanctuaries-label">Sanctuaries</div></div>
     <div class="onb-stat-div"></div>
-    <div class="onb-stat"><div class="onb-stat-num">23</div><div class="onb-stat-label">Countries</div></div>
+    <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-countries-count">23</div><div class="onb-stat-label" id="onb-stat-countries-label">Countries</div></div>
     <div class="onb-stat-div"></div>
-    <div class="onb-stat"><div class="onb-stat-num">3</div><div class="onb-stat-label">Continents</div></div>
+    <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-continents-count">3</div><div class="onb-stat-label" id="onb-stat-continents-label">Continents</div></div>
   </div>
-  <button class="onb-btn" onclick="closeOnboarding()">Begin your pilgrimage ✦</button>
-  <div class="onb-footer">111 SANCTUARIES · 23 COUNTRIES · 3 CONTINENTS</div>
+  <button class="onb-btn" id="onb-cta" onclick="closeOnboarding()">Begin your pilgrimage ✦</button>
+  <div class="onb-footer" id="onb-footer">111 SANCTUARIES · 23 COUNTRIES · 3 CONTINENTS</div>
 </div>
 
 <!-- APP -->
@@ -470,7 +470,14 @@ const i18n = {
     authErrInUse:'This email is already registered.', authErrWeak:'Password must be at least 6 characters.',
     authErrInvalidEmail:'Invalid email.', authErrInvalidCred:'Incorrect email or password.',
     authErrGeneric:'Sign in error. Please try again.',
+    premiumUnavailable:'Premium purchases are temporarily unavailable.',
+    premiumUnavailableDetail:'Automatic premium activation is disabled until secure payment verification is in place.',
+    paymentManualReview:'Premium can no longer be activated automatically from the payment return. If you were charged, contact elnuevoeuropeo@gmail.com.',
     onbStep1:'1 of 3',onbStep2:'2 of 3',onbStep3:'3 of 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Discover sacred places',onbTitle2:'Collect pilgrim stamps',onbTitle3:'Earn your certificate',onbDesc1:'Explore an interactive map of Catholic sanctuaries across Europe, the Americas and Asia.',onbDesc2:'Register your visits and build your personal pilgrim passport with stamps from every sanctuary.',onbDesc3:'Complete a country and download a beautiful pilgrimage certificate with your name.',onbNext:'Next',onbStart:'Begin my pilgrimage ?',onbSkip:'Skip',
+    onbBadgeRoutes:'✨ Sacred routes', onbBadgeCertificates:'📜 Beautiful certificates',
+    onbTagline:'The Pilgrim Passport', onbCopy:'Sacred places, living routes and beautifully kept milestones for every pilgrim journey.',
+    onbStatSanctuaries:'Sanctuaries', onbStatCountries:'Countries', onbStatContinents:'Continents',
+    onbCta:'Begin your pilgrimage ✦',
     navWorld:'World',editName:'Edit my name', editNamePrompt:'Enter your pilgrim name:', createdBy:'Created with faith by', feedbackMsg:'Suggestions and feedback always welcome',
   },
   es: {
@@ -519,7 +526,14 @@ const i18n = {
     authErrInUse:'Este correo ya está registrado.', authErrWeak:'La contraseña debe tener al menos 6 caracteres.',
     authErrInvalidEmail:'Correo electrónico no válido.', authErrInvalidCred:'Correo o contraseña incorrectos.',
     authErrGeneric:'Error al iniciar sesión. Inténtalo de nuevo.',
+    premiumUnavailable:'Las compras Premium están temporalmente desactivadas.',
+    premiumUnavailableDetail:'La activación automática de Premium queda deshabilitada hasta tener una verificación de pago segura.',
+    paymentManualReview:'Premium ya no puede activarse automáticamente desde el retorno del pago. Si se te ha cobrado, escribe a elnuevoeuropeo@gmail.com.',
     onbStep1:'1 de 3',onbStep2:'2 de 3',onbStep3:'3 de 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Descubre lugares sagrados',onbTitle2:'Colecciona sellos peregrinos',onbTitle3:'Consigue tu certificado',onbDesc1:'Explora un mapa interactivo de santuarios católicos en Europa, América y Asia.',onbDesc2:'Registra tus visitas y construye tu pasaporte peregrino personal con sellos de cada santuario.',onbDesc3:'Completa un país y descarga un hermoso certificado de peregrinación con tu nombre.',onbNext:'Siguiente',onbStart:'Comenzar mi peregrinación ?',onbSkip:'Saltar',
+    onbBadgeRoutes:'✨ Rutas sagradas', onbBadgeCertificates:'📜 Certificados cuidados',
+    onbTagline:'El Pasaporte del Peregrino', onbCopy:'Lugares sagrados, rutas vivas y recuerdos bien guardados para cada peregrinación.',
+    onbStatSanctuaries:'Santuarios', onbStatCountries:'Países', onbStatContinents:'Continentes',
+    onbCta:'Comenzar mi peregrinación ✦',
     navWorld:'Mundo',editName:'Editar mi nombre', editNamePrompt:'Introduce tu nombre de peregrino:', createdBy:'Creado con fe por', feedbackMsg:'Sugerencias y comentarios siempre bienvenidos',
   },
   fr: {
@@ -568,7 +582,14 @@ const i18n = {
     authErrInUse:'Cet e-mail est déjà enregistré.', authErrWeak:'Le mot de passe doit contenir au moins 6 caractères.',
     authErrInvalidEmail:'Adresse e-mail invalide.', authErrInvalidCred:'E-mail ou mot de passe incorrect.',
     authErrGeneric:'Erreur de connexion. Veuillez réessayer.',
+    premiumUnavailable:'Les achats Premium sont temporairement désactivés.',
+    premiumUnavailableDetail:'L’activation automatique de Premium reste désactivée tant qu’une vérification de paiement sécurisée n’est pas en place.',
+    paymentManualReview:'Premium ne peut plus être activé automatiquement depuis le retour de paiement. Si vous avez été débité, écrivez à elnuevoeuropeo@gmail.com.',
     onbStep1:'1 sur 3',onbStep2:'2 sur 3',onbStep3:'3 sur 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Découvrez des lieux sacrés',onbTitle2:'Collectionnez les tampons',onbTitle3:'Obtenez votre certificat',onbDesc1:'Explorez une carte interactive des sanctuaires catholiques en Europe, Amériques et Asie.',onbDesc2:'Enregistrez vos visites et construisez votre passeport de pèlerin avec les tampons de chaque sanctuaire.',onbDesc3:'Complétez un pays et téléchargez un magnifique certificat de pèlerinage à votre nom.',onbNext:'Suivant',onbStart:'Commencer mon pèlerinage ?',onbSkip:'Passer',
+    onbBadgeRoutes:'✨ Routes sacrées', onbBadgeCertificates:'📜 Beaux certificats',
+    onbTagline:'Le Passeport du Pèlerin', onbCopy:'Lieux sacrés, routes vivantes et étapes précieusement gardées pour chaque pèlerinage.',
+    onbStatSanctuaries:'Sanctuaires', onbStatCountries:'Pays', onbStatContinents:'Continents',
+    onbCta:'Commencer mon pèlerinage ✦',
     navWorld:'Monde',editName:'Modifier mon nom', editNamePrompt:'Entrez votre nom de pèlerin :', createdBy:'Créé avec foi par', feedbackMsg:'Suggestions et commentaires toujours bienvenus',
   },
   it: {
@@ -617,7 +638,14 @@ const i18n = {
     authErrInUse:'Questa e-mail è già registrata.', authErrWeak:'La password deve avere almeno 6 caratteri.',
     authErrInvalidEmail:'Indirizzo e-mail non valido.', authErrInvalidCred:'E-mail o password errati.',
     authErrGeneric:'Errore di accesso. Riprova.',
+    premiumUnavailable:'Gli acquisti Premium sono temporaneamente disattivati.',
+    premiumUnavailableDetail:'L’attivazione automatica di Premium resta disabilitata finché non esiste una verifica di pagamento sicura.',
+    paymentManualReview:'Premium non può più essere attivato automaticamente dal ritorno del pagamento. Se ti è stato addebitato, scrivi a elnuevoeuropeo@gmail.com.',
     onbStep1:'1 di 3',onbStep2:'2 di 3',onbStep3:'3 di 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Scopri luoghi sacri',onbTitle2:'Colleziona timbri del pellegrino',onbTitle3:'Ottieni il tuo certificato',onbDesc1:'Esplora una mappa interattiva dei santuari cattolici in Europa, Americhe e Asia.',onbDesc2:'Registra le tue visite e costruisci il tuo passaporto del pellegrino con i timbri di ogni santuario.',onbDesc3:'Completa un paese e scarica un bellissimo certificato di pellegrinaggio con il tuo nome.',onbNext:'Avanti',onbStart:'Iniziare il mio pellegrinaggio ?',onbSkip:'Salta',
+    onbBadgeRoutes:'✨ Vie sacre', onbBadgeCertificates:'📜 Certificati curati',
+    onbTagline:'Il Passaporto del Pellegrino', onbCopy:'Luoghi sacri, percorsi vivi e tappe custodite con cura per ogni pellegrinaggio.',
+    onbStatSanctuaries:'Santuari', onbStatCountries:'Paesi', onbStatContinents:'Continenti',
+    onbCta:'Iniziare il mio pellegrinaggio ✦',
     navWorld:'Mondo',editName:'Modifica il mio nome', editNamePrompt:'Inserisci il tuo nome di pellegrino:', createdBy:'Creato con fede da', feedbackMsg:'Suggerimenti e commenti sempre benvenuti',
   },
   pt: {
@@ -666,7 +694,14 @@ const i18n = {
     authErrInUse:'Este e-mail já está registado.', authErrWeak:'A palavra-passe deve ter pelo menos 6 caracteres.',
     authErrInvalidEmail:'Endereço de e-mail inválido.', authErrInvalidCred:'E-mail ou palavra-passe incorretos.',
     authErrGeneric:'Erro ao entrar. Tente novamente.',
+    premiumUnavailable:'As compras Premium estão temporariamente desativadas.',
+    premiumUnavailableDetail:'A ativação automática de Premium permanece desativada até existir uma verificação de pagamento segura.',
+    paymentManualReview:'O Premium já não pode ser ativado automaticamente a partir do regresso do pagamento. Se te foi cobrado, escreve para elnuevoeuropeo@gmail.com.',
     onbStep1:'1 de 3',onbStep2:'2 de 3',onbStep3:'3 de 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Descubra lugares sagrados',onbTitle2:'Colecione selos de peregrino',onbTitle3:'Obtenha o seu certificado',onbDesc1:'Explore um mapa interativo de santuários católicos na Europa, Américas e Ásia.',onbDesc2:'Registe as suas visitas e construa o seu passaporte de peregrino com selos de cada santuário.',onbDesc3:'Complete um país e descarregue um belo certificado de peregrinação com o seu nome.',onbNext:'Seguinte',onbStart:'Começar a minha peregrinação ?',onbSkip:'Saltar',
+    onbBadgeRoutes:'✨ Rotas sagradas', onbBadgeCertificates:'📜 Belos certificados',
+    onbTagline:'O Passaporte do Peregrino', onbCopy:'Lugares sagrados, rotas vivas e marcos bem guardados para cada peregrinação.',
+    onbStatSanctuaries:'Santuários', onbStatCountries:'Países', onbStatContinents:'Continentes',
+    onbCta:'Começar a minha peregrinação ✦',
     navWorld:'Mundo',editName:'Editar o meu nome', editNamePrompt:'Introduza o seu nome de peregrino:', createdBy:'Criado com fé por', feedbackMsg:'Sugestões e comentários sempre bem-vindos',
   }
 };
@@ -675,12 +710,20 @@ function t(key){ return (i18n[currentLang]||i18n.en)[key] || i18n.en[key] || key
 function sd(s){ return (currentLang==='es' && s.es) ? s.es : (currentLang==='fr' && s.fr) ? s.fr : (currentLang==='it' && s.it) ? s.it : (currentLang==='pt' && s.pt) ? s.pt : s; }
 function cn(c){ if(currentLang==='en') return c.name; return c['name'+currentLang.charAt(0).toUpperCase()+currentLang.slice(1)] || c.name; }
 
-// Temporary private beta access. Limited to localhost during development.
+// Temporary private beta access. Limited to browser localhost during development.
 const TESTER_ACCESS_FLAG = 'peregrin_beta_tester_access';
 const TESTER_ACCESS_CODE = 'PEREGRIN-FAMILIA-2026';
 
+function isNativeAppRuntime(){
+  try{
+    return !!(window.Capacitor && typeof window.Capacitor.isNativePlatform==='function' && window.Capacitor.isNativePlatform());
+  }catch(e){
+    return false;
+  }
+}
+
 function canUseTesterAccess(){
-  return ['localhost','127.0.0.1'].includes(window.location.hostname);
+  return ['localhost','127.0.0.1'].includes(window.location.hostname) && !isNativeAppRuntime();
 }
 
 function hasTesterAccess(){
@@ -1044,18 +1087,9 @@ try{
 }
 
 const regionMap = {europe:['be','es','pt','fr','it','pl','ie','de','at','hr','ba'], americas:['mx','br','ar','pe','co','bo','us','ca'], asia:['ph','in','kr','jp']};
-const certificateRules = {
-  be:{
-    sanctuaryIds:[1,8,4,5],
-    summary:{
-      en:'4 Marian sanctuaries of Belgium',
-      es:'4 santuarios marianos de Bélgica',
-      fr:'4 sanctuaires mariaux de Belgique',
-      it:'4 santuari mariani del Belgio',
-      pt:'4 santuários marianos da Bélgica'
-    }
-  }
-};
+// Only define a rule here when a country's certificate should intentionally
+// use a subset different from all sanctuaries in that country.
+const certificateRules = {};
 function getRegion(cid){ for(const [r,ids] of Object.entries(regionMap)) if(ids.includes(cid)) return r; return null; }
 function isRegionUnlocked(region){ return hasTesterAccess() || unlockedRegions.includes('all')||unlockedRegions.includes(region); }
 function getCertificateSanctuaries(countryId){
@@ -1118,8 +1152,8 @@ window._loadUserData = async function(uid){
     if(snap.exists){
       const d=snap.data();
       visits=d.visits||{};
-      if(d.isPremium===true) unlockedRegions=['all'];
-      else unlockedRegions=d.unlockedRegions||[];
+      if(d.isPremium===true || (Array.isArray(d.unlockedRegions) && d.unlockedRegions.length>0)) unlockedRegions=['all'];
+      else unlockedRegions=[];
       if(d.lang) currentLang=d.lang;
       if(d.displayName) pilgrimName=d.displayName;
     }else{visits={};unlockedRegions=[];}
@@ -1182,6 +1216,32 @@ function applyLang(){
     passToggle.setAttribute('title', toggleLabel);
   }
   updateAuthPasswordToggle();
+  applyOnboardingCopy();
+}
+
+function applyOnboardingCopy(){
+  const setText = (id, value) => {
+    const el = document.getElementById(id);
+    if(el) el.textContent = value;
+  };
+  const sanctuaryCount = sanctuaries.length;
+  const countryCount = countries.length;
+  const continentCount = Object.keys(regionMap).length;
+  setText('onb-badge-routes', t('onbBadgeRoutes'));
+  setText('onb-badge-certificates', t('onbBadgeCertificates'));
+  setText('onb-tagline', t('onbTagline'));
+  setText('onb-copy', t('onbCopy'));
+  setText('onb-stat-sanctuaries-count', String(sanctuaryCount));
+  setText('onb-stat-countries-count', String(countryCount));
+  setText('onb-stat-continents-count', String(continentCount));
+  setText('onb-stat-sanctuaries-label', t('onbStatSanctuaries'));
+  setText('onb-stat-countries-label', t('onbStatCountries'));
+  setText('onb-stat-continents-label', t('onbStatContinents'));
+  setText('onb-cta', t('onbCta'));
+  setText(
+    'onb-footer',
+    `${sanctuaryCount} ${t('onbStatSanctuaries').toUpperCase()} · ${countryCount} ${t('onbStatCountries').toUpperCase()} · ${continentCount} ${t('onbStatContinents').toUpperCase()}`
+  );
 }
 
 // ===================== AUTH =====================
@@ -1257,20 +1317,6 @@ async function handleSignOut(){
 }
 
 // ===================== PREMIUM =====================
-function renderRegionOption(region, icon, labelKey, subKey, priceKey){
-  const unlocked = isRegionUnlocked(region);
-  if(unlocked) return `<div style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--cream);border-radius:12px;margin-bottom:8px;opacity:0.6;">
-    <span style="font-size:22px;">${icon}</span>
-    <div style="flex:1;"><div style="font-weight:600;font-size:14px;">${t(labelKey)}</div><div style="font-size:11px;color:var(--brown-light);">${t(subKey)}</div></div>
-    <span style="font-size:12px;color:#2E7D32;font-weight:700;">${t('premiumAlreadyUnlocked')}</span>
-  </div>`;
-  return `<div style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--white);border:2px solid var(--cream-dark);border-radius:12px;margin-bottom:8px;cursor:pointer;transition:all 0.2s;" onclick="handleRegionPurchase('${region}')" onmousedown="this.style.transform='scale(0.98)'" onmouseup="this.style.transform=''">
-    <span style="font-size:22px;">${icon}</span>
-    <div style="flex:1;"><div style="font-weight:600;font-size:14px;">${t(labelKey)}</div><div style="font-size:11px;color:var(--brown-light);">${t(subKey)}</div></div>
-    <span style="font-family:'Crimson Pro',serif;font-size:16px;font-weight:700;color:var(--burgundy);">${t(priceKey)}</span>
-  </div>`;
-}
-
 function handleTesterAccessToggle(){
   if(!canUseTesterAccess()) return;
   if(hasTesterAccess()){
@@ -1304,8 +1350,13 @@ function openPremiumModal(){
     <div class="premium-sub">${t('premiumSub')}</div>
     ${allUnlocked
       ? `<div style="margin:24px 0;padding:18px;background:var(--cream);border-radius:12px;text-align:center;color:#2E7D32;font-weight:600;font-size:15px;">✓ ${t('premiumAlreadyUnlocked')}</div>`
-      : `<div style="text-align:center;margin:18px 0 6px;font-size:12px;color:var(--brown-light);">${t('premiumOnetime')}</div>
-         <button class="premium-cta" onclick="handleRegionPurchase('all')" style="margin:6px 0 10px;">✨ ${t('premiumUnlockAll')} — ${t('premiumPriceAll')}</button>`
+      : PREMIUM_CHECKOUT_ENABLED
+        ? `<div style="text-align:center;margin:18px 0 6px;font-size:12px;color:var(--brown-light);">${t('premiumOnetime')}</div>
+           <button class="premium-cta" onclick="handleRegionPurchase('all')" style="margin:6px 0 10px;">✨ ${t('premiumUnlockAll')} — ${t('premiumPriceAll')}</button>`
+        : `<div style="margin:24px 0;padding:18px;background:var(--cream);border-radius:12px;text-align:center;">
+             <div style="font-weight:700;color:var(--burgundy);margin-bottom:6px;">${t('premiumUnavailable')}</div>
+             <div style="font-size:12px;line-height:1.5;color:var(--brown-light);">${t('premiumUnavailableDetail')}</div>
+           </div>`
     }
     ${testerAccessAvailable
       ? `<div style="margin-top:10px;padding-top:12px;border-top:1px solid var(--cream-dark);">
@@ -1318,19 +1369,20 @@ function openPremiumModal(){
   document.getElementById('premium-modal').classList.add('open');
 }
 function closePremiumModal(){document.getElementById('premium-modal').classList.remove('open');}
-// ===================== STRIPE PAYMENT LINK =====================
-// URL del Payment Link de Stripe (LIVE — cobros reales):
-const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/4gM9AV1NT8Rt2ptfOkfEk00'; // Peregrin Premium 4,99€ (LIVE)
-const PAYMENT_INTENT_FLAG = 'peregrin_stripe_checkout_started';
+// ===================== PREMIUM CHECKOUT =====================
+// Re-enable checkout only once payment verification runs on a trusted backend.
+const PREMIUM_CHECKOUT_ENABLED = false;
+const STRIPE_PAYMENT_LINK = PREMIUM_CHECKOUT_ENABLED
+  ? 'https://buy.stripe.com/4gM9AV1NT8Rt2ptfOkfEk00'
+  : '';
 
 function handleRegionPurchase(region){
-  if(!STRIPE_PAYMENT_LINK){
-    showToast({en:'Payment system being configured',es:'Sistema de pago en configuración',fr:'Système de paiement en configuration',it:'Sistema di pagamento in configurazione',pt:'Sistema de pagamento em configuração'}[currentLang]||'Payment system being configured');
+  if(!PREMIUM_CHECKOUT_ENABLED || !STRIPE_PAYMENT_LINK){
+    showToast(t('premiumUnavailable'));
     return;
   }
   const uid = window._currentUser?.uid || '';
   const sep = STRIPE_PAYMENT_LINK.includes('?') ? '&' : '?';
-  try{ sessionStorage.setItem(PAYMENT_INTENT_FLAG, JSON.stringify({uid, region, startedAt:Date.now()})); }catch(e){}
   // client_reference_id viaja a Stripe y vuelve en el webhook si algún día se añade
   window.location.href = STRIPE_PAYMENT_LINK + sep + 'client_reference_id=' + encodeURIComponent(uid);
 }
@@ -1681,6 +1733,15 @@ function renderProfile(){
 }
 
 // ===================== CERTIFICATE =====================
+function stableCertificateHash(value){
+  let hash = 2166136261;
+  for(let i=0;i<value.length;i++){
+    hash ^= value.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash>>>0).toString(36).toUpperCase().padStart(8,'0');
+}
+
 function generateCertificate(countryId){
   const country = countries.find(c => c.id === countryId);
   const cs = getCertificateSanctuaries(countryId);
@@ -1732,7 +1793,8 @@ function generateCertificate(countryId){
   const raw = pilgrimName || user?.displayName || user?.email?.split('@')[0] || 'Pilgrim';
   const name = raw.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\x20-\x7E]/g,'').trim()||'Pilgrim';
   const year = new Date().getFullYear().toString();
-  const certNo = `${countryId.toUpperCase()}-${year}-${String(cs.length).padStart(2,'0')}`;
+  const identitySeed = user?.uid || user?.email || raw;
+  const certNo = `${countryId.toUpperCase()}-${year}-${stableCertificateHash(`${countryId}|${identitySeed}|${cs.map(s=>s.id).join('-')}`).slice(0,8)}`;
   const certificateSummary = getCertificateSummary(country, cs);
   const panelW = 82;
   const gapW = 6;
@@ -2032,7 +2094,7 @@ async function editPilgrimName(){
 // ===================== DEV MODE =====================
 let devTapCount=0, devTapTimer=null;
 function handleDevTap(){
-  const isLocalDev = ['localhost','127.0.0.1'].includes(window.location.hostname) || window.location.protocol==='file:';
+  const isLocalDev = canUseTesterAccess();
   if(!isLocalDev) return;
   devTapCount++;
   if(devTapTimer) clearTimeout(devTapTimer);
@@ -2077,7 +2139,7 @@ _auth.getRedirectResult().catch(()=>{});
 _auth.onAuthStateChanged(async user=>{
   const urlParams = new URLSearchParams(window.location.search);
   const paymentSuccess = urlParams.get('payment') === 'success';
-  if(user && !didRunRestoreSessionGate && shouldBlockRestoredSession && !explicitAuthAction && !paymentSuccess){
+  if(user && !didRunRestoreSessionGate && shouldBlockRestoredSession && !explicitAuthAction){
     didRunRestoreSessionGate = true;
     await _auth.signOut().catch(()=>{});
     return;
@@ -2089,31 +2151,15 @@ _auth.onAuthStateChanged(async user=>{
     document.getElementById('app-wrapper').style.display='flex';
     if(!map) initMap();
     setTimeout(()=>{ if(map) map.invalidateSize(); },150);
-
-    let paymentIntent = null;
-    try{
-      paymentIntent = JSON.parse(sessionStorage.getItem(PAYMENT_INTENT_FLAG) || 'null');
-    }catch(e){ paymentIntent = null; }
-    const canTrustReturn = !!(paymentIntent && paymentIntent.uid === user.uid);
-    if(paymentSuccess && canTrustReturn){
-      try{
-        await window._fbSetDoc(user.uid, {isPremium:true, unlockedRegions:['all']});
-        history.replaceState({}, document.title, window.location.pathname);
-      }catch(e){}
-    } else if(paymentSuccess){
-      history.replaceState({}, document.title, window.location.pathname);
-      showToast({en:'We could not validate your payment return. If you were charged, contact support and we will help you.',es:'No hemos podido validar el retorno del pago. Si se te ha cobrado, escríbenos y te ayudamos.',fr:'Nous n’avons pas pu valider le retour du paiement. Si vous avez été débité, contactez-nous et nous vous aiderons.',it:'Non siamo riusciti a convalidare il ritorno del pagamento. Se ti è stato addebitato, contattaci e ti aiuteremo.',pt:'Não conseguimos validar o regresso do pagamento. Se te foi cobrado, escreve-nos e ajudamos.'}[currentLang]||'We could not validate your payment return. If you were charged, contact support and we will help you.');
-    }
-    try{ if(paymentSuccess) sessionStorage.removeItem(PAYMENT_INTENT_FLAG); }catch(e){}
+    if(paymentSuccess) history.replaceState({}, document.title, window.location.pathname);
 
     await window._loadUserData(user.uid);
     returnToMainView();
 
-    if(paymentSuccess && canTrustReturn){
-      unlockedRegions = ['all'];
+    if(paymentSuccess){
       refreshAll();
       if(map) updateMarkerStyles();
-      showToast(t('premiumActivatedToast'));
+      showToast(t('paymentManualReview'));
     }
   } else {
     switchAuthTab('login');
