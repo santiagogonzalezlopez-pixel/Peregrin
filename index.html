@@ -722,6 +722,45 @@ function isNativeAppRuntime(){
   }
 }
 
+function getCapacitorPlugin(name){
+  try{
+    return (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins[name]) || null;
+  }catch(e){
+    return null;
+  }
+}
+
+function bytesToBase64(bytes){
+  let binary = '';
+  const chunkSize = 0x8000;
+  for(let i=0;i<bytes.length;i+=chunkSize){
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunkSize));
+  }
+  return btoa(binary);
+}
+
+async function saveCertificateNative(doc, fileName){
+  if(!isNativeAppRuntime()) return false;
+  const Filesystem = getCapacitorPlugin('Filesystem');
+  const Share = getCapacitorPlugin('Share');
+  if(!Filesystem || !Share || typeof Filesystem.writeFile!=='function' || typeof Share.share!=='function') return false;
+  const pdfBytes = new Uint8Array(doc.output('arraybuffer'));
+  const base64Data = bytesToBase64(pdfBytes);
+  const savedFile = await Filesystem.writeFile({
+    path: fileName,
+    data: base64Data,
+    directory: 'CACHE',
+    recursive: true
+  });
+  await Share.share({
+    title: t('certTitle'),
+    text: `${t('certTitle')} · ${fileName}`,
+    files: [savedFile.uri],
+    dialogTitle: t('certBtn')
+  });
+  return true;
+}
+
 function canUseTesterAccess(){
   return ['localhost','127.0.0.1'].includes(window.location.hostname) && !isNativeAppRuntime();
 }
@@ -1742,7 +1781,7 @@ function stableCertificateHash(value){
   return (hash>>>0).toString(36).toUpperCase().padStart(8,'0');
 }
 
-function generateCertificate(countryId){
+async function generateCertificate(countryId){
   const country = countries.find(c => c.id === countryId);
   const cs = getCertificateSanctuaries(countryId);
   if(!country || cs.length===0) return;
@@ -2058,8 +2097,16 @@ function generateCertificate(countryId){
   doc.text(footers[currentLang]||footers.en, W/2, H-3, {align:'center'});
 
   const safeCountryName = country.name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
-  doc.save('Peregrin_' + safeCountryName + '_' + year + '.pdf');
-  showToast(t('certDownloaded'));
+  const fileName = 'Peregrin_' + safeCountryName + '_' + year + '.pdf';
+  try{
+    const handledNatively = await saveCertificateNative(doc, fileName);
+    if(!handledNatively) doc.save(fileName);
+    showToast(t('certDownloaded'));
+  }catch(e){
+    console.error('certificate delivery failed:', e);
+    doc.save(fileName);
+    showToast(t('certDownloaded'));
+  }
 }
 
 // ===================== ONBOARDING =====================
