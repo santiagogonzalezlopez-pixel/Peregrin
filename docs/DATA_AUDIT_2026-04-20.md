@@ -243,6 +243,84 @@ Reason:
 - The current entries are meaningful, but they are not enough to present Bolivia as an editorially complete country.
 - Leaving the certificate active would promise more than the current dataset can support.
 
+## India Review
+
+India currently contains four sanctuaries in the dataset:
+
+- San Thome Basilica
+- Basilica of Bom Jesus
+- Basilica of Our Lady of Good Health
+- Sé Cathedral
+
+These four entries are defensible and important. They represent apostolic tradition, Marian pilgrimage, Francis Xavier devotion, and historic Goa.
+
+Even so, India is far too large and diverse a Catholic landscape for this shortlist to support a country certificate.
+
+The clearest omission is the National Shrine Basilica of Our Lady of Ransom at Vallarpadam, whose official site presents it explicitly as a national shrine basilica and active pilgrimage centre in Kochi.
+
+Product recommendation:
+
+- Keep the current four Indian entries.
+- Do not offer an India country certificate yet.
+- Re-enable that certificate only after a focused India pass that decides whether to add the most obvious missing pilgrimage centres such as Vallarpadam and other major regional shrines.
+
+Reason:
+
+- The current India set is strong, but still too narrow to communicate editorial completeness.
+- Leaving the certificate active would overstate how finished the country currently is.
+
+## South Korea Review
+
+South Korea currently contains four sanctuaries in the dataset:
+
+- Jeoldusan Martyrs' Shrine
+- Solmoe Shrine
+- Myeongdong Cathedral
+- Haemi Martyrs' Shrine
+
+These four entries are defensible and coherent. They communicate the martyrdom story and the identity of Korean Catholicism very well.
+
+However, South Korea still looks incomplete as a country set.
+
+The clearest omission is Seosomun Shrine History Museum. The official Seoul Metropolitan Government materials describe Seosomun as the official place of execution in the Joseon dynasty, marked by the painful history of executing many Catholics. Leaving that site out still makes the current Korea set feel narrower than it should.
+
+Product recommendation:
+
+- Keep the current four South Korean entries.
+- Do not offer a South Korea country certificate yet.
+- Re-enable that certificate only after a focused Korea pass that decides whether to add Seosomun and any other obvious missing national sites.
+
+Reason:
+
+- The current shortlist is meaningful, but it omits one of the country's most obvious Catholic landmarks.
+- Leaving the certificate active would make the country feel under-curated.
+
+## Japan Review
+
+Japan currently contains four sanctuaries in the dataset:
+
+- Oura Church
+- Twenty-Six Martyrs Monument
+- Urakami Cathedral
+- Saint Mary's Cathedral
+
+These four entries are defensible. They cover hidden Christians, martyrdom, postwar resurrection, and the modern church in Tokyo.
+
+But Japan still looks incomplete as a country certificate set.
+
+The strongest warning sign is how much of the Japanese Catholic story remains outside this shortlist. UNESCO's official World Heritage entry for the Hidden Christian Sites in the Nagasaki Region describes a serial property of twelve components, including villages, castle remains, and a cathedral, that together testify to the clandestine transmission of Christianity in Japan over more than two centuries.
+
+Product recommendation:
+
+- Keep the current four Japanese entries.
+- Do not offer a Japan country certificate yet.
+- Re-enable that certificate only after a focused Japan pass that decides how to represent the broader hidden-Christian landscape and other major Catholic sites beyond the current Nagasaki-heavy shortlist.
+
+Reason:
+
+- The current entries are strong, but they still represent only a slice of Japan's most distinctive Catholic heritage.
+- Leaving the certificate active would suggest a completeness that the current dataset does not yet earn.
+
 ## Country Counts
 
 Full sanctuary count by country:

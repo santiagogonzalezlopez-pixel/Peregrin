@@ -369,6 +369,15 @@ const certificateRules = {
   hr:{
     disabled:true
   },
+  in:{
+    disabled:true
+  },
+  jp:{
+    disabled:true
+  },
+  kr:{
+    disabled:true
+  },
   pe:{
     disabled:true
   },
