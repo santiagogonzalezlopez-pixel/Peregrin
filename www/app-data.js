@@ -354,6 +354,9 @@ const certificateRules = {
   ba:{
     disabled:true
   },
+  hr:{
+    disabled:true
+  },
   pe:{
     disabled:true
   },

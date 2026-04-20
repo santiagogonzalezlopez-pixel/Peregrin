@@ -105,6 +105,40 @@ Reason:
 - The current Peru set is not wrong, but it is too thin to support the idea of "complete Peru".
 - Leaving the certificate active would communicate editorial completeness that the current data does not yet earn.
 
+## Croatia Review
+
+Croatia currently contains four sanctuaries in the dataset:
+
+- Cathedral of Saint Domnius
+- Zagreb Cathedral
+- Sanctuary of Our Lady of Trsat
+- Cathedral of Saint James
+
+These four entries are defensible.
+
+- Split's Cathedral of Saint Domnius is clearly still an active liturgical and pilgrimage site in the city's official feast program for Saint Domnius.
+- Zagreb Cathedral is the country's best-known cathedral and remains central to the religious identity of Zagreb despite the post-2020 earthquake restoration.
+- Trsat is presented by the official Rijeka tourism materials as the largest pilgrimage centre of Western Croatia.
+- Šibenik Cathedral is a protected UNESCO cathedral of major national significance.
+
+At the same time, the current Croatia set is not editorially complete enough to support a country certificate.
+
+The strongest warning sign is omission, not bad data:
+
+- The Archdiocese of Zagreb describes Marija Bistrica as the most known Croatian shrine of St. Mary and the central place of worship of the Croatian people for centuries.
+- The same archdiocesan shrine directory also lists the National Shrine of St. Joseph in Karlovac.
+
+Product recommendation:
+
+- Keep the current four Croatian entries.
+- Do not offer a Croatia country certificate yet.
+- Re-enable that certificate only after a focused Croatia pass that decides whether to add the major missing national shrines or intentionally redefine Croatia as a much narrower curated set.
+
+Reason:
+
+- The current entries are good, but they do not justify the claim of "completed Croatia".
+- Leaving the certificate active would turn a decent shortlist into an overstatement.
+
 ## Country Counts
 
 Full sanctuary count by country:
