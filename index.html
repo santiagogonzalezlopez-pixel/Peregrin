@@ -262,11 +262,6 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .onb-hill-front{position:absolute;left:-8%;right:-8%;bottom:0;height:126px;background:linear-gradient(180deg,#11241c,#1a362c);border-radius:58% 58% 0 0 / 100% 100% 0 0;}
 .onb-path{position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);width:146px;height:186px;background:linear-gradient(180deg,rgba(232,201,122,0.82),rgba(253,245,230,0.96));clip-path:polygon(46% 0,54% 0,82% 100%,18% 100%);}
 .onb-path::after{content:'';position:absolute;left:50%;top:12px;bottom:0;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,rgba(114,47,55,0.24),rgba(114,47,55,0));opacity:0.5;}
-.onb-chapel{position:absolute;left:50%;bottom:114px;transform:translateX(-50%);width:34px;height:46px;}
-.onb-cross-mark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34px;height:46px;filter:drop-shadow(0 6px 14px rgba(0,0,0,0.24));}
-.onb-cross-mark::before,.onb-cross-mark::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:linear-gradient(180deg,#fff8ea,#e9c978);border-radius:6px;}
-.onb-cross-mark::before{width:10px;height:46px;}
-.onb-cross-mark::after{width:34px;height:10px;top:16px;}
 .onb-float-card{position:absolute;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.16);box-shadow:0 10px 20px rgba(0,0,0,0.16);font-size:11px;font-weight:600;letter-spacing:0.2px;color:var(--cream);backdrop-filter:blur(10px);animation:onb-float 5.5s ease-in-out infinite;}
 .onb-float-card-left{left:50%;bottom:14px;transform:translateX(-50%);min-width:152px;justify-content:center;text-align:center;}
 .onb-float-card-right{top:110px;right:16px;animation-delay:0.8s;}
@@ -370,7 +365,6 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
     <div class="onb-scene">
       <div class="onb-hill-back"></div>
       <div class="onb-path"></div>
-      <div class="onb-chapel"><div class="onb-cross-mark"></div></div>
       <div class="onb-hill-front"></div>
     </div>
   </div>
