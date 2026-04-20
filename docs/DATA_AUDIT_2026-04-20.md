@@ -82,6 +82,29 @@ Reason:
 - With only one sanctuary, the current country-certificate mechanic makes Bosnia feel artificially easy and weakens trust in the rest of the passport.
 - This is not a data-corruption problem. It is a product-integrity problem.
 
+## Peru Review
+
+Peru currently contains three sanctuaries in the dataset:
+
+- Church of Las Nazarenas
+- Cathedral of Cusco
+- Sanctuary of Our Lady of Chapi
+
+These three entries are defensible. Las Nazarenas is strongly tied to the Lord of Miracles devotion in Lima, the Cathedral of Cusco is an active archdiocesan centre, and Chapi remains one of the strongest Marian pilgrimages in southern Peru.
+
+At the same time, Peru looks editorially incomplete rather than intentionally finished. Pope Francis, in his Marian celebration in Trujillo on January 20, 2018, publicly invoked several other major Peruvian devotions and pilgrimage centres not currently represented in the app, including Otuzco and Ayabaca.
+
+Product recommendation:
+
+- Keep the current three Peruvian entries.
+- Do not offer a Peru country certificate yet.
+- Re-enable that certificate only after a deliberate Peru pass that decides whether to add more national devotions or explicitly keep Peru as a narrower curated set.
+
+Reason:
+
+- The current Peru set is not wrong, but it is too thin to support the idea of "complete Peru".
+- Leaving the certificate active would communicate editorial completeness that the current data does not yet earn.
+
 ## Country Counts
 
 Full sanctuary count by country:

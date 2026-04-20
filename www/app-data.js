@@ -354,6 +354,9 @@ const certificateRules = {
   ba:{
     disabled:true
   },
+  pe:{
+    disabled:true
+  },
   be:{
     sanctuaryIds:[1,2,3,4,5,6,8],
     summary:{
