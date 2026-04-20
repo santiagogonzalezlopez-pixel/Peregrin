@@ -482,10 +482,10 @@
         }
         ctx.fillStyle = toRgb(GOLD);
         ctx.beginPath();
-        ctx.arc(itemX + 18, y + 2, 6, 0, Math.PI * 2);
+        ctx.arc(itemX + 18, y + 8, 6, 0, Math.PI * 2);
         ctx.fill();
         item.lines.forEach((line, lineIndex) => {
-          drawText(ctx, line, itemX + 38, y + (lineIndex * 26), {
+          drawText(ctx, line, itemX + 38, y + 6 + (lineIndex * 26), {
             size: 23,
             family: "'Jost', sans-serif",
             weight: "500",

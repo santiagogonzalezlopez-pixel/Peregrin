@@ -105,7 +105,8 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .map-route-banner{position:absolute;top:10px;left:10px;right:52px;z-index:500;background:var(--burgundy);color:var(--cream);padding:10px 14px;border-radius:10px;font-size:13px;font-weight:500;display:none;align-items:center;justify-content:space-between;box-shadow:var(--shadow-lg);border-left:4px solid var(--gold);}
 .map-route-banner span{flex:1;}
 .map-route-banner button{background:none;border:none;color:var(--cream);font-size:18px;cursor:pointer;padding:0 0 0 12px;opacity:0.8;line-height:1;}
-.map-help-btn{position:absolute;top:58px;left:10px;z-index:500;display:flex;align-items:center;gap:8px;max-width:230px;padding:10px 14px;border:none;border-radius:999px;background:rgba(255,252,245,0.96);color:var(--burgundy);font-family:'Jost',sans-serif;font-size:12px;font-weight:700;box-shadow:var(--shadow-lg);cursor:pointer;}
+.header-actions{display:flex;align-items:center;gap:8px;}
+.map-help-btn{display:flex;align-items:center;gap:8px;max-width:230px;padding:6px 12px;border:none;border-radius:20px;background:rgba(255,255,255,0.12);color:var(--cream);font-family:'Jost',sans-serif;font-size:12px;font-weight:700;box-shadow:none;cursor:pointer;}
 .map-help-btn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
 /* MARKERS */
@@ -269,7 +270,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .onb-cross-mark::before{width:4px;height:16px;}
 .onb-cross-mark::after{width:14px;height:4px;}
 .onb-float-card{position:absolute;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.16);box-shadow:0 10px 20px rgba(0,0,0,0.16);font-size:11px;font-weight:600;letter-spacing:0.2px;color:var(--cream);backdrop-filter:blur(10px);animation:onb-float 5.5s ease-in-out infinite;}
-.onb-float-card-left{top:26px;left:18px;}
+.onb-float-card-left{left:50%;bottom:14px;transform:translateX(-50%);min-width:152px;justify-content:center;text-align:center;}
 .onb-float-card-right{top:110px;right:16px;animation-delay:0.8s;}
 @keyframes onb-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
 .onb-logo{font-family:'Crimson Pro',serif;font-size:46px;font-weight:700;letter-spacing:4px;margin-bottom:8px;position:relative;z-index:1;}
@@ -282,7 +283,6 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .onb-stat-label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;opacity:0.6;}
 .onb-stat-div{width:1px;height:32px;background:linear-gradient(transparent,rgba(197,150,58,0.36),transparent);align-self:center;}
 .onb-btn{width:100%;max-width:280px;padding:16px;background:linear-gradient(135deg,#f1c66d,#c7892d);color:var(--brown);border:none;border-radius:16px;font-family:'Crimson Pro',serif;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 16px 30px rgba(197,150,58,0.28);position:relative;letter-spacing:0.5px;z-index:1;}
-.onb-footer{position:absolute;bottom:24px;font-size:10px;opacity:0.44;letter-spacing:1.4px;z-index:1;}
 @media(max-width:380px){
   .onb-hero{height:228px;}
   .onb-logo{font-size:40px;}
@@ -386,7 +386,6 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
     <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-continents-count">3</div><div class="onb-stat-label" id="onb-stat-continents-label">Continents</div></div>
   </div>
   <button class="onb-btn" id="onb-cta" onclick="closeOnboarding()">Begin your pilgrimage ✦</button>
-  <div class="onb-footer" id="onb-footer">111 SANCTUARIES · 23 COUNTRIES · 3 CONTINENTS</div>
 </div>
 
 <!-- APP -->
@@ -396,7 +395,13 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
       <h1>P<span>✦</span>REGRIN</h1>
       <div class="header-sub" id="header-sub">Your pilgrim passport</div>
     </div>
-    <div class="header-right" id="header-country" onclick="switchScreen('explore')">🌍 World</div>
+    <div class="header-actions">
+      <div class="header-right" id="header-country" onclick="switchScreen('explore')">🌍 World</div>
+      <button class="map-help-btn" id="map-help-btn" onclick="showOnboarding()">
+        <span>✨</span>
+        <span id="map-help-btn-label">What is Peregrin?</span>
+      </button>
+    </div>
   </div>
   <div class="main">
     <div class="screen active" id="screen-map">
@@ -405,10 +410,6 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
         <span id="map-route-name"></span>
         <button onclick="clearRouteFilter()">✕</button>
       </div>
-      <button class="map-help-btn" id="map-help-btn" onclick="showOnboarding()">
-        <span>✨</span>
-        <span id="map-help-btn-label">What is Peregrin?</span>
-      </button>
     </div>
     <div class="screen" id="screen-explore"><div class="explore-screen" style="background:var(--cream);padding:20px;"></div></div>
     <div class="screen" id="screen-passport"><div class="passport-screen"></div></div>
@@ -958,10 +959,6 @@ function applyOnboardingCopy(){
   setText('onb-stat-continents-label', t('onbStatContinents'));
   setText('onb-cta', t('onbCta'));
   setText('map-help-btn-label', t('mapHelpCta'));
-  setText(
-    'onb-footer',
-    `${sanctuaryCount} ${t('onbStatSanctuaries').toUpperCase()} · ${countryCount} ${t('onbStatCountries').toUpperCase()} · ${continentCount} ${t('onbStatContinents').toUpperCase()}`
-  );
 }
 
 // ===================== AUTH =====================
