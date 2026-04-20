@@ -262,13 +262,8 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .onb-hill-front{position:absolute;left:-8%;right:-8%;bottom:0;height:126px;background:linear-gradient(180deg,#11241c,#1a362c);border-radius:58% 58% 0 0 / 100% 100% 0 0;}
 .onb-path{position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);width:146px;height:186px;background:linear-gradient(180deg,rgba(232,201,122,0.82),rgba(253,245,230,0.96));clip-path:polygon(46% 0,54% 0,82% 100%,18% 100%);}
 .onb-path::after{content:'';position:absolute;left:50%;top:12px;bottom:0;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,rgba(114,47,55,0.24),rgba(114,47,55,0));opacity:0.5;}
-.onb-chapel{position:absolute;left:50%;bottom:102px;transform:translateX(-50%);width:78px;height:74px;border-radius:16px 16px 12px 12px;background:linear-gradient(180deg,#fff8ea,#e4d2b3);box-shadow:0 10px 24px rgba(0,0,0,0.18);}
-.onb-chapel::before{content:'';position:absolute;left:50%;top:-22px;transform:translateX(-50%);border-left:34px solid transparent;border-right:34px solid transparent;border-bottom:28px solid #7b2630;}
-.onb-chapel::after{content:'';position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:18px;height:30px;border-radius:9px 9px 0 0;background:#7b2630;}
-.onb-cross-mark{position:absolute;left:50%;top:-10px;transform:translateX(-50%);width:16px;height:16px;}
-.onb-cross-mark::before,.onb-cross-mark::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--gold-light);border-radius:3px;}
-.onb-cross-mark::before{width:4px;height:16px;}
-.onb-cross-mark::after{width:14px;height:4px;}
+.onb-chapel{position:absolute;left:50%;bottom:114px;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;min-width:130px;height:42px;padding:0 18px;border-radius:999px;background:linear-gradient(180deg,#36574c,#223932);box-shadow:0 10px 24px rgba(0,0,0,0.18);border:1px solid rgba(255,255,255,0.14);}
+.onb-chapel-text{font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--cream);white-space:nowrap;}
 .onb-float-card{position:absolute;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.16);box-shadow:0 10px 20px rgba(0,0,0,0.16);font-size:11px;font-weight:600;letter-spacing:0.2px;color:var(--cream);backdrop-filter:blur(10px);animation:onb-float 5.5s ease-in-out infinite;}
 .onb-float-card-left{left:50%;bottom:14px;transform:translateX(-50%);min-width:152px;justify-content:center;text-align:center;}
 .onb-float-card-right{top:110px;right:16px;animation-delay:0.8s;}
@@ -372,9 +367,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
     <div class="onb-scene">
       <div class="onb-hill-back"></div>
       <div class="onb-path"></div>
-      <div class="onb-chapel">
-        <div class="onb-cross-mark"></div>
-      </div>
+      <div class="onb-chapel"><div class="onb-chapel-text" id="onb-hero-pill">Sacred routes</div></div>
       <div class="onb-hill-front"></div>
     </div>
   </div>
@@ -508,6 +501,7 @@ const i18n = {
     paymentManualReview:'Premium can no longer be activated automatically from the payment return. If you were charged, contact elnuevoeuropeo@gmail.com.',
     onbStep1:'1 of 3',onbStep2:'2 of 3',onbStep3:'3 of 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Discover sacred places',onbTitle2:'Collect pilgrim stamps',onbTitle3:'Earn your certificate',onbDesc1:'Explore an interactive map of Catholic sanctuaries across Europe, the Americas and Asia.',onbDesc2:'Register your visits and build your personal pilgrim passport with stamps from every sanctuary.',onbDesc3:'Complete a country and download a beautiful pilgrimage certificate with your name.',onbNext:'Next',onbStart:'Begin my pilgrimage',onbSkip:'Skip',
     onbBadgeRoutes:'✨ Sacred routes', onbBadgeCertificates:'📜 Beautiful certificates',
+    onbHeroPill:'Sacred routes',
     onbTagline:'The Pilgrim Passport', onbCopy:'Sacred places, living routes and beautifully kept milestones for every pilgrim journey.',
     onbPurposeTitle:'What Peregrin is for', onbPurposeBody:'Use Peregrin to discover Catholic sanctuaries, mark the places you visit, follow sacred routes and keep your pilgrimage history with achievements and country certificates.',
     onbStatSanctuaries:'Sanctuaries', onbStatCountries:'Countries', onbStatContinents:'Continents',
@@ -567,6 +561,7 @@ const i18n = {
     paymentManualReview:'Premium ya no puede activarse automáticamente desde el retorno del pago. Si se te ha cobrado, escribe a elnuevoeuropeo@gmail.com.',
     onbStep1:'1 de 3',onbStep2:'2 de 3',onbStep3:'3 de 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Descubre lugares sagrados',onbTitle2:'Colecciona sellos peregrinos',onbTitle3:'Consigue tu certificado',onbDesc1:'Explora un mapa interactivo de santuarios católicos en Europa, América y Asia.',onbDesc2:'Registra tus visitas y construye tu pasaporte peregrino personal con sellos de cada santuario.',onbDesc3:'Completa un país y descarga un hermoso certificado de peregrinación con tu nombre.',onbNext:'Siguiente',onbStart:'Comenzar mi peregrinación',onbSkip:'Saltar',
     onbBadgeRoutes:'✨ Rutas sagradas', onbBadgeCertificates:'📜 Certificados cuidados',
+    onbHeroPill:'Rutas sagradas',
     onbTagline:'El Pasaporte del Peregrino', onbCopy:'Lugares sagrados, rutas vivas y recuerdos bien guardados para cada peregrinación.',
     onbPurposeTitle:'Para qué sirve Peregrin', onbPurposeBody:'Peregrin te sirve para descubrir santuarios católicos, marcar los lugares que visitas, seguir rutas sagradas y guardar tu camino con logros y certificados por país.',
     onbStatSanctuaries:'Santuarios', onbStatCountries:'Países', onbStatContinents:'Continentes',
@@ -626,6 +621,7 @@ const i18n = {
     paymentManualReview:'Premium ne peut plus être activé automatiquement depuis le retour de paiement. Si vous avez été débité, écrivez à elnuevoeuropeo@gmail.com.',
     onbStep1:'1 sur 3',onbStep2:'2 sur 3',onbStep3:'3 sur 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Découvrez des lieux sacrés',onbTitle2:'Collectionnez les tampons',onbTitle3:'Obtenez votre certificat',onbDesc1:'Explorez une carte interactive des sanctuaires catholiques en Europe, Amériques et Asie.',onbDesc2:'Enregistrez vos visites et construisez votre passeport de pèlerin avec les tampons de chaque sanctuaire.',onbDesc3:'Complétez un pays et téléchargez un magnifique certificat de pèlerinage à votre nom.',onbNext:'Suivant',onbStart:'Commencer mon pèlerinage',onbSkip:'Passer',
     onbBadgeRoutes:'✨ Routes sacrées', onbBadgeCertificates:'📜 Beaux certificats',
+    onbHeroPill:'Routes sacrées',
     onbTagline:'Le Passeport du Pèlerin', onbCopy:'Lieux sacrés, routes vivantes et étapes précieusement gardées pour chaque pèlerinage.',
     onbPurposeTitle:'À quoi sert Peregrin', onbPurposeBody:'Peregrin vous aide à découvrir des sanctuaires catholiques, marquer les lieux visités, suivre des routes sacrées et garder la mémoire de votre chemin avec des réalisations et des certificats par pays.',
     onbStatSanctuaries:'Sanctuaires', onbStatCountries:'Pays', onbStatContinents:'Continents',
@@ -685,6 +681,7 @@ const i18n = {
     paymentManualReview:'Premium non può più essere attivato automaticamente dal ritorno del pagamento. Se ti è stato addebitato, scrivi a elnuevoeuropeo@gmail.com.',
     onbStep1:'1 di 3',onbStep2:'2 di 3',onbStep3:'3 di 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Scopri luoghi sacri',onbTitle2:'Colleziona timbri del pellegrino',onbTitle3:'Ottieni il tuo certificato',onbDesc1:'Esplora una mappa interattiva dei santuari cattolici in Europa, Americhe e Asia.',onbDesc2:'Registra le tue visite e costruisci il tuo passaporto del pellegrino con i timbri di ogni santuario.',onbDesc3:'Completa un paese e scarica un bellissimo certificato di pellegrinaggio con il tuo nome.',onbNext:'Avanti',onbStart:'Iniziare il mio pellegrinaggio',onbSkip:'Salta',
     onbBadgeRoutes:'✨ Vie sacre', onbBadgeCertificates:'📜 Certificati curati',
+    onbHeroPill:'Vie sacre',
     onbTagline:'Il Passaporto del Pellegrino', onbCopy:'Luoghi sacri, percorsi vivi e tappe custodite con cura per ogni pellegrinaggio.',
     onbPurposeTitle:'A cosa serve Peregrin', onbPurposeBody:'Peregrin ti aiuta a scoprire santuari cattolici, segnare i luoghi che visiti, seguire itinerari sacri e custodire il tuo cammino con traguardi e certificati per paese.',
     onbStatSanctuaries:'Santuari', onbStatCountries:'Paesi', onbStatContinents:'Continenti',
@@ -744,6 +741,7 @@ const i18n = {
     paymentManualReview:'O Premium já não pode ser ativado automaticamente a partir do regresso do pagamento. Se te foi cobrado, escreve para elnuevoeuropeo@gmail.com.',
     onbStep1:'1 de 3',onbStep2:'2 de 3',onbStep3:'3 de 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Descubra lugares sagrados',onbTitle2:'Colecione selos de peregrino',onbTitle3:'Obtenha o seu certificado',onbDesc1:'Explore um mapa interativo de santuários católicos na Europa, Américas e Ásia.',onbDesc2:'Registe as suas visitas e construa o seu passaporte de peregrino com selos de cada santuário.',onbDesc3:'Complete um país e descarregue um belo certificado de peregrinação com o seu nome.',onbNext:'Seguinte',onbStart:'Começar a minha peregrinação',onbSkip:'Saltar',
     onbBadgeRoutes:'✨ Rotas sagradas', onbBadgeCertificates:'📜 Belos certificados',
+    onbHeroPill:'Rotas sagradas',
     onbTagline:'O Passaporte do Peregrino', onbCopy:'Lugares sagrados, rotas vivas e marcos bem guardados para cada peregrinação.',
     onbPurposeTitle:'Para que serve o Peregrin', onbPurposeBody:'O Peregrin ajuda-o a descobrir santuários católicos, marcar os lugares que visita, seguir rotas sagradas e guardar o seu caminho com conquistas e certificados por país.',
     onbStatSanctuaries:'Santuários', onbStatCountries:'Países', onbStatContinents:'Continentes',
@@ -961,6 +959,7 @@ function applyOnboardingCopy(){
   const continentCount = Object.keys(regionMap).length;
   setText('onb-badge-routes', t('onbBadgeRoutes'));
   setText('onb-badge-certificates', t('onbBadgeCertificates'));
+  setText('onb-hero-pill', t('onbHeroPill'));
   setText('onb-tagline', t('onbTagline'));
   setText('onb-copy', t('onbCopy'));
   setText('onb-purpose-title', t('onbPurposeTitle'));
