@@ -63,6 +63,25 @@ Conclusion:
 - Belgium should still be manually reviewed one entry at a time for wording and category quality.
 - But the current local list does not look like a random or fabricated set.
 
+## Bosnia and Herzegovina Review
+
+Bosnia and Herzegovina currently contains only one sanctuary in the dataset:
+
+- Medjugorje
+
+A factual check supports keeping Medjugorje in the app. The official Medjugorje parish site presents it as an active pilgrimage destination, and the Vatican's September 19, 2024 note on the spiritual experience connected with Medjugorje describes it as a major pilgrimage destination with evident pastoral fruits.
+
+Product recommendation:
+
+- Keep Medjugorje.
+- Do not offer a Bosnia and Herzegovina country certificate yet.
+- Re-enable that certificate only when the country has broader and more deliberate coverage.
+
+Reason:
+
+- With only one sanctuary, the current country-certificate mechanic makes Bosnia feel artificially easy and weakens trust in the rest of the passport.
+- This is not a data-corruption problem. It is a product-integrity problem.
+
 ## Country Counts
 
 Full sanctuary count by country:

@@ -804,6 +804,9 @@ function getRegion(cid){ for(const [r,ids] of Object.entries(regionMap)) if(ids.
 function isRegionUnlocked(region){ return hasTesterAccess() || unlockedRegions.includes('all')||unlockedRegions.includes(region); }
 function getCertificateSanctuaries(countryId){
   const rule=certificateRules[countryId];
+  if(rule?.disabled){
+    return [];
+  }
   if(rule?.sanctuaryIds?.length){
     return rule.sanctuaryIds.map(id=>sanctuaries.find(s=>s.id===id)).filter(Boolean);
   }
