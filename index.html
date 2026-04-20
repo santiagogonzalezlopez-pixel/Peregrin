@@ -105,6 +105,8 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .map-route-banner{position:absolute;top:10px;left:10px;right:52px;z-index:500;background:var(--burgundy);color:var(--cream);padding:10px 14px;border-radius:10px;font-size:13px;font-weight:500;display:none;align-items:center;justify-content:space-between;box-shadow:var(--shadow-lg);border-left:4px solid var(--gold);}
 .map-route-banner span{flex:1;}
 .map-route-banner button{background:none;border:none;color:var(--cream);font-size:18px;cursor:pointer;padding:0 0 0 12px;opacity:0.8;line-height:1;}
+.map-help-btn{position:absolute;top:58px;left:10px;z-index:500;display:flex;align-items:center;gap:8px;max-width:230px;padding:10px 14px;border:none;border-radius:999px;background:rgba(255,252,245,0.96);color:var(--burgundy);font-family:'Jost',sans-serif;font-size:12px;font-weight:700;box-shadow:var(--shadow-lg);cursor:pointer;}
+.map-help-btn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
 /* MARKERS */
 .custom-marker{background:var(--burgundy);border:3px solid var(--gold);border-radius:50%;width:32px!important;height:32px!important;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 2px 8px rgba(0,0,0,0.35);position:relative;}
@@ -402,6 +404,10 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
         <span id="map-route-name"></span>
         <button onclick="clearRouteFilter()">✕</button>
       </div>
+      <button class="map-help-btn" id="map-help-btn" onclick="showOnboarding()">
+        <span>✨</span>
+        <span id="map-help-btn-label">What is Peregrin?</span>
+      </button>
     </div>
     <div class="screen" id="screen-explore"><div class="explore-screen" style="background:var(--cream);padding:20px;"></div></div>
     <div class="screen" id="screen-passport"><div class="passport-screen"></div></div>
@@ -496,7 +502,7 @@ const i18n = {
     onbTagline:'The Pilgrim Passport', onbCopy:'Sacred places, living routes and beautifully kept milestones for every pilgrim journey.',
     onbStatSanctuaries:'Sanctuaries', onbStatCountries:'Countries', onbStatContinents:'Continents',
     onbCta:'Begin your pilgrimage ✦',
-    navWorld:'World',editName:'Edit my name', editNamePrompt:'Enter your pilgrim name:', viewIntro:'View intro again', aboutTitle:'What is Peregrin?', aboutBody:'Peregrin is a digital pilgrimage passport for Catholic pilgrims. It helps you discover sanctuaries, register your visits, complete countries and keep the memory of your journey with routes, achievements and certificates.', premiumBadge:'PREMIUM', betaTesterBadge:'BETA TESTER', testerPremiumOn:'Premium activated for local testing', testerPremiumOff:'Premium deactivated for local testing', commentsTitle:'Pilgrim comments', commentsPlaceholder:'Share a tip, a practical note or a short impression for other pilgrims...', commentsHint:'Visible to other signed-in testers in this beta.', commentsSubmit:'Post comment', commentsLoading:'Loading comments...', commentsEmpty:'No comments yet. Be the first to leave one.', commentsUnavailable:'Comments are not available right now.', commentsPosted:'Comment posted', commentsTooShort:'Write at least 3 characters.', createdBy:'Created with faith by', feedbackMsg:'Suggestions and feedback always welcome',
+    navWorld:'World',editName:'Edit my name', editNamePrompt:'Enter your pilgrim name:', viewIntro:'View intro again', mapHelpCta:'What is Peregrin?', aboutTitle:'What is Peregrin?', aboutBody:'Peregrin is a digital pilgrimage passport for Catholic pilgrims. It helps you discover sanctuaries, register your visits, complete countries and keep the memory of your journey with routes, achievements and certificates.', premiumBadge:'PREMIUM', betaTesterBadge:'BETA TESTER', testerPremiumOn:'Premium activated for local testing', testerPremiumOff:'Premium deactivated for local testing', commentsTitle:'Pilgrim comments', commentsPlaceholder:'Share a tip, a practical note or a short impression for other pilgrims...', commentsHint:'Visible to other signed-in testers in this beta.', commentsSubmit:'Post comment', commentsLoading:'Loading comments...', commentsEmpty:'No comments yet. Be the first to leave one.', commentsUnavailable:'Comments are not available right now.', commentsPosted:'Comment posted', commentsTooShort:'Write at least 3 characters.', createdBy:'Created with faith by', feedbackMsg:'Suggestions and feedback always welcome',
   },
   es: {
     appSubtitle:'Tu pasaporte peregrino', navMap:'Mapa', navCountries:'Países',
@@ -554,7 +560,7 @@ const i18n = {
     onbTagline:'El Pasaporte del Peregrino', onbCopy:'Lugares sagrados, rutas vivas y recuerdos bien guardados para cada peregrinación.',
     onbStatSanctuaries:'Santuarios', onbStatCountries:'Países', onbStatContinents:'Continentes',
     onbCta:'Comenzar mi peregrinación ✦',
-    navWorld:'Mundo',editName:'Editar mi nombre', editNamePrompt:'Introduce tu nombre de peregrino:', viewIntro:'Volver a ver la introducción', aboutTitle:'¿Qué es Peregrin?', aboutBody:'Peregrin es un pasaporte digital de peregrinación católica. Te ayuda a descubrir santuarios, registrar tus visitas, completar países y guardar la memoria de tu camino con rutas, logros y certificados.', premiumBadge:'PREMIUM', betaTesterBadge:'BETA TESTER', testerPremiumOn:'Premium activado para pruebas locales', testerPremiumOff:'Premium desactivado para pruebas locales', commentsTitle:'Comentarios de peregrinos', commentsPlaceholder:'Comparte un consejo, una nota práctica o una impresión breve para otros peregrinos...', commentsHint:'Visible para otros testers autenticados en esta beta.', commentsSubmit:'Publicar comentario', commentsLoading:'Cargando comentarios...', commentsEmpty:'Todavía no hay comentarios. Sé el primero en dejar uno.', commentsUnavailable:'Los comentarios no están disponibles ahora mismo.', commentsPosted:'Comentario publicado', commentsTooShort:'Escribe al menos 3 caracteres.', createdBy:'Creado con fe por', feedbackMsg:'Sugerencias y comentarios siempre bienvenidos',
+    navWorld:'Mundo',editName:'Editar mi nombre', editNamePrompt:'Introduce tu nombre de peregrino:', viewIntro:'Volver a ver la introducción', mapHelpCta:'Qué es Peregrin', aboutTitle:'¿Qué es Peregrin?', aboutBody:'Peregrin es un pasaporte digital de peregrinación católica. Te ayuda a descubrir santuarios, registrar tus visitas, completar países y guardar la memoria de tu camino con rutas, logros y certificados.', premiumBadge:'PREMIUM', betaTesterBadge:'BETA TESTER', testerPremiumOn:'Premium activado para pruebas locales', testerPremiumOff:'Premium desactivado para pruebas locales', commentsTitle:'Comentarios de peregrinos', commentsPlaceholder:'Comparte un consejo, una nota práctica o una impresión breve para otros peregrinos...', commentsHint:'Visible para otros testers autenticados en esta beta.', commentsSubmit:'Publicar comentario', commentsLoading:'Cargando comentarios...', commentsEmpty:'Todavía no hay comentarios. Sé el primero en dejar uno.', commentsUnavailable:'Los comentarios no están disponibles ahora mismo.', commentsPosted:'Comentario publicado', commentsTooShort:'Escribe al menos 3 caracteres.', createdBy:'Creado con fe por', feedbackMsg:'Sugerencias y comentarios siempre bienvenidos',
   },
   fr: {
     appSubtitle:'Votre passeport de pèlerin', navMap:'Carte', navCountries:'Pays',
@@ -612,7 +618,7 @@ const i18n = {
     onbTagline:'Le Passeport du Pèlerin', onbCopy:'Lieux sacrés, routes vivantes et étapes précieusement gardées pour chaque pèlerinage.',
     onbStatSanctuaries:'Sanctuaires', onbStatCountries:'Pays', onbStatContinents:'Continents',
     onbCta:'Commencer mon pèlerinage ✦',
-    navWorld:'Monde',editName:'Modifier mon nom', editNamePrompt:'Entrez votre nom de pèlerin :', viewIntro:'Revoir l’introduction', aboutTitle:'Qu’est-ce que Peregrin ?', aboutBody:'Peregrin est un passeport numérique de pèlerinage catholique. Il vous aide à découvrir des sanctuaires, enregistrer vos visites, compléter des pays et garder la mémoire de votre chemin avec des itinéraires, réalisations et certificats.', premiumBadge:'PREMIUM', betaTesterBadge:'BÊTA TESTEUR', testerPremiumOn:'Premium activé pour les tests locaux', testerPremiumOff:'Premium désactivé pour les tests locaux', commentsTitle:'Commentaires des pèlerins', commentsPlaceholder:'Partagez un conseil, une note pratique ou une brève impression pour les autres pèlerins...', commentsHint:'Visible aux autres testeurs connectés dans cette bêta.', commentsSubmit:'Publier', commentsLoading:'Chargement des commentaires...', commentsEmpty:'Aucun commentaire pour le moment. Soyez le premier à en laisser un.', commentsUnavailable:'Les commentaires ne sont pas disponibles pour le moment.', commentsPosted:'Commentaire publié', commentsTooShort:'Écrivez au moins 3 caractères.', createdBy:'Créé avec foi par', feedbackMsg:'Suggestions et commentaires toujours bienvenus',
+    navWorld:'Monde',editName:'Modifier mon nom', editNamePrompt:'Entrez votre nom de pèlerin :', viewIntro:'Revoir l’introduction', mapHelpCta:'Qu’est-ce que Peregrin ?', aboutTitle:'Qu’est-ce que Peregrin ?', aboutBody:'Peregrin est un passeport numérique de pèlerinage catholique. Il vous aide à découvrir des sanctuaires, enregistrer vos visites, compléter des pays et garder la mémoire de votre chemin avec des itinéraires, réalisations et certificats.', premiumBadge:'PREMIUM', betaTesterBadge:'BÊTA TESTEUR', testerPremiumOn:'Premium activé pour les tests locaux', testerPremiumOff:'Premium désactivé pour les tests locaux', commentsTitle:'Commentaires des pèlerins', commentsPlaceholder:'Partagez un conseil, une note pratique ou une brève impression pour les autres pèlerins...', commentsHint:'Visible aux autres testeurs connectés dans cette bêta.', commentsSubmit:'Publier', commentsLoading:'Chargement des commentaires...', commentsEmpty:'Aucun commentaire pour le moment. Soyez le premier à en laisser un.', commentsUnavailable:'Les commentaires ne sont pas disponibles pour le moment.', commentsPosted:'Commentaire publié', commentsTooShort:'Écrivez au moins 3 caractères.', createdBy:'Créé avec foi par', feedbackMsg:'Suggestions et commentaires toujours bienvenus',
   },
   it: {
     appSubtitle:'Il tuo passaporto del pellegrino', navMap:'Mappa', navCountries:'Paesi',
@@ -670,7 +676,7 @@ const i18n = {
     onbTagline:'Il Passaporto del Pellegrino', onbCopy:'Luoghi sacri, percorsi vivi e tappe custodite con cura per ogni pellegrinaggio.',
     onbStatSanctuaries:'Santuari', onbStatCountries:'Paesi', onbStatContinents:'Continenti',
     onbCta:'Iniziare il mio pellegrinaggio ✦',
-    navWorld:'Mondo',editName:'Modifica il mio nome', editNamePrompt:'Inserisci il tuo nome di pellegrino:', viewIntro:'Rivedi l’introduzione', aboutTitle:'Che cos’è Peregrin?', aboutBody:'Peregrin è un passaporto digitale di pellegrinaggio cattolico. Ti aiuta a scoprire santuari, registrare le visite, completare paesi e custodire il ricordo del tuo cammino con itinerari, traguardi e certificati.', premiumBadge:'PREMIUM', betaTesterBadge:'BETA TESTER', testerPremiumOn:'Premium attivato per i test locali', testerPremiumOff:'Premium disattivato per i test locali', commentsTitle:'Commenti dei pellegrini', commentsPlaceholder:'Condividi un consiglio, una nota pratica o una breve impressione per altri pellegrini...', commentsHint:'Visibile agli altri tester autenticati in questa beta.', commentsSubmit:'Pubblica', commentsLoading:'Caricamento commenti...', commentsEmpty:'Ancora nessun commento. Sii il primo a lasciarne uno.', commentsUnavailable:'I commenti non sono disponibili in questo momento.', commentsPosted:'Commento pubblicato', commentsTooShort:'Scrivi almeno 3 caratteri.', createdBy:'Creato con fede da', feedbackMsg:'Suggerimenti e commenti sempre benvenuti',
+    navWorld:'Mondo',editName:'Modifica il mio nome', editNamePrompt:'Inserisci il tuo nome di pellegrino:', viewIntro:'Rivedi l’introduzione', mapHelpCta:'Che cos’è Peregrin?', aboutTitle:'Che cos’è Peregrin?', aboutBody:'Peregrin è un passaporto digitale di pellegrinaggio cattolico. Ti aiuta a scoprire santuari, registrare le visite, completare paesi e custodire il ricordo del tuo cammino con itinerari, traguardi e certificati.', premiumBadge:'PREMIUM', betaTesterBadge:'BETA TESTER', testerPremiumOn:'Premium attivato per i test locali', testerPremiumOff:'Premium disattivato per i test locali', commentsTitle:'Commenti dei pellegrini', commentsPlaceholder:'Condividi un consiglio, una nota pratica o una breve impressione per altri pellegrini...', commentsHint:'Visibile agli altri tester autenticati in questa beta.', commentsSubmit:'Pubblica', commentsLoading:'Caricamento commenti...', commentsEmpty:'Ancora nessun commento. Sii il primo a lasciarne uno.', commentsUnavailable:'I commenti non sono disponibili in questo momento.', commentsPosted:'Commento pubblicato', commentsTooShort:'Scrivi almeno 3 caratteri.', createdBy:'Creato con fede da', feedbackMsg:'Suggerimenti e commenti sempre benvenuti',
   },
   pt: {
     appSubtitle:'O seu passaporte de peregrino', navMap:'Mapa', navCountries:'Países',
@@ -728,7 +734,7 @@ const i18n = {
     onbTagline:'O Passaporte do Peregrino', onbCopy:'Lugares sagrados, rotas vivas e marcos bem guardados para cada peregrinação.',
     onbStatSanctuaries:'Santuários', onbStatCountries:'Países', onbStatContinents:'Continentes',
     onbCta:'Começar a minha peregrinação ✦',
-    navWorld:'Mundo',editName:'Editar o meu nome', editNamePrompt:'Introduza o seu nome de peregrino:', viewIntro:'Voltar a ver a introdução', aboutTitle:'O que é o Peregrin?', aboutBody:'Peregrin é um passaporte digital de peregrinação católica. Ajuda-o a descobrir santuários, registar as suas visitas, completar países e guardar a memória do seu caminho com rotas, conquistas e certificados.', premiumBadge:'PREMIUM', betaTesterBadge:'BETA TESTER', testerPremiumOn:'Premium ativado para testes locais', testerPremiumOff:'Premium desativado para testes locais', commentsTitle:'Comentários de peregrinos', commentsPlaceholder:'Partilhe uma dica, uma nota prática ou uma impressão breve para outros peregrinos...', commentsHint:'Visível para outros testers autenticados nesta beta.', commentsSubmit:'Publicar comentário', commentsLoading:'A carregar comentários...', commentsEmpty:'Ainda não há comentários. Seja o primeiro a deixar um.', commentsUnavailable:'Os comentários não estão disponíveis neste momento.', commentsPosted:'Comentário publicado', commentsTooShort:'Escreva pelo menos 3 caracteres.', createdBy:'Criado com fé por', feedbackMsg:'Sugestões e comentários sempre bem-vindos',
+    navWorld:'Mundo',editName:'Editar o meu nome', editNamePrompt:'Introduza o seu nome de peregrino:', viewIntro:'Voltar a ver a introdução', mapHelpCta:'O que é o Peregrin?', aboutTitle:'O que é o Peregrin?', aboutBody:'Peregrin é um passaporte digital de peregrinação católica. Ajuda-o a descobrir santuários, registar as suas visitas, completar países e guardar a memória do seu caminho com rotas, conquistas e certificados.', premiumBadge:'PREMIUM', betaTesterBadge:'BETA TESTER', testerPremiumOn:'Premium ativado para testes locais', testerPremiumOff:'Premium desativado para testes locais', commentsTitle:'Comentários de peregrinos', commentsPlaceholder:'Partilhe uma dica, uma nota prática ou uma impressão breve para outros peregrinos...', commentsHint:'Visível para outros testers autenticados nesta beta.', commentsSubmit:'Publicar comentário', commentsLoading:'A carregar comentários...', commentsEmpty:'Ainda não há comentários. Seja o primeiro a deixar um.', commentsUnavailable:'Os comentários não estão disponíveis neste momento.', commentsPosted:'Comentário publicado', commentsTooShort:'Escreva pelo menos 3 caracteres.', createdBy:'Criado com fé por', feedbackMsg:'Sugestões e comentários sempre bem-vindos',
   }
 };
 
@@ -941,6 +947,7 @@ function applyOnboardingCopy(){
   setText('onb-stat-countries-label', t('onbStatCountries'));
   setText('onb-stat-continents-label', t('onbStatContinents'));
   setText('onb-cta', t('onbCta'));
+  setText('map-help-btn-label', t('mapHelpCta'));
   setText(
     'onb-footer',
     `${sanctuaryCount} ${t('onbStatSanctuaries').toUpperCase()} · ${countryCount} ${t('onbStatCountries').toUpperCase()} · ${continentCount} ${t('onbStatContinents').toUpperCase()}`
@@ -1590,8 +1597,9 @@ function renderProfile(){
 }
 
 // ===================== ONBOARDING =====================
-// Show on first ever visit (before login, using localStorage)
-if(!localStorage.getItem('peregrin_onb_seen')){
+const ONBOARDING_VERSION = '1.0.6';
+const ONBOARDING_STORAGE_KEY = `peregrin_onb_seen_${ONBOARDING_VERSION}`;
+if(!localStorage.getItem(ONBOARDING_STORAGE_KEY)){
   document.getElementById('onboarding').classList.add('open');
 }
 function showOnboarding(){
@@ -1600,6 +1608,7 @@ function showOnboarding(){
 function closeOnboarding(){
   document.getElementById('onboarding').classList.remove('open');
   localStorage.setItem('peregrin_onb_seen','1');
+  localStorage.setItem(ONBOARDING_STORAGE_KEY,'1');
   if(window._currentUser) window._fbSetDoc(window._currentUser.uid,{onboardingSeen:true});
 }
 
