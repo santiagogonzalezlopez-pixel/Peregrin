@@ -1368,6 +1368,10 @@ async function loadSanctuaryComments(sanctuaryId){
   const listEl = document.getElementById(`comments-list-${sanctuaryId}`);
   if(!listEl) return;
   listEl.innerHTML = `<div class="comment-state">${t('commentsLoading')}</div>`;
+  if(!window._currentUser?.uid){
+    listEl.innerHTML = `<div class="comment-state">${t('commentsSignIn')}</div>`;
+    return;
+  }
   if(typeof window._fbListSanctuaryComments !== 'function'){
     listEl.innerHTML = `<div class="comment-state">${t('commentsUnavailable')}</div>`;
     return;
@@ -1427,8 +1431,9 @@ async function submitSanctuaryComment(sanctuaryId){
   button.disabled = true;
   try{
     const now = Date.now();
+    const sanctuaryKey = String(sanctuaryId);
     await window._fbAddSanctuaryComment(sanctuaryId, {
-      sanctuaryId,
+      sanctuaryId: sanctuaryKey,
       text,
       authorName,
       authorUid: window._currentUser?.uid || null,

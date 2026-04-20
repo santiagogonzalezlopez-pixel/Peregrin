@@ -44,6 +44,7 @@ service cloud.firestore {
         && request.resource.data.text.size() <= 280
         && request.resource.data.createdAtMs is int
         && request.resource.data.createdAtIso is string
+        && request.resource.data.sanctuaryId is string
         && request.resource.data.sanctuaryId == sanctuaryId;
 
       allow update, delete: if false;
