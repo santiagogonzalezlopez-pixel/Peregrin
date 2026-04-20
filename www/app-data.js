@@ -332,21 +332,6 @@ const achievements = [
     it:{name:'Cammino dei Martiri',desc:'Visita i santuari del martirio di Corea e Giappone'},pt:{name:'Caminho dos Mártires',desc:'Visita os santuários do martírio da Coreia e do Japão'}},
 ];
 
-// ===================== STATE =====================
-let visits={}, unlockedRegions=[], currentLang='en', currentScreen='map', currentCountry='be', map=null, markers={}, activeRouteFilter=null, pilgrimName='';
-let markerDisplayPositions=null;
-let shouldReturnHomeOnResume=false;
-let explicitAuthAction=false;
-let shouldBlockRestoredSession=false;
-let didRunRestoreSessionGate=false;
-const RUNTIME_SESSION_FLAG='peregrin_runtime_session';
-try{
-  shouldBlockRestoredSession = sessionStorage.getItem(RUNTIME_SESSION_FLAG)!=='1';
-  sessionStorage.setItem(RUNTIME_SESSION_FLAG,'1');
-}catch(e){
-  shouldBlockRestoredSession = false;
-}
-
 const regionMap = {europe:['be','es','pt','fr','it','pl','ie','de','at','hr','ba'], americas:['mx','br','ar','pe','co','bo','us','ca'], asia:['ph','in','kr','jp']};
 // Only define a rule here when a country's certificate should intentionally
 // use a subset different from all sanctuaries in that country.
