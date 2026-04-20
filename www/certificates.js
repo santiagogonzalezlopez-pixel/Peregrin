@@ -480,12 +480,8 @@
         if((row + column) % 2 === 0){
           roundedRect(ctx, itemX, y - 18, columnWidth, item.blockHeight - 8, 12, "rgb(246, 236, 218)");
         }
-        ctx.fillStyle = toRgb(GOLD);
-        ctx.beginPath();
-        ctx.arc(itemX + 18, y + 8, 6, 0, Math.PI * 2);
-        ctx.fill();
         item.lines.forEach((line, lineIndex) => {
-          drawText(ctx, line, itemX + 38, y + 6 + (lineIndex * 26), {
+          drawText(ctx, line, itemX + 18, y + 6 + (lineIndex * 26), {
             size: 23,
             family: "'Jost', sans-serif",
             weight: "500",
