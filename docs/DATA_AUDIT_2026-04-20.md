@@ -139,6 +139,110 @@ Reason:
 - The current entries are good, but they do not justify the claim of "completed Croatia".
 - Leaving the certificate active would turn a decent shortlist into an overstatement.
 
+## Brazil Review
+
+Brazil currently contains four sanctuaries in the dataset:
+
+- Basilica of Our Lady of Aparecida
+- Basilica of Our Lady of Nazareth
+- Cathedral Basilica of Salvador
+- Sanctuary of Dom Bosco
+
+These four entries are defensible. Aparecida is the country's great Marian centre, and Círio de Nazaré is among the most significant Catholic devotions in Brazil. The current set also gives some regional spread.
+
+However, Brazil is too large and too rich in pilgrimage culture for this shortlist to support a country certificate.
+
+The clearest omission is Bom Jesus da Lapa, whose official sanctuary presents itself as an active pilgrimage centre with multiple annual romarias and daily liturgical life. Another strong omission is the Sanctuary of Bom Jesus de Congonhas, a UNESCO-recognized sanctuary of major national religious and cultural weight.
+
+Product recommendation:
+
+- Keep the current four Brazilian entries.
+- Do not offer a Brazil country certificate yet.
+- Re-enable that certificate only after a focused Brazil pass that decides whether to include the major omitted pilgrimage centres or intentionally redefine Brazil as a smaller curated route.
+
+Reason:
+
+- The current Brazil set is meaningful, but it is not broad enough to claim "completed Brazil".
+- Leaving the certificate active would overstate editorial completeness.
+
+## Argentina Review
+
+Argentina currently contains four sanctuaries in the dataset:
+
+- Basilica of Our Lady of Luján
+- Basilica of Our Lady of Itatí
+- Cathedral of Córdoba
+- Sanctuary of Our Lady of San Nicolás
+
+These four entries are defensible and important. Luján is unquestionably central, and Itatí and San Nicolás are major Marian devotions.
+
+At the same time, Argentina still looks incomplete as a national set.
+
+The clearest missing piece is the Cathedral Basilica and Sanctuary of Our Lady of the Valley in Catamarca, which Argentina's own national heritage site describes as a sanctuary of Nuestra Señora del Valle, linked to an image venerated since the early seventeenth century.
+
+Product recommendation:
+
+- Keep the current four Argentine entries.
+- Do not offer an Argentina country certificate yet.
+- Re-enable that certificate only after a focused Argentina pass that decides whether to add the major missing national devotions or explicitly define the country as a narrower curated list.
+
+Reason:
+
+- The current entries are strong, but they do not yet justify the idea of "completed Argentina".
+- Leaving the certificate active would communicate more certainty than the current content deserves.
+
+## Colombia Review
+
+Colombia currently contains four sanctuaries in the dataset:
+
+- Sanctuary of Our Lady of Las Lajas
+- Sanctuary of Our Lady of Chiquinquirá
+- Sanctuary of the Lord of Miracles of Buga
+- Cathedral Basilica of Bogotá
+
+These four entries are defensible. Chiquinquirá is explicitly treated by Boyacá's official materials as the Santuario Mariano Nacional of the patroness of Colombia, and Las Lajas and Buga are major pilgrimage destinations.
+
+Even so, Colombia still feels incomplete as a country set.
+
+The strongest omission is Monserrate in Bogotá. Its official site presents it as one of Colombia's most iconic destinations, where spirituality, nature, and culture converge. Leaving Monserrate out while keeping a national Colombia certificate would feel odd to many users.
+
+Product recommendation:
+
+- Keep the current four Colombian entries.
+- Do not offer a Colombia country certificate yet.
+- Re-enable that certificate only after a focused Colombia pass that decides whether to add Monserrate and any other obvious missing pilgrimage centres.
+
+Reason:
+
+- The current shortlist is good, but it still misses a landmark devotional site that many users would expect immediately.
+- Leaving the certificate active would make the country feel under-curated.
+
+## Bolivia Review
+
+Bolivia currently contains four sanctuaries in the dataset:
+
+- Sanctuary of Our Lady of Copacabana
+- Cristo de la Concordia
+- Sanctuary of Our Lady of Urkupiña
+- Basilica of San Francisco
+
+These four entries are defensible. Copacabana is central to Bolivian Marian devotion, and Quillacollo's own municipal materials show that the Urkupiña feast is important enough to be promoted toward UNESCO recognition.
+
+But Bolivia still looks incomplete as a country certificate set.
+
+The clearest omission is the Sanctuary of the Virgin of Chaguaya, which the Government of Tarija describes as one of the most important religious celebrations of the department, centered on annual pilgrimages to the sanctuary.
+
+Product recommendation:
+
+- Keep the current four Bolivian entries.
+- Do not offer a Bolivia country certificate yet.
+- Re-enable that certificate only after a focused Bolivia pass that decides whether to add the strongest missing pilgrimage centres such as Chaguaya.
+
+Reason:
+
+- The current entries are meaningful, but they are not enough to present Bolivia as an editorially complete country.
+- Leaving the certificate active would promise more than the current dataset can support.
+
 ## Country Counts
 
 Full sanctuary count by country:
