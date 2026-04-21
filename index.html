@@ -393,7 +393,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
       <div class="header-sub" id="header-sub">Your pilgrim passport</div>
     </div>
     <div class="header-actions">
-      <div class="header-right" id="header-country" onclick="switchScreen('explore')">🌍 World</div>
+      <div class="header-right" id="header-country" onclick="switchScreen('explore')" aria-label="World">🌍</div>
       <button class="map-help-btn" id="map-help-btn" onclick="showOnboarding()">
         <span>✨</span>
         <span id="map-help-btn-label">What is Peregrin?</span>
@@ -907,7 +907,11 @@ function applyLang(){
   const authSub = document.getElementById('auth-subtitle');
   if(authSub) authSub.textContent = t('appSubtitle');
   const headerCountry = document.getElementById('header-country');
-  if(headerCountry) headerCountry.textContent = '🌍 ' + t('navWorld');
+  if(headerCountry){
+    headerCountry.textContent = '🌍';
+    headerCountry.setAttribute('aria-label', t('navWorld'));
+    headerCountry.setAttribute('title', t('navWorld'));
+  }
   document.querySelectorAll('[data-nav]').forEach(el=>{
     el.textContent = t(el.dataset.nav);
   });
