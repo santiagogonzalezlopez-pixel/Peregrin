@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" role="img" aria-label="Cathedral doorway illustration">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1d3241"/>
+      <stop offset="100%" stop-color="#5a2b2e"/>
+    </linearGradient>
+    <linearGradient id="stone" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#dcc79f"/>
+      <stop offset="100%" stop-color="#a07d56"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="420" fill="url(#bg)"/>
+  <circle cx="940" cy="92" r="72" fill="#f3d98b" opacity=".22"/>
+  <rect x="150" y="110" width="900" height="250" rx="18" fill="#4d2b25" opacity=".82"/>
+  <rect x="230" y="90" width="740" height="290" rx="12" fill="#6b4436"/>
+  <rect x="275" y="120" width="650" height="230" rx="10" fill="#7d5443"/>
+  <path d="M430 340V210c0-92 75-148 170-148s170 56 170 148v130z" fill="url(#stone)"/>
+  <path d="M470 340V225c0-62 52-102 130-102s130 40 130 102v115z" fill="#593322"/>
+  <rect x="555" y="175" width="90" height="165" rx="40" fill="#241612"/>
+  <rect x="582" y="175" width="8" height="165" fill="#8d6f49" opacity=".75"/>
+  <path d="M545 72l18 27 32 5-23 22 6 31-29-15-29 15 6-31-23-22 32-5z" fill="#f0d47d"/>
+  <circle cx="600" cy="115" r="26" fill="#6b4436" stroke="#f0d47d" stroke-width="7"/>
+  <path d="M600 96c14 9 22 18 22 26 0 15-12 25-22 25s-22-10-22-25c0-8 8-17 22-26z" fill="#f0d47d"/>
+  <rect x="300" y="145" width="80" height="145" rx="10" fill="#d7bc8d" opacity=".8"/>
+  <rect x="820" y="145" width="80" height="145" rx="10" fill="#d7bc8d" opacity=".8"/>
+</svg>

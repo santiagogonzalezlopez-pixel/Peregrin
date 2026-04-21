@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" role="img" aria-label="Church doorway illustration">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#27384b"/>
+      <stop offset="100%" stop-color="#8a5a44"/>
+    </linearGradient>
+    <linearGradient id="stone" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f5e2bf"/>
+      <stop offset="100%" stop-color="#bf8f64"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="420" fill="url(#bg)"/>
+  <rect x="145" y="126" width="910" height="234" rx="20" fill="#613c30"/>
+  <rect x="228" y="90" width="744" height="270" rx="16" fill="#79513d"/>
+  <rect x="300" y="138" width="600" height="202" rx="12" fill="#8e654a"/>
+  <path d="M456 340V214c0-85 60-140 144-140s144 55 144 140v126z" fill="url(#stone)"/>
+  <path d="M493 340V223c0-59 45-98 107-98s107 39 107 98v117z" fill="#563125"/>
+  <rect x="563" y="194" width="74" height="146" rx="35" fill="#241714"/>
+  <rect x="597" y="194" width="6" height="146" fill="#d5b981" opacity=".78"/>
+  <circle cx="600" cy="112" r="26" fill="#f1d588"/>
+  <path d="M600 84v56M574 108h52" stroke="#6a4431" stroke-width="7" stroke-linecap="round"/>
+  <rect x="345" y="178" width="70" height="120" rx="10" fill="#f5e2bf" opacity=".78"/>
+  <rect x="785" y="178" width="70" height="120" rx="10" fill="#f5e2bf" opacity=".78"/>
+</svg>
