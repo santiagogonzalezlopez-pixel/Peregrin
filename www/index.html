@@ -160,6 +160,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .route-card:active{transform:scale(0.98);}
 .route-banner{height:116px;position:relative;overflow:hidden;background:linear-gradient(135deg,#4c2e2b,#7b4d3e);}
 .route-banner-image{width:100%;height:100%;object-fit:cover;display:block;}
+.route-banner-image.is-fallback{object-fit:cover;}
 .route-body{padding:16px;}
 .route-name{font-family:'Crimson Pro',serif;font-size:18px;font-weight:600;margin-bottom:4px;}
 .route-meta{font-size:12px;color:var(--brown-light);margin-bottom:8px;}
@@ -778,6 +779,24 @@ function getCapacitorPlugin(name){
 
 function normalizeAccessCode(value){
   return (value||'').trim().toUpperCase().replace(/\s+/g,'-');
+}
+
+const ROUTE_IMAGE_FALLBACK = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 420'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23322f46'/%3E%3Cstop offset='100%25' stop-color='%2380503d'/%3E%3C/linearGradient%3E%3ClinearGradient id='stone' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%23f2dfbf'/%3E%3Cstop offset='100%25' stop-color='%23bc9164'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='420' fill='url(%23bg)'/%3E%3Crect x='190' y='118' width='820' height='242' rx='18' fill='%23684231'/%3E%3Crect x='270' y='92' width='660' height='268' rx='16' fill='%23805842'/%3E%3Cpath d='M458 340V214c0-83 62-138 142-138s142 55 142 138v126z' fill='url(%23stone)'/%3E%3Cpath d='M494 340V224c0-57 45-96 106-96s106 39 106 96v116z' fill='%23522f23'/%3E%3Crect x='562' y='195' width='76' height='145' rx='37' fill='%23201412'/%3E%3Ccircle cx='600' cy='116' r='24' fill='%23f0d27f'/%3E%3Cpath d='M600 87v58M572 113h56' stroke='%23644330' stroke-width='8' stroke-linecap='round'/%3E%3C/svg%3E";
+
+function resolveAssetUrl(path){
+  if(!path) return "";
+  try{
+    return new URL(path, document.baseURI).href;
+  }catch(e){
+    return path;
+  }
+}
+
+function handleRouteBannerError(img){
+  if(!img) return;
+  img.onerror = null;
+  img.src = ROUTE_IMAGE_FALLBACK;
+  img.classList.add('is-fallback');
 }
 
 function isValidPremiumAccessCode(value){
@@ -1556,7 +1575,7 @@ function renderRoutes(){
       const stops=r.stops.map(id=>sanctuaries.find(s=>s.id===id)).filter(Boolean);
       const vc=r.stops.filter(id=>isVisited(id)).length;
       return `<div class="route-card" onclick="showRouteOnMap(${idx})">
-        <div class="route-banner"><img class="route-banner-image" src="${r.image}" alt=""></div>
+        <div class="route-banner"><img class="route-banner-image" src="${resolveAssetUrl(r.image)}" alt="" loading="lazy" onerror="handleRouteBannerError(this)"></div>
         <div class="route-body">
           <div class="route-name">${rd.name}</div>
           <div class="route-meta">📏 ${r.distance} · 🗓️ ${rd.days} · ✅ ${vc}/${r.stops.length}</div>
