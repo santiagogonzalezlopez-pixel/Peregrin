@@ -9,6 +9,11 @@ service cloud.firestore {
       return signedIn() && request.auth.uid == userId;
     }
 
+    function isPremiumOwner(userId) {
+      return isOwner(userId)
+        && get(/databases/$(database)/documents/users/$(userId)).data.isPremium == true;
+    }
+
     function mutableUserFields() {
       return ['visits', 'lang', 'displayName', 'onboardingSeen'];
     }
@@ -42,6 +47,16 @@ service cloud.firestore {
       return request.resource.data.diff(resource.data).changedKeys().hasOnly(mutableUserFields().concat(premiumUserFields()));
     }
 
+    function validJournalEntry(sanctuaryId, data) {
+      return data.keys().hasOnly(['sanctuaryId', 'text', 'updatedAtMs', 'updatedAtIso'])
+        && data.sanctuaryId is string
+        && data.sanctuaryId == sanctuaryId
+        && data.text is string
+        && data.text.size() <= 1000
+        && data.updatedAtMs is int
+        && data.updatedAtIso is string;
+    }
+
     match /users/{userId} {
       allow read: if isOwner(userId);
       allow create: if isOwner(userId)
@@ -55,6 +70,13 @@ service cloud.firestore {
           || validPremiumUnlock(request.resource.data)
         );
       allow delete: if false;
+
+      match /journal/{sanctuaryId} {
+        allow read: if isPremiumOwner(userId);
+        allow create, update: if isPremiumOwner(userId)
+          && validJournalEntry(sanctuaryId, request.resource.data);
+        allow delete: if false;
+      }
     }
 
     match /sanctuaries/{sanctuaryId}/comments/{commentId} {

@@ -220,6 +220,19 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .comment-report{margin-top:8px;padding:0;border:none;background:transparent;color:var(--brown-light);font-family:'Jost',sans-serif;font-size:11px;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
 .comment-report:hover{color:var(--burgundy);}
 .comment-state{font-size:12px;color:var(--brown-light);line-height:1.6;padding:4px 2px;}
+.journal-box{background:linear-gradient(135deg,#fffaf0,#f3e7d3);border:1px solid var(--cream-dark);border-radius:14px;padding:13px;}
+.journal-textarea{width:100%;min-height:110px;resize:vertical;padding:12px 14px;border:2px solid var(--cream-dark);border-radius:12px;font-family:'Jost',sans-serif;font-size:13px;line-height:1.55;color:var(--brown);background:var(--white);outline:none;}
+.journal-textarea:focus{border-color:var(--gold);}
+.journal-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;}
+.journal-save{padding:10px 14px;border:none;border-radius:10px;background:var(--burgundy);color:var(--cream);font-family:'Jost',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
+.premium-teaser{background:linear-gradient(135deg,rgba(197,150,58,.18),rgba(114,47,55,.08));border:1px solid rgba(197,150,58,.38);border-radius:13px;padding:12px;font-size:12.5px;line-height:1.55;color:var(--brown);}
+.route-guide-btn{width:100%;margin-top:12px;padding:11px 14px;border:none;border-radius:11px;background:linear-gradient(135deg,var(--burgundy),var(--burgundy-dark));color:var(--cream);font-family:'Jost',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
+.route-guide-btn.locked{background:linear-gradient(135deg,var(--gold),#b8842e);color:var(--brown);}
+.route-guide-panel{background:var(--cream);border-radius:14px;padding:14px;border:1px solid var(--cream-dark);margin-bottom:16px;}
+.route-guide-kicker{font-size:11px;text-transform:uppercase;letter-spacing:1.6px;color:var(--gold);font-weight:800;margin-bottom:4px;}
+.route-guide-section{margin-top:14px;}
+.route-guide-section-title{font-family:'Crimson Pro',serif;font-size:17px;font-weight:700;color:var(--burgundy);margin-bottom:5px;}
+.route-guide-section p{font-size:13.5px;line-height:1.7;color:var(--brown);}
 
 /* PROFILE */
 .screen-title{font-family:'Crimson Pro',serif;font-size:24px;font-weight:700;color:var(--brown);margin-bottom:20px;}
@@ -412,6 +425,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 <div class="toast" id="toast"></div>
 
 <script src="app-data.js"></script>
+<script src="route-guides.js"></script>
 <script>
 // ===================== I18N =====================
 const i18n = {
@@ -711,6 +725,11 @@ const i18n = {
     navWorld:'Mundo',editName:'Editar o meu nome', editNamePrompt:'Introduza o seu nome de peregrino:', viewIntro:'Voltar a ver a introdução', mapHelpCta:'Peregrin', aboutTitle:'O que é o Peregrin?', aboutBody:'Peregrin é um passaporte digital de peregrinação católica. Ajuda-o a descobrir santuários, registar as suas visitas, completar países e guardar a memória do seu caminho com rotas, conquistas e certificados.', pageTitle:'Peregrin — O seu passaporte de peregrino', pilgrimFallback:'Peregrino', premiumBadge:'PREMIUM', betaTesterBadge:'BETA TESTER', testerPremiumOn:'Premium ativado para testes locais', testerPremiumOff:'Premium desativado para testes locais', commentsTitle:'Comentários de peregrinos', commentsPlaceholder:'Partilhe uma dica, uma nota prática ou uma impressão breve para outros peregrinos...', commentsHint:'Visível para outros testers autenticados nesta beta.', commentsSubmit:'Publicar comentário', commentsLoading:'A carregar comentários...', commentsEmpty:'Ainda não há comentários. Seja o primeiro a deixar um.', commentsUnavailable:'Os comentários não estão disponíveis neste momento.', commentsPosted:'Comentário publicado', commentsTooShort:'Escreva pelo menos 3 caracteres.', commentsSignIn:'Inicie sessão para deixar comentários.', commentsNoLinks:'Por agora não são permitidos links nos comentários.', commentsReport:'Reportar', commentsReported:'Comentário reportado. Obrigado.', commentsSlowDown:(seconds)=>`Espere ${seconds}s antes de voltar a comentar.`, createdBy:'Criado com fé por', feedbackMsg:'Sugestões e comentários sempre bem-vindos',
   }
 };
+if(window.PEREGRIN_PREMIUM_I18N){
+  Object.keys(window.PEREGRIN_PREMIUM_I18N).forEach(lang => {
+    i18n[lang] = Object.assign(i18n[lang] || {}, window.PEREGRIN_PREMIUM_I18N[lang]);
+  });
+}
 
 function t(key){ return (i18n[currentLang]||i18n.en)[key] || i18n.en[key] || key; }
 function sd(s){ return (currentLang==='es' && s.es) ? s.es : (currentLang==='fr' && s.fr) ? s.fr : (currentLang==='it' && s.it) ? s.it : (currentLang==='pt' && s.pt) ? s.pt : s; }
@@ -794,6 +813,7 @@ function hasFullPremiumAccess(){
 }
 
 const { countries, sanctuaries, routes, achievements, regionMap, certificateRules } = window.PEREGRIN_DATA;
+const routeGuides = window.PEREGRIN_ROUTE_GUIDES || {};
 
 function getRegion(cid){ for(const [r,ids] of Object.entries(regionMap)) if(ids.includes(cid)) return r; return null; }
 function isRegionUnlocked(region){ return LAUNCH_ALL_COUNTRIES_UNLOCKED || hasTesterAccess() || unlockedRegions.includes('all')||unlockedRegions.includes(region); }
@@ -1108,6 +1128,10 @@ function openPremiumModal(){
     <div class="premium-cross">✦</div>
     <div class="premium-title">${t('premiumTitle')}</div>
     <div class="premium-sub">${t('premiumSub')}</div>
+    <div class="premium-feature"><span class="premium-feature-icon">◈</span><span>${t('premiumCountries')}</span></div>
+    <div class="premium-feature"><span class="premium-feature-icon">✦</span><span>${t('premiumGuides')}</span></div>
+    <div class="premium-feature"><span class="premium-feature-icon">✎</span><span>${t('premiumJournal')}</span></div>
+    <div class="premium-feature"><span class="premium-feature-icon">□</span><span>${t('premiumMemory')}</span></div>
     ${allUnlocked
       ? `<div style="margin:24px 0;padding:18px;background:var(--cream);border-radius:12px;text-align:center;color:#2E7D32;font-weight:600;font-size:15px;">✓ ${t('premiumAlreadyUnlocked')}</div>`
       : PREMIUM_CHECKOUT_ENABLED
@@ -1257,6 +1281,55 @@ function updateMarkerStyles(){
   });
 }
 
+function getRouteGuide(routeId){
+  const guide = routeGuides[routeId];
+  if(!guide) return null;
+  return guide[currentLang] || guide.en || guide.es || null;
+}
+
+function openRouteGuide(routeId, event){
+  if(event){
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  if(!hasFullPremiumAccess()){
+    openPremiumModal();
+    return;
+  }
+  const route = routes.find(r => r.id === routeId);
+  const guide = getRouteGuide(routeId);
+  if(!route || !guide) return;
+  const rd = route[currentLang] || route.es || route.en;
+  document.getElementById('modal-content').innerHTML=`
+    <div class="modal-handle"></div>
+    <div class="route-banner" style="height:190px;"><img class="route-banner-image" src="${resolveAssetUrl(route.image)}" alt="" onerror="handleRouteBannerError(this)"><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="route-guide-kicker">${t('routeGuideTitle')}</div>
+      <div class="modal-title">${rd.name}</div>
+      <div class="modal-location">${route.distance} · ${rd.days}</div>
+      <div class="route-guide-panel">
+        <div class="route-guide-section">
+          <div class="route-guide-section-title">${t('routeGuidePurpose')}</div>
+          <p>${guide.purpose}</p>
+        </div>
+        <div class="route-guide-section">
+          <div class="route-guide-section-title">${t('routeGuideRhythm')}</div>
+          <p>${guide.rhythm}</p>
+        </div>
+        <div class="route-guide-section">
+          <div class="route-guide-section-title">${t('routeGuidePrayer')}</div>
+          <p>${guide.prayer}</p>
+        </div>
+        <div class="route-guide-section">
+          <div class="route-guide-section-title">${t('routeGuidePractical')}</div>
+          <p>${guide.practical}</p>
+        </div>
+      </div>
+      <button class="modal-visit-btn" onclick="showRouteOnMap(${routes.indexOf(route)});closeModal();">${t('navMap')}</button>
+    </div>`;
+  document.getElementById('modal').classList.add('open');
+}
+
 function showRouteOnMap(idx){
   const r=routes[idx];
   activeRouteFilter=r.stops;
@@ -1288,6 +1361,74 @@ function focusCountry(cid){
 }
 
 // ===================== MODAL =====================
+function renderJournalSection(s){
+  if(!hasFullPremiumAccess()){
+    return `<div class="modal-section">
+      <h3>✎ ${t('journalTitle')}</h3>
+      <div class="premium-teaser">
+        <div>${t('journalLocked')}</div>
+        <button class="modal-premium-btn" onclick="openPremiumModal()">${t('discoverPremium')}</button>
+      </div>
+    </div>`;
+  }
+  return `<div class="modal-section">
+    <h3>✎ ${t('journalTitle')}</h3>
+    <div class="journal-box">
+      <textarea class="journal-textarea" id="journal-input-${s.id}" maxlength="1000" placeholder="${t('journalPlaceholder')}"></textarea>
+      <div class="journal-actions">
+        <div class="comment-hint" id="journal-state-${s.id}">${t('journalLoading')}</div>
+        <button class="journal-save" onclick="saveJournalNote(${s.id})">${t('journalSave')}</button>
+      </div>
+      <div class="comment-hint" style="margin-top:8px;">${t('journalHint')}</div>
+    </div>
+  </div>`;
+}
+
+async function loadJournalNote(sanctuaryId){
+  const input = document.getElementById(`journal-input-${sanctuaryId}`);
+  const state = document.getElementById(`journal-state-${sanctuaryId}`);
+  if(!input || !state || !window._currentUser?.uid) return;
+  if(typeof window._fbGetJournalNote !== 'function'){
+    state.textContent = t('journalUnavailable');
+    return;
+  }
+  state.textContent = t('journalLoading');
+  try{
+    const snap = await window._fbGetJournalNote(window._currentUser.uid, sanctuaryId);
+    if(!document.getElementById(`journal-input-${sanctuaryId}`)) return;
+    input.value = snap.exists ? (snap.data().text || '') : '';
+    state.textContent = '';
+  }catch(e){
+    console.error('loadJournalNote failed:', e);
+    state.textContent = t('journalUnavailable');
+  }
+}
+
+async function saveJournalNote(sanctuaryId){
+  const input = document.getElementById(`journal-input-${sanctuaryId}`);
+  const state = document.getElementById(`journal-state-${sanctuaryId}`);
+  if(!input || !state || !window._currentUser?.uid) return;
+  if(typeof window._fbSetJournalNote !== 'function'){
+    showToast(t('journalUnavailable'));
+    return;
+  }
+  try{
+    const now = Date.now();
+    const text = input.value.trim().slice(0, 1000);
+    await window._fbSetJournalNote(window._currentUser.uid, sanctuaryId, {
+      sanctuaryId: String(sanctuaryId),
+      text,
+      updatedAtMs: now,
+      updatedAtIso: new Date(now).toISOString()
+    });
+    state.textContent = '';
+    showToast(t('journalSaved'));
+  }catch(e){
+    console.error('saveJournalNote failed:', e);
+    showToast(t('journalUnavailable'));
+  }
+}
+
 function openModal(id){
   const s=sanctuaries.find(x=>x.id===id);if(!s)return;
   const locked=!isCountryUnlocked(s.country);
@@ -1307,6 +1448,7 @@ function openModal(id){
       <div class="modal-section"><h3>ℹ️ ${t('descLabel')}</h3><p>${d.description}</p></div>
       <div class="modal-section"><h3>📜 ${t('histLabel')}</h3><p>${d.history}</p></div>
       <div class="modal-section"><h3>🙏 ${t('prayerLabel')}</h3><div class="modal-prayer">${d.prayer}</div></div>
+      ${renderJournalSection(s)}
       <div class="modal-section">
         <h3>💬 ${t('commentsTitle')}</h3>
         <div class="comments-box">
@@ -1331,6 +1473,7 @@ function openModal(id){
   document.getElementById('modal').classList.add('open');
   updateCommentCounter(s.id);
   loadSanctuaryComments(s.id);
+  if(hasFullPremiumAccess()) loadJournalNote(s.id);
 }
 function closeModal(){document.getElementById('modal').classList.remove('open');}
 document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal'))closeModal();});
@@ -1600,6 +1743,8 @@ function renderRoutes(){
       const rd=r[currentLang]||r.en;
       const stops=r.stops.map(id=>sanctuaries.find(s=>s.id===id)).filter(Boolean);
       const vc=r.stops.filter(id=>isVisited(id)).length;
+      const hasGuide = !!getRouteGuide(r.id);
+      const guideUnlocked = hasFullPremiumAccess();
       return `<div class="route-card" onclick="showRouteOnMap(${idx})">
         <div class="route-banner"><img class="route-banner-image" src="${resolveAssetUrl(r.image)}" alt="" loading="lazy" onerror="handleRouteBannerError(this)"></div>
         <div class="route-body">
@@ -1607,6 +1752,7 @@ function renderRoutes(){
           <div class="route-meta">${r.distance} · ${rd.days} · ${vc}/${r.stops.length} ${t('routeVisited')}</div>
           <div class="route-desc">${rd.desc}</div>
           <div class="route-stops">${stops.map(s=>`<span class="route-stop" style="${isVisited(s.id)?'background:var(--gold-light);color:var(--brown);font-weight:600':''}">${sd(s).city}</span>`).join('')}</div>
+          ${hasGuide?`<button class="route-guide-btn ${guideUnlocked?'':'locked'}" onclick="openRouteGuide('${r.id}', event)">${guideUnlocked?t('routeGuideCta'):t('routeGuideLocked')}</button>`:''}
         </div>
       </div>`;
     }).join('')}`;
@@ -1746,6 +1892,8 @@ window._fbCreateUser   = (e,p) => _auth.createUserWithEmailAndPassword(e,p);
 window._fbSignOut      = ()    => _auth.signOut();
 window._fbGetDoc       = (uid) => _db.collection('users').doc(uid).get();
 window._fbSetDoc       = (uid,d) => _db.collection('users').doc(uid).set(d,{merge:true});
+window._fbGetJournalNote = (uid, sanctuaryId) => _db.collection('users').doc(uid).collection('journal').doc(String(sanctuaryId)).get();
+window._fbSetJournalNote = (uid, sanctuaryId, data) => _db.collection('users').doc(uid).collection('journal').doc(String(sanctuaryId)).set(data,{merge:true});
 window._fbListSanctuaryComments = (sanctuaryId, limitCount=12) => _db.collection('sanctuaries').doc(String(sanctuaryId)).collection('comments').orderBy('createdAtMs','desc').limit(limitCount).get();
 window._fbAddSanctuaryComment = (sanctuaryId, data) => _db.collection('sanctuaries').doc(String(sanctuaryId)).collection('comments').add(data);
 window._fbReportSanctuaryComment = (sanctuaryId, commentId, data) => _db.collection('sanctuaries').doc(String(sanctuaryId)).collection('comments').doc(String(commentId)).collection('reports').doc(String(data.reporterUid)).set(data, {merge:true});
