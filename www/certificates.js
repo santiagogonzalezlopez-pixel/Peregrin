@@ -143,10 +143,32 @@
     }
   }
 
+  function ensureCertificatePreviewStyles(){
+    if(document.getElementById("certificate-preview-styles")) return;
+    const style = document.createElement("style");
+    style.id = "certificate-preview-styles";
+    style.textContent = `
+      .certificate-preview-overlay{position:fixed;inset:0;z-index:3600;background:rgba(30,18,16,.78);display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;pointer-events:none;transition:opacity .25s ease;}
+      .certificate-preview-overlay.open{opacity:1;pointer-events:all;}
+      .certificate-preview-dialog{width:min(940px,100%);max-height:92vh;background:#fffaf0;border-radius:22px;box-shadow:0 24px 80px rgba(0,0,0,.38);overflow:hidden;display:flex;flex-direction:column;border:1px solid rgba(197,150,58,.35);}
+      .certificate-preview-head{padding:18px 18px 12px;text-align:center;background:linear-gradient(135deg,#722f37,#4d2026);color:#fdf5e6;}
+      .certificate-preview-title{font-family:'Crimson Pro',serif;font-size:24px;font-weight:700;margin-bottom:4px;}
+      .certificate-preview-hint{font-family:'Jost',sans-serif;font-size:13px;line-height:1.45;opacity:.82;}
+      .certificate-preview-body{padding:14px;background:#efe2cc;overflow:auto;}
+      .certificate-preview-img{display:block;width:100%;height:auto;border-radius:14px;box-shadow:0 10px 28px rgba(62,39,35,.18);background:#fdf5e6;}
+      .certificate-preview-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px;background:#fffaf0;}
+      .certificate-preview-actions button{border:none;border-radius:12px;padding:13px 12px;font-family:'Jost',sans-serif;font-size:14px;font-weight:800;cursor:pointer;}
+      .certificate-preview-share{background:linear-gradient(135deg,#c5963a,#e8c97a);color:#3e2723;}
+      .certificate-preview-download,.certificate-preview-close{background:#f2e6d2;color:#722f37;}
+      .certificate-preview-close{grid-column:1 / -1;}
+      @media(max-width:520px){.certificate-preview-overlay{padding:10px;align-items:flex-end}.certificate-preview-dialog{max-height:94vh;border-radius:18px 18px 0 0}.certificate-preview-title{font-size:21px}.certificate-preview-actions{grid-template-columns:1fr}.certificate-preview-close{grid-column:auto}}
+    `;
+    document.head.appendChild(style);
+  }
+
   async function saveCertificateImageNative(dataUrl, fileName){
     if(!isNativeAppRuntime()) return {ok:false};
     const Filesystem = getCapacitorPlugin("Filesystem");
-    const Share = getCapacitorPlugin("Share");
     if(!Filesystem || typeof Filesystem.writeFile !== "function" || typeof Filesystem.getUri !== "function") return {ok:false};
     const base64Data = dataUrl.replace(/^data:image\/png;base64,/, "");
     const targetDirectories = ["DOCUMENTS", "CACHE"];
@@ -176,39 +198,114 @@
       return {ok:false};
     }
 
-    let shared = false;
-    if(Share && typeof Share.share === "function"){
-      let canShare = true;
-      if(typeof Share.canShare === "function"){
-        const shareAvailability = await Share.canShare().catch(() => ({value:true}));
-        canShare = shareAvailability?.value !== false;
-      }
-      if(canShare){
-        try{
-          await Share.share({
-            title: t("certTitle"),
-            text: `${t("certTitle")} · ${fileName}`,
-            files: [savedFile.uri],
-            dialogTitle: t("certBtn")
-          });
-          shared = true;
-        }catch(primaryShareError){
+    return {ok:true, uri:savedFile.uri, directory:savedFile.directory};
+  }
+
+  async function shareCertificateImage(dataUrl, fileName, nativeFile){
+    if(nativeFile?.uri && isNativeAppRuntime()){
+      const Share = getCapacitorPlugin("Share");
+      if(Share && typeof Share.share === "function"){
+        let canShare = true;
+        if(typeof Share.canShare === "function"){
+          const shareAvailability = await Share.canShare().catch(() => ({value:true}));
+          canShare = shareAvailability?.value !== false;
+        }
+        if(canShare){
           try{
             await Share.share({
               title: t("certTitle"),
-              text: `${t("certTitle")} · ${fileName}`,
-              url: savedFile.uri,
-              dialogTitle: t("certBtn")
+              text: `${t("certTitle")} - ${fileName}`,
+              files: [nativeFile.uri],
+              dialogTitle: t("certShareBtn")
             });
-            shared = true;
-          }catch(fallbackShareError){
-            console.warn("native certificate image share failed:", fallbackShareError || primaryShareError);
+            showToast(t("certReady"));
+            return;
+          }catch(primaryShareError){
+            try{
+              await Share.share({
+                title: t("certTitle"),
+                text: `${t("certTitle")} - ${fileName}`,
+                url: nativeFile.uri,
+                dialogTitle: t("certShareBtn")
+              });
+              showToast(t("certReady"));
+              return;
+            }catch(fallbackShareError){
+              console.warn("native certificate image share failed:", fallbackShareError || primaryShareError);
+            }
           }
         }
       }
     }
 
-    return {ok:true, shared, uri:savedFile.uri, directory:savedFile.directory};
+    if(navigator.share){
+      try{
+        const blob = await (await fetch(dataUrl)).blob();
+        const file = new File([blob], fileName, {type:"image/png"});
+        if(!navigator.canShare || navigator.canShare({files:[file]})){
+          await navigator.share({
+            title: t("certTitle"),
+            text: `${t("certTitle")} - ${fileName}`,
+            files: [file]
+          });
+          showToast(t("certReady"));
+          return;
+        }
+      }catch(e){
+        console.warn("web certificate image share failed:", e);
+      }
+    }
+
+    downloadCertificateImage(dataUrl, fileName);
+    showToast(t("certDownloaded"));
+  }
+
+  function showCertificatePreview(dataUrl, fileName, nativeFile){
+    ensureCertificatePreviewStyles();
+    const previous = document.getElementById("certificate-preview-overlay");
+    if(previous) previous.remove();
+
+    const overlay = document.createElement("div");
+    overlay.id = "certificate-preview-overlay";
+    overlay.className = "certificate-preview-overlay";
+    overlay.innerHTML = `
+      <div class="certificate-preview-dialog" role="dialog" aria-modal="true" aria-labelledby="certificate-preview-title">
+        <div class="certificate-preview-head">
+          <div class="certificate-preview-title" id="certificate-preview-title">${t("certPreviewTitle")}</div>
+          <div class="certificate-preview-hint">${t("certPreviewHint")}</div>
+        </div>
+        <div class="certificate-preview-body">
+          <img class="certificate-preview-img" alt="${t("certTitle")}" src="${dataUrl}">
+        </div>
+        <div class="certificate-preview-actions">
+          <button type="button" class="certificate-preview-share">${t("certShareBtn")}</button>
+          <button type="button" class="certificate-preview-download">${t("certDownloadBtn")}</button>
+          <button type="button" class="certificate-preview-close">${t("certCloseBtn")}</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    const onKeydown = (event) => {
+      if(event.key === "Escape") close();
+    };
+    const close = () => {
+      document.removeEventListener("keydown", onKeydown);
+      overlay.remove();
+    };
+    overlay.querySelector(".certificate-preview-share").addEventListener("click", () => {
+      shareCertificateImage(dataUrl, fileName, nativeFile);
+    });
+    overlay.querySelector(".certificate-preview-download").addEventListener("click", () => {
+      downloadCertificateImage(dataUrl, fileName);
+      showToast(t("certDownloaded"));
+    });
+    overlay.querySelector(".certificate-preview-close").addEventListener("click", close);
+    overlay.addEventListener("click", (event) => {
+      if(event.target === overlay) close();
+    });
+    document.addEventListener("keydown", onKeydown);
+    requestAnimationFrame(() => overlay.classList.add("open"));
   }
 
   function downloadCertificateImage(dataUrl, fileName){
@@ -542,19 +639,15 @@
 
     try{
       const nativeResult = await saveCertificateImageNative(dataUrl, fileName);
-      if(nativeResult.ok){
-        showToast(t(nativeResult.shared ? "certReady" : "certSaved"));
-        return;
-      }
-      downloadCertificateImage(dataUrl, fileName);
-      showToast(t("certDownloaded"));
+      showCertificatePreview(dataUrl, fileName, nativeResult.ok ? nativeResult : null);
+      showToast(t(nativeResult.ok ? "certSaved" : "certReady"));
     }catch(e){
       console.error("certificate image delivery failed:", e);
       try{
-        downloadCertificateImage(dataUrl, fileName);
-        showToast(t("certDownloaded"));
+        showCertificatePreview(dataUrl, fileName, null);
+        showToast(t("certReady"));
       }catch(downloadError){
-        console.error("certificate image download fallback failed:", downloadError);
+        console.error("certificate image preview fallback failed:", downloadError);
         showToast(t("certFailed"));
       }
     }
