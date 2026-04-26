@@ -784,6 +784,14 @@ function resolveAssetUrl(path){
   }
 }
 
+function getGooglePlayBillingPlugin(){
+  return getCapacitorPlugin('PeregrinBilling');
+}
+
+function canUseGooglePlayBilling(){
+  return isNativeAppRuntime() && !!getGooglePlayBillingPlugin();
+}
+
 function handleRouteBannerError(img){
   if(!img) return;
   img.onerror = null;
@@ -1149,6 +1157,7 @@ function openPremiumModal(){
          </div>`
       : ''
     }
+    ${!allUnlocked && canUseGooglePlayBilling() ? `<button class="premium-close" onclick="restorePremiumPurchase()" style="margin-bottom:8px;">${t('restorePurchase')}</button>` : ''}
     ${!allUnlocked ? `<button class="premium-close" onclick="handlePremiumCodeUnlock()" style="margin-bottom:8px;">${t('premiumCodeCta')}</button>` : ''}
     <button class="premium-close" onclick="closePremiumModal()">${t('premiumLater')}</button>`;
   document.getElementById('premium-modal').classList.add('open');
@@ -1157,8 +1166,73 @@ function closePremiumModal(){document.getElementById('premium-modal').classList.
 // ===================== PREMIUM CHECKOUT =====================
 const PREMIUM_CHECKOUT_ENABLED = true;
 const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/4gM9AV1NT8Rt2ptfOkfEk00';
+const GOOGLE_PLAY_PRODUCT_ID = 'peregrin_premium_all';
 
-function handleRegionPurchase(region){
+function googlePlayPurchasePayload(result){
+  return {
+    googlePlayProductId: result?.productId || GOOGLE_PLAY_PRODUCT_ID,
+    googlePlayPurchaseToken: result?.purchaseToken || '',
+    googlePlayOrderId: result?.orderId || '',
+    googlePlayPurchaseTime: String(result?.purchaseTime || '')
+  };
+}
+
+function isBillingCancelled(error){
+  const code = String(error?.code || error?.message || '');
+  return code.includes('USER_CANCELED') || code.includes('cancel');
+}
+
+async function handleGooglePlayPurchase(region){
+  const Billing = getGooglePlayBillingPlugin();
+  if(!Billing || typeof Billing.purchasePremium !== 'function'){
+    showToast(t('billingUnavailable'));
+    return;
+  }
+  try{
+    const result = await Billing.purchasePremium({productId:GOOGLE_PLAY_PRODUCT_ID, region});
+    if(result?.success){
+      await grantPremiumAccess('google_play', googlePlayPurchasePayload(result));
+      closePremiumModal();
+      showToast(t('premiumActivatedToast'));
+      return;
+    }
+    showToast(t('billingFailed'));
+  }catch(e){
+    console.error('google play purchase failed:', e);
+    showToast(isBillingCancelled(e) ? t('billingCancelled') : t('billingFailed'));
+  }
+}
+
+async function restorePremiumPurchase(){
+  const Billing = getGooglePlayBillingPlugin();
+  if(!Billing || typeof Billing.restorePurchases !== 'function'){
+    showToast(t('billingUnavailable'));
+    return;
+  }
+  try{
+    const result = await Billing.restorePurchases({productId:GOOGLE_PLAY_PRODUCT_ID});
+    if(result?.success){
+      await grantPremiumAccess('google_play_restore', googlePlayPurchasePayload(result));
+      closePremiumModal();
+      showToast(t('restorePurchaseRestored'));
+      return;
+    }
+    showToast(t('restorePurchaseNotFound'));
+  }catch(e){
+    console.error('google play restore failed:', e);
+    showToast(t('billingFailed'));
+  }
+}
+
+async function handleRegionPurchase(region){
+  if(canUseGooglePlayBilling()){
+    await handleGooglePlayPurchase(region);
+    return;
+  }
+  if(isNativeAppRuntime()){
+    showToast(t('billingUnavailable'));
+    return;
+  }
   if(!PREMIUM_CHECKOUT_ENABLED || !STRIPE_PAYMENT_LINK){
     showToast(t('premiumUnavailable'));
     return;

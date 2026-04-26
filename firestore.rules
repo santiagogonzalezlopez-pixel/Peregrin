@@ -19,7 +19,17 @@ service cloud.firestore {
     }
 
     function premiumUserFields() {
-      return ['isPremium', 'unlockedRegions', 'premiumSource', 'premiumCode', 'premiumUnlockedAt'];
+      return [
+        'isPremium',
+        'unlockedRegions',
+        'premiumSource',
+        'premiumCode',
+        'premiumUnlockedAt',
+        'googlePlayProductId',
+        'googlePlayPurchaseToken',
+        'googlePlayOrderId',
+        'googlePlayPurchaseTime'
+      ];
     }
 
     function validUserFields(data) {
@@ -41,6 +51,21 @@ service cloud.firestore {
         && data.premiumUnlockedAt is string
         && exists(/databases/$(database)/documents/premiumCodes/$(data.premiumCode))
         && get(/databases/$(database)/documents/premiumCodes/$(data.premiumCode)).data.active == true;
+    }
+
+    function validGooglePlayUnlock(data) {
+      return data.isPremium == true
+        && data.unlockedRegions is list
+        && data.unlockedRegions.size() == 1
+        && data.unlockedRegions[0] == 'all'
+        && (data.premiumSource == 'google_play' || data.premiumSource == 'google_play_restore')
+        && data.premiumUnlockedAt is string
+        && data.googlePlayProductId == 'peregrin_premium_all'
+        && data.googlePlayPurchaseToken is string
+        && data.googlePlayPurchaseToken.size() > 10
+        && data.googlePlayPurchaseToken.size() <= 2048
+        && (!('googlePlayOrderId' in data) || data.googlePlayOrderId is string)
+        && (!('googlePlayPurchaseTime' in data) || data.googlePlayPurchaseTime is string);
     }
 
     function changedOnlyMutableOrPremium() {
@@ -68,6 +93,7 @@ service cloud.firestore {
         && (
           request.resource.data.diff(resource.data).changedKeys().hasOnly(mutableUserFields())
           || validPremiumUnlock(request.resource.data)
+          || validGooglePlayUnlock(request.resource.data)
         );
       allow delete: if false;
 

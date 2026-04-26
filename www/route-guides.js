@@ -19,7 +19,13 @@ window.PEREGRIN_PREMIUM_I18N = {
     journalSave:'Save note',
     journalSaved:'Journal note saved',
     journalLoading:'Loading your note...',
-    journalUnavailable:'Journal not available right now.'
+    journalUnavailable:'Journal not available right now.',
+    restorePurchase:'Restore Google Play purchase',
+    restorePurchaseRestored:'Purchase restored. Premium is active.',
+    restorePurchaseNotFound:'No Google Play Premium purchase was found.',
+    billingUnavailable:'Google Play purchase is not available right now.',
+    billingCancelled:'Purchase cancelled.',
+    billingFailed:'Google Play purchase could not be completed.'
   },
   es:{
     premiumSub:'Rutas guiadas de peregrinacion, diario privado, todos los paises, certificados y logros en un desbloqueo para siempre.',
@@ -41,7 +47,13 @@ window.PEREGRIN_PREMIUM_I18N = {
     journalSave:'Guardar nota',
     journalSaved:'Nota del diario guardada',
     journalLoading:'Cargando tu nota...',
-    journalUnavailable:'El diario no esta disponible ahora mismo.'
+    journalUnavailable:'El diario no esta disponible ahora mismo.',
+    restorePurchase:'Restaurar compra de Google Play',
+    restorePurchaseRestored:'Compra restaurada. Premium esta activo.',
+    restorePurchaseNotFound:'No se encontro ninguna compra Premium en Google Play.',
+    billingUnavailable:'La compra de Google Play no esta disponible ahora mismo.',
+    billingCancelled:'Compra cancelada.',
+    billingFailed:'No se pudo completar la compra en Google Play.'
   },
   fr:{
     premiumSub:'Itineraires guides, journal prive, tous les pays, certificats et realisations dans un seul deblocage permanent.',
@@ -63,7 +75,13 @@ window.PEREGRIN_PREMIUM_I18N = {
     journalSave:'Enregistrer',
     journalSaved:'Note enregistree',
     journalLoading:'Chargement de votre note...',
-    journalUnavailable:'Le journal n est pas disponible pour le moment.'
+    journalUnavailable:'Le journal n est pas disponible pour le moment.',
+    restorePurchase:'Restaurer l achat Google Play',
+    restorePurchaseRestored:'Achat restaure. Premium est actif.',
+    restorePurchaseNotFound:'Aucun achat Premium Google Play trouve.',
+    billingUnavailable:'L achat Google Play n est pas disponible pour le moment.',
+    billingCancelled:'Achat annule.',
+    billingFailed:'L achat Google Play n a pas pu aboutir.'
   },
   it:{
     premiumSub:'Itinerari guidati, diario privato, tutti i paesi, certificati e traguardi in un unico sblocco permanente.',
@@ -85,7 +103,13 @@ window.PEREGRIN_PREMIUM_I18N = {
     journalSave:'Salva nota',
     journalSaved:'Nota salvata',
     journalLoading:'Caricamento nota...',
-    journalUnavailable:'Diario non disponibile in questo momento.'
+    journalUnavailable:'Diario non disponibile in questo momento.',
+    restorePurchase:'Ripristina acquisto Google Play',
+    restorePurchaseRestored:'Acquisto ripristinato. Premium e attivo.',
+    restorePurchaseNotFound:'Nessun acquisto Premium trovato su Google Play.',
+    billingUnavailable:'Acquisto Google Play non disponibile in questo momento.',
+    billingCancelled:'Acquisto annullato.',
+    billingFailed:'Impossibile completare l acquisto su Google Play.'
   },
   pt:{
     premiumSub:'Rotas guiadas, diario privado, todos os paises, certificados e conquistas num desbloqueio permanente.',
@@ -107,7 +131,13 @@ window.PEREGRIN_PREMIUM_I18N = {
     journalSave:'Guardar nota',
     journalSaved:'Nota guardada',
     journalLoading:'A carregar a sua nota...',
-    journalUnavailable:'O diario nao esta disponivel neste momento.'
+    journalUnavailable:'O diario nao esta disponivel neste momento.',
+    restorePurchase:'Restaurar compra Google Play',
+    restorePurchaseRestored:'Compra restaurada. Premium esta ativo.',
+    restorePurchaseNotFound:'Nenhuma compra Premium encontrada no Google Play.',
+    billingUnavailable:'A compra Google Play nao esta disponivel neste momento.',
+    billingCancelled:'Compra cancelada.',
+    billingFailed:'Nao foi possivel concluir a compra no Google Play.'
   }
 };
 
