@@ -50,10 +50,13 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .auth-password-toggle.is-visible{color:var(--burgundy);}
 .auth-btn-primary{width:100%;padding:13px;background:var(--burgundy);color:var(--cream);border:none;border-radius:10px;font-family:'Jost',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;margin-bottom:10px;}
 .auth-btn-primary:hover{background:var(--burgundy-dark);}
+.auth-link{display:block;width:100%;border:none;background:transparent;color:var(--burgundy);font-family:'Jost',sans-serif;font-size:12px;font-weight:600;text-align:center;text-decoration:underline;text-underline-offset:3px;cursor:pointer;margin:-2px 0 12px;padding:2px;}
+.auth-link:hover{color:var(--burgundy-dark);}
 .auth-divider{text-align:center;font-size:12px;color:var(--brown-light);margin:6px 0 10px;}
 
 
 .auth-error{font-size:12px;color:#c62828;margin-bottom:8px;text-align:center;min-height:16px;}
+.auth-error.is-success{color:#2E7D32;}
 
 /* PREMIUM MODAL */
 #premium-modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:5000;display:none;align-items:flex-end;justify-content:center;}
@@ -340,6 +343,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
         </button>
       </div>
     </div>
+    <button type="button" class="auth-link" id="auth-reset-link" onclick="handlePasswordReset()">Forgot your password?</button>
     <button class="auth-btn-primary" id="auth-submit" onclick="handleEmailAuth()">Sign in</button>
   </div>
 </div>
@@ -434,7 +438,7 @@ const i18n = {
     navPassport:'Passport', navRoutes:'Routes', navProfile:'Profile',
     signIn:'Sign in', register:'Register', createAccount:'Create account',
     emailLabel:'Email address', passwordLabel:'Password', nameLabel:'Your full name',
-    showPassword:'Show password', hidePassword:'Hide password',
+    showPassword:'Show password', hidePassword:'Hide password', forgotPassword:'Forgot your password?',
     emailPlaceholder:'Email address', passwordPlaceholder:'Password', namePlaceholder:'Your full name',
     continueGoogle:'Continue with Google', signOut:'Sign out',
     passportTitle:'Pilgrim Passport', visited:'Visited', remaining:'Remaining',
@@ -475,7 +479,8 @@ const i18n = {
     authErrNotFound:'User not found.', authErrWrongPass:'Incorrect password.',
     authErrInUse:'This email is already registered.', authErrWeak:'Password must be at least 6 characters.',
     authErrInvalidEmail:'Invalid email.', authErrInvalidCred:'Incorrect email or password.',
-    authErrGeneric:'Sign in error. Please try again.',
+    authErrGeneric:'Sign in error. Please try again.', resetEmailMissing:'Enter your email address first.',
+    resetEmailSent:'We sent you an email to reset your password.', resetEmailError:'We could not send the reset email. Check the address and try again.',
     premiumUnavailable:'Premium purchases are temporarily unavailable.',
     premiumUnavailableDetail:'Premium purchases will stay disabled until secure payment verification is in place.',
     paymentReturnInvalid:'We could not validate your payment return. If you were charged, contact elnuevoeuropeo@gmail.com.',
@@ -493,7 +498,7 @@ const i18n = {
     navPassport:'Pasaporte', navRoutes:'Rutas', navProfile:'Perfil',
     signIn:'Iniciar sesión', register:'Registrarse', createAccount:'Crear cuenta',
     emailLabel:'Correo electrónico', passwordLabel:'Contraseña', nameLabel:'Nombre completo',
-    showPassword:'Mostrar contraseña', hidePassword:'Ocultar contraseña',
+    showPassword:'Mostrar contraseña', hidePassword:'Ocultar contraseña', forgotPassword:'¿Has olvidado tu contraseña?',
     emailPlaceholder:'Correo electrónico', passwordPlaceholder:'Contraseña', namePlaceholder:'Tu nombre completo',
     continueGoogle:'Continuar con Google', signOut:'Cerrar sesión',
     passportTitle:'Pasaporte Peregrino', visited:'Visitados', remaining:'Pendientes',
@@ -534,7 +539,8 @@ const i18n = {
     authErrNotFound:'Usuario no encontrado.', authErrWrongPass:'Contraseña incorrecta.',
     authErrInUse:'Este correo ya está registrado.', authErrWeak:'La contraseña debe tener al menos 6 caracteres.',
     authErrInvalidEmail:'Correo electrónico no válido.', authErrInvalidCred:'Correo o contraseña incorrectos.',
-    authErrGeneric:'Error al iniciar sesión. Inténtalo de nuevo.',
+    authErrGeneric:'Error al iniciar sesión. Inténtalo de nuevo.', resetEmailMissing:'Introduce primero tu correo electrónico.',
+    resetEmailSent:'Te hemos enviado un email para restablecer la contraseña.', resetEmailError:'No hemos podido enviar el email. Revisa la dirección e inténtalo de nuevo.',
     premiumUnavailable:'Las compras Premium están temporalmente desactivadas.',
     premiumUnavailableDetail:'Las compras Premium seguirán desactivadas hasta tener una verificación de pago segura.',
     paymentReturnInvalid:'No hemos podido validar el retorno del pago. Si se te ha cobrado, escribe a elnuevoeuropeo@gmail.com.',
@@ -552,7 +558,7 @@ const i18n = {
     navPassport:'Passeport', navRoutes:'Itinéraires', navProfile:'Profil',
     signIn:'Se connecter', register:"S'inscrire", createAccount:'Créer un compte',
     emailLabel:'Adresse e-mail', passwordLabel:'Mot de passe', nameLabel:'Nom complet',
-    showPassword:'Afficher le mot de passe', hidePassword:'Masquer le mot de passe',
+    showPassword:'Afficher le mot de passe', hidePassword:'Masquer le mot de passe', forgotPassword:'Mot de passe oublié ?',
     emailPlaceholder:'Adresse e-mail', passwordPlaceholder:'Mot de passe', namePlaceholder:'Votre nom complet',
     continueGoogle:'Continuer avec Google', signOut:'Se déconnecter',
     passportTitle:'Passeport du Pèlerin', visited:'Visités', remaining:'Restants',
@@ -593,7 +599,8 @@ const i18n = {
     authErrNotFound:'Utilisateur introuvable.', authErrWrongPass:'Mot de passe incorrect.',
     authErrInUse:'Cet e-mail est déjà enregistré.', authErrWeak:'Le mot de passe doit contenir au moins 6 caractères.',
     authErrInvalidEmail:'Adresse e-mail invalide.', authErrInvalidCred:'E-mail ou mot de passe incorrect.',
-    authErrGeneric:'Erreur de connexion. Veuillez réessayer.',
+    authErrGeneric:'Erreur de connexion. Veuillez réessayer.', resetEmailMissing:'Saisissez d abord votre adresse e-mail.',
+    resetEmailSent:'Nous vous avons envoyé un e-mail pour réinitialiser votre mot de passe.', resetEmailError:'Impossible d envoyer l e-mail. Vérifiez l adresse et réessayez.',
     premiumUnavailable:'Les achats Premium sont temporairement désactivés.',
     premiumUnavailableDetail:'Les achats Premium resteront désactivés tant qu’une vérification de paiement sécurisée n’est pas en place.',
     paymentReturnInvalid:'Nous n’avons pas pu valider le retour du paiement. Si vous avez été débité, écrivez à elnuevoeuropeo@gmail.com.',
@@ -611,7 +618,7 @@ const i18n = {
     navPassport:'Passaporto', navRoutes:'Itinerari', navProfile:'Profilo',
     signIn:'Accedi', register:'Registrati', createAccount:'Crea account',
     emailLabel:'Indirizzo e-mail', passwordLabel:'Password', nameLabel:'Nome completo',
-    showPassword:'Mostra password', hidePassword:'Nascondi password',
+    showPassword:'Mostra password', hidePassword:'Nascondi password', forgotPassword:'Hai dimenticato la password?',
     emailPlaceholder:'Indirizzo e-mail', passwordPlaceholder:'Password', namePlaceholder:'Il tuo nome completo',
     continueGoogle:'Continua con Google', signOut:'Esci',
     passportTitle:'Passaporto del Pellegrino', visited:'Visitati', remaining:'Rimanenti',
@@ -652,7 +659,8 @@ const i18n = {
     authErrNotFound:'Utente non trovato.', authErrWrongPass:'Password errata.',
     authErrInUse:'Questa e-mail è già registrata.', authErrWeak:'La password deve avere almeno 6 caratteri.',
     authErrInvalidEmail:'Indirizzo e-mail non valido.', authErrInvalidCred:'E-mail o password errati.',
-    authErrGeneric:'Errore di accesso. Riprova.',
+    authErrGeneric:'Errore di accesso. Riprova.', resetEmailMissing:'Inserisci prima il tuo indirizzo e-mail.',
+    resetEmailSent:'Ti abbiamo inviato un e-mail per reimpostare la password.', resetEmailError:'Non siamo riusciti a inviare l e-mail. Controlla l indirizzo e riprova.',
     premiumUnavailable:'Gli acquisti Premium sono temporaneamente disattivati.',
     premiumUnavailableDetail:'Gli acquisti Premium resteranno disattivati finché non esiste una verifica di pagamento sicura.',
     paymentReturnInvalid:'Non siamo riusciti a convalidare il ritorno del pagamento. Se ti è stato addebitato, scrivi a elnuevoeuropeo@gmail.com.',
@@ -670,7 +678,7 @@ const i18n = {
     navPassport:'Passaporte', navRoutes:'Rotas', navProfile:'Perfil',
     signIn:'Entrar', register:'Registar', createAccount:'Criar conta',
     emailLabel:'Endereço de e-mail', passwordLabel:'Palavra-passe', nameLabel:'Nome completo',
-    showPassword:'Mostrar palavra-passe', hidePassword:'Ocultar palavra-passe',
+    showPassword:'Mostrar palavra-passe', hidePassword:'Ocultar palavra-passe', forgotPassword:'Esqueceu-se da palavra-passe?',
     emailPlaceholder:'Endereço de e-mail', passwordPlaceholder:'Palavra-passe', namePlaceholder:'O seu nome completo',
     continueGoogle:'Continuar com Google', signOut:'Sair',
     passportTitle:'Passaporte do Peregrino', visited:'Visitados', remaining:'Restantes',
@@ -711,7 +719,8 @@ const i18n = {
     authErrNotFound:'Utilizador não encontrado.', authErrWrongPass:'Palavra-passe incorreta.',
     authErrInUse:'Este e-mail já está registado.', authErrWeak:'A palavra-passe deve ter pelo menos 6 caracteres.',
     authErrInvalidEmail:'Endereço de e-mail inválido.', authErrInvalidCred:'E-mail ou palavra-passe incorretos.',
-    authErrGeneric:'Erro ao entrar. Tente novamente.',
+    authErrGeneric:'Erro ao entrar. Tente novamente.', resetEmailMissing:'Introduza primeiro o seu endereço de e-mail.',
+    resetEmailSent:'Enviámos um e-mail para repor a palavra-passe.', resetEmailError:'Não foi possível enviar o e-mail. Verifique o endereço e tente novamente.',
     premiumUnavailable:'As compras Premium estão temporariamente desativadas.',
     premiumUnavailableDetail:'As compras Premium continuarão desativadas até existir uma verificação de pagamento segura.',
     paymentReturnInvalid:'Não conseguimos validar o regresso do pagamento. Se te foi cobrado, escreve para elnuevoeuropeo@gmail.com.',
@@ -943,6 +952,7 @@ function applyLang(){
   const emailLabel = document.getElementById('auth-email-label');
   const passLabel = document.getElementById('auth-password-label');
   const passToggle = document.getElementById('auth-password-toggle');
+  const resetLink = document.getElementById('auth-reset-link');
   const emailEl = document.getElementById('auth-email');
   const passEl = document.getElementById('auth-password');
   if(tabLogin) tabLogin.textContent = t('signIn');
@@ -951,6 +961,7 @@ function applyLang(){
   if(nameLabel) nameLabel.textContent = t('nameLabel');
   if(emailLabel) emailLabel.textContent = t('emailLabel');
   if(passLabel) passLabel.textContent = t('passwordLabel');
+  if(resetLink) resetLink.textContent = t('forgotPassword');
   if(emailEl) emailEl.placeholder = t('emailPlaceholder');
   if(passEl) passEl.placeholder = t('passwordPlaceholder');
   const nameEl = document.getElementById('auth-name');
@@ -1043,9 +1054,12 @@ function switchAuthTab(tab){
   document.getElementById('tab-register').classList.toggle('active',tab==='register');
   document.getElementById('auth-submit').textContent=tab==='login'?t('signIn'):t('createAccount');
   document.getElementById('auth-name-field').style.display=tab==='register'?'block':'none';
+  document.getElementById('auth-reset-link').style.display=tab==='login'?'block':'none';
   document.getElementById('auth-password').autocomplete=tab==='login'?'current-password':'new-password';
   setAuthPasswordVisibility(false);
-  document.getElementById('auth-error').textContent='';
+  const errEl=document.getElementById('auth-error');
+  errEl.textContent='';
+  errEl.classList.remove('is-success');
 }
 async function handleEmailAuth(){
   const email=document.getElementById('auth-email').value.trim();
@@ -1053,6 +1067,7 @@ async function handleEmailAuth(){
   const nameVal=document.getElementById('auth-name').value.trim();
   const errEl=document.getElementById('auth-error');
   errEl.textContent='';
+  errEl.classList.remove('is-success');
   if(!email||!pass){errEl.textContent=t('authErrFields');return;}
   if(currentAuthTab==='register'&&!nameVal){errEl.textContent=t('authErrName');return;}
   try{
@@ -1066,6 +1081,26 @@ async function handleEmailAuth(){
   }catch(e){
     const msgs={'auth/user-not-found':t('authErrNotFound'),'auth/wrong-password':t('authErrWrongPass'),'auth/email-already-in-use':t('authErrInUse'),'auth/weak-password':t('authErrWeak'),'auth/invalid-email':t('authErrInvalidEmail'),'auth/invalid-credential':t('authErrInvalidCred')};
     errEl.textContent=msgs[e.code]||t('authErrGeneric');
+  }
+}
+
+async function handlePasswordReset(){
+  const email=document.getElementById('auth-email').value.trim();
+  const errEl=document.getElementById('auth-error');
+  errEl.textContent='';
+  errEl.classList.remove('is-success');
+  if(!email){
+    errEl.textContent=t('resetEmailMissing');
+    return;
+  }
+  try{
+    rememberEmail(email);
+    await window._fbSendPasswordResetEmail(email);
+    errEl.classList.add('is-success');
+    errEl.textContent=t('resetEmailSent');
+  }catch(e){
+    console.error('password reset failed:', e);
+    errEl.textContent=t('resetEmailError');
   }
 }
 
@@ -1968,6 +2003,10 @@ _auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).catch(()=>{});
 
 window._fbSignInEmail  = (e,p) => _auth.signInWithEmailAndPassword(e,p);
 window._fbCreateUser   = (e,p) => _auth.createUserWithEmailAndPassword(e,p);
+window._fbSendPasswordResetEmail = (e) => {
+  _auth.languageCode = currentLang || 'en';
+  return _auth.sendPasswordResetEmail(e);
+};
 window._fbSignOut      = ()    => _auth.signOut();
 window._fbGetDoc       = (uid) => _db.collection('users').doc(uid).get();
 window._fbSetDoc       = (uid,d) => _db.collection('users').doc(uid).set(d,{merge:true});
