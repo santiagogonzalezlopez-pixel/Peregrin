@@ -789,7 +789,11 @@ function getGooglePlayBillingPlugin(){
 }
 
 function canUseGooglePlayBilling(){
-  return isNativeAppRuntime() && !!getGooglePlayBillingPlugin();
+  return GOOGLE_PLAY_CHECKOUT_ENABLED && isNativeAppRuntime() && !!getGooglePlayBillingPlugin();
+}
+
+function canOfferPremiumCheckout(){
+  return isNativeAppRuntime() ? canUseGooglePlayBilling() : PREMIUM_CHECKOUT_ENABLED;
 }
 
 function handleRouteBannerError(img){
@@ -1142,7 +1146,7 @@ function openPremiumModal(){
     <div class="premium-feature"><span class="premium-feature-icon">□</span><span>${t('premiumMemory')}</span></div>
     ${allUnlocked
       ? `<div style="margin:24px 0;padding:18px;background:var(--cream);border-radius:12px;text-align:center;color:#2E7D32;font-weight:600;font-size:15px;">✓ ${t('premiumAlreadyUnlocked')}</div>`
-      : PREMIUM_CHECKOUT_ENABLED
+      : canOfferPremiumCheckout()
         ? `<div style="text-align:center;margin:18px 0 6px;font-size:12px;color:var(--brown-light);">${t('premiumOnetime')}</div>
            <button class="premium-cta" onclick="handleRegionPurchase('all')" style="margin:6px 0 10px;">✨ ${t('premiumUnlockAll')} — ${t('premiumPriceAll')}</button>`
         : `<div style="margin:24px 0;padding:18px;background:var(--cream);border-radius:12px;text-align:center;">
@@ -1165,6 +1169,7 @@ function openPremiumModal(){
 function closePremiumModal(){document.getElementById('premium-modal').classList.remove('open');}
 // ===================== PREMIUM CHECKOUT =====================
 const PREMIUM_CHECKOUT_ENABLED = true;
+const GOOGLE_PLAY_CHECKOUT_ENABLED = false;
 const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/4gM9AV1NT8Rt2ptfOkfEk00';
 const GOOGLE_PLAY_PRODUCT_ID = 'peregrin_premium_all';
 

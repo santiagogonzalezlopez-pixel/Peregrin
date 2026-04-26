@@ -10,6 +10,20 @@ Peregrin usa Google Play Billing dentro de la app Android y mantiene Stripe solo
 - Beneficio: desbloqueo permanente de todos los paises, guias Premium, diario privado, certificados y logros
 - Precio: el que se decida en Play Console
 
+## Activacion en codigo
+
+Mientras el producto no exista en Play Console, la compra Android queda apagada con esta constante en `index.html`:
+
+```js
+const GOOGLE_PLAY_CHECKOUT_ENABLED = false;
+```
+
+Cuando el producto `peregrin_premium_all` este creado y activo, cambiarla a:
+
+```js
+const GOOGLE_PLAY_CHECKOUT_ENABLED = true;
+```
+
 ## Flujo implementado
 
 - Android llama al plugin nativo `PeregrinBilling`.
