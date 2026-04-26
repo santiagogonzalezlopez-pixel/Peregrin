@@ -1,8 +1,9 @@
 ﻿{
   "name": "Peregrin - Tu pasaporte peregrino",
   "short_name": "Peregrin",
-  "description": "El pasaporte digital del peregrino catolico. Descubre, visita y colecciona santuarios.",
-  "start_url": "/",
+  "description": "El pasaporte digital del peregrino católico. Descubre, visita y colecciona santuarios.",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#FDF5E6",
   "theme_color": "#722F37",

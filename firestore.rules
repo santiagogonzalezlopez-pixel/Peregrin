@@ -13,11 +13,33 @@ service cloud.firestore {
       return ['visits', 'lang', 'displayName', 'onboardingSeen'];
     }
 
+    function premiumUserFields() {
+      return ['isPremium', 'unlockedRegions', 'premiumSource', 'premiumCode', 'premiumUnlockedAt'];
+    }
+
     function validUserFields(data) {
       return (!('visits' in data) || data.visits is map)
         && (!('lang' in data) || (data.lang is string && data.lang.size() == 2))
         && (!('displayName' in data) || (data.displayName is string && data.displayName.size() > 0 && data.displayName.size() <= 80))
         && (!('onboardingSeen' in data) || data.onboardingSeen is bool);
+    }
+
+    function validPremiumUnlock(data) {
+      return data.isPremium == true
+        && data.unlockedRegions is list
+        && data.unlockedRegions.size() == 1
+        && data.unlockedRegions[0] == 'all'
+        && data.premiumSource == 'code'
+        && data.premiumCode is string
+        && data.premiumCode.size() >= 6
+        && data.premiumCode.size() <= 64
+        && data.premiumUnlockedAt is string
+        && exists(/databases/$(database)/documents/premiumCodes/$(data.premiumCode))
+        && get(/databases/$(database)/documents/premiumCodes/$(data.premiumCode)).data.active == true;
+    }
+
+    function changedOnlyMutableOrPremium() {
+      return request.resource.data.diff(resource.data).changedKeys().hasOnly(mutableUserFields().concat(premiumUserFields()));
     }
 
     match /users/{userId} {
@@ -26,8 +48,12 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(mutableUserFields())
         && validUserFields(request.resource.data);
       allow update: if isOwner(userId)
-        && request.resource.data.diff(resource.data).changedKeys().hasOnly(mutableUserFields())
-        && validUserFields(request.resource.data);
+        && changedOnlyMutableOrPremium()
+        && validUserFields(request.resource.data)
+        && (
+          request.resource.data.diff(resource.data).changedKeys().hasOnly(mutableUserFields())
+          || validPremiumUnlock(request.resource.data)
+        );
       allow delete: if false;
     }
 
@@ -48,6 +74,20 @@ service cloud.firestore {
         && request.resource.data.sanctuaryId == sanctuaryId;
 
       allow update, delete: if false;
+
+      match /reports/{reporterUid} {
+        allow read: if false;
+        allow create, update: if signedIn()
+          && request.auth.uid == reporterUid
+          && request.resource.data.reporterUid == request.auth.uid
+          && request.resource.data.sanctuaryId is string
+          && request.resource.data.sanctuaryId == sanctuaryId
+          && request.resource.data.commentId is string
+          && request.resource.data.commentId == commentId
+          && request.resource.data.createdAtMs is int
+          && request.resource.data.createdAtIso is string;
+        allow delete: if false;
+      }
     }
 
     match /{document=**} {
