@@ -52,6 +52,9 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .auth-btn-primary:hover{background:var(--burgundy-dark);}
 .auth-link{display:block;width:100%;border:none;background:transparent;color:var(--burgundy);font-family:'Jost',sans-serif;font-size:12px;font-weight:600;text-align:center;text-decoration:underline;text-underline-offset:3px;cursor:pointer;margin:-2px 0 12px;padding:2px;}
 .auth-link:hover{color:var(--burgundy-dark);}
+.auth-lang-selector{margin:-8px 0 18px;}
+.auth-lang-selector .lang-buttons{gap:5px;}
+.auth-lang-selector .lang-btn{min-width:48px;padding:8px 3px;font-size:11px;}
 .auth-divider{text-align:center;font-size:12px;color:var(--brown-light);margin:6px 0 10px;}
 
 
@@ -321,6 +324,9 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
     <div class="auth-tab-row">
       <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Sign in</button>
       <button class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Register</button>
+    </div>
+    <div class="auth-lang-selector" aria-label="Language">
+      <div class="lang-buttons" id="auth-lang-buttons"></div>
     </div>
     <div class="auth-error" id="auth-error"></div>
     <div class="auth-field" id="auth-name-field" style="display:none;">
@@ -750,10 +756,40 @@ const TESTER_ACCESS_CODE = 'PEREGRIN-FAMILIA-2026';
 const PAYMENT_INTENT_FLAG = 'peregrin_stripe_checkout_started';
 const PAYMENT_INTENT_MAX_AGE_MS = 1000 * 60 * 90;
 const AUTH_EMAIL_STORAGE_KEY = 'peregrin_last_email';
+const AUTH_LANG_STORAGE_KEY = 'peregrin_preferred_lang';
 const LAUNCH_ALL_COUNTRIES_UNLOCKED = false;
 let visits={}, unlockedRegions=[], currentLang='en', currentScreen='map', currentCountry='be', map=null, markers={}, activeRouteFilter=null, pilgrimName='';
 let markerDisplayPositions=null;
 let shouldReturnHomeOnResume=false;
+const SUPPORTED_LANGS = [
+  {code:'en', label:'🇬🇧 EN'},
+  {code:'es', label:'🇪🇸 ES'},
+  {code:'fr', label:'🇫🇷 FR'},
+  {code:'it', label:'🇮🇹 IT'},
+  {code:'pt', label:'🇵🇹 PT'}
+];
+
+function isSupportedLang(lang){
+  return SUPPORTED_LANGS.some(x=>x.code===lang);
+}
+
+function getStoredPreferredLang(){
+  try{
+    const stored = localStorage.getItem(AUTH_LANG_STORAGE_KEY);
+    return isSupportedLang(stored) ? stored : null;
+  }catch(e){
+    return null;
+  }
+}
+
+function rememberPreferredLang(lang){
+  try{
+    if(isSupportedLang(lang)) localStorage.setItem(AUTH_LANG_STORAGE_KEY, lang);
+  }catch(e){}
+}
+
+const storedPreferredLang = getStoredPreferredLang();
+if(storedPreferredLang) currentLang = storedPreferredLang;
 
 function isNativeAppRuntime(){
   try{
@@ -922,15 +958,42 @@ async function saveVisits(){
 }
 
 async function setLang(lang){
+  if(!isSupportedLang(lang)) return;
   currentLang=lang;
+  rememberPreferredLang(lang);
+  syncFirebaseAuthLanguage();
   try{ if(window._currentUser) await window._fbSetDoc(window._currentUser.uid,{lang}); }catch(e){}
   applyLang();
   refreshAll();
   rebindMapPopups();
 }
 
+function renderLanguageButtons(){
+  return SUPPORTED_LANGS.map(lang =>
+    `<button type="button" class="lang-btn ${currentLang===lang.code?'active':''}" data-lang="${lang.code}" onclick="setLang('${lang.code}')">${lang.label}</button>`
+  ).join('');
+}
+
+function updateLanguageButtons(){
+  document.querySelectorAll('.lang-buttons').forEach(container=>{
+    if(container.id==='auth-lang-buttons' || container.dataset.dynamicLang==='true'){
+      container.innerHTML = renderLanguageButtons();
+    }
+  });
+}
+
+function syncFirebaseAuthLanguage(){
+  try{
+    if(typeof window._setFirebaseAuthLanguage === 'function'){
+      window._setFirebaseAuthLanguage(currentLang || 'en');
+    }
+  }catch(e){}
+}
+
 function applyLang(){
   document.documentElement.lang = currentLang;
+  rememberPreferredLang(currentLang);
+  syncFirebaseAuthLanguage();
   document.title = t('pageTitle');
   document.getElementById('header-sub').textContent = t('appSubtitle');
   const authSub = document.getElementById('auth-subtitle');
@@ -972,6 +1035,7 @@ function applyLang(){
     passToggle.setAttribute('aria-label', toggleLabel);
     passToggle.setAttribute('title', toggleLabel);
   }
+  updateLanguageButtons();
   updateAuthPasswordToggle();
   applyOnboardingCopy();
 }
@@ -1076,7 +1140,7 @@ async function handleEmailAuth(){
     else {
       const cred=await window._fbCreateUser(email,pass);
       await cred.user.updateProfile({displayName:nameVal});
-      await window._fbSetDoc(cred.user.uid,{displayName:nameVal});
+      await window._fbSetDoc(cred.user.uid,{displayName:nameVal, lang:currentLang});
     }
   }catch(e){
     const msgs={'auth/user-not-found':t('authErrNotFound'),'auth/wrong-password':t('authErrWrongPass'),'auth/email-already-in-use':t('authErrInUse'),'auth/weak-password':t('authErrWeak'),'auth/invalid-email':t('authErrInvalidEmail'),'auth/invalid-credential':t('authErrInvalidCred')};
@@ -1913,13 +1977,7 @@ function renderProfile(){
     <div class="profile-option" onclick="handleSignOut()" style="color:var(--burgundy);"><span class="profile-option-icon">🚪</span>${t('signOut')}</div>
     <div class="lang-selector">
       <div class="lang-selector-label">${t('language')}</div>
-      <div class="lang-buttons">
-        <button class="lang-btn ${currentLang==='en'?'active':''}" onclick="setLang('en')">🇬🇧 EN</button>
-        <button class="lang-btn ${currentLang==='es'?'active':''}" onclick="setLang('es')">🇪🇸 ES</button>
-        <button class="lang-btn ${currentLang==='fr'?'active':''}" onclick="setLang('fr')">🇫🇷 FR</button>
-        <button class="lang-btn ${currentLang==='it'?'active':''}" onclick="setLang('it')">🇮🇹 IT</button>
-        <button class="lang-btn ${currentLang==='pt'?'active':''}" onclick="setLang('pt')">🇵🇹 PT</button>
-      </div>
+      <div class="lang-buttons" data-dynamic-lang="true">${renderLanguageButtons()}</div>
     </div>
     <div style="background:var(--white);border-radius:14px;padding:20px;margin-bottom:8px;box-shadow:var(--shadow);text-align:center;">
       <div style="font-size:13px;color:var(--brown-light);margin-bottom:6px;">${t('createdBy')}</div>
@@ -2001,10 +2059,20 @@ const _auth = firebase.auth();
 const _db   = firebase.firestore();
 _auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).catch(()=>{});
 
-window._fbSignInEmail  = (e,p) => _auth.signInWithEmailAndPassword(e,p);
-window._fbCreateUser   = (e,p) => _auth.createUserWithEmailAndPassword(e,p);
+window._setFirebaseAuthLanguage = (lang) => {
+  _auth.languageCode = isSupportedLang(lang) ? lang : 'en';
+};
+window._setFirebaseAuthLanguage(currentLang || 'en');
+window._fbSignInEmail  = (e,p) => {
+  window._setFirebaseAuthLanguage(currentLang || 'en');
+  return _auth.signInWithEmailAndPassword(e,p);
+};
+window._fbCreateUser   = (e,p) => {
+  window._setFirebaseAuthLanguage(currentLang || 'en');
+  return _auth.createUserWithEmailAndPassword(e,p);
+};
 window._fbSendPasswordResetEmail = (e) => {
-  _auth.languageCode = currentLang || 'en';
+  window._setFirebaseAuthLanguage(currentLang || 'en');
   return _auth.sendPasswordResetEmail(e);
 };
 window._fbSignOut      = ()    => _auth.signOut();
