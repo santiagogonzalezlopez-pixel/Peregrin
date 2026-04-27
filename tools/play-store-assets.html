@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peregrin Play Store Assets</title>
+<style>
+:root{
+  --burgundy:#722F37;
+  --burgundy-dark:#47131c;
+  --gold:#d7aa46;
+  --gold-light:#f0d68a;
+  --cream:#fdf5e6;
+  --cream-dark:#ead7b5;
+  --brown:#3E2723;
+  --brown-light:#7a5849;
+  --white:#ffffff;
+}
+*{box-sizing:border-box}
+html{width:100vw;height:100vh;overflow:hidden;background:
+  radial-gradient(circle at 18% 10%,rgba(240,214,138,.35) 0 12%,transparent 30%),
+  radial-gradient(circle at 88% 82%,rgba(114,47,55,.18) 0 18%,transparent 38%),
+  linear-gradient(160deg,#fff8ea 0%,#f5e5c8 42%,#fdf5e6 100%);}
+body{margin:0;width:100vw;height:100vh;overflow:hidden;background:
+  radial-gradient(circle at 18% 10%,rgba(240,214,138,.35) 0 12%,transparent 30%),
+  radial-gradient(circle at 88% 82%,rgba(114,47,55,.18) 0 18%,transparent 38%),
+  linear-gradient(160deg,#fff8ea 0%,#f5e5c8 42%,#fdf5e6 100%);
+  font-family:"Segoe UI",Arial,sans-serif;color:var(--brown);}
+.asset{position:fixed;left:0;top:0;right:0;bottom:0;overflow:hidden;background:
+  radial-gradient(circle at 18% 10%,rgba(240,214,138,.35) 0 12%,transparent 30%),
+  radial-gradient(circle at 88% 82%,rgba(114,47,55,.18) 0 18%,transparent 38%),
+  linear-gradient(160deg,#fff8ea 0%,#f5e5c8 42%,#fdf5e6 100%);
+}
+.asset::before{content:"";position:absolute;inset:-20%;background:
+  linear-gradient(rgba(114,47,55,.055) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(114,47,55,.055) 1px,transparent 1px);
+  background-size:76px 76px;transform:rotate(-8deg);opacity:.48}
+.phone-shot{width:1080px;height:1920px;padding:92px 74px 78px;}
+.feature{width:1024px;height:620px;padding:58px 70px;}
+.brand-row{position:relative;z-index:1;display:flex;align-items:center;gap:18px;margin-bottom:56px}
+.brand-icon{width:82px;height:82px;border-radius:23px;box-shadow:0 14px 34px rgba(62,39,35,.2)}
+.brand-name{font-family:Georgia,serif;font-size:38px;font-weight:700;letter-spacing:.8px;color:var(--burgundy)}
+.brand-sub{font-size:20px;color:var(--brown-light);margin-top:4px}
+.hero-title{position:relative;z-index:1;font-family:Georgia,serif;font-size:72px;line-height:.96;font-weight:700;color:var(--burgundy);letter-spacing:-1.8px;margin:0 0 20px}
+.hero-copy{position:relative;z-index:1;font-size:29px;line-height:1.34;color:var(--brown-light);max-width:760px;margin:0 0 42px}
+.phone{position:absolute;z-index:1;left:160px;bottom:92px;width:760px;height:1110px;border-radius:72px;background:#1d1012;padding:26px;box-shadow:0 44px 90px rgba(62,39,35,.32)}
+.phone::before{content:"";position:absolute;top:14px;left:50%;transform:translateX(-50%);width:118px;height:18px;border-radius:20px;background:#372325;z-index:5}
+.screen{position:relative;width:100%;height:100%;border-radius:52px;background:var(--cream);overflow:hidden}
+.status{height:54px;background:var(--burgundy);color:rgba(253,245,230,.78);display:flex;align-items:center;justify-content:space-between;padding:0 34px;font-size:18px;font-weight:700}
+.appbar{height:132px;background:linear-gradient(135deg,var(--burgundy),var(--burgundy-dark));color:var(--cream);padding:26px 34px;display:flex;align-items:center;justify-content:space-between}
+.app-title{font-family:Georgia,serif;font-size:39px;font-weight:700;letter-spacing:3px}
+.app-title span{color:var(--gold-light)}
+.app-sub{font-size:17px;opacity:.68;margin-top:4px}
+.pill{background:rgba(255,255,255,.14);border-radius:28px;padding:14px 20px;font-size:18px;font-weight:700}
+.content{height:calc(100% - 54px - 132px - 96px);position:relative;overflow:hidden}
+.nav{height:96px;background:#fff;border-top:1px solid var(--cream-dark);display:grid;grid-template-columns:repeat(5,1fr);align-items:center;text-align:center;color:var(--brown-light);font-size:15px;font-weight:700}
+.nav .active{color:var(--burgundy)}
+.nav-ico{display:block;font-size:27px;margin-bottom:4px}
+.map-bg{position:absolute;inset:0;background:
+  radial-gradient(ellipse at 60% 36%,#d6e0e1 0 18%,transparent 19%),
+  radial-gradient(ellipse at 42% 50%,#d6e0e1 0 15%,transparent 16%),
+  linear-gradient(135deg,#f8f5ef,#e9eeee)}
+.map-label{position:absolute;color:#a6adb0;font-size:31px;font-weight:800;letter-spacing:1px}
+.pin{position:absolute;width:74px;height:74px;border-radius:50%;background:var(--burgundy);border:9px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 8px 16px rgba(0,0,0,.28)}
+.pin.big{width:90px;height:90px;font-size:37px}
+.zoom{position:absolute;right:24px;top:24px;width:78px;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.18);font-size:42px;font-weight:800;text-align:center}
+.zoom div{height:78px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #ddd}
+.card-stack{padding:34px;display:grid;gap:20px}
+.passport-head{background:linear-gradient(135deg,var(--burgundy),var(--burgundy-dark));color:var(--cream);border-radius:30px;padding:42px 32px;text-align:center;box-shadow:0 16px 32px rgba(62,39,35,.16)}
+.passport-title{font-family:Georgia,serif;font-size:42px;font-weight:700}
+.passport-stats{display:flex;gap:18px;justify-content:center;margin-top:28px}
+.stat{background:rgba(255,255,255,.12);border-radius:18px;padding:18px 34px}.stat b{display:block;color:var(--gold-light);font-family:Georgia,serif;font-size:42px}.stat span{font-size:14px;text-transform:uppercase;letter-spacing:1.2px}
+.stamp-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.stamp{background:#fff;border-radius:22px;padding:24px;box-shadow:0 8px 24px rgba(62,39,35,.13);position:relative}.stamp::after{content:"✓";position:absolute;right:18px;top:16px;background:var(--gold);color:white;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900}
+.stamp .ico{font-size:42px}.stamp h4{font-family:Georgia,serif;font-size:23px;margin:12px 0 4px}.stamp p{font-size:16px;color:var(--brown-light);margin:0}
+.route{background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 12px 28px rgba(62,39,35,.15)}
+.route-img{height:178px;background:linear-gradient(135deg,#2c1a18,#84543f);position:relative;overflow:hidden}
+.route-img::before{content:"";position:absolute;left:48px;right:48px;bottom:-4px;height:140px;background:
+  linear-gradient(90deg,transparent 0 10%,rgba(255,245,210,.84) 10% 18%,transparent 18% 26%,rgba(255,245,210,.84) 26% 34%,transparent 34% 42%,rgba(255,245,210,.84) 42% 50%,transparent 50% 58%,rgba(255,245,210,.84) 58% 66%,transparent 66% 74%,rgba(255,245,210,.84) 74% 82%,transparent 82%),
+  linear-gradient(#c49b58,#f6e4b4);clip-path:polygon(50% 0,100% 36%,100% 100%,0 100%,0 36%)}
+.route-body{padding:24px}.route-body h3{font-family:Georgia,serif;font-size:31px;margin:0 0 8px}.route-body p{font-size:18px;color:var(--brown-light);line-height:1.45;margin:0 0 16px}.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{background:var(--cream);border-radius:18px;padding:8px 14px;font-size:14px;color:var(--brown-light);font-weight:700}
+.detail{padding:34px}.detail-card{background:#fff;border-radius:30px;padding:34px;box-shadow:0 12px 28px rgba(62,39,35,.14)}
+.detail-hero{height:176px;border-radius:24px;background:linear-gradient(135deg,#8b1d31,#d8aa46);display:flex;align-items:center;justify-content:center;font-size:78px;margin-bottom:26px}
+.detail-card h3{font-family:Georgia,serif;font-size:37px;margin:0 0 8px}.detail-card p{font-size:19px;color:var(--brown-light);line-height:1.55;margin:0 0 20px}.journal{background:var(--cream);border-left:6px solid var(--gold);border-radius:0 18px 18px 0;padding:22px;font-size:19px;line-height:1.5}
+.cert{padding:36px;display:flex;align-items:center;justify-content:center;height:100%}
+.certificate{background:#fff9e9;border:4px solid var(--gold);border-radius:28px;width:590px;min-height:610px;text-align:center;padding:52px 42px;box-shadow:0 18px 40px rgba(62,39,35,.18)}
+.certificate .mark{font-size:64px;color:var(--gold)}.certificate h3{font-family:Georgia,serif;font-size:42px;color:var(--burgundy);margin:20px 0 10px}.certificate p{font-size:21px;line-height:1.5;color:var(--brown-light)}.seal{width:116px;height:116px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#b8842e);margin:30px auto 0;display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--burgundy)}
+.feature .brand-row{margin-bottom:22px}.feature .brand-icon{width:94px;height:94px}.feature h1{position:relative;z-index:1;font-family:Georgia,serif;font-size:60px;line-height:1;color:var(--burgundy);margin:0 0 16px}.feature p{position:relative;z-index:1;font-size:25px;line-height:1.32;color:var(--brown-light);max-width:610px;margin:0}.feature-phone{position:absolute;right:70px;bottom:-76px;width:250px;height:430px;border-radius:42px;background:#1d1012;padding:12px;box-shadow:0 30px 56px rgba(62,39,35,.28)}.feature-phone .screen{border-radius:32px}.feature-phone .appbar{height:72px;padding:14px}.feature-phone .app-title{font-size:22px}.feature-phone .content{height:346px}.feature-phone .pin{width:36px;height:36px;border-width:4px;font-size:15px}
+.store-icon{width:512px;height:512px;background:
+  radial-gradient(circle at 36% 24%,rgba(255,245,230,.22) 0 18%,transparent 38%),
+  radial-gradient(circle at 55% 45%,rgba(215,170,70,.28) 0 28%,transparent 50%),
+  linear-gradient(135deg,#6f2635,#722f37 48%,#4d1722);
+  position:fixed;inset:0;overflow:hidden}
+.store-icon::before{content:"";position:absolute;inset:0;border:10px solid rgba(215,170,70,.54)}
+.store-icon .cross{position:absolute;left:222px;top:82px;width:76px;height:76px;background:var(--gold);border-radius:13px;box-shadow:0 4px 0 rgba(62,39,35,.22)}
+.store-icon .cross::before{content:"";position:absolute;left:-28px;top:22px;width:132px;height:54px;background:var(--gold);border-radius:13px}
+.store-icon .p{position:absolute;left:156px;top:140px;font-family:Georgia,serif;font-size:250px;line-height:.86;font-weight:700;color:var(--cream);text-shadow:5px 5px 0 rgba(62,39,35,.36),-2px -2px 0 rgba(240,214,138,.78)}
+</style>
+</head>
+<body>
+<script>
+const icon = '../icon-512.png';
+const assets = {
+  feature:{cls:'feature',title:'Pasaporte peregrino católico',copy:'Descubre santuarios, sigue rutas sagradas y guarda recuerdos de fe.'},
+  '01-map':{title:'Descubre santuarios',copy:'Explora lugares santos y marca cada visita real de tu peregrinación.',screen:'map'},
+  '02-passport':{title:'Tu pasaporte peregrino',copy:'Guarda sellos, países completados y el progreso de tu camino.',screen:'passport'},
+  '03-routes':{title:'Sigue rutas sagradas',copy:'Itinerarios cuidados para caminar con sentido, oración y memoria.',screen:'routes'},
+  '04-journal':{title:'Conserva tu camino',copy:'Notas privadas, comentarios útiles y fichas de cada santuario.',screen:'journal'},
+  '05-certificates':{title:'Recibe certificados',copy:'Celebra tus peregrinaciones con recuerdos bonitos y compartibles.',screen:'cert'}
+};
+const key = new URLSearchParams(location.search).get('asset') || '01-map';
+const data = assets[key] || assets['01-map'];
+function nav(active){return `<div class="nav">${['Mapa','Países','Pasaporte','Rutas','Perfil'].map(x=>`<div class="${x===active?'active':''}"><span class="nav-ico">${{Mapa:'⌖',Países:'◷',Pasaporte:'▣',Rutas:'⌘',Perfil:'♙'}[x]}</span>${x}</div>`).join('')}</div>`}
+function appbar(){return `<div class="status"><span>9:41</span><span>● ● ●</span></div><div class="appbar"><div><div class="app-title">P<span>✦</span>REGRIN</div><div class="app-sub">Tu pasaporte peregrino</div></div><div class="pill">🌍</div></div>`}
+function mapScreen(){return `${appbar()}<div class="content"><div class="map-bg"></div><div class="map-label" style="left:58px;top:120px">FRANCE</div><div class="map-label" style="left:372px;top:230px">ITALY</div><div class="map-label" style="left:202px;top:430px">SPAIN</div>${[[120,250,'✝'],[210,330,'⛪'],[350,280,'🕯'],[470,360,'✦'],[260,510,'⛰'],[520,520,'✓'],[160,620,'⛪']].map(p=>`<div class="pin ${p[5]?'big':''}" style="left:${p[0]}px;top:${p[1]}px">${p[2]}</div>`).join('')}<div class="zoom"><div>+</div><div>−</div></div></div>${nav('Mapa')}`}
+function passportScreen(){return `${appbar()}<div class="content"><div class="card-stack"><div class="passport-head"><div class="passport-title">Pasaporte Peregrino</div><div class="passport-stats"><div class="stat"><b>17</b><span>Visitas</span></div><div class="stat"><b>94</b><span>Pendientes</span></div></div></div><div class="stamp-grid"><div class="stamp"><div class="ico">⛪</div><h4>Lourdes</h4><p>Francia</p></div><div class="stamp"><div class="ico">✝</div><h4>Santiago</h4><p>España</p></div><div class="stamp"><div class="ico">🕯</div><h4>Fátima</h4><p>Portugal</p></div><div class="stamp"><div class="ico">⛰</div><h4>Montserrat</h4><p>España</p></div></div></div></div>${nav('Pasaporte')}`}
+function routesScreen(){return `${appbar()}<div class="content"><div class="card-stack"><div class="route"><div class="route-img"></div><div class="route-body"><h3>Camino de Santiago</h3><p>Una ruta de conversión, memoria apostólica y alegría peregrina.</p><div class="chips"><span class="chip">Santiago</span><span class="chip">León</span><span class="chip">Burgos</span></div></div></div><div class="route"><div class="route-img"></div><div class="route-body"><h3>Fátima · Lourdes</h3><p>Santuarios marianos para rezar, caminar y confiar.</p><div class="chips"><span class="chip">Fátima</span><span class="chip">Lourdes</span></div></div></div></div></div>${nav('Rutas')}`}
+function journalScreen(){return `${appbar()}<div class="content"><div class="detail"><div class="detail-card"><div class="detail-hero">✝</div><h3>Santuario</h3><p>Historia, oración, ubicación y comentarios de otros peregrinos.</p><div class="journal"><b>Diario privado</b><br>Guarda aquí una intención, una memoria o una oración de tu visita.</div></div></div></div>${nav('Mapa')}`}
+function certScreen(){return `${appbar()}<div class="content"><div class="cert"><div class="certificate"><div class="mark">✦</div><h3>Certificado</h3><p>Has completado una etapa de tu peregrinación y visitado sus santuarios.</p><div class="seal">P</div></div></div></div>${nav('Pasaporte')}`}
+function screen(kind){return {map:mapScreen,passport:passportScreen,routes:routesScreen,journal:journalScreen,cert:certScreen}[kind]()}
+if(key==='icon'){
+  document.body.innerHTML = `<main class="store-icon"><div class="cross"></div><div class="p">P</div></main>`;
+}else if(key==='feature'){
+  document.body.innerHTML = `<main class="asset feature"><div class="brand-row"><img class="brand-icon" src="${icon}"><div><div class="brand-name">Peregrin Passport</div><div class="brand-sub">Pasaporte peregrino católico</div></div></div><h1>${data.title}</h1><p>${data.copy}</p><div class="feature-phone"><div class="screen">${mapScreen()}</div></div></main>`;
+}else{
+  document.body.innerHTML = `<main class="asset phone-shot"><div class="brand-row"><img class="brand-icon" src="${icon}"><div><div class="brand-name">Peregrin Passport</div><div class="brand-sub">Pasaporte peregrino católico</div></div></div><h1 class="hero-title">${data.title}</h1><p class="hero-copy">${data.copy}</p><div class="phone"><div class="screen">${screen(data.screen)}</div></div></main>`;
+}
+</script>
+</body>
+</html>
