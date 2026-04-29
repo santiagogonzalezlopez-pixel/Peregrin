@@ -324,10 +324,10 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 <div id="auth-screen">
   <div class="auth-logo">P<span>✦</span>REGRIN</div>
   <div class="auth-subtitle" id="auth-subtitle">Your pilgrim passport</div>
-  <div class="auth-card">
+  <form class="auth-card" id="auth-form" onsubmit="event.preventDefault(); handleEmailAuth();">
     <div class="auth-tab-row">
-      <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Sign in</button>
-      <button class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Register</button>
+      <button type="button" class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Sign in</button>
+      <button type="button" class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Register</button>
     </div>
     <div class="auth-lang-selector" aria-label="Language">
       <div class="lang-buttons" id="auth-lang-buttons"></div>
@@ -354,8 +354,8 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
       </div>
     </div>
     <button type="button" class="auth-link" id="auth-reset-link" onclick="handlePasswordReset()">Forgot your password?</button>
-    <button class="auth-btn-primary" id="auth-submit" onclick="handleEmailAuth()">Sign in</button>
-  </div>
+    <button type="submit" class="auth-btn-primary" id="auth-submit">Sign in</button>
+  </form>
 </div>
 
 <!-- PREMIUM MODAL -->
@@ -765,7 +765,7 @@ const PAYMENT_INTENT_MAX_AGE_MS = 1000 * 60 * 90;
 const AUTH_EMAIL_STORAGE_KEY = 'peregrin_last_email';
 const AUTH_LANG_STORAGE_KEY = 'peregrin_preferred_lang';
 const LAUNCH_ALL_COUNTRIES_UNLOCKED = false;
-let visits={}, unlockedRegions=[], currentLang='en', currentScreen='map', currentCountry='be', map=null, markers={}, activeRouteFilter=null, pilgrimName='';
+let visits={}, unlockedRegions=[], currentLang='en', currentScreen='map', currentCountry='be', map=null, markers={}, activeRouteFilter=null, activeCountryFilter=null, pilgrimName='';
 let markerDisplayPositions=null;
 let shouldReturnHomeOnResume=false;
 const SUPPORTED_LANGS = [
@@ -1468,21 +1468,67 @@ function initMap(){
 }
 
 function updateMarkerStyles(){
+  if(!map) return;
   sanctuaries.forEach(s=>{
     const visited=isVisited(s.id);
     const inRoute=!activeRouteFilter||activeRouteFilter.includes(s.id);
+    const inCountry=!activeCountryFilter||s.country===activeCountryFilter;
+    const visible=activeRouteFilter ? inRoute : inCountry;
+    if(!markers[s.id]) return;
+    if(!visible){
+      if(map.hasLayer(markers[s.id])) map.removeLayer(markers[s.id]);
+      return;
+    }
+    if(!map.hasLayer(markers[s.id])) markers[s.id].addTo(map);
     const highlight=!!activeRouteFilter&&inRoute;
     markers[s.id].setIcon(createMarkerIcon(s,visited,highlight));
-    markers[s.id].setOpacity(inRoute?1:0.25);
+    markers[s.id].setOpacity(1);
     markers[s.id].unbindPopup();
     markers[s.id].bindPopup(buildPopupContent(s),{maxWidth:280,closeButton:true});
   });
+}
+
+function fitMapToSanctuaries(list){
+  if(!map || !list || !list.length) return;
+  const displayPositions = getMarkerDisplayPositions();
+  const points = list.map(s => displayPositions[s.id] || {lat:s.lat,lng:s.lng}).filter(Boolean);
+  if(!points.length) return;
+  setTimeout(()=>{
+    if(!map) return;
+    map.invalidateSize();
+    if(points.length===1){
+      map.setView([points[0].lat, points[0].lng], 8);
+      return;
+    }
+    const bounds = L.latLngBounds(points.map(p=>[p.lat,p.lng]));
+    map.fitBounds(bounds.pad(0.22), {padding:[34,34], maxZoom:8});
+  }, 80);
+}
+
+function showMapFilterBanner(label){
+  const banner=document.getElementById('map-route-banner');
+  const name=document.getElementById('map-route-name');
+  if(name) name.textContent=label;
+  if(banner) banner.style.display='flex';
 }
 
 function getRouteGuide(routeId){
   const guide = routeGuides[routeId];
   if(!guide) return null;
   return guide[currentLang] || guide.en || guide.es || null;
+}
+
+function isVariableRouteValue(value){
+  const normalized = String(value || '').trim().toLowerCase();
+  return ['variable','varies','variabile','variável'].includes(normalized);
+}
+
+function getRouteMetaParts(route, routeData, visitedCount){
+  const parts = [];
+  if(route.distance && !isVariableRouteValue(route.distance)) parts.push(route.distance);
+  if(routeData.days && !isVariableRouteValue(routeData.days)) parts.push(routeData.days);
+  parts.push(`${visitedCount}/${route.stops.length} ${t('routeVisited')}`);
+  return parts;
 }
 
 function openRouteGuide(routeId, event){
@@ -1498,13 +1544,14 @@ function openRouteGuide(routeId, event){
   const guide = getRouteGuide(routeId);
   if(!route || !guide) return;
   const rd = route[currentLang] || route.es || route.en;
+  const vc=route.stops.filter(id=>isVisited(id)).length;
   document.getElementById('modal-content').innerHTML=`
     <div class="modal-handle"></div>
     <div class="route-banner" style="height:190px;"><img class="route-banner-image" src="${resolveAssetUrl(route.image)}" alt="" onerror="handleRouteBannerError(this)"><button class="modal-close" onclick="closeModal()">✕</button></div>
     <div class="modal-body">
       <div class="route-guide-kicker">${t('routeGuideTitle')}</div>
       <div class="modal-title">${rd.name}</div>
-      <div class="modal-location">${route.distance} · ${rd.days}</div>
+      <div class="modal-location">${getRouteMetaParts(route, rd, vc).join(' · ')}</div>
       <div class="route-guide-panel">
         <div class="route-guide-section">
           <div class="route-guide-section-title">${t('routeGuidePurpose')}</div>
@@ -1530,13 +1577,22 @@ function openRouteGuide(routeId, event){
 
 function showRouteOnMap(idx){
   const r=routes[idx];
+  if(!r) return;
   activeRouteFilter=r.stops;
+  activeCountryFilter=null;
   switchScreen('map');
   updateMarkerStyles();
-  document.getElementById('map-route-name').textContent='🛣️ '+(r[currentLang]||r.en).name;
-  document.getElementById('map-route-banner').style.display='flex';
+  showMapFilterBanner('🛣️ '+(r[currentLang]||r.en).name);
+  const stops=r.stops.map(id=>sanctuaries.find(s=>s.id===id)).filter(Boolean);
+  fitMapToSanctuaries(stops);
 }
-function clearRouteFilter(){activeRouteFilter=null;updateMarkerStyles();document.getElementById('map-route-banner').style.display='none';}
+function clearRouteFilter(){
+  activeRouteFilter=null;
+  activeCountryFilter=null;
+  updateMarkerStyles();
+  document.getElementById('map-route-banner').style.display='none';
+  if(map) setTimeout(()=>map.setView([25,15],3), 50);
+}
 
 function rebindMapPopups(){
   if(!map) return;
@@ -1550,12 +1606,14 @@ function rebindMapPopups(){
 
 function focusCountry(cid){
   currentCountry=cid;
+  activeCountryFilter=cid;
+  activeRouteFilter=null;
   const cs=sanctuaries.filter(s=>s.country===cid);
-  if(cs.length&&map){
-    const lats=cs.map(s=>s.lat),lngs=cs.map(s=>s.lng);
-    map.fitBounds([[Math.min(...lats)-0.5,Math.min(...lngs)-0.5],[Math.max(...lats)+0.5,Math.max(...lngs)+0.5]]);
-  }
   switchScreen('map');
+  updateMarkerStyles();
+  const country = countries.find(c=>c.id===cid);
+  showMapFilterBanner(`${country?.flag||'🌍'} ${country?cn(country):''}`);
+  fitMapToSanctuaries(cs);
 }
 
 // ===================== MODAL =====================
@@ -1947,7 +2005,7 @@ function renderRoutes(){
         <div class="route-banner"><img class="route-banner-image" src="${resolveAssetUrl(r.image)}" alt="" loading="lazy" onerror="handleRouteBannerError(this)"></div>
         <div class="route-body">
           <div class="route-name">${rd.name}</div>
-          <div class="route-meta">${r.distance} · ${rd.days} · ${vc}/${r.stops.length} ${t('routeVisited')}</div>
+          <div class="route-meta">${getRouteMetaParts(r, rd, vc).join(' · ')}</div>
           <div class="route-desc">${rd.desc}</div>
           <div class="route-stops">${stops.map(s=>`<span class="route-stop" style="${isVisited(s.id)?'background:var(--gold-light);color:var(--brown);font-weight:600':''}">${sd(s).city}</span>`).join('')}</div>
           ${hasGuide?`<button class="route-guide-btn ${guideUnlocked?'':'locked'}" onclick="openRouteGuide('${r.id}', event)">${guideUnlocked?t('routeGuideCta'):t('routeGuideLocked')}</button>`:''}
