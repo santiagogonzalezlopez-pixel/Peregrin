@@ -108,18 +108,23 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .popup-btn.detail{background:none;color:var(--burgundy);text-decoration:underline;padding:6px;font-size:12px;}
 .popup-maps-link{display:block;text-align:center;color:var(--brown-light);font-size:11.5px;text-decoration:none;margin-top:6px;padding:4px;font-weight:500;}
 .popup-locked{background:var(--cream-dark);color:var(--brown-light);width:100%;padding:10px;border:none;border-radius:8px;font-family:'Jost',sans-serif;font-size:13px;font-weight:600;cursor:pointer;}
-.map-route-banner{position:absolute;top:10px;left:10px;right:52px;z-index:500;background:var(--burgundy);color:var(--cream);padding:10px 14px;border-radius:10px;font-size:13px;font-weight:500;display:none;align-items:center;justify-content:space-between;box-shadow:var(--shadow-lg);border-left:4px solid var(--gold);}
-.map-route-banner span{flex:1;}
-.map-route-banner button{background:none;border:none;color:var(--cream);font-size:18px;cursor:pointer;padding:0 0 0 12px;opacity:0.8;line-height:1;}
+.map-route-banner{position:absolute;top:10px;left:10px;right:52px;z-index:500;background:linear-gradient(135deg,var(--burgundy),var(--burgundy-dark));color:var(--cream);padding:10px 12px 10px 14px;border-radius:12px;font-size:13px;font-weight:500;display:none;align-items:center;justify-content:space-between;gap:12px;box-shadow:var(--shadow-lg);border-left:4px solid var(--gold);}
+.map-route-banner span{flex:1;min-width:0;}
+.map-route-banner strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:'Crimson Pro',serif;font-size:15px;letter-spacing:0.2px;}
+.map-route-banner small{display:block;margin-top:2px;color:rgba(253,245,230,0.72);font-size:11px;line-height:1.25;}
+.map-route-banner button{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.14);border-radius:999px;color:var(--cream);font-family:'Jost',sans-serif;font-size:11px;font-weight:800;cursor:pointer;padding:7px 10px;white-space:nowrap;line-height:1;}
 .header-actions{display:flex;align-items:center;gap:8px;}
 .map-help-btn{display:flex;align-items:center;gap:8px;max-width:230px;padding:6px 12px;border:none;border-radius:20px;background:rgba(255,255,255,0.12);color:var(--cream);font-family:'Jost',sans-serif;font-size:12px;font-weight:700;box-shadow:none;cursor:pointer;}
 .map-help-btn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
 /* MARKERS */
-.custom-marker{background:var(--burgundy);border:3px solid var(--gold);border-radius:50%;width:32px!important;height:32px!important;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 2px 8px rgba(0,0,0,0.35);position:relative;}
-.custom-marker.visited-marker{background:var(--gold);border:4px solid var(--burgundy-dark);width:42px!important;height:42px!important;font-size:19px;box-shadow:0 0 0 5px rgba(197,150,58,0.28),0 4px 14px rgba(0,0,0,0.4);}
+.custom-marker{background:radial-gradient(circle at 35% 28%,#8d414b 0%,var(--burgundy) 58%,var(--burgundy-dark) 100%);border:3px solid var(--gold);border-radius:50%;width:32px!important;height:32px!important;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.35),inset 0 0 0 1px rgba(253,245,230,0.12);position:relative;}
+.custom-marker.visited-marker{background:linear-gradient(135deg,var(--gold),var(--gold-light));border:4px solid var(--burgundy-dark);width:42px!important;height:42px!important;box-shadow:0 0 0 5px rgba(197,150,58,0.28),0 4px 14px rgba(0,0,0,0.4);}
 .custom-marker.route-highlight-marker{border-width:4px;box-shadow:0 0 0 5px rgba(197,150,58,0.45),0 4px 14px rgba(0,0,0,0.5);}
 .custom-marker.locked-marker{background:#9E9E9E;border-color:#757575;opacity:0.7;}
+.marker-symbol{width:18px;height:18px;color:var(--cream);display:block;filter:drop-shadow(0 1px 0 rgba(0,0,0,0.22));}
+.visited-marker .marker-symbol{width:22px;height:22px;color:var(--burgundy-dark);}
+.locked-marker .marker-symbol{color:#eeeeee;}
 .visited-check{position:absolute;top:-5px;right:-5px;background:#2E7D32;color:white;border-radius:50%;width:16px;height:16px;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid white;line-height:1;}
 .lock-badge{position:absolute;top:-5px;right:-5px;background:#757575;color:white;border-radius:50%;width:16px;height:16px;font-size:9px;display:flex;align-items:center;justify-content:center;border:2px solid white;}
 
@@ -137,7 +142,8 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .stamp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px;}
 .stamp-card{background:var(--white);border-radius:12px;padding:16px;box-shadow:var(--shadow);position:relative;overflow:hidden;cursor:pointer;}
 .stamp-card::after{content:'✓';position:absolute;top:8px;right:10px;width:22px;height:22px;background:var(--gold);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
-.stamp-icon{font-size:28px;margin-bottom:8px;}
+.stamp-icon{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--burgundy),var(--burgundy-dark));border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:10px;box-shadow:inset 0 0 0 1px rgba(253,245,230,0.1);}
+.stamp-symbol{width:22px;height:22px;color:var(--cream);display:block;}
 .stamp-name{font-family:'Crimson Pro',serif;font-size:14px;font-weight:600;margin-bottom:2px;}
 .stamp-date{font-size:11px;color:var(--brown-light);}
 .empty-state{text-align:center;padding:40px 20px;color:var(--brown-light);}
@@ -154,6 +160,8 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .achievement-icon{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
 .achievement-card.unlocked .achievement-icon{background:linear-gradient(135deg,var(--gold),var(--gold-light));}
 .achievement-card.locked .achievement-icon{background:var(--cream-dark);}
+.achievement-symbol{width:26px;height:26px;color:var(--burgundy-dark);display:block;}
+.achievement-card.locked .achievement-symbol{color:var(--brown-light);}
 .achievement-info{flex:1;}
 .achievement-name{font-family:'Crimson Pro',serif;font-size:16px;font-weight:600;margin-bottom:2px;}
 .achievement-desc{font-size:12px;color:var(--brown-light);line-height:1.4;}
@@ -173,6 +181,9 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .route-desc{font-size:13px;line-height:1.5;color:var(--brown);margin-bottom:12px;}
 .route-stops{display:flex;gap:6px;flex-wrap:wrap;}
 .route-stop{font-size:11px;background:var(--cream);padding:4px 10px;border-radius:12px;color:var(--brown-light);}
+.route-first-stop{display:flex;align-items:center;gap:8px;margin:0 0 12px;padding:9px 11px;border-radius:11px;background:linear-gradient(135deg,rgba(197,150,58,0.14),rgba(253,245,230,0.82));font-size:12px;color:var(--brown);}
+.route-first-stop span{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:800;color:var(--burgundy);}
+.route-action-hint{margin-top:12px;font-size:11px;font-weight:800;color:var(--burgundy);letter-spacing:0.2px;}
 
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:2000;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity 0.3s;}
@@ -183,6 +194,8 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .modal-hero{width:100%;height:200px;display:flex;align-items:center;justify-content:center;font-size:70px;position:relative;overflow:hidden;}
 .modal-hero::before{content:'✝';position:absolute;font-size:180px;opacity:0.07;top:-20px;right:-10px;color:white;}
 .modal-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(transparent,rgba(0,0,0,0.15));}
+.modal-hero-symbol{width:86px;height:86px;color:var(--cream);padding:20px;border-radius:50%;background:rgba(0,0,0,0.16);border:2px solid rgba(240,214,138,0.62);box-shadow:0 18px 34px rgba(0,0,0,0.2);position:relative;z-index:1;}
+.modal-hero-symbol-svg{width:100%;height:100%;display:block;color:currentColor;}
 .hero-be{background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);}.hero-es{background:linear-gradient(135deg,#8B1A1A,#C41E3A,#E8A317);}
 .hero-pt{background:linear-gradient(135deg,#006600,#009900,#CC0000);}.hero-fr{background:linear-gradient(135deg,#002654,#2B4570,#C8102E);}
 .hero-it{background:linear-gradient(135deg,#009246,#006233,#CE2B37);}.hero-pl{background:linear-gradient(135deg,#DC143C,#8B0000,#FFFFFF20);}
@@ -404,8 +417,8 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
     <div class="screen active" id="screen-map">
       <div id="map"></div>
       <div class="map-route-banner" id="map-route-banner">
-        <span id="map-route-name"></span>
-        <button onclick="clearRouteFilter()">✕</button>
+        <span><strong id="map-route-name"></strong><small id="map-route-subtitle"></small></span>
+        <button id="map-route-clear" onclick="clearRouteFilter()">Ver todo</button>
       </div>
     </div>
     <div class="screen" id="screen-explore"><div class="explore-screen" style="background:var(--cream);padding:20px;"></div></div>
@@ -504,7 +517,7 @@ const i18n = {
     onbPurposeTitle:'What Peregrin is', onbPurposeBody:'Peregrin is a Catholic pilgrimage passport that helps you discover sanctuaries, mark the holy places you have visited, follow sacred routes and keep an ordered memory of your journey. It is designed to accompany your real pilgrimage life with visits, milestones, achievements and country certificates gathered over time.',
     onbStatSanctuaries:'Sanctuaries', onbStatCountries:'Countries', onbStatContinents:'Continents',
     onbCta:'Begin your pilgrimage ✦',
-    navWorld:'World',editName:'Edit my name', editNamePrompt:'Enter your pilgrim name:', viewIntro:'View intro again', mapHelpCta:'Peregrin', aboutTitle:'What is Peregrin?', aboutBody:'Peregrin is a digital pilgrimage passport for Catholic pilgrims. It helps you discover sanctuaries, register your visits, complete countries and keep the memory of your journey with routes, achievements and certificates.', pageTitle:'Peregrin — Your pilgrim passport', pilgrimFallback:'Pilgrim', premiumBadge:'PREMIUM', betaTesterBadge:'BETA TESTER', testerPremiumOn:'Premium activated for local testing', testerPremiumOff:'Premium deactivated for local testing', commentsTitle:'Pilgrim comments', commentsPlaceholder:'Share a tip, a practical note or a short impression for other pilgrims...', commentsHint:'Visible to other signed-in testers in this beta.', commentsSubmit:'Post comment', commentsLoading:'Loading comments...', commentsEmpty:'No comments yet. Be the first to leave one.', commentsUnavailable:'Comments are not available right now.', commentsPosted:'Comment posted', commentsTooShort:'Write at least 3 characters.', commentsSignIn:'Sign in to leave comments.', commentsNoLinks:'Links are not allowed in comments for now.', commentsReport:'Report', commentsReported:'Comment reported. Thank you.', commentsSlowDown:(seconds)=>`Please wait ${seconds}s before posting again.`, createdBy:'Created with faith by', feedbackMsg:'Suggestions and feedback always welcome',
+    navWorld:'World',editName:'Edit my name', editNamePrompt:'Enter your pilgrim name:', viewIntro:'View intro again', mapHelpCta:'Peregrin', aboutTitle:'What is Peregrin?', aboutBody:'Peregrin is a digital pilgrimage passport for Catholic pilgrims. It helps you discover sanctuaries, register your visits, complete countries and keep the memory of your journey with routes, achievements and certificates.', pageTitle:'Peregrin — Your pilgrim passport', pilgrimFallback:'Pilgrim', premiumBadge:'PREMIUM', betaTesterBadge:'BETA TESTER', testerPremiumOn:'Premium activated for local testing', testerPremiumOff:'Premium deactivated for local testing', mapFilterCountry:'Showing only this country', mapFilterRoute:'Showing only this route', mapFilterShowAll:'Show all', routeTapHint:'Tap to see this route on the map', routeFirstStop:'First stop', commentsTitle:'Pilgrim comments', commentsPlaceholder:'Share a tip, a practical note or a short impression for other pilgrims...', commentsHint:'Visible to other signed-in testers in this beta.', commentsSubmit:'Post comment', commentsLoading:'Loading comments...', commentsEmpty:'No comments yet. Be the first to leave one.', commentsUnavailable:'Comments are not available right now.', commentsPosted:'Comment posted', commentsTooShort:'Write at least 3 characters.', commentsSignIn:'Sign in to leave comments.', commentsNoLinks:'Links are not allowed in comments for now.', commentsReport:'Report', commentsReported:'Comment reported. Thank you.', commentsSlowDown:(seconds)=>`Please wait ${seconds}s before posting again.`, createdBy:'Created with faith by', feedbackMsg:'Suggestions and feedback always welcome',
   },
   es: {
     appSubtitle:'Tu pasaporte peregrino', navMap:'Mapa', navCountries:'Países',
@@ -564,7 +577,7 @@ const i18n = {
     onbPurposeTitle:'Qué es Peregrin', onbPurposeBody:'Peregrin es un pasaporte católico de peregrinación que te ayuda a descubrir santuarios, marcar los lugares santos que has visitado, seguir rutas sagradas y guardar una memoria ordenada de tu camino. Está pensado para acompañar tu vida real de peregrino con visitas, hitos, logros y certificados por país que vas reuniendo con el tiempo.',
     onbStatSanctuaries:'Santuarios', onbStatCountries:'Países', onbStatContinents:'Continentes',
     onbCta:'Comenzar mi peregrinación ✦',
-    navWorld:'Mundo',editName:'Editar mi nombre', editNamePrompt:'Introduce tu nombre de peregrino:', viewIntro:'Volver a ver la introducción', mapHelpCta:'Peregrin', aboutTitle:'¿Qué es Peregrin?', aboutBody:'Peregrin es un pasaporte digital de peregrinación católica. Te ayuda a descubrir santuarios, registrar tus visitas, completar países y guardar la memoria de tu camino con rutas, logros y certificados.', pageTitle:'Peregrin — Tu pasaporte peregrino', pilgrimFallback:'Peregrino', premiumBadge:'PREMIUM', betaTesterBadge:'BETA TESTER', testerPremiumOn:'Premium activado para pruebas locales', testerPremiumOff:'Premium desactivado para pruebas locales', commentsTitle:'Comentarios de peregrinos', commentsPlaceholder:'Comparte un consejo, una nota práctica o una impresión breve para otros peregrinos...', commentsHint:'Visible para otros testers autenticados en esta beta.', commentsSubmit:'Publicar comentario', commentsLoading:'Cargando comentarios...', commentsEmpty:'Todavía no hay comentarios. Sé el primero en dejar uno.', commentsUnavailable:'Los comentarios no están disponibles ahora mismo.', commentsPosted:'Comentario publicado', commentsTooShort:'Escribe al menos 3 caracteres.', commentsSignIn:'Inicia sesión para dejar comentarios.', commentsNoLinks:'Por ahora no se permiten enlaces en los comentarios.', commentsReport:'Reportar', commentsReported:'Comentario reportado. Gracias.', commentsSlowDown:(seconds)=>`Espera ${seconds}s antes de volver a comentar.`, createdBy:'Creado con fe por', feedbackMsg:'Sugerencias y comentarios siempre bienvenidos',
+    navWorld:'Mundo',editName:'Editar mi nombre', editNamePrompt:'Introduce tu nombre de peregrino:', viewIntro:'Volver a ver la introducción', mapHelpCta:'Peregrin', aboutTitle:'¿Qué es Peregrin?', aboutBody:'Peregrin es un pasaporte digital de peregrinación católica. Te ayuda a descubrir santuarios, registrar tus visitas, completar países y guardar la memoria de tu camino con rutas, logros y certificados.', pageTitle:'Peregrin — Tu pasaporte peregrino', pilgrimFallback:'Peregrino', premiumBadge:'PREMIUM', betaTesterBadge:'BETA TESTER', testerPremiumOn:'Premium activado para pruebas locales', testerPremiumOff:'Premium desactivado para pruebas locales', mapFilterCountry:'Mostrando solo este país', mapFilterRoute:'Mostrando solo esta ruta', mapFilterShowAll:'Ver todo', routeTapHint:'Toca para verla en el mapa', routeFirstStop:'Primera parada', commentsTitle:'Comentarios de peregrinos', commentsPlaceholder:'Comparte un consejo, una nota práctica o una impresión breve para otros peregrinos...', commentsHint:'Visible para otros testers autenticados en esta beta.', commentsSubmit:'Publicar comentario', commentsLoading:'Cargando comentarios...', commentsEmpty:'Todavía no hay comentarios. Sé el primero en dejar uno.', commentsUnavailable:'Los comentarios no están disponibles ahora mismo.', commentsPosted:'Comentario publicado', commentsTooShort:'Escribe al menos 3 caracteres.', commentsSignIn:'Inicia sesión para dejar comentarios.', commentsNoLinks:'Por ahora no se permiten enlaces en los comentarios.', commentsReport:'Reportar', commentsReported:'Comentario reportado. Gracias.', commentsSlowDown:(seconds)=>`Espera ${seconds}s antes de volver a comentar.`, createdBy:'Creado con fe por', feedbackMsg:'Sugerencias y comentarios siempre bienvenidos',
   },
   fr: {
     appSubtitle:'Votre passeport de pèlerin', navMap:'Carte', navCountries:'Pays',
@@ -624,7 +637,7 @@ const i18n = {
     onbPurposeTitle:'Qu’est-ce que Peregrin ?', onbPurposeBody:'Peregrin est un passeport catholique de pèlerinage qui vous aide à découvrir des sanctuaires, marquer les lieux saints déjà visités, suivre des routes sacrées et garder une mémoire ordonnée de votre chemin. Il est pensé pour accompagner votre vie réelle de pèlerin avec des visites, des étapes, des réalisations et des certificats par pays recueillis au fil du temps.',
     onbStatSanctuaries:'Sanctuaires', onbStatCountries:'Pays', onbStatContinents:'Continents',
     onbCta:'Commencer mon pèlerinage ✦',
-    navWorld:'Monde',editName:'Modifier mon nom', editNamePrompt:'Entrez votre nom de pèlerin :', viewIntro:'Revoir l’introduction', mapHelpCta:'Peregrin', aboutTitle:'Qu’est-ce que Peregrin ?', aboutBody:'Peregrin est un passeport numérique de pèlerinage catholique. Il vous aide à découvrir des sanctuaires, enregistrer vos visites, compléter des pays et garder la mémoire de votre chemin avec des itinéraires, réalisations et certificats.', pageTitle:'Peregrin — Votre passeport de pèlerin', pilgrimFallback:'Pèlerin', premiumBadge:'PREMIUM', betaTesterBadge:'BÊTA TESTEUR', testerPremiumOn:'Premium activé pour les tests locaux', testerPremiumOff:'Premium désactivé pour les tests locaux', commentsTitle:'Commentaires des pèlerins', commentsPlaceholder:'Partagez un conseil, une note pratique ou une brève impression pour les autres pèlerins...', commentsHint:'Visible aux autres testeurs connectés dans cette bêta.', commentsSubmit:'Publier', commentsLoading:'Chargement des commentaires...', commentsEmpty:'Aucun commentaire pour le moment. Soyez le premier à en laisser un.', commentsUnavailable:'Les commentaires ne sont pas disponibles pour le moment.', commentsPosted:'Commentaire publié', commentsTooShort:'Écrivez au moins 3 caractères.', commentsSignIn:'Connectez-vous pour laisser un commentaire.', commentsNoLinks:'Les liens ne sont pas autorisés dans les commentaires pour le moment.', commentsReport:'Signaler', commentsReported:'Commentaire signalé. Merci.', commentsSlowDown:(seconds)=>`Attendez ${seconds}s avant de publier à nouveau.`, createdBy:'Créé avec foi par', feedbackMsg:'Suggestions et commentaires toujours bienvenus',
+    navWorld:'Monde',editName:'Modifier mon nom', editNamePrompt:'Entrez votre nom de pèlerin :', viewIntro:'Revoir l’introduction', mapHelpCta:'Peregrin', aboutTitle:'Qu’est-ce que Peregrin ?', aboutBody:'Peregrin est un passeport numérique de pèlerinage catholique. Il vous aide à découvrir des sanctuaires, enregistrer vos visites, compléter des pays et garder la mémoire de votre chemin avec des itinéraires, réalisations et certificats.', pageTitle:'Peregrin — Votre passeport de pèlerin', pilgrimFallback:'Pèlerin', premiumBadge:'PREMIUM', betaTesterBadge:'BÊTA TESTEUR', testerPremiumOn:'Premium activé pour les tests locaux', testerPremiumOff:'Premium désactivé pour les tests locaux', mapFilterCountry:'Affichage de ce pays uniquement', mapFilterRoute:'Affichage de cet itinéraire uniquement', mapFilterShowAll:'Tout afficher', routeTapHint:'Touchez pour voir cet itinéraire sur la carte', routeFirstStop:'Première étape', commentsTitle:'Commentaires des pèlerins', commentsPlaceholder:'Partagez un conseil, une note pratique ou une brève impression pour les autres pèlerins...', commentsHint:'Visible aux autres testeurs connectés dans cette bêta.', commentsSubmit:'Publier', commentsLoading:'Chargement des commentaires...', commentsEmpty:'Aucun commentaire pour le moment. Soyez le premier à en laisser un.', commentsUnavailable:'Les commentaires ne sont pas disponibles pour le moment.', commentsPosted:'Commentaire publié', commentsTooShort:'Écrivez au moins 3 caractères.', commentsSignIn:'Connectez-vous pour laisser un commentaire.', commentsNoLinks:'Les liens ne sont pas autorisés dans les commentaires pour le moment.', commentsReport:'Signaler', commentsReported:'Commentaire signalé. Merci.', commentsSlowDown:(seconds)=>`Attendez ${seconds}s avant de publier à nouveau.`, createdBy:'Créé avec foi par', feedbackMsg:'Suggestions et commentaires toujours bienvenus',
   },
   it: {
     appSubtitle:'Il tuo passaporto del pellegrino', navMap:'Mappa', navCountries:'Paesi',
@@ -684,7 +697,7 @@ const i18n = {
     onbPurposeTitle:'Che cos’è Peregrin?', onbPurposeBody:'Peregrin è un passaporto cattolico di pellegrinaggio che ti aiuta a scoprire santuari, segnare i luoghi santi che hai visitato, seguire itinerari sacri e custodire una memoria ordinata del tuo cammino. È pensato per accompagnare la tua vita reale di pellegrino con visite, tappe, traguardi e certificati per paese raccolti nel tempo.',
     onbStatSanctuaries:'Santuari', onbStatCountries:'Paesi', onbStatContinents:'Continenti',
     onbCta:'Iniziare il mio pellegrinaggio ✦',
-    navWorld:'Mondo',editName:'Modifica il mio nome', editNamePrompt:'Inserisci il tuo nome di pellegrino:', viewIntro:'Rivedi l’introduzione', mapHelpCta:'Peregrin', aboutTitle:'Che cos’è Peregrin?', aboutBody:'Peregrin è un passaporto digitale di pellegrinaggio cattolico. Ti aiuta a scoprire santuari, registrare le visite, completare paesi e custodire il ricordo del tuo cammino con itinerari, traguardi e certificati.', pageTitle:'Peregrin — Il tuo passaporto del pellegrino', pilgrimFallback:'Pellegrino', premiumBadge:'PREMIUM', betaTesterBadge:'BETA TESTER', testerPremiumOn:'Premium attivato per i test locali', testerPremiumOff:'Premium disattivato per i test locali', commentsTitle:'Commenti dei pellegrini', commentsPlaceholder:'Condividi un consiglio, una nota pratica o una breve impressione per altri pellegrini...', commentsHint:'Visibile agli altri tester autenticati in questa beta.', commentsSubmit:'Pubblica', commentsLoading:'Caricamento commenti...', commentsEmpty:'Ancora nessun commento. Sii il primo a lasciarne uno.', commentsUnavailable:'I commenti non sono disponibili in questo momento.', commentsPosted:'Commento pubblicato', commentsTooShort:'Scrivi almeno 3 caratteri.', commentsSignIn:'Accedi per lasciare commenti.', commentsNoLinks:'Per ora i link non sono consentiti nei commenti.', commentsReport:'Segnala', commentsReported:'Commento segnalato. Grazie.', commentsSlowDown:(seconds)=>`Attendi ${seconds}s prima di pubblicare di nuovo.`, createdBy:'Creato con fede da', feedbackMsg:'Suggerimenti e commenti sempre benvenuti',
+    navWorld:'Mondo',editName:'Modifica il mio nome', editNamePrompt:'Inserisci il tuo nome di pellegrino:', viewIntro:'Rivedi l’introduzione', mapHelpCta:'Peregrin', aboutTitle:'Che cos’è Peregrin?', aboutBody:'Peregrin è un passaporto digitale di pellegrinaggio cattolico. Ti aiuta a scoprire santuari, registrare le visite, completare paesi e custodire il ricordo del tuo cammino con itinerari, traguardi e certificati.', pageTitle:'Peregrin — Il tuo passaporto del pellegrino', pilgrimFallback:'Pellegrino', premiumBadge:'PREMIUM', betaTesterBadge:'BETA TESTER', testerPremiumOn:'Premium attivato per i test locali', testerPremiumOff:'Premium disattivato per i test locali', mapFilterCountry:'Mostra solo questo paese', mapFilterRoute:'Mostra solo questo itinerario', mapFilterShowAll:'Mostra tutto', routeTapHint:'Tocca per vedere l’itinerario sulla mappa', routeFirstStop:'Prima tappa', commentsTitle:'Commenti dei pellegrini', commentsPlaceholder:'Condividi un consiglio, una nota pratica o una breve impressione per altri pellegrini...', commentsHint:'Visibile agli altri tester autenticati in questa beta.', commentsSubmit:'Pubblica', commentsLoading:'Caricamento commenti...', commentsEmpty:'Ancora nessun commento. Sii il primo a lasciarne uno.', commentsUnavailable:'I commenti non sono disponibili in questo momento.', commentsPosted:'Commento pubblicato', commentsTooShort:'Scrivi almeno 3 caratteri.', commentsSignIn:'Accedi per lasciare commenti.', commentsNoLinks:'Per ora i link non sono consentiti nei commenti.', commentsReport:'Segnala', commentsReported:'Commento segnalato. Grazie.', commentsSlowDown:(seconds)=>`Attendi ${seconds}s prima di pubblicare di nuovo.`, createdBy:'Creato con fede da', feedbackMsg:'Suggerimenti e commenti sempre benvenuti',
   },
   pt: {
     appSubtitle:'O seu passaporte de peregrino', navMap:'Mapa', navCountries:'Países',
@@ -744,7 +757,7 @@ const i18n = {
     onbPurposeTitle:'O que é o Peregrin?', onbPurposeBody:'O Peregrin é um passaporte católico de peregrinação que o ajuda a descobrir santuários, marcar os lugares santos que já visitou, seguir rotas sagradas e guardar uma memória organizada do seu caminho. Foi pensado para acompanhar a sua vida real de peregrino com visitas, etapas, conquistas e certificados por país reunidos ao longo do tempo.',
     onbStatSanctuaries:'Santuários', onbStatCountries:'Países', onbStatContinents:'Continentes',
     onbCta:'Começar a minha peregrinação ✦',
-    navWorld:'Mundo',editName:'Editar o meu nome', editNamePrompt:'Introduza o seu nome de peregrino:', viewIntro:'Voltar a ver a introdução', mapHelpCta:'Peregrin', aboutTitle:'O que é o Peregrin?', aboutBody:'Peregrin é um passaporte digital de peregrinação católica. Ajuda-o a descobrir santuários, registar as suas visitas, completar países e guardar a memória do seu caminho com rotas, conquistas e certificados.', pageTitle:'Peregrin — O seu passaporte de peregrino', pilgrimFallback:'Peregrino', premiumBadge:'PREMIUM', betaTesterBadge:'BETA TESTER', testerPremiumOn:'Premium ativado para testes locais', testerPremiumOff:'Premium desativado para testes locais', commentsTitle:'Comentários de peregrinos', commentsPlaceholder:'Partilhe uma dica, uma nota prática ou uma impressão breve para outros peregrinos...', commentsHint:'Visível para outros testers autenticados nesta beta.', commentsSubmit:'Publicar comentário', commentsLoading:'A carregar comentários...', commentsEmpty:'Ainda não há comentários. Seja o primeiro a deixar um.', commentsUnavailable:'Os comentários não estão disponíveis neste momento.', commentsPosted:'Comentário publicado', commentsTooShort:'Escreva pelo menos 3 caracteres.', commentsSignIn:'Inicie sessão para deixar comentários.', commentsNoLinks:'Por agora não são permitidos links nos comentários.', commentsReport:'Reportar', commentsReported:'Comentário reportado. Obrigado.', commentsSlowDown:(seconds)=>`Espere ${seconds}s antes de voltar a comentar.`, createdBy:'Criado com fé por', feedbackMsg:'Sugestões e comentários sempre bem-vindos',
+    navWorld:'Mundo',editName:'Editar o meu nome', editNamePrompt:'Introduza o seu nome de peregrino:', viewIntro:'Voltar a ver a introdução', mapHelpCta:'Peregrin', aboutTitle:'O que é o Peregrin?', aboutBody:'Peregrin é um passaporte digital de peregrinação católica. Ajuda-o a descobrir santuários, registar as suas visitas, completar países e guardar a memória do seu caminho com rotas, conquistas e certificados.', pageTitle:'Peregrin — O seu passaporte de peregrino', pilgrimFallback:'Peregrino', premiumBadge:'PREMIUM', betaTesterBadge:'BETA TESTER', testerPremiumOn:'Premium ativado para testes locais', testerPremiumOff:'Premium desativado para testes locais', mapFilterCountry:'A mostrar apenas este país', mapFilterRoute:'A mostrar apenas esta rota', mapFilterShowAll:'Ver tudo', routeTapHint:'Toque para ver esta rota no mapa', routeFirstStop:'Primeira paragem', commentsTitle:'Comentários de peregrinos', commentsPlaceholder:'Partilhe uma dica, uma nota prática ou uma impressão breve para outros peregrinos...', commentsHint:'Visível para outros testers autenticados nesta beta.', commentsSubmit:'Publicar comentário', commentsLoading:'A carregar comentários...', commentsEmpty:'Ainda não há comentários. Seja o primeiro a deixar um.', commentsUnavailable:'Os comentários não estão disponíveis neste momento.', commentsPosted:'Comentário publicado', commentsTooShort:'Escreva pelo menos 3 caracteres.', commentsSignIn:'Inicie sessão para deixar comentários.', commentsNoLinks:'Por agora não são permitidos links nos comentários.', commentsReport:'Reportar', commentsReported:'Comentário reportado. Obrigado.', commentsSlowDown:(seconds)=>`Espere ${seconds}s antes de voltar a comentar.`, createdBy:'Criado com fé por', feedbackMsg:'Sugestões e comentários sempre bem-vindos',
   }
 };
 if(window.PEREGRIN_PREMIUM_I18N){
@@ -1023,6 +1036,8 @@ function applyLang(){
     headerCountry.setAttribute('aria-label', t('navWorld'));
     headerCountry.setAttribute('title', t('navWorld'));
   }
+  const filterClear = document.getElementById('map-route-clear');
+  if(filterClear) filterClear.textContent = t('mapFilterShowAll');
   document.querySelectorAll('[data-nav]').forEach(el=>{
     el.textContent = t(el.dataset.nav);
   });
@@ -1426,6 +1441,35 @@ document.addEventListener('visibilitychange', ()=>{
 });
 
 // ===================== MAP =====================
+function getSanctuarySymbolKey(s){
+  const d = sd(s);
+  const text = `${s.icon || ''} ${s.name || ''} ${s.type || ''} ${d.name || ''} ${d.type || ''}`.toLowerCase();
+  if(text.includes('blood') || text.includes('sangre') || text.includes('sang') || text.includes('sangue')) return 'drop';
+  if(text.includes('mount') || text.includes('monte') || text.includes('mont') || text.includes('góra') || text.includes('hill')) return 'mountain';
+  if(text.includes('candle') || text.includes('vela') || text.includes('lourdes') || text.includes('fátima') || text.includes('fatima')) return 'flame';
+  if(text.includes('marian') || text.includes('mary') || text.includes('virgin') || text.includes('our lady') || text.includes('señora') || text.includes('vierge') || text.includes('madonna') || text.includes('senhora')) return 'star';
+  if(text.includes('cathedral') || text.includes('catedral') || text.includes('cathédrale') || text.includes('cattedrale')) return 'cathedral';
+  if(text.includes('monastery') || text.includes('monasterio') || text.includes('monastère') || text.includes('mosteiro')) return 'arch';
+  if(text.includes('christ') || text.includes('cristo') || text.includes('cruz') || text.includes('cross')) return 'cross';
+  return 'church';
+}
+
+function sanctuarySymbolSvg(s, className='marker-symbol'){
+  const key = getSanctuarySymbolKey(s);
+  const common = `class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"`;
+  const paths = {
+    church:`<path d="M4 20h16"/><path d="M6 20V9.5L12 5l6 4.5V20"/><path d="M12 5V2.8"/><path d="M10.5 3.8h3"/><path d="M9.4 20v-5.2a2.6 2.6 0 0 1 5.2 0V20"/><path d="M8.5 11.2h7"/>`,
+    cathedral:`<path d="M4 20h16"/><path d="M5.5 20V9l3.2-3 3.3 3v11"/><path d="M12 20V7.5L15.5 4 19 7.5V20"/><path d="M8.7 6V3.2"/><path d="M7.4 4.4H10"/><path d="M15.5 4V2.5"/><path d="M14.3 3.3h2.4"/><path d="M8.6 20v-4.5a1.8 1.8 0 0 1 3.6 0V20"/><path d="M15 20v-5a1.7 1.7 0 0 1 3.4 0v5"/>`,
+    cross:`<path d="M12 3v18"/><path d="M7 8h10"/><path d="M5 21h14"/>`,
+    star:`<path d="M12 3.2l1.5 5 4.8-1.9-2.2 4.7 4.4 2.7-5.1 1.1.7 5.1-4.1-3.2-4.1 3.2.7-5.1-5.1-1.1L7.9 11 5.7 6.3l4.8 1.9L12 3.2z"/>`,
+    flame:`<path d="M12.2 21c3.5 0 5.8-2.4 5.8-5.7 0-3.5-2.4-5.5-4-7.4-.8 2.1-2.5 3-4.1 4.4-1.3 1.1-2.1 2.4-2.1 4.1 0 2.7 1.9 4.6 4.4 4.6z"/><path d="M12 18.2c1.2 0 2-.8 2-2 0-1.1-.7-1.8-1.3-2.5-.4.8-1.2 1.3-1.8 1.9-.5.5-.8 1-.8 1.6 0 .6.6 1 1.9 1z"/>`,
+    mountain:`<path d="M3.5 20h17"/><path d="M5 18l5.2-9 3.1 5 1.6-2.4L20 18"/><path d="M9.4 10.3l1.6 1.1 1.1-1.8"/>`,
+    drop:`<path d="M12 3.5s5.5 6.2 5.5 10.6a5.5 5.5 0 0 1-11 0C6.5 9.7 12 3.5 12 3.5z"/><path d="M9.7 15.2c.4 1.2 1.2 1.8 2.4 1.8"/>`,
+    arch:`<path d="M4 20h16"/><path d="M6 20V8l6-4 6 4v12"/><path d="M9 20v-6a3 3 0 0 1 6 0v6"/><path d="M8 10h8"/><path d="M12 4v4"/>`
+  };
+  return `<svg ${common}>${paths[key] || paths.church}</svg>`;
+}
+
 function createMarkerIcon(s,visited,highlight){
   const locked=!isCountryUnlocked(s.country);
   let cls='custom-marker';
@@ -1433,7 +1477,7 @@ function createMarkerIcon(s,visited,highlight){
   else if(locked) cls+=' locked-marker';
   if(highlight) cls+=' route-highlight-marker';
   const badge=visited?'<span class="visited-check">✓</span>':locked?'<span class="lock-badge">🔒</span>':'';
-  return L.divIcon({className:'',html:`<div class="${cls}">${s.icon}${badge}</div>`,
+  return L.divIcon({className:'',html:`<div class="${cls}">${sanctuarySymbolSvg(s)}${badge}</div>`,
     iconSize:visited?[42,42]:[32,32],iconAnchor:visited?[21,21]:[16,16],popupAnchor:[0,visited?-24:-18]});
 }
 
@@ -1505,11 +1549,24 @@ function fitMapToSanctuaries(list){
   }, 80);
 }
 
-function showMapFilterBanner(label){
+function showMapFilterBanner(label, subtitle){
   const banner=document.getElementById('map-route-banner');
   const name=document.getElementById('map-route-name');
+  const sub=document.getElementById('map-route-subtitle');
+  const clear=document.getElementById('map-route-clear');
   if(name) name.textContent=label;
+  if(sub) sub.textContent=subtitle || '';
+  if(clear) clear.textContent=t('mapFilterShowAll');
   if(banner) banner.style.display='flex';
+}
+
+function openSanctuaryPopupAfterFocus(sanctuaryId){
+  if(!sanctuaryId || !map || !markers[sanctuaryId]) return;
+  setTimeout(()=>{
+    if(map && markers[sanctuaryId] && map.hasLayer(markers[sanctuaryId])){
+      markers[sanctuaryId].openPopup();
+    }
+  }, 560);
 }
 
 function getRouteGuide(routeId){
@@ -1529,6 +1586,17 @@ function getRouteMetaParts(route, routeData, visitedCount){
   if(routeData.days && !isVariableRouteValue(routeData.days)) parts.push(routeData.days);
   parts.push(`${visitedCount}/${route.stops.length} ${t('routeVisited')}`);
   return parts;
+}
+
+function achievementSymbolSvg(a){
+  const common = `class="achievement-symbol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"`;
+  if(a.special){
+    return `<svg ${common}><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.2 2.3 3.2 5.1 3.2 8.5s-1 6.2-3.2 8.5"/><path d="M12 3.5C9.8 5.8 8.8 8.6 8.8 12s1 6.2 3.2 8.5"/></svg>`;
+  }
+  if(a.ids){
+    return `<svg ${common}><path d="M4 18l4-4 4 4 4-4 4 4"/><path d="M4 8l4 4 4-4 4 4 4-4"/><circle cx="4" cy="18" r="1.3"/><circle cx="20" cy="8" r="1.3"/></svg>`;
+  }
+  return `<svg ${common}><path d="M12 3v14"/><path d="M8 7h8"/><path d="M6 21h12"/><path d="M8 17h8"/></svg>`;
 }
 
 function openRouteGuide(routeId, event){
@@ -1582,9 +1650,10 @@ function showRouteOnMap(idx){
   activeCountryFilter=null;
   switchScreen('map');
   updateMarkerStyles();
-  showMapFilterBanner('🛣️ '+(r[currentLang]||r.en).name);
+  showMapFilterBanner('🛣️ '+(r[currentLang]||r.en).name, t('mapFilterRoute'));
   const stops=r.stops.map(id=>sanctuaries.find(s=>s.id===id)).filter(Boolean);
   fitMapToSanctuaries(stops);
+  if(stops[0]) openSanctuaryPopupAfterFocus(stops[0].id);
 }
 function clearRouteFilter(){
   activeRouteFilter=null;
@@ -1612,7 +1681,7 @@ function focusCountry(cid){
   switchScreen('map');
   updateMarkerStyles();
   const country = countries.find(c=>c.id===cid);
-  showMapFilterBanner(`${country?.flag||'🌍'} ${country?cn(country):''}`);
+  showMapFilterBanner(`${country?.flag||'🌍'} ${country?cn(country):''}`, t('mapFilterCountry'));
   fitMapToSanctuaries(cs);
 }
 
@@ -1696,7 +1765,7 @@ function openModal(id){
   const canComment = !!window._currentUser?.uid;
   document.getElementById('modal-content').innerHTML=`
     <div class="modal-handle"></div>
-    <div class="modal-hero hero-${s.country}"><span class="modal-hero-flag">${countries.find(x=>x.id===s.country)?.flag||''}</span>${s.icon}<span class="modal-hero-country">${cn(countries.find(x=>x.id===s.country))}</span><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-hero hero-${s.country}"><span class="modal-hero-flag">${countries.find(x=>x.id===s.country)?.flag||''}</span><span class="modal-hero-symbol">${sanctuarySymbolSvg(s,'modal-hero-symbol-svg')}</span><span class="modal-hero-country">${cn(countries.find(x=>x.id===s.country))}</span><button class="modal-close" onclick="closeModal()">✕</button></div>
     <div class="modal-body">
       <div class="modal-type">${d.type}</div>
       <div class="modal-title">${d.name}</div>
@@ -1956,7 +2025,7 @@ function renderPassport(){
       <div class="stamp-grid">
         ${visitedList.map(s=>`
           <div class="stamp-card" onclick="openModal(${s.id})">
-            <div class="stamp-icon">${s.icon}</div>
+            <div class="stamp-icon">${sanctuarySymbolSvg(s,'stamp-symbol')}</div>
             <div class="stamp-name">${sd(s).name}</div>
             <div class="stamp-date">${visits[s.id]}</div>
           </div>`).join('')}
@@ -1981,7 +2050,7 @@ function renderAchievements(){
       else if(a.condition){progress=Math.min(vc/a.total,1);unlocked=a.condition(vc);}
       else if(a.ids){const done=a.ids.filter(id=>isVisited(id)).length;progress=done/a.total;unlocked=done>=a.total;}
       return `<div class="achievement-card ${unlocked?'unlocked':'locked'}">
-        <div class="achievement-icon">${a.icon}</div>
+        <div class="achievement-icon">${achievementSymbolSvg(a)}</div>
         <div class="achievement-info">
           <div class="achievement-name">${(a[currentLang]||a.en).name}</div>
           <div class="achievement-desc">${(a[currentLang]||a.en).desc}</div>
@@ -2007,7 +2076,9 @@ function renderRoutes(){
           <div class="route-name">${rd.name}</div>
           <div class="route-meta">${getRouteMetaParts(r, rd, vc).join(' · ')}</div>
           <div class="route-desc">${rd.desc}</div>
+          ${stops[0]?`<div class="route-first-stop"><span>${t('routeFirstStop')}</span>${sd(stops[0]).city}</div>`:''}
           <div class="route-stops">${stops.map(s=>`<span class="route-stop" style="${isVisited(s.id)?'background:var(--gold-light);color:var(--brown);font-weight:600':''}">${sd(s).city}</span>`).join('')}</div>
+          <div class="route-action-hint">${t('routeTapHint')}</div>
           ${hasGuide?`<button class="route-guide-btn ${guideUnlocked?'':'locked'}" onclick="openRouteGuide('${r.id}', event)">${guideUnlocked?t('routeGuideCta'):t('routeGuideLocked')}</button>`:''}
         </div>
       </div>`;
