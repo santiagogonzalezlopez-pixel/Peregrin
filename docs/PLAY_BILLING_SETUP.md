@@ -12,26 +12,59 @@ Peregrin usa Google Play Billing dentro de la app Android y mantiene Stripe solo
 
 ## Activacion en codigo
 
-Mientras el producto no exista en Play Console, la compra Android queda apagada con esta constante en `index.html`:
-
-```js
-const GOOGLE_PLAY_CHECKOUT_ENABLED = false;
-```
-
-Cuando el producto `peregrin_premium_all` este creado y activo, cambiarla a:
+La compra Android esta activada en `index.html` para produccion:
 
 ```js
 const GOOGLE_PLAY_CHECKOUT_ENABLED = true;
 ```
 
+Antes de enviar el AAB a revision, confirma en Play Console que el producto `peregrin_premium_all` existe, esta activo y tiene precio configurado.
+
 ## Flujo implementado
 
 - Android llama al plugin nativo `PeregrinBilling`.
 - La compra abre la pasarela oficial de Google Play.
-- La app reconoce y guarda el desbloqueo Premium en Firestore.
+- La app envia el purchase token a Firebase Cloud Functions.
+- La funcion `verifyGooglePlayPurchase` valida el token con Google Play Developer API.
+- Si Google confirma la compra, Firebase marca Premium en Firestore desde servidor.
 - El modal Premium incluye restaurar compra si el usuario reinstala o cambia de dispositivo.
 - Web/GitHub Pages sigue usando el enlace de Stripe.
+- El codigo Premium manual sigue disponible como respaldo.
 
-## Nota de seguridad
+## Firebase / Google Play API
 
-La version actual reconoce la compra desde el cliente y guarda el token de Google Play en Firestore. Antes de escalar a muchos usuarios conviene endurecerlo con verificacion servidor a servidor mediante Google Play Developer API o Cloud Functions.
+- Proyecto Firebase: `peregrin-d7611`
+- Funcion: `verifyGooglePlayPurchase`
+- Region: `europe-west1`
+- App Android: `com.peregrin.app`
+- Producto: `peregrin_premium_all`
+
+La funcion usa credenciales de servidor del proyecto Firebase. En Play Console hace falta que la cuenta de servicio de la funcion tenga acceso a la Google Play Developer API para esta app.
+
+Cuenta de servicio probable en Cloud Functions gen 2:
+
+```text
+844223897807-compute@developer.gserviceaccount.com
+```
+
+Si Play Console pide enlazar o autorizar el proyecto, entra en:
+
+```text
+Play Console -> Configuracion -> Acceso a la API
+```
+
+Y concede a esa cuenta de servicio acceso a la app Peregrin con permisos para consultar/gestionar compras o pedidos.
+
+Para desplegar desde este repo, usa solo:
+
+```bash
+firebase deploy --only functions:verifyGooglePlayPurchase,firestore:rules --project peregrin-d7611
+```
+
+No uses `firebase deploy --only functions` desde este repo mientras las funciones de Stripe (`createCheckoutSession`, `stripeWebhook`) no esten tambien en el directorio `functions/`.
+
+## Seguridad
+
+Las reglas de Firestore ya no aceptan desbloqueos de Google Play escritos directamente por el cliente. Solo se mantiene el codigo Premium manual como respaldo controlado con la coleccion `premiumCodes`.
+
+La app no guarda el purchase token completo en `users`; guarda un hash servidor. El token completo solo se usa dentro de la Cloud Function para consultar Google Play.

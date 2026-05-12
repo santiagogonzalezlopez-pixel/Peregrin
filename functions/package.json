@@ -1,0 +1,17 @@
+{
+  "name": "peregrin-functions",
+  "private": true,
+  "main": "index.js",
+  "engines": {
+    "node": "22"
+  },
+  "scripts": {
+    "lint": "node --check index.js",
+    "deploy": "firebase deploy --only functions:verifyGooglePlayPurchase,firestore:rules --project peregrin-d7611"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.9.0",
+    "firebase-functions": "^7.2.5",
+    "googleapis": "^171.4.0"
+  }
+}
