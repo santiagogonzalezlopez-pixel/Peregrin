@@ -1210,7 +1210,7 @@ async function handleEmailAuth(){
       await window._fbSetDoc(cred.user.uid,{displayName:nameVal, lang:currentLang});
     }
   }catch(e){
-    const msgs={'auth/user-not-found':t('authErrNotFound'),'auth/wrong-password':t('authErrWrongPass'),'auth/email-already-in-use':t('authErrInUse'),'auth/weak-password':t('authErrWeak'),'auth/invalid-email':t('authErrInvalidEmail'),'auth/invalid-credential':t('authErrInvalidCred')};
+    const msgs={'auth/user-not-found':t('authErrNotFound'),'auth/wrong-password':t('authErrWrongPass'),'auth/email-already-in-use':t('authErrInUse'),'auth/weak-password':t('authErrWeak'),'auth/invalid-email':t('authErrInvalidEmail'),'auth/invalid-credential':t('authErrInvalidCred'),'auth/invalid-login-credentials':t('authErrInvalidCred')};
     errEl.textContent=msgs[e.code]||t('authErrGeneric');
   }
 }
@@ -2294,7 +2294,7 @@ firebase.initializeApp({
 });
 const _auth = firebase.auth();
 const _db   = firebase.firestore();
-const _functions = firebase.functions('europe-west1');
+const _functions = firebase.app().functions('europe-west1');
 _auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).catch(()=>{});
 
 window._setFirebaseAuthLanguage = (lang) => {
