@@ -24,16 +24,17 @@
   --burgundy:#722F37; --burgundy-dark:#5A1A22; --gold:#C5963A; --gold-light:#E8C97A;
   --cream:#FDF5E6; --cream-dark:#F5E6CC; --brown:#3E2723; --brown-light:#6D4C41;
   --white:#FFFFFF; --shadow:0 2px 16px rgba(62,39,35,0.15); --shadow-lg:0 8px 32px rgba(62,39,35,0.2);
+  --auth-viewport-height:100dvh;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);height:100vh;height:100dvh;overflow:hidden;display:flex;flex-direction:column;}
 
 /* AUTH */
-#auth-screen{position:fixed;inset:0;background:linear-gradient(160deg,var(--burgundy-dark),var(--burgundy));display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;padding:30px;}
+#auth-screen{position:fixed;inset:0;height:var(--auth-viewport-height);min-height:var(--auth-viewport-height);background:linear-gradient(160deg,var(--burgundy-dark),var(--burgundy));display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;padding:calc(24px + env(safe-area-inset-top,0px)) 24px calc(24px + env(safe-area-inset-bottom,0px));overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
 .auth-logo{font-family:'Crimson Pro',serif;font-size:48px;font-weight:700;color:var(--cream);letter-spacing:2px;margin-bottom:4px;}
 .auth-logo span{color:var(--gold-light);}
 .auth-subtitle{font-size:13px;color:rgba(253,245,230,0.7);margin-bottom:40px;letter-spacing:1px;}
-.auth-card{background:var(--white);border-radius:20px;padding:28px 24px;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
+.auth-card{background:var(--white);border-radius:20px;padding:28px 24px;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,0.3);flex:0 0 auto;}
 .auth-tab-row{display:flex;margin-bottom:24px;background:var(--cream);border-radius:10px;padding:4px;gap:4px;}
 .auth-tab{flex:1;padding:8px;border:none;background:none;border-radius:8px;font-family:'Jost',sans-serif;font-size:13px;font-weight:500;cursor:pointer;color:var(--brown-light);transition:all 0.2s;}
 .auth-tab.active{background:var(--white);color:var(--burgundy);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,0.1);}
@@ -51,6 +52,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .auth-password-toggle.is-visible{color:var(--burgundy);}
 .auth-btn-primary{width:100%;padding:13px;background:var(--burgundy);color:var(--cream);border:none;border-radius:10px;font-family:'Jost',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;margin-bottom:10px;}
 .auth-btn-primary:hover{background:var(--burgundy-dark);}
+.auth-btn-primary:disabled{opacity:0.68;cursor:progress;}
 .auth-link{display:block;width:100%;border:none;background:transparent;color:var(--burgundy);font-family:'Jost',sans-serif;font-size:12px;font-weight:600;text-align:center;text-decoration:underline;text-underline-offset:3px;cursor:pointer;margin:-2px 0 12px;padding:2px;}
 .auth-link:hover{color:var(--burgundy-dark);}
 .auth-lang-selector{margin:-8px 0 18px;}
@@ -61,6 +63,15 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 
 .auth-error{font-size:12px;color:#c62828;margin-bottom:8px;text-align:center;min-height:16px;}
 .auth-error.is-success{color:#2E7D32;}
+#auth-screen.keyboard-open{justify-content:flex-start;}
+#auth-screen.keyboard-open .auth-logo{font-size:34px;margin-top:2px;}
+#auth-screen.keyboard-open .auth-subtitle{margin-bottom:14px;}
+#auth-screen.keyboard-open .auth-card{padding:20px;margin-bottom:18px;}
+@media(max-height:620px){
+  .auth-logo{font-size:38px;}
+  .auth-subtitle{margin-bottom:18px;}
+  .auth-card{padding:20px;}
+}
 
 /* PREMIUM MODAL */
 #premium-modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:5000;display:none;align-items:flex-end;justify-content:center;}
@@ -532,7 +543,9 @@ const i18n = {
     authErrNotFound:'User not found.', authErrWrongPass:'Incorrect password.',
     authErrInUse:'This email is already registered.', authErrWeak:'Password must be at least 6 characters.',
     authErrInvalidEmail:'Invalid email.', authErrInvalidCred:'Incorrect email or password.',
-    authErrGeneric:'Sign in error. Please try again.', resetEmailMissing:'Enter your email address first.',
+    authErrNameLong:'Name must be 80 characters or fewer.', authErrNetwork:'No connection to sign-in service. Check your internet and try again.',
+    authErrTooMany:'Too many attempts. Wait a moment and try again.', authErrDisabled:'Email sign-in is not enabled for this app.',
+    authErrRegisterGeneric:'We could not create the account. Please try again.', authErrGeneric:'Sign in error. Please try again.', resetEmailMissing:'Enter your email address first.',
     resetEmailSent:'We sent you an email to reset your password.', resetEmailError:'We could not send the reset email. Check the address and try again.',
     premiumUnavailable:'Premium purchases are temporarily unavailable.',
     premiumUnavailableDetail:'Premium purchases are available in the Android app through Google Play.',
@@ -593,7 +606,9 @@ const i18n = {
     authErrNotFound:'Usuario no encontrado.', authErrWrongPass:'Contraseña incorrecta.',
     authErrInUse:'Este correo ya está registrado.', authErrWeak:'La contraseña debe tener al menos 6 caracteres.',
     authErrInvalidEmail:'Correo electrónico no válido.', authErrInvalidCred:'Correo o contraseña incorrectos.',
-    authErrGeneric:'Error al iniciar sesión. Inténtalo de nuevo.', resetEmailMissing:'Introduce primero tu correo electrónico.',
+    authErrNameLong:'El nombre debe tener 80 caracteres como máximo.', authErrNetwork:'No hay conexión con el servicio de inicio de sesión. Revisa internet e inténtalo de nuevo.',
+    authErrTooMany:'Demasiados intentos. Espera un momento e inténtalo de nuevo.', authErrDisabled:'El inicio de sesión por email no está activado para esta app.',
+    authErrRegisterGeneric:'No hemos podido crear la cuenta. Inténtalo de nuevo.', authErrGeneric:'Error al iniciar sesión. Inténtalo de nuevo.', resetEmailMissing:'Introduce primero tu correo electrónico.',
     resetEmailSent:'Te hemos enviado un email para restablecer la contraseña.', resetEmailError:'No hemos podido enviar el email. Revisa la dirección e inténtalo de nuevo.',
     premiumUnavailable:'Las compras Premium están temporalmente desactivadas.',
     premiumUnavailableDetail:'Las compras Premium están disponibles en la app Android con Google Play.',
@@ -654,7 +669,9 @@ const i18n = {
     authErrNotFound:'Utilisateur introuvable.', authErrWrongPass:'Mot de passe incorrect.',
     authErrInUse:'Cet e-mail est déjà enregistré.', authErrWeak:'Le mot de passe doit contenir au moins 6 caractères.',
     authErrInvalidEmail:'Adresse e-mail invalide.', authErrInvalidCred:'E-mail ou mot de passe incorrect.',
-    authErrGeneric:'Erreur de connexion. Veuillez réessayer.', resetEmailMissing:'Saisissez d abord votre adresse e-mail.',
+    authErrNameLong:'Le nom doit contenir 80 caractères maximum.', authErrNetwork:'Impossible de joindre le service de connexion. Vérifiez internet et réessayez.',
+    authErrTooMany:'Trop de tentatives. Attendez un moment et réessayez.', authErrDisabled:'La connexion par e-mail n’est pas activée pour cette app.',
+    authErrRegisterGeneric:'Nous n’avons pas pu créer le compte. Veuillez réessayer.', authErrGeneric:'Erreur de connexion. Veuillez réessayer.', resetEmailMissing:'Saisissez d abord votre adresse e-mail.',
     resetEmailSent:'Nous vous avons envoyé un e-mail pour réinitialiser votre mot de passe.', resetEmailError:'Impossible d envoyer l e-mail. Vérifiez l adresse et réessayez.',
     premiumUnavailable:'Les achats Premium sont temporairement désactivés.',
     premiumUnavailableDetail:'Les achats Premium sont disponibles dans l’app Android avec Google Play.',
@@ -715,7 +732,9 @@ const i18n = {
     authErrNotFound:'Utente non trovato.', authErrWrongPass:'Password errata.',
     authErrInUse:'Questa e-mail è già registrata.', authErrWeak:'La password deve avere almeno 6 caratteri.',
     authErrInvalidEmail:'Indirizzo e-mail non valido.', authErrInvalidCred:'E-mail o password errati.',
-    authErrGeneric:'Errore di accesso. Riprova.', resetEmailMissing:'Inserisci prima il tuo indirizzo e-mail.',
+    authErrNameLong:'Il nome deve contenere al massimo 80 caratteri.', authErrNetwork:'Nessuna connessione al servizio di accesso. Controlla internet e riprova.',
+    authErrTooMany:'Troppi tentativi. Attendi un momento e riprova.', authErrDisabled:'L’accesso con e-mail non è attivo per questa app.',
+    authErrRegisterGeneric:'Non siamo riusciti a creare l’account. Riprova.', authErrGeneric:'Errore di accesso. Riprova.', resetEmailMissing:'Inserisci prima il tuo indirizzo e-mail.',
     resetEmailSent:'Ti abbiamo inviato un e-mail per reimpostare la password.', resetEmailError:'Non siamo riusciti a inviare l e-mail. Controlla l indirizzo e riprova.',
     premiumUnavailable:'Gli acquisti Premium sono temporaneamente disattivati.',
     premiumUnavailableDetail:'Gli acquisti Premium sono disponibili nell’app Android con Google Play.',
@@ -776,7 +795,9 @@ const i18n = {
     authErrNotFound:'Utilizador não encontrado.', authErrWrongPass:'Palavra-passe incorreta.',
     authErrInUse:'Este e-mail já está registado.', authErrWeak:'A palavra-passe deve ter pelo menos 6 caracteres.',
     authErrInvalidEmail:'Endereço de e-mail inválido.', authErrInvalidCred:'E-mail ou palavra-passe incorretos.',
-    authErrGeneric:'Erro ao entrar. Tente novamente.', resetEmailMissing:'Introduza primeiro o seu endereço de e-mail.',
+    authErrNameLong:'O nome deve ter no máximo 80 caracteres.', authErrNetwork:'Sem ligação ao serviço de entrada. Verifique a internet e tente novamente.',
+    authErrTooMany:'Demasiadas tentativas. Aguarde um momento e tente novamente.', authErrDisabled:'A entrada por e-mail não está ativada para esta app.',
+    authErrRegisterGeneric:'Não foi possível criar a conta. Tente novamente.', authErrGeneric:'Erro ao entrar. Tente novamente.', resetEmailMissing:'Introduza primeiro o seu endereço de e-mail.',
     resetEmailSent:'Enviámos um e-mail para repor a palavra-passe.', resetEmailError:'Não foi possível enviar o e-mail. Verifique o endereço e tente novamente.',
     premiumUnavailable:'As compras Premium estão temporariamente desativadas.',
     premiumUnavailableDetail:'As compras Premium estão disponíveis na app Android com Google Play.',
@@ -1133,6 +1154,7 @@ function applyOnboardingCopy(){
 // ===================== AUTH =====================
 var currentAuthTab='login';
 let authPasswordVisible=false;
+let authRequestInFlight=false;
 const authPasswordEyeIcon = `
   <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6z"></path>
@@ -1145,6 +1167,79 @@ const authPasswordEyeOffIcon = `
     <path d="M6.6 6.6A17.2 17.2 0 0 0 2 12s3.6 7 10 7a10.7 10.7 0 0 0 5.4-1.4"></path>
     <path d="M9.9 9.9A3 3 0 0 0 14.1 14.1"></path>
   </svg>`;
+
+function normalizeAuthEmail(value){
+  return (value||'').trim().toLowerCase();
+}
+
+function setAuthBusy(isBusy){
+  const submit=document.getElementById('auth-submit');
+  if(submit) submit.disabled=!!isBusy;
+}
+
+function syncAuthViewport(){
+  const screen=document.getElementById('auth-screen');
+  if(!screen) return;
+  const vv=window.visualViewport;
+  const viewportHeight=Math.round(vv?.height || window.innerHeight || document.documentElement.clientHeight || 0);
+  if(viewportHeight>0) document.documentElement.style.setProperty('--auth-viewport-height', viewportHeight+'px');
+  const keyboardOpen=!!(vv && window.innerHeight && viewportHeight < window.innerHeight - 90);
+  screen.classList.toggle('keyboard-open', keyboardOpen);
+}
+
+function ensureAuthFieldVisible(target){
+  if(!target || !target.closest || !target.closest('#auth-screen')) return;
+  setTimeout(()=>target.scrollIntoView({block:'center', inline:'nearest', behavior:'smooth'}), 80);
+}
+
+function initAuthKeyboardHandling(){
+  syncAuthViewport();
+  window.addEventListener('resize', syncAuthViewport);
+  window.addEventListener('orientationchange', ()=>setTimeout(syncAuthViewport, 250));
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize', syncAuthViewport);
+    window.visualViewport.addEventListener('scroll', syncAuthViewport);
+  }
+  const form=document.getElementById('auth-form');
+  if(form){
+    form.addEventListener('focusin', e => {
+      if(e.target && e.target.matches && e.target.matches('input')) ensureAuthFieldVisible(e.target);
+    });
+  }
+}
+
+function getAuthErrorMessage(error){
+  const code=error?.code || '';
+  const message=String(error?.message || '').toLowerCase();
+  const messages={
+    'auth/user-not-found':t('authErrNotFound'),
+    'auth/wrong-password':t('authErrWrongPass'),
+    'auth/email-already-in-use':t('authErrInUse'),
+    'auth/weak-password':t('authErrWeak'),
+    'auth/invalid-email':t('authErrInvalidEmail'),
+    'auth/invalid-credential':t('authErrInvalidCred'),
+    'auth/invalid-login-credentials':t('authErrInvalidCred'),
+    'auth/too-many-requests':t('authErrTooMany'),
+    'auth/operation-not-allowed':t('authErrDisabled')
+  };
+  if(messages[code]) return messages[code];
+  if(code.includes('network') || message.includes('network')) return t('authErrNetwork');
+  return currentAuthTab==='register' ? t('authErrRegisterGeneric') : t('authErrGeneric');
+}
+
+async function saveNewUserProfile(user, nameVal){
+  if(!user) return;
+  try{
+    await user.updateProfile({displayName:nameVal});
+  }catch(e){
+    console.error('auth profile update failed:', e);
+  }
+  try{
+    await window._fbSetDoc(user.uid,{displayName:nameVal, lang:currentLang});
+  }catch(e){
+    console.error('user profile document save failed:', e);
+  }
+}
 
 function restoreRememberedEmail(){
   try{
@@ -1193,7 +1288,8 @@ function switchAuthTab(tab){
   applyLang();
 }
 async function handleEmailAuth(){
-  const email=document.getElementById('auth-email').value.trim();
+  if(authRequestInFlight) return;
+  const email=normalizeAuthEmail(document.getElementById('auth-email').value);
   const pass=document.getElementById('auth-password').value;
   const nameVal=document.getElementById('auth-name').value.trim();
   const errEl=document.getElementById('auth-error');
@@ -1201,22 +1297,27 @@ async function handleEmailAuth(){
   errEl.classList.remove('is-success');
   if(!email||!pass){errEl.textContent=t('authErrFields');return;}
   if(currentAuthTab==='register'&&!nameVal){errEl.textContent=t('authErrName');return;}
+  if(currentAuthTab==='register'&&nameVal.length>80){errEl.textContent=t('authErrNameLong');return;}
+  authRequestInFlight=true;
+  setAuthBusy(true);
   try{
     rememberEmail(email);
     if(currentAuthTab==='login') await window._fbSignInEmail(email,pass);
     else {
       const cred=await window._fbCreateUser(email,pass);
-      await cred.user.updateProfile({displayName:nameVal});
-      await window._fbSetDoc(cred.user.uid,{displayName:nameVal, lang:currentLang});
+      await saveNewUserProfile(cred.user,nameVal);
     }
   }catch(e){
-    const msgs={'auth/user-not-found':t('authErrNotFound'),'auth/wrong-password':t('authErrWrongPass'),'auth/email-already-in-use':t('authErrInUse'),'auth/weak-password':t('authErrWeak'),'auth/invalid-email':t('authErrInvalidEmail'),'auth/invalid-credential':t('authErrInvalidCred'),'auth/invalid-login-credentials':t('authErrInvalidCred')};
-    errEl.textContent=msgs[e.code]||t('authErrGeneric');
+    console.error('email auth failed:', e);
+    errEl.textContent=getAuthErrorMessage(e);
+  }finally{
+    authRequestInFlight=false;
+    setAuthBusy(false);
   }
 }
 
 async function handlePasswordReset(){
-  const email=document.getElementById('auth-email').value.trim();
+  const email=normalizeAuthEmail(document.getElementById('auth-email').value);
   const errEl=document.getElementById('auth-error');
   errEl.textContent='';
   errEl.classList.remove('is-success');
@@ -2282,6 +2383,7 @@ if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch
 // Map initialises after login to avoid Leaflet rendering on hidden div
 applyLang();
 restoreRememberedEmail();
+initAuthKeyboardHandling();
 
 // ===================== FIREBASE INIT =====================
 firebase.initializeApp({
@@ -2295,21 +2397,33 @@ firebase.initializeApp({
 const _auth = firebase.auth();
 const _db   = firebase.firestore();
 const _functions = firebase.app().functions('europe-west1');
-_auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).catch(()=>{});
+const _authReady = _auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(error => {
+  console.error('auth persistence failed, falling back to session:', error);
+  return _auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).catch(e => {
+    console.error('auth session persistence failed:', e);
+  });
+});
+
+function waitForAuthReady(){
+  return _authReady.catch(()=>{});
+}
 
 window._setFirebaseAuthLanguage = (lang) => {
   _auth.languageCode = isSupportedLang(lang) ? lang : 'en';
 };
 window._setFirebaseAuthLanguage(currentLang || 'en');
-window._fbSignInEmail  = (e,p) => {
+window._fbSignInEmail  = async (e,p) => {
+  await waitForAuthReady();
   window._setFirebaseAuthLanguage(currentLang || 'en');
   return _auth.signInWithEmailAndPassword(e,p);
 };
-window._fbCreateUser   = (e,p) => {
+window._fbCreateUser   = async (e,p) => {
+  await waitForAuthReady();
   window._setFirebaseAuthLanguage(currentLang || 'en');
   return _auth.createUserWithEmailAndPassword(e,p);
 };
-window._fbSendPasswordResetEmail = (e) => {
+window._fbSendPasswordResetEmail = async (e) => {
+  await waitForAuthReady();
   window._setFirebaseAuthLanguage(currentLang || 'en');
   return _auth.sendPasswordResetEmail(e);
 };
@@ -2323,7 +2437,8 @@ window._fbListSanctuaryComments = (sanctuaryId, limitCount=12) => _db.collection
 window._fbAddSanctuaryComment = (sanctuaryId, data) => _db.collection('sanctuaries').doc(String(sanctuaryId)).collection('comments').add(data);
 window._fbReportSanctuaryComment = (sanctuaryId, commentId, data) => _db.collection('sanctuaries').doc(String(sanctuaryId)).collection('comments').doc(String(commentId)).collection('reports').doc(String(data.reporterUid)).set(data, {merge:true});
 
-_auth.getRedirectResult().catch(()=>{});
+function startAuthStateListener(){
+_auth.getRedirectResult().catch(e=>console.error('auth redirect result failed:', e));
 _auth.onAuthStateChanged(async user=>{
   const urlParams = new URLSearchParams(window.location.search);
   const paymentSuccess = urlParams.get('payment') === 'success';
@@ -2360,6 +2475,8 @@ _auth.onAuthStateChanged(async user=>{
     document.getElementById('app-wrapper').style.display='none';
   }
 });
+}
+_authReady.then(startAuthStateListener).catch(startAuthStateListener);
 </script>
 <script src="certificates.js"></script>
 </body>
