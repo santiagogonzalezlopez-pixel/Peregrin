@@ -158,6 +158,7 @@
       .certificate-preview-img{display:block;width:100%;height:auto;border-radius:14px;box-shadow:0 10px 28px rgba(62,39,35,.18);background:#fdf5e6;}
       .certificate-preview-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px;background:#fffaf0;}
       .certificate-preview-actions button{border:none;border-radius:12px;padding:13px 12px;font-family:'Jost',sans-serif;font-size:14px;font-weight:800;cursor:pointer;}
+      .certificate-preview-actions button:disabled{opacity:.58;cursor:wait;}
       .certificate-preview-share{background:linear-gradient(135deg,#c5963a,#e8c97a);color:#3e2723;}
       .certificate-preview-download,.certificate-preview-close{background:#f2e6d2;color:#722f37;}
       .certificate-preview-close{grid-column:1 / -1;}
@@ -220,19 +221,9 @@
             });
             showToast(t("certReady"));
             return;
-          }catch(primaryShareError){
-            try{
-              await Share.share({
-                title: t("certTitle"),
-                text: `${t("certTitle")} - ${fileName}`,
-                url: nativeFile.uri,
-                dialogTitle: t("certShareBtn")
-              });
-              showToast(t("certReady"));
-              return;
-            }catch(fallbackShareError){
-              console.warn("native certificate image share failed:", fallbackShareError || primaryShareError);
-            }
+          }catch(shareError){
+            console.warn("native certificate image share cancelled or failed:", shareError);
+            return;
           }
         }
       }
@@ -252,12 +243,32 @@
           return;
         }
       }catch(e){
-        console.warn("web certificate image share failed:", e);
+        console.warn("web certificate image share cancelled or failed:", e);
+        return;
       }
     }
 
     downloadCertificateImage(dataUrl, fileName);
     showToast(t("certDownloaded"));
+  }
+
+  async function downloadCertificateImageForUser(dataUrl, fileName, nativeFile){
+    if(nativeFile?.ok){
+      showToast(t("certSaved"));
+      return nativeFile;
+    }
+    try{
+      const nativeResult = await saveCertificateImageNative(dataUrl, fileName);
+      if(nativeResult?.ok){
+        showToast(t("certSaved"));
+        return nativeResult;
+      }
+    }catch(e){
+      console.warn("native certificate image download failed:", e);
+    }
+    downloadCertificateImage(dataUrl, fileName);
+    showToast(t("certDownloaded"));
+    return null;
   }
 
   function showCertificatePreview(dataUrl, fileName, nativeFile){
@@ -293,12 +304,38 @@
       document.removeEventListener("keydown", onKeydown);
       overlay.remove();
     };
-    overlay.querySelector(".certificate-preview-share").addEventListener("click", () => {
-      shareCertificateImage(dataUrl, fileName, nativeFile);
+    let savedNativeFile = nativeFile || null;
+    let actionInProgress = false;
+    const shareButton = overlay.querySelector(".certificate-preview-share");
+    const downloadButton = overlay.querySelector(".certificate-preview-download");
+    const setButtonsBusy = (busy) => {
+      shareButton.disabled = busy;
+      downloadButton.disabled = busy;
+    };
+    shareButton.addEventListener("click", async () => {
+      if(actionInProgress) return;
+      actionInProgress = true;
+      setButtonsBusy(true);
+      try{
+        if(!savedNativeFile?.ok){
+          savedNativeFile = await saveCertificateImageNative(dataUrl, fileName);
+        }
+        await shareCertificateImage(dataUrl, fileName, savedNativeFile);
+      }finally{
+        actionInProgress = false;
+        setButtonsBusy(false);
+      }
     });
-    overlay.querySelector(".certificate-preview-download").addEventListener("click", () => {
-      downloadCertificateImage(dataUrl, fileName);
-      showToast(t("certDownloaded"));
+    downloadButton.addEventListener("click", async () => {
+      if(actionInProgress) return;
+      actionInProgress = true;
+      setButtonsBusy(true);
+      try{
+        savedNativeFile = await downloadCertificateImageForUser(dataUrl, fileName, savedNativeFile);
+      }finally{
+        actionInProgress = false;
+        setButtonsBusy(false);
+      }
     });
     overlay.querySelector(".certificate-preview-close").addEventListener("click", close);
     overlay.addEventListener("click", (event) => {
@@ -638,18 +675,11 @@
     const dataUrl = canvas.toDataURL("image/png");
 
     try{
-      const nativeResult = await saveCertificateImageNative(dataUrl, fileName);
-      showCertificatePreview(dataUrl, fileName, nativeResult.ok ? nativeResult : null);
-      showToast(t(nativeResult.ok ? "certSaved" : "certReady"));
+      showCertificatePreview(dataUrl, fileName, null);
+      showToast(t("certReady"));
     }catch(e){
-      console.error("certificate image delivery failed:", e);
-      try{
-        showCertificatePreview(dataUrl, fileName, null);
-        showToast(t("certReady"));
-      }catch(downloadError){
-        console.error("certificate image preview fallback failed:", downloadError);
-        showToast(t("certFailed"));
-      }
+      console.error("certificate image preview failed:", e);
+      showToast(t("certFailed"));
     }
   };
 })();

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'peregrin-v12';
+const CACHE_NAME = 'peregrin-v13';
 const SCOPE_PATH = new URL(self.registration.scope).pathname.replace(/\/$/, '');
 const appPath = path => `${SCOPE_PATH}${path}`.replace(/\/{2,}/g, '/');
 const APP_SHELL = [
