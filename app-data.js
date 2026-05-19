@@ -336,36 +336,6 @@ const regionMap = {europe:['be','es','pt','fr','it','pl','ie','de','at','hr','ba
 // Only define a rule here when a country's certificate should intentionally
 // use a subset different from all sanctuaries in that country.
 const certificateRules = {
-  ar:{
-    disabled:true
-  },
-  ba:{
-    disabled:true
-  },
-  bo:{
-    disabled:true
-  },
-  br:{
-    disabled:true
-  },
-  co:{
-    disabled:true
-  },
-  hr:{
-    disabled:true
-  },
-  in:{
-    disabled:true
-  },
-  jp:{
-    disabled:true
-  },
-  kr:{
-    disabled:true
-  },
-  pe:{
-    disabled:true
-  },
   be:{
     sanctuaryIds:[1,2,3,4,5,6,8],
     summary:{
