@@ -20,12 +20,12 @@ window.PEREGRIN_PREMIUM_I18N = {
     journalSaved:'Journal note saved',
     journalLoading:'Loading your note...',
     journalUnavailable:'Journal not available right now.',
-    restorePurchase:'Restore Google Play purchase',
+    restorePurchase:'Restore purchase',
     restorePurchaseRestored:'Purchase restored. Premium is active.',
-    restorePurchaseNotFound:'No Google Play Premium purchase was found.',
+    restorePurchaseNotFound:'No previous Premium purchase was found.',
     billingUnavailable:'Google Play purchase is not available right now.',
     billingCancelled:'Purchase cancelled.',
-    billingFailed:'Google Play could not verify the purchase. If you were charged, contact elnuevoeuropeo@gmail.com.'
+    billingFailed:'Premium could not be verified. Try restoring it again.'
   },
   es:{
     premiumSub:'Acceso completo a todos los países, rutas, diario privado, certificados y logros.',
@@ -48,12 +48,12 @@ window.PEREGRIN_PREMIUM_I18N = {
     journalSaved:'Nota del diario guardada',
     journalLoading:'Cargando tu nota...',
     journalUnavailable:'El diario no está disponible ahora mismo.',
-    restorePurchase:'Restaurar compra de Google Play',
+    restorePurchase:'Restaurar compra',
     restorePurchaseRestored:'Compra restaurada. Premium está activo.',
-    restorePurchaseNotFound:'No se encontró ninguna compra Premium en Google Play.',
+    restorePurchaseNotFound:'No hay compra Premium anterior.',
     billingUnavailable:'La compra de Google Play no está disponible ahora mismo.',
     billingCancelled:'Compra cancelada.',
-    billingFailed:'Google Play no pudo verificar la compra. Si se te ha cobrado, escribe a elnuevoeuropeo@gmail.com.'
+    billingFailed:'No se pudo verificar Premium. Prueba restaurar compra otra vez.'
   },
   fr:{
     premiumSub:'Accès complet à tous les pays, itinéraires, journal privé, certificats et réalisations.',
@@ -76,12 +76,12 @@ window.PEREGRIN_PREMIUM_I18N = {
     journalSaved:'Note enregistrée',
     journalLoading:'Chargement de votre note...',
     journalUnavailable:'Le journal n’est pas disponible pour le moment.',
-    restorePurchase:'Restaurer l’achat Google Play',
+    restorePurchase:'Restaurer l’achat',
     restorePurchaseRestored:'Achat restauré. Premium est actif.',
-    restorePurchaseNotFound:'Aucun achat Premium Google Play trouvé.',
+    restorePurchaseNotFound:'Aucun achat Premium précédent trouvé.',
     billingUnavailable:'L’achat Google Play n’est pas disponible pour le moment.',
     billingCancelled:'Achat annulé.',
-    billingFailed:'Google Play n’a pas pu vérifier l’achat. Si vous avez été facturé, contactez elnuevoeuropeo@gmail.com.'
+    billingFailed:'Premium n’a pas pu être vérifié. Réessayez la restauration.'
   },
   it:{
     premiumSub:'Accesso completo a tutti i paesi, itinerari, diario privato, certificati e traguardi.',
@@ -104,12 +104,12 @@ window.PEREGRIN_PREMIUM_I18N = {
     journalSaved:'Nota salvata',
     journalLoading:'Caricamento nota...',
     journalUnavailable:'Diario non disponibile in questo momento.',
-    restorePurchase:'Ripristina acquisto Google Play',
+    restorePurchase:'Ripristina acquisto',
     restorePurchaseRestored:'Acquisto ripristinato. Premium è attivo.',
-    restorePurchaseNotFound:'Nessun acquisto Premium trovato su Google Play.',
+    restorePurchaseNotFound:'Nessun acquisto Premium precedente trovato.',
     billingUnavailable:'Acquisto Google Play non disponibile in questo momento.',
     billingCancelled:'Acquisto annullato.',
-    billingFailed:'Google Play non ha potuto verificare l’acquisto. Se ti è stato addebitato, scrivi a elnuevoeuropeo@gmail.com.'
+    billingFailed:'Premium non verificato. Prova a ripristinare di nuovo.'
   },
   pt:{
     premiumSub:'Acesso completo a todos os países, rotas, diário privado, certificados e conquistas.',
@@ -132,12 +132,12 @@ window.PEREGRIN_PREMIUM_I18N = {
     journalSaved:'Nota guardada',
     journalLoading:'A carregar a sua nota...',
     journalUnavailable:'O diário não está disponível neste momento.',
-    restorePurchase:'Restaurar compra Google Play',
+    restorePurchase:'Restaurar compra',
     restorePurchaseRestored:'Compra restaurada. Premium está ativo.',
-    restorePurchaseNotFound:'Nenhuma compra Premium encontrada no Google Play.',
+    restorePurchaseNotFound:'Nenhuma compra Premium anterior encontrada.',
     billingUnavailable:'A compra Google Play não está disponível neste momento.',
     billingCancelled:'Compra cancelada.',
-    billingFailed:'O Google Play não conseguiu verificar a compra. Se foi cobrado, escreva para elnuevoeuropeo@gmail.com.'
+    billingFailed:'Premium não foi verificado. Tente restaurar de novo.'
   }
 };
 
