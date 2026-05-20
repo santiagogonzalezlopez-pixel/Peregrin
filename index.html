@@ -1515,10 +1515,10 @@ async function handleGooglePlayPurchase(region){
       showToast(t('premiumActivatedToast'));
       return;
     }
-    showToast(t('billingFailed'));
+    showToast(t('billingFailed'),6000);
   }catch(e){
     console.error('google play purchase failed:', e);
-    showToast(isBillingCancelled(e) ? t('billingCancelled') : t('billingFailed'));
+    showToast(isBillingCancelled(e) ? t('billingCancelled') : t('billingFailed'),isBillingCancelled(e) ? 3000 : 6000);
   }
 }
 
@@ -1536,10 +1536,10 @@ async function restorePremiumPurchase(){
       showToast(t('restorePurchaseRestored'));
       return;
     }
-    showToast(t('restorePurchaseNotFound'));
+    showToast(t('restorePurchaseNotFound'),5000);
   }catch(e){
     console.error('google play restore failed:', e);
-    showToast(t('billingFailed'));
+    showToast(t('billingFailed'),6000);
   }
 }
 
