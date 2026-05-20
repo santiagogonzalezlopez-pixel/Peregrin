@@ -1,6 +1,5 @@
 package com.peregrin.app;
 
-import com.android.billingclient.api.AcknowledgePurchaseParams;
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingFlowParams;
@@ -188,17 +187,7 @@ public class PeregrinBillingPlugin extends Plugin implements PurchasesUpdatedLis
         return;
       }
 
-      acknowledgeIfNeeded(premiumPurchase, new AckCallback() {
-        @Override
-        public void onComplete(boolean acknowledged) {
-          call.resolve(purchaseResult(premiumPurchase, productId, acknowledged));
-        }
-
-        @Override
-        public void onError(BillingResult ackResult) {
-          call.reject(ackResult.getDebugMessage(), String.valueOf(ackResult.getResponseCode()));
-        }
-      });
+      call.resolve(purchaseResult(premiumPurchase, productId));
     });
   }
 
@@ -215,19 +204,8 @@ public class PeregrinBillingPlugin extends Plugin implements PurchasesUpdatedLis
         return;
       }
 
-      acknowledgeIfNeeded(premiumPurchase, new AckCallback() {
-        @Override
-        public void onComplete(boolean acknowledged) {
-          pendingPurchaseCall = null;
-          call.resolve(purchaseResult(premiumPurchase, DEFAULT_PRODUCT_ID, acknowledged));
-        }
-
-        @Override
-        public void onError(BillingResult ackResult) {
-          pendingPurchaseCall = null;
-          call.reject(ackResult.getDebugMessage(), String.valueOf(ackResult.getResponseCode()));
-        }
-      });
+      pendingPurchaseCall = null;
+      call.resolve(purchaseResult(premiumPurchase, DEFAULT_PRODUCT_ID));
       return;
     }
 
@@ -250,32 +228,14 @@ public class PeregrinBillingPlugin extends Plugin implements PurchasesUpdatedLis
     return null;
   }
 
-  private void acknowledgeIfNeeded(Purchase purchase, AckCallback callback) {
-    if (purchase.isAcknowledged()) {
-      callback.onComplete(true);
-      return;
-    }
-
-    AcknowledgePurchaseParams params = AcknowledgePurchaseParams.newBuilder()
-      .setPurchaseToken(purchase.getPurchaseToken())
-      .build();
-    billingClient.acknowledgePurchase(params, billingResult -> {
-      if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-        callback.onComplete(true);
-      } else {
-        callback.onError(billingResult);
-      }
-    });
-  }
-
-  private JSObject purchaseResult(Purchase purchase, String productId, boolean acknowledged) {
+  private JSObject purchaseResult(Purchase purchase, String productId) {
     JSObject result = new JSObject();
     result.put("success", true);
     result.put("productId", productId);
     result.put("purchaseToken", purchase.getPurchaseToken());
     result.put("orderId", purchase.getOrderId());
     result.put("purchaseTime", purchase.getPurchaseTime());
-    result.put("acknowledged", acknowledged);
+    result.put("acknowledged", purchase.isAcknowledged());
     return result;
   }
 
@@ -288,11 +248,6 @@ public class PeregrinBillingPlugin extends Plugin implements PurchasesUpdatedLis
 
   private interface ReadyCallback {
     void onReady();
-    void onError(BillingResult billingResult);
-  }
-
-  private interface AckCallback {
-    void onComplete(boolean acknowledged);
     void onError(BillingResult billingResult);
   }
 }
