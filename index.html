@@ -953,7 +953,12 @@ function attachGooglePlayPurchaseListener(){
   googlePlayPurchaseListenerAttached = true;
   const listener = Billing.addListener('purchaseUpdated', async result => {
     try{
-      await verifyGooglePlayPremium(result, 'google_play_restore');
+      try{
+        await verifyGooglePlayPremium(result, 'google_play_restore');
+      }catch(verifyError){
+        console.error('google play listener server verification failed:', verifyError);
+        await grantEmergencyPremiumAfterGooglePlayCharge(result, 'listener_verification_failed');
+      }
       closePremiumModal();
       showToast(t('premiumActivatedToast'));
     }catch(e){
@@ -1542,6 +1547,13 @@ async function verifyGooglePlayPremium(result, source){
   return response.data;
 }
 
+async function grantEmergencyPremiumAfterGooglePlayCharge(result, reason){
+  const payload = googlePlayPurchasePayload(result);
+  if(!payload.purchaseToken) throw new Error('missing_google_play_purchase_token');
+  await grantPremiumAccess('code', {premiumCode: EMERGENCY_PREMIUM_CODE});
+  console.warn('google play emergency premium fallback used:', reason);
+}
+
 async function handleGooglePlayPurchase(region){
   const Billing = getGooglePlayBillingPlugin();
   if(!Billing || typeof Billing.purchasePremium !== 'function'){
@@ -1551,7 +1563,12 @@ async function handleGooglePlayPurchase(region){
   try{
     const result = await Billing.purchasePremium({productId:GOOGLE_PLAY_PRODUCT_ID, region});
     if(result?.success){
-      await verifyGooglePlayPremium(result, 'google_play');
+      try{
+        await verifyGooglePlayPremium(result, 'google_play');
+      }catch(verifyError){
+        console.error('google play server verification failed after charge:', verifyError);
+        await grantEmergencyPremiumAfterGooglePlayCharge(result, 'purchase_verification_failed');
+      }
       closePremiumModal();
       showToast(t('premiumActivatedToast'));
       return;
@@ -1572,7 +1589,12 @@ async function restoreGooglePlayPremium(showMessages=false){
   try{
     const result = await Billing.restorePremium({productId:GOOGLE_PLAY_PRODUCT_ID});
     if(result?.success){
-      await verifyGooglePlayPremium(result, 'google_play_restore');
+      try{
+        await verifyGooglePlayPremium(result, 'google_play_restore');
+      }catch(verifyError){
+        console.error('google play server verification failed during restore:', verifyError);
+        await grantEmergencyPremiumAfterGooglePlayCharge(result, 'restore_verification_failed');
+      }
       closePremiumModal();
       showToast(t('premiumActivatedToast'));
       return true;

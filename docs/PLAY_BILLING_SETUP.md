@@ -27,6 +27,7 @@ Antes de enviar el AAB a revision, confirma en Play Console que el producto `per
 - La app envia el purchase token a Firebase Cloud Functions.
 - La funcion `verifyGooglePlayPurchase` valida el token con Google Play Developer API.
 - Si Google confirma la compra, Firebase marca Premium en Firestore desde servidor.
+- Si Google Play ya cobro pero la verificacion servidor falla por configuracion/API, la app desbloquea con el codigo de emergencia para no dejar al usuario pagado bloqueado.
 - Despues de conceder Premium, Firebase consume el producto para que pueda comprarse de nuevo con la misma cuenta de Google Play en otro perfil de Peregrin.
 - El modal Premium muestra restaurar compra en Android y tambien intenta recuperar compras automaticamente al iniciar sesion.
 - Web/GitHub Pages usa Stripe Payment Link `https://buy.stripe.com/bJeeVfbotaZBaVZgSofEk01` con precio `2,99 €`.
