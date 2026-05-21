@@ -61,27 +61,23 @@ async function verifyProductPurchase(androidPublisher, purchaseToken) {
   }
 }
 
-async function acknowledgeIfNeeded(androidPublisher, purchase) {
-  if (purchase.acknowledgementState === 1) return true;
+async function consumeIfNeeded(androidPublisher, purchase) {
+  if (purchase.consumptionState === 1) return true;
 
   try {
-    await androidPublisher.purchases.products.acknowledge({
+    await androidPublisher.purchases.products.consume({
       packageName: PACKAGE_NAME,
       productId: PREMIUM_PRODUCT_ID,
       token: purchase.purchaseToken,
-      requestBody: {},
     });
     return true;
   } catch (error) {
-    logger.error("google_play_purchase_acknowledge_failed", {
+    logger.error("google_play_purchase_consume_failed", {
       code: error.code,
       message: error.message,
       errors: error.errors,
     });
-    throw new HttpsError(
-      "failed-precondition",
-      "Google Play purchase was verified but could not be acknowledged."
-    );
+    return false;
   }
 }
 
@@ -115,7 +111,6 @@ exports.verifyGooglePlayPurchase = onCall(
     }
 
     purchase.purchaseToken = purchaseToken;
-    await acknowledgeIfNeeded(androidPublisher, purchase);
 
     const uid = request.auth.uid;
     const now = admin.firestore.FieldValue.serverTimestamp();
@@ -149,7 +144,8 @@ exports.verifyGooglePlayPurchase = onCall(
           orderId,
           purchaseTime,
           purchaseState: purchase.purchaseState,
-          acknowledgementState: 1,
+          acknowledgementState: purchase.acknowledgementState || 0,
+          consumptionState: purchase.consumptionState || 0,
           source,
           verifiedAt: now,
         },
@@ -173,11 +169,23 @@ exports.verifyGooglePlayPurchase = onCall(
       );
     });
 
+    const consumed = await consumeIfNeeded(androidPublisher, purchase);
+    if (consumed) {
+      await purchaseRef.set(
+        {
+          consumptionState: 1,
+          consumedAt: admin.firestore.FieldValue.serverTimestamp(),
+        },
+        {merge: true}
+      );
+    }
+
     return {
       success: true,
       productId: PREMIUM_PRODUCT_ID,
       orderId,
       purchaseTime,
+      consumed,
     };
   }
 );

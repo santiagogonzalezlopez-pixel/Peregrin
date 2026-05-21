@@ -20,9 +20,6 @@ window.PEREGRIN_PREMIUM_I18N = {
     journalSaved:'Journal note saved',
     journalLoading:'Loading your note...',
     journalUnavailable:'Journal not available right now.',
-    restorePurchase:'Restore purchase',
-    restorePurchaseRestored:'Purchase restored. Premium is active.',
-    restorePurchaseNotFound:'No previous Premium purchase was found.',
     billingUnavailable:'Google Play purchase is not available right now.',
     billingCancelled:'Purchase cancelled.',
     billingFailed:'Premium could not be verified. Try restoring it again.'
@@ -48,9 +45,6 @@ window.PEREGRIN_PREMIUM_I18N = {
     journalSaved:'Nota del diario guardada',
     journalLoading:'Cargando tu nota...',
     journalUnavailable:'El diario no está disponible ahora mismo.',
-    restorePurchase:'Restaurar compra',
-    restorePurchaseRestored:'Compra restaurada. Premium está activo.',
-    restorePurchaseNotFound:'No hay compra Premium anterior.',
     billingUnavailable:'La compra de Google Play no está disponible ahora mismo.',
     billingCancelled:'Compra cancelada.',
     billingFailed:'No se pudo verificar Premium. Prueba restaurar compra otra vez.'
@@ -76,9 +70,6 @@ window.PEREGRIN_PREMIUM_I18N = {
     journalSaved:'Note enregistrée',
     journalLoading:'Chargement de votre note...',
     journalUnavailable:'Le journal n’est pas disponible pour le moment.',
-    restorePurchase:'Restaurer l’achat',
-    restorePurchaseRestored:'Achat restauré. Premium est actif.',
-    restorePurchaseNotFound:'Aucun achat Premium précédent trouvé.',
     billingUnavailable:'L’achat Google Play n’est pas disponible pour le moment.',
     billingCancelled:'Achat annulé.',
     billingFailed:'Premium n’a pas pu être vérifié. Réessayez la restauration.'
@@ -104,9 +95,6 @@ window.PEREGRIN_PREMIUM_I18N = {
     journalSaved:'Nota salvata',
     journalLoading:'Caricamento nota...',
     journalUnavailable:'Diario non disponibile in questo momento.',
-    restorePurchase:'Ripristina acquisto',
-    restorePurchaseRestored:'Acquisto ripristinato. Premium è attivo.',
-    restorePurchaseNotFound:'Nessun acquisto Premium precedente trovato.',
     billingUnavailable:'Acquisto Google Play non disponibile in questo momento.',
     billingCancelled:'Acquisto annullato.',
     billingFailed:'Premium non verificato. Prova a ripristinare di nuovo.'
@@ -132,9 +120,6 @@ window.PEREGRIN_PREMIUM_I18N = {
     journalSaved:'Nota guardada',
     journalLoading:'A carregar a sua nota...',
     journalUnavailable:'O diário não está disponível neste momento.',
-    restorePurchase:'Restaurar compra',
-    restorePurchaseRestored:'Compra restaurada. Premium está ativo.',
-    restorePurchaseNotFound:'Nenhuma compra Premium anterior encontrada.',
     billingUnavailable:'A compra Google Play não está disponível neste momento.',
     billingCancelled:'Compra cancelada.',
     billingFailed:'Premium não foi verificado. Tente restaurar de novo.'

@@ -8,7 +8,7 @@ Peregrin usa Google Play Billing dentro de la app Android y mantiene Stripe solo
 - Product ID: `peregrin_premium_all`
 - Nombre sugerido: `Peregrin Premium`
 - Beneficio: desbloqueo permanente de todos los paises, guias Premium, diario privado, certificados y logros
-- Precio: el que se decida en Play Console
+- Precio actual previsto: `2,99 €` (tambien debe configurarse manualmente en Play Console)
 
 ## Activacion en codigo
 
@@ -27,7 +27,8 @@ Antes de enviar el AAB a revision, confirma en Play Console que el producto `per
 - La app envia el purchase token a Firebase Cloud Functions.
 - La funcion `verifyGooglePlayPurchase` valida el token con Google Play Developer API.
 - Si Google confirma la compra, Firebase marca Premium en Firestore desde servidor.
-- El modal Premium incluye restaurar compra si el usuario reinstala o cambia de dispositivo.
+- Despues de conceder Premium, Firebase consume el producto para que pueda comprarse de nuevo con la misma cuenta de Google Play en otro perfil de Peregrin.
+- El modal Premium no muestra restaurar compra; el Premium se recupera iniciando sesion con la misma cuenta de Peregrin.
 - Web/GitHub Pages sigue usando el enlace de Stripe.
 - El codigo Premium manual sigue disponible como respaldo.
 

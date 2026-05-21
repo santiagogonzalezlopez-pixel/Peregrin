@@ -85,22 +85,6 @@ public class PeregrinBillingPlugin extends Plugin implements PurchasesUpdatedLis
     });
   }
 
-  @PluginMethod
-  public void restorePurchases(PluginCall call) {
-    String productId = call.getString("productId", DEFAULT_PRODUCT_ID);
-    connect(new ReadyCallback() {
-      @Override
-      public void onReady() {
-        queryOwnedPremium(call, productId);
-      }
-
-      @Override
-      public void onError(BillingResult billingResult) {
-        call.reject(billingResult.getDebugMessage(), String.valueOf(billingResult.getResponseCode()));
-      }
-    });
-  }
-
   private void connect(ReadyCallback callback) {
     if (billingClient == null) {
       if (callback != null) callback.onError(errorResult("Billing client is not initialized."));
@@ -163,6 +147,10 @@ public class PeregrinBillingPlugin extends Plugin implements PurchasesUpdatedLis
       BillingResult launchResult = billingClient.launchBillingFlow(getActivity(), flowParams);
       if (launchResult.getResponseCode() != BillingClient.BillingResponseCode.OK) {
         pendingPurchaseCall = null;
+        if (launchResult.getResponseCode() == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
+          queryOwnedPremium(call, productId);
+          return;
+        }
         call.reject(launchResult.getDebugMessage(), String.valueOf(launchResult.getResponseCode()));
       }
     });
@@ -212,6 +200,8 @@ public class PeregrinBillingPlugin extends Plugin implements PurchasesUpdatedLis
     pendingPurchaseCall = null;
     if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
       call.reject("Purchase cancelled.", "USER_CANCELED");
+    } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
+      queryOwnedPremium(call, DEFAULT_PRODUCT_ID);
     } else {
       call.reject(billingResult.getDebugMessage(), String.valueOf(billingResult.getResponseCode()));
     }
