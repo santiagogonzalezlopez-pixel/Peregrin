@@ -29,7 +29,7 @@ Antes de enviar el AAB a revision, confirma en Play Console que el producto `per
 - Si Google confirma la compra, Firebase marca Premium en Firestore desde servidor.
 - Despues de conceder Premium, Firebase consume el producto para que pueda comprarse de nuevo con la misma cuenta de Google Play en otro perfil de Peregrin.
 - El modal Premium no muestra restaurar compra; el Premium se recupera iniciando sesion con la misma cuenta de Peregrin.
-- Web/GitHub Pages sigue usando el enlace de Stripe.
+- Web/GitHub Pages usa Stripe Payment Link `https://buy.stripe.com/bJeeVfbotaZBaVZgSofEk01` con precio `2,99 €`.
 - El codigo Premium manual sigue disponible como respaldo.
 
 ## Firebase / Google Play API
