@@ -1,82 +1,125 @@
-# Google Play Billing setup
+# Google Play Billing and Stripe setup
 
-Peregrin usa Google Play Billing dentro de la app Android y mantiene Stripe solo para la version web.
+Last updated: 2026-05-21
 
-## Producto que debe existir en Play Console
+Peregrin uses Google Play Billing inside the Android app and Stripe for the web.
 
-- Tipo: one-time product / in-app product
+## Google Play product
+
+- Type: one-time product / in-app product
 - Product ID: `peregrin_premium_all`
-- Nombre sugerido: `Peregrin Premium`
-- Beneficio: desbloqueo permanente de todos los paises, guias Premium, diario privado, certificados y logros
-- Precio actual previsto: `2,99 €` (tambien debe configurarse manualmente en Play Console)
+- Suggested name: `Peregrin Premium`
+- Price: `EUR 2.99`, configured manually in Play Console
+- Benefit: permanent unlock for all countries, Premium guides, private journal,
+  certificates, routes, and achievements
 
-## Activacion en codigo
+Before sending an AAB to review, confirm in Play Console that the product exists,
+is active, and has a price configured.
 
-La compra Android esta activada en `index.html` para produccion:
+## Android activation in code
+
+Android checkout is enabled in `index.html`:
 
 ```js
 const GOOGLE_PLAY_CHECKOUT_ENABLED = true;
+const GOOGLE_PLAY_PRODUCT_ID = 'peregrin_premium_all';
 ```
 
-Antes de enviar el AAB a revision, confirma en Play Console que el producto `peregrin_premium_all` existe, esta activo y tiene precio configurado.
+The native bridge lives in:
 
-## Flujo implementado
+```text
+android/app/src/main/java/com/peregrin/app/PeregrinBillingPlugin.java
+```
 
-- Android llama al plugin nativo `PeregrinBilling`.
-- La compra abre la pasarela oficial de Google Play.
-- La app envia el purchase token a Firebase Cloud Functions.
-- La funcion `verifyGooglePlayPurchase` valida el token con Google Play Developer API.
-- Si Google confirma la compra, Firebase marca Premium en Firestore desde servidor.
-- Si Google Play ya cobro pero la verificacion servidor falla por configuracion/API, la app desbloquea con el codigo de emergencia para no dejar al usuario pagado bloqueado.
-- Despues de conceder Premium, Firebase consume el producto para que pueda comprarse de nuevo con la misma cuenta de Google Play en otro perfil de Peregrin.
-- El modal Premium muestra restaurar compra en Android y tambien intenta recuperar compras automaticamente al iniciar sesion.
-- Web/GitHub Pages usa Stripe Payment Link `https://buy.stripe.com/bJeeVfbotaZBaVZgSofEk01` con precio `2,99 €`.
-- El codigo Premium manual sigue disponible como respaldo.
-- El retorno de Stripe iniciado desde la app desbloquea con el codigo de emergencia principal `PEREGRIN-388066-6291`.
-- El codigo de emergencia alternativo `PEREGRIN-PREMIUM-2026` tambien se mantiene activo.
-- El webhook `stripeWebhook` tambien desbloquea Premium desde servidor cuando recibe `checkout.session.completed` o `checkout.session.async_payment_succeeded` con `payment_status=paid`.
-- Si `SMTP_URL` esta configurado en Cloud Functions, el webhook envia al comprador un email con el codigo de emergencia para cubrir cualquier caso en que la cuenta no pueda emparejarse automaticamente.
+## Android flow
+
+- Android calls the native `PeregrinBilling` plugin.
+- Google Play opens the official purchase sheet.
+- The app receives a purchase token from Google Play.
+- The app sends the token to Firebase Function `verifyGooglePlayPurchase`.
+- The Function validates the token with Google Play Developer API.
+- If Google confirms the purchase, Firebase marks the user Premium from the server.
+- The Function consumes the one-time product so the same Google Play account can buy
+  again for another Peregrin profile.
+- Version `1.0.30` adds:
+  - automatic restore on login when the user is not Premium,
+  - a visible "Restaurar compra" button in Android,
+  - a `purchaseUpdated` listener,
+  - emergency code unlock if Google Play returns a paid token but server
+    verification fails.
 
 ## Firebase / Google Play API
 
-- Proyecto Firebase: `peregrin-d7611`
-- Funcion: `verifyGooglePlayPurchase`
-- Region: `europe-west1`
-- Funcion Stripe: `stripeWebhook`
-- Region Stripe: `us-central1`
-- App Android: `com.peregrin.app`
-- Producto: `peregrin_premium_all`
+- Firebase project: `peregrin-d7611`
+- Callable Function: `verifyGooglePlayPurchase`
+- Deployed callable region: `europe-west1`
+- Android package: `com.peregrin.app`
+- Product: `peregrin_premium_all`
 
-La funcion usa credenciales de servidor del proyecto Firebase. En Play Console hace falta que la cuenta de servicio de la funcion tenga acceso a la Google Play Developer API para esta app.
+The frontend calls:
 
-Cuenta de servicio probable en Cloud Functions gen 2:
+```js
+firebase.app().functions('europe-west1')
+```
+
+So `verifyGooglePlayPurchase` must remain in `europe-west1`.
+
+Service account seen in Play Console on 2026-05-21:
 
 ```text
 844223897807-compute@developer.gserviceaccount.com
 ```
 
-Si Play Console pide enlazar o autorizar el proyecto, entra en:
+On 2026-05-21, Play Console visually showed this service account as active and
+with administrator permissions for `Peregrin Passport / com.peregrin.app`.
+
+If Google Play verification fails with `403`, check:
+
+- Play Console -> Setup -> API access.
+- The linked Google Cloud project.
+- Service account permissions for this specific app.
+- Google Play Developer API access.
+- Whether permissions have had enough time to propagate.
+
+## Web Stripe flow
+
+- Stripe Payment Link:
 
 ```text
-Play Console -> Configuracion -> Acceso a la API
+https://buy.stripe.com/bJeeVfbotaZBaVZgSofEk01
 ```
 
-Y concede a esa cuenta de servicio acceso a la app Peregrin con permisos para consultar/gestionar compras o pedidos.
+- The app appends checkout context such as `client_reference_id`,
+  `prefilled_email`, and `locale`.
+- When Stripe returns to the app with `payment=success` and the local checkout
+  session is recent, the app unlocks Premium internally using the primary emergency
+  code.
 
-Para desplegar desde este repo, usa solo:
+This fallback is intentional. It protects paid users from being blocked if the
+server-side Stripe webhook cannot match the payment to the Firebase user.
 
-```bash
-firebase deploy --only functions:verifyGooglePlayPurchase,functions:stripeWebhook,firestore:rules --project peregrin-d7611
-```
+## Stripe webhook status
 
-Configura en Stripe un webhook hacia la URL de `stripeWebhook` con estos eventos:
+Existing deployed functions seen on 2026-05-21:
 
 ```text
-checkout.session.completed
-checkout.session.async_payment_succeeded
+verifyGooglePlayPurchase  europe-west1
+createCheckoutSession     us-central1
+stripeWebhook             us-central1
 ```
 
-Y define estas variables de entorno en Cloud Functions antes del despliegue:
+This repo contains `stripeWebhook` code intended to:
+
+- verify `checkout.session.completed`,
+- verify `checkout.session.async_payment_succeeded`,
+- mark the matched Firebase user Premium,
+- store paid sessions that need manual linking,
+- optionally email the Premium code if SMTP is configured.
+
+Important: do not promise automatic email delivery until live Stripe webhook
+configuration and SMTP variables have been verified in production.
+
+Required environment for email-enabled Stripe webhook:
 
 ```text
 STRIPE_WEBHOOK_SECRET=whsec_...
@@ -86,10 +129,54 @@ SMTP_URL=smtp://usuario:password@host:puerto
 SMTP_FROM="Peregrin" <elnuevoeuropeo@gmail.com>
 ```
 
-`SMTP_URL` y `SMTP_FROM` son opcionales para el desbloqueo automatico, pero necesarios para enviar el email con el codigo.
+Never commit real secret values.
 
-## Seguridad
+## Emergency Premium codes
 
-Las reglas de Firestore ya no aceptan desbloqueos de Google Play escritos directamente por el cliente. Se mantiene el codigo Premium manual como respaldo controlado con la coleccion `premiumCodes`, mas los codigos de emergencia `PEREGRIN-388066-6291` y `PEREGRIN-PREMIUM-2026` para pagos reales que necesiten rescate inmediato.
+Active codes:
 
-La app no guarda el purchase token completo en `users`; guarda un hash servidor. El token completo solo se usa dentro de la Cloud Function para consultar Google Play.
+```text
+PEREGRIN-388066-6291
+PEREGRIN-PREMIUM-2026
+```
+
+The app accepts both. Firestore rules accept both. Use the first one as the support
+code for paid users who are blocked.
+
+The user normally does not see the emergency code in the Android paid flow. Version
+`1.0.30` applies it internally only after Google Play has returned a paid purchase
+token and server verification did not complete.
+
+## Deploy commands
+
+Safe rules deploy:
+
+```powershell
+npx.cmd firebase deploy --only firestore:rules --project peregrin-d7611
+```
+
+Inspect deployed functions:
+
+```powershell
+npx.cmd firebase functions:list --project peregrin-d7611
+```
+
+Check Google Play verification logs:
+
+```powershell
+npx.cmd firebase functions:log --only verifyGooglePlayPurchase --project peregrin-d7611 -n 100
+```
+
+Function deploys should be targeted and deliberate. Do not deploy all Functions
+unless the Stripe functions, regions, runtime, and live environment variables have
+all been checked.
+
+## Security notes
+
+Firestore rules no longer allow a client to claim `premiumSource: google_play`
+directly. Google Play unlocks must come from the server. Client-side Premium code
+unlock remains available as a support fallback.
+
+The app does not store the full purchase token in `users`; it stores a server-side
+hash. The full token is used only inside the Cloud Function to query Google Play.
+

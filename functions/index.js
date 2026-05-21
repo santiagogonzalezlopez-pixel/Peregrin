@@ -12,8 +12,8 @@ admin.initializeApp();
 
 const PACKAGE_NAME = "com.peregrin.app";
 const PREMIUM_PRODUCT_ID = "peregrin_premium_all";
-const REGION = "europe-west1";
-const STRIPE_REGION = "us-central1";
+const GOOGLE_PLAY_FUNCTION_REGION = "europe-west1";
+const STRIPE_FUNCTION_REGION = "us-central1";
 const ANDROID_PUBLISHER_SCOPE = "https://www.googleapis.com/auth/androidpublisher";
 const STRIPE_API_VERSION = "2026-02-25.clover";
 const DEFAULT_PREMIUM_FALLBACK_CODES = [
@@ -258,7 +258,7 @@ async function consumeIfNeeded(androidPublisher, purchase) {
 
 exports.verifyGooglePlayPurchase = onCall(
   {
-    region: STRIPE_REGION,
+    region: GOOGLE_PLAY_FUNCTION_REGION,
     timeoutSeconds: 60,
     memory: "256MiB",
   },
@@ -367,7 +367,7 @@ exports.verifyGooglePlayPurchase = onCall(
 
 exports.stripeWebhook = onRequest(
   {
-    region: REGION,
+    region: STRIPE_FUNCTION_REGION,
     timeoutSeconds: 60,
     memory: "256MiB",
   },
