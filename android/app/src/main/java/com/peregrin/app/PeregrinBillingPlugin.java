@@ -85,6 +85,22 @@ public class PeregrinBillingPlugin extends Plugin implements PurchasesUpdatedLis
     });
   }
 
+  @PluginMethod
+  public void restorePremium(PluginCall call) {
+    String productId = call.getString("productId", DEFAULT_PRODUCT_ID);
+    connect(new ReadyCallback() {
+      @Override
+      public void onReady() {
+        queryOwnedPremium(call, productId);
+      }
+
+      @Override
+      public void onError(BillingResult billingResult) {
+        call.reject(billingResult.getDebugMessage(), String.valueOf(billingResult.getResponseCode()));
+      }
+    });
+  }
+
   private void connect(ReadyCallback callback) {
     if (billingClient == null) {
       if (callback != null) callback.onError(errorResult("Billing client is not initialized."));
@@ -182,7 +198,15 @@ public class PeregrinBillingPlugin extends Plugin implements PurchasesUpdatedLis
   @Override
   public void onPurchasesUpdated(BillingResult billingResult, List<Purchase> purchases) {
     PluginCall call = pendingPurchaseCall;
-    if (call == null) return;
+    if (call == null) {
+      if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && purchases != null) {
+        Purchase premiumPurchase = findPurchasedPremium(purchases, DEFAULT_PRODUCT_ID);
+        if (premiumPurchase != null) {
+          notifyListeners("purchaseUpdated", purchaseResult(premiumPurchase, DEFAULT_PRODUCT_ID));
+        }
+      }
+      return;
+    }
 
     if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && purchases != null) {
       Purchase premiumPurchase = findPurchasedPremium(purchases, DEFAULT_PRODUCT_ID);

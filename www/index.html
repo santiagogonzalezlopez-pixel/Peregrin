@@ -528,6 +528,7 @@ const i18n = {
     premiumLabelEurope:'Europe', premiumLabelAmericas:'Americas', premiumLabelAsia:'Asia', premiumLabelAll:'All countries',
     premiumSubEurope:'11 countries · 58 sanctuaries', premiumSubAmericas:'8 countries · 36 sanctuaries', premiumSubAsia:'4 countries · 17 sanctuaries', premiumSubAll:'23 countries · 111 sanctuaries · Best value',
     premiumOnetime:'One-time payment · Yours forever', premiumGooglePlayNote:'Secure one-time payment with Google Play', premiumAlreadyUnlocked:'Unlocked', premiumActivatedToast:'Premium activated. Thank you!',
+    premiumRestoreCta:'Restore purchase', premiumRestoreChecking:'Checking your purchase…', premiumRestoreNone:'No pending Premium purchase found.',
     premiumCodeCta:'Use premium code', premiumCodePrompt:'Enter your premium code:', premiumCodeInvalid:'Invalid premium code.', premiumCodeApplied:'Premium activated with code.',
     premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Unlock all countries, certificates, all routes and all achievements.',
     testerAccessLabel:'Local access', testerAccessHint:'Only on this device during development', testerUnlockBtn:'Activate local access', testerDisableBtn:'Disable local access',
@@ -553,7 +554,7 @@ const i18n = {
     billingUnavailable:'Google Play Billing is not available on this device.', billingFailed:'We could not complete the purchase. Please try again.',
     billingCancelled:'Purchase cancelled.', profileSaveFailed:'We could not save the name. Please try again.',
     paymentReturnInvalid:'We could not validate your payment return. If you were charged, contact elnuevoeuropeo@gmail.com.',
-    paymentManualReview:'Premium can no longer be activated automatically from the payment return. If you were charged, contact elnuevoeuropeo@gmail.com.',
+    paymentActivating:'Activating Premium…', paymentManualReview:'We could not activate Premium yet. Use the Premium code from your email or contact elnuevoeuropeo@gmail.com.',
     onbStep1:'1 of 3',onbStep2:'2 of 3',onbStep3:'3 of 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Discover sacred places',onbTitle2:'Collect pilgrim stamps',onbTitle3:'Earn your certificate',onbDesc1:'Explore an interactive map of Catholic sanctuaries across Europe, the Americas and Asia.',onbDesc2:'Register your visits and build your personal pilgrim passport with stamps from every sanctuary.',onbDesc3:'Complete a country and download a beautiful pilgrimage certificate with your name.',onbNext:'Next',onbStart:'Begin my pilgrimage',onbSkip:'Skip',
     onbBadgeRoutes:'✨ Sacred routes', onbBadgeCertificates:'📜 Beautiful certificates',
     onbTagline:'The Pilgrim Passport', onbCopy:'Sacred places, living routes and beautifully kept milestones for every pilgrim journey.',
@@ -594,6 +595,7 @@ const i18n = {
     premiumLabelEurope:'Europa', premiumLabelAmericas:'América', premiumLabelAsia:'Asia', premiumLabelAll:'Todos los países',
     premiumSubEurope:'11 países · 58 santuarios', premiumSubAmericas:'8 países · 36 santuarios', premiumSubAsia:'4 países · 17 santuarios', premiumSubAll:'23 países · 111 santuarios · Mejor valor',
     premiumOnetime:'Pago único · Tuyo para siempre', premiumGooglePlayNote:'Pago único seguro con Google Play', premiumAlreadyUnlocked:'Desbloqueado', premiumActivatedToast:'Premium activado. ¡Gracias!',
+    premiumRestoreCta:'Restaurar compra', premiumRestoreChecking:'Comprobando tu compra…', premiumRestoreNone:'No se ha encontrado ninguna compra Premium pendiente.',
     premiumCodeCta:'Tengo un código Premium', premiumCodePrompt:'Introduce tu código Premium:', premiumCodeInvalid:'Código Premium no válido.', premiumCodeApplied:'Premium activado con código.',
     premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Desbloquea todos los países, certificados, todas las rutas y todos los logros.',
     testerAccessLabel:'Acceso local', testerAccessHint:'Solo en este dispositivo durante el desarrollo', testerUnlockBtn:'Activar acceso local', testerDisableBtn:'Desactivar acceso local',
@@ -619,7 +621,7 @@ const i18n = {
     billingUnavailable:'Google Play Billing no está disponible en este dispositivo.', billingFailed:'No hemos podido completar la compra. Inténtalo de nuevo.',
     billingCancelled:'Compra cancelada.', profileSaveFailed:'No hemos podido guardar el nombre. Inténtalo de nuevo.',
     paymentReturnInvalid:'No hemos podido validar el retorno del pago. Si se te ha cobrado, escribe a elnuevoeuropeo@gmail.com.',
-    paymentManualReview:'Premium ya no puede activarse automáticamente desde el retorno del pago. Si se te ha cobrado, escribe a elnuevoeuropeo@gmail.com.',
+    paymentActivating:'Activando Premium…', paymentManualReview:'Aún no hemos podido activar Premium. Usa el código Premium de tu email o escribe a elnuevoeuropeo@gmail.com.',
     onbStep1:'1 de 3',onbStep2:'2 de 3',onbStep3:'3 de 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Descubre lugares sagrados',onbTitle2:'Colecciona sellos peregrinos',onbTitle3:'Consigue tu certificado',onbDesc1:'Explora un mapa interactivo de santuarios católicos en Europa, América y Asia.',onbDesc2:'Registra tus visitas y construye tu pasaporte peregrino personal con sellos de cada santuario.',onbDesc3:'Completa un país y descarga un hermoso certificado de peregrinación con tu nombre.',onbNext:'Siguiente',onbStart:'Comenzar mi peregrinación',onbSkip:'Saltar',
     onbBadgeRoutes:'✨ Rutas sagradas', onbBadgeCertificates:'📜 Certificados cuidados',
     onbTagline:'El Pasaporte del Peregrino', onbCopy:'Lugares sagrados, rutas vivas y recuerdos bien guardados para cada peregrinación.',
@@ -660,6 +662,7 @@ const i18n = {
     premiumLabelEurope:'Europe', premiumLabelAmericas:'Amériques', premiumLabelAsia:'Asie', premiumLabelAll:'Tous les pays',
     premiumSubEurope:'11 pays · 58 sanctuaires', premiumSubAmericas:'8 pays · 36 sanctuaires', premiumSubAsia:'4 pays · 17 sanctuaires', premiumSubAll:'23 pays · 111 sanctuaires · Meilleure offre',
     premiumOnetime:'Paiement unique · À vous pour toujours', premiumGooglePlayNote:'Paiement unique sécurisé avec Google Play', premiumAlreadyUnlocked:'Débloqué', premiumActivatedToast:'Premium activé. Merci !',
+    premiumRestoreCta:'Restaurer l’achat', premiumRestoreChecking:'Vérification de votre achat…', premiumRestoreNone:'Aucun achat Premium en attente trouvé.',
     premiumCodeCta:'J’ai un code Premium', premiumCodePrompt:'Entrez votre code Premium :', premiumCodeInvalid:'Code Premium invalide.', premiumCodeApplied:'Premium activé avec code.',
     premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Débloquez tous les pays, certificats, tous les itinéraires et toutes les réalisations.',
     testerAccessLabel:'Accès local', testerAccessHint:'Seulement sur cet appareil en développement', testerUnlockBtn:'Activer l’accès local', testerDisableBtn:'Désactiver l’accès local',
@@ -685,7 +688,7 @@ const i18n = {
     billingUnavailable:'Google Play Billing n’est pas disponible sur cet appareil.', billingFailed:'Nous n’avons pas pu finaliser l’achat. Veuillez réessayer.',
     billingCancelled:'Achat annulé.', profileSaveFailed:'Nous n’avons pas pu enregistrer le nom. Veuillez réessayer.',
     paymentReturnInvalid:'Nous n’avons pas pu valider le retour du paiement. Si vous avez été débité, écrivez à elnuevoeuropeo@gmail.com.',
-    paymentManualReview:'Premium ne peut plus être activé automatiquement depuis le retour de paiement. Si vous avez été débité, écrivez à elnuevoeuropeo@gmail.com.',
+    paymentActivating:'Activation de Premium…', paymentManualReview:'Nous n’avons pas encore pu activer Premium. Utilisez le code Premium reçu par e-mail ou écrivez à elnuevoeuropeo@gmail.com.',
     onbStep1:'1 sur 3',onbStep2:'2 sur 3',onbStep3:'3 sur 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Découvrez des lieux sacrés',onbTitle2:'Collectionnez les tampons',onbTitle3:'Obtenez votre certificat',onbDesc1:'Explorez une carte interactive des sanctuaires catholiques en Europe, Amériques et Asie.',onbDesc2:'Enregistrez vos visites et construisez votre passeport de pèlerin avec les tampons de chaque sanctuaire.',onbDesc3:'Complétez un pays et téléchargez un magnifique certificat de pèlerinage à votre nom.',onbNext:'Suivant',onbStart:'Commencer mon pèlerinage',onbSkip:'Passer',
     onbBadgeRoutes:'✨ Routes sacrées', onbBadgeCertificates:'📜 Beaux certificats',
     onbTagline:'Le Passeport du Pèlerin', onbCopy:'Lieux sacrés, routes vivantes et étapes précieusement gardées pour chaque pèlerinage.',
@@ -726,6 +729,7 @@ const i18n = {
     premiumLabelEurope:'Europa', premiumLabelAmericas:'Americhe', premiumLabelAsia:'Asia', premiumLabelAll:'Tutti i paesi',
     premiumSubEurope:'11 paesi · 58 santuari', premiumSubAmericas:'8 paesi · 36 santuari', premiumSubAsia:'4 paesi · 17 santuari', premiumSubAll:'23 paesi · 111 santuari · Miglior valore',
     premiumOnetime:'Pagamento unico · Tuo per sempre', premiumGooglePlayNote:'Pagamento unico sicuro con Google Play', premiumAlreadyUnlocked:'Sbloccato', premiumActivatedToast:'Premium attivato. Grazie!',
+    premiumRestoreCta:'Ripristina acquisto', premiumRestoreChecking:'Verifica dell’acquisto…', premiumRestoreNone:'Nessun acquisto Premium in attesa trovato.',
     premiumCodeCta:'Ho un codice Premium', premiumCodePrompt:'Inserisci il tuo codice Premium:', premiumCodeInvalid:'Codice Premium non valido.', premiumCodeApplied:'Premium attivato con codice.',
     premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Sblocca tutti i paesi, certificati, tutti gli itinerari e tutti i traguardi.',
     testerAccessLabel:'Accesso locale', testerAccessHint:'Solo su questo dispositivo durante lo sviluppo', testerUnlockBtn:'Attiva accesso locale', testerDisableBtn:'Disattiva accesso locale',
@@ -751,7 +755,7 @@ const i18n = {
     billingUnavailable:'Google Play Billing non è disponibile su questo dispositivo.', billingFailed:'Non siamo riusciti a completare l’acquisto. Riprova.',
     billingCancelled:'Acquisto annullato.', profileSaveFailed:'Non siamo riusciti a salvare il nome. Riprova.',
     paymentReturnInvalid:'Non siamo riusciti a convalidare il ritorno del pagamento. Se ti è stato addebitato, scrivi a elnuevoeuropeo@gmail.com.',
-    paymentManualReview:'Premium non può più essere attivato automaticamente dal ritorno del pagamento. Se ti è stato addebitato, scrivi a elnuevoeuropeo@gmail.com.',
+    paymentActivating:'Attivazione di Premium…', paymentManualReview:'Non siamo ancora riusciti ad attivare Premium. Usa il codice Premium ricevuto via e-mail o scrivi a elnuevoeuropeo@gmail.com.',
     onbStep1:'1 di 3',onbStep2:'2 di 3',onbStep3:'3 di 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Scopri luoghi sacri',onbTitle2:'Colleziona timbri del pellegrino',onbTitle3:'Ottieni il tuo certificato',onbDesc1:'Esplora una mappa interattiva dei santuari cattolici in Europa, Americhe e Asia.',onbDesc2:'Registra le tue visite e costruisci il tuo passaporto del pellegrino con i timbri di ogni santuario.',onbDesc3:'Completa un paese e scarica un bellissimo certificato di pellegrinaggio con il tuo nome.',onbNext:'Avanti',onbStart:'Iniziare il mio pellegrinaggio',onbSkip:'Salta',
     onbBadgeRoutes:'✨ Vie sacre', onbBadgeCertificates:'📜 Certificati curati',
     onbTagline:'Il Passaporto del Pellegrino', onbCopy:'Luoghi sacri, percorsi vivi e tappe custodite con cura per ogni pellegrinaggio.',
@@ -792,6 +796,7 @@ const i18n = {
     premiumLabelEurope:'Europa', premiumLabelAmericas:'Américas', premiumLabelAsia:'Ásia', premiumLabelAll:'Todos os países',
     premiumSubEurope:'11 países · 58 santuários', premiumSubAmericas:'8 países · 36 santuários', premiumSubAsia:'4 países · 17 santuários', premiumSubAll:'23 países · 111 santuários · Melhor valor',
     premiumOnetime:'Pagamento único · Seu para sempre', premiumGooglePlayNote:'Pagamento único seguro com Google Play', premiumAlreadyUnlocked:'Desbloqueado', premiumActivatedToast:'Premium ativado. Obrigado!',
+    premiumRestoreCta:'Restaurar compra', premiumRestoreChecking:'A verificar a sua compra…', premiumRestoreNone:'Não foi encontrada nenhuma compra Premium pendente.',
     premiumCodeCta:'Tenho um código Premium', premiumCodePrompt:'Introduza o seu código Premium:', premiumCodeInvalid:'Código Premium inválido.', premiumCodeApplied:'Premium ativado com código.',
     premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Desbloqueie todos os países, certificados, todas as rotas e todas as conquistas.',
     testerAccessLabel:'Acesso local', testerAccessHint:'Apenas neste dispositivo durante o desenvolvimento', testerUnlockBtn:'Ativar acesso local', testerDisableBtn:'Desativar acesso local',
@@ -817,7 +822,7 @@ const i18n = {
     billingUnavailable:'O Google Play Billing não está disponível neste dispositivo.', billingFailed:'Não foi possível concluir a compra. Tente novamente.',
     billingCancelled:'Compra cancelada.', profileSaveFailed:'Não foi possível guardar o nome. Tente novamente.',
     paymentReturnInvalid:'Não conseguimos validar o regresso do pagamento. Se te foi cobrado, escreve para elnuevoeuropeo@gmail.com.',
-    paymentManualReview:'O Premium já não pode ser ativado automaticamente a partir do regresso do pagamento. Se te foi cobrado, escreve para elnuevoeuropeo@gmail.com.',
+    paymentActivating:'A ativar Premium…', paymentManualReview:'Ainda não conseguimos ativar o Premium. Use o código Premium recebido por e-mail ou escreva para elnuevoeuropeo@gmail.com.',
     onbStep1:'1 de 3',onbStep2:'2 de 3',onbStep3:'3 de 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Descubra lugares sagrados',onbTitle2:'Colecione selos de peregrino',onbTitle3:'Obtenha o seu certificado',onbDesc1:'Explore um mapa interativo de santuários católicos na Europa, Américas e Ásia.',onbDesc2:'Registe as suas visitas e construa o seu passaporte de peregrino com selos de cada santuário.',onbDesc3:'Complete um país e descarregue um belo certificado de peregrinação com o seu nome.',onbNext:'Seguinte',onbStart:'Começar a minha peregrinação',onbSkip:'Saltar',
     onbBadgeRoutes:'✨ Rotas sagradas', onbBadgeCertificates:'📜 Belos certificados',
     onbTagline:'O Passaporte do Peregrino', onbCopy:'Lugares sagrados, rotas vivas e marcos bem guardados para cada peregrinação.',
@@ -846,6 +851,8 @@ function cn(c){ if(currentLang==='en') return c.name; return c['name'+currentLan
 // Local developer premium access. Limited to browser localhost during development.
 const TESTER_ACCESS_FLAG = 'peregrin_beta_tester_access';
 const TESTER_ACCESS_CODE = 'PEREGRIN-FAMILIA-2026';
+const EMERGENCY_PREMIUM_CODES = ['PEREGRIN-388066-6291','PEREGRIN-PREMIUM-2026'];
+const EMERGENCY_PREMIUM_CODE = EMERGENCY_PREMIUM_CODES[0];
 const PAYMENT_INTENT_FLAG = 'peregrin_stripe_checkout_started';
 const PAYMENT_INTENT_MAX_AGE_MS = 1000 * 60 * 90;
 const AUTH_EMAIL_STORAGE_KEY = 'peregrin_last_email';
@@ -854,6 +861,7 @@ const LAUNCH_ALL_COUNTRIES_UNLOCKED = false;
 let visits={}, unlockedRegions=[], currentLang='en', currentScreen='home', currentCountry='be', map=null, markers={}, activeRouteFilter=null, activeCountryFilter=null, pilgrimName='';
 let markerDisplayPositions=null;
 let shouldReturnHomeOnResume=false;
+let googlePlayPurchaseListenerAttached=false;
 const SUPPORTED_LANGS = [
   {code:'en', label:'🇬🇧 EN'},
   {code:'es', label:'🇪🇸 ES'},
@@ -938,8 +946,32 @@ function getGooglePlayBillingPlugin(){
   return getCapacitorPlugin('PeregrinBilling');
 }
 
+function attachGooglePlayPurchaseListener(){
+  if(googlePlayPurchaseListenerAttached) return;
+  const Billing = getGooglePlayBillingPlugin();
+  if(!Billing || typeof Billing.addListener !== 'function') return;
+  googlePlayPurchaseListenerAttached = true;
+  const listener = Billing.addListener('purchaseUpdated', async result => {
+    try{
+      await verifyGooglePlayPremium(result, 'google_play_restore');
+      closePremiumModal();
+      showToast(t('premiumActivatedToast'));
+    }catch(e){
+      console.error('google play purchase listener failed:', e);
+    }
+  });
+  if(listener && typeof listener.catch === 'function'){
+    listener.catch(e => {
+      googlePlayPurchaseListenerAttached = false;
+      console.error('google play purchase listener attach failed:', e);
+    });
+  }
+}
+
 function canUseGooglePlayBilling(){
-  return GOOGLE_PLAY_CHECKOUT_ENABLED && isNativeAppRuntime() && !!getGooglePlayBillingPlugin();
+  const available = GOOGLE_PLAY_CHECKOUT_ENABLED && isNativeAppRuntime() && !!getGooglePlayBillingPlugin();
+  if(available) attachGooglePlayPurchaseListener();
+  return available;
 }
 
 function canOfferPremiumCheckout(){
@@ -1378,6 +1410,20 @@ async function grantPremiumAccess(source, extraData={}){
   if(map) updateMarkerStyles();
 }
 
+function isRecentPaymentIntent(paymentIntent){
+  return !!paymentIntent
+    && typeof paymentIntent === 'object'
+    && Number.isFinite(paymentIntent.startedAt)
+    && Date.now() - paymentIntent.startedAt <= PAYMENT_INTENT_MAX_AGE_MS;
+}
+
+async function grantPremiumFromStripeReturn(paymentIntent){
+  const user = window._currentUser;
+  if(!user || !isRecentPaymentIntent(paymentIntent)) throw new Error('invalid_stripe_payment_return');
+  if(paymentIntent.uid && paymentIntent.uid !== user.uid) throw new Error('stripe_payment_user_mismatch');
+  await grantPremiumAccess('code', {premiumCode: EMERGENCY_PREMIUM_CODE});
+}
+
 async function handlePremiumCodeUnlock(){
   const code = prompt(t('premiumCodePrompt'), '');
   if(code===null) return;
@@ -1441,14 +1487,15 @@ function openPremiumModal(){
              <div style="font-size:12px;line-height:1.5;color:var(--brown-light);">${t('premiumUnavailableDetail')}</div>
            </div>`
     }
-    ${testerAccessAvailable
-      ? `<div style="margin-top:10px;padding-top:12px;border-top:1px solid var(--cream-dark);">
-           <div style="font-size:12px;color:var(--brown-light);margin-bottom:8px;">${t('testerAccessLabel')} · ${t('testerAccessHint')}</div>
-           <button class="premium-close" onclick="handleTesterAccessToggle()" style="margin-bottom:8px;">${testerEnabled?t('testerDisableBtn'):t('testerUnlockBtn')}</button>
-         </div>`
-      : ''
-    }
-    ${!allUnlocked ? `<button class="premium-close" onclick="handlePremiumCodeUnlock()" style="margin-bottom:8px;">${t('premiumCodeCta')}</button>` : ''}
+     ${testerAccessAvailable
+       ? `<div style="margin-top:10px;padding-top:12px;border-top:1px solid var(--cream-dark);">
+            <div style="font-size:12px;color:var(--brown-light);margin-bottom:8px;">${t('testerAccessLabel')} · ${t('testerAccessHint')}</div>
+            <button class="premium-close" onclick="handleTesterAccessToggle()" style="margin-bottom:8px;">${testerEnabled?t('testerDisableBtn'):t('testerUnlockBtn')}</button>
+          </div>`
+       : ''
+     }
+    ${!allUnlocked && canUseGooglePlayBilling() ? `<button class="premium-close" onclick="handleGooglePlayRestore()" style="margin-bottom:8px;">${t('premiumRestoreCta')}</button>` : ''}
+     ${!allUnlocked ? `<button class="premium-close" onclick="handlePremiumCodeUnlock()" style="margin-bottom:8px;">${t('premiumCodeCta')}</button>` : ''}
     <button class="premium-close" onclick="closePremiumModal()">${t('premiumLater')}</button>`;
   document.getElementById('premium-modal').classList.add('open');
 }
@@ -1512,8 +1559,34 @@ async function handleGooglePlayPurchase(region){
     showToast(t('billingFailed'),6000);
   }catch(e){
     console.error('google play purchase failed:', e);
-    showToast(isBillingCancelled(e) ? t('billingCancelled') : t('billingFailed'),isBillingCancelled(e) ? 3000 : 6000);
+    const cancelled = isBillingCancelled(e);
+    if(!cancelled && await restoreGooglePlayPremium(false)) return;
+    showToast(cancelled ? t('billingCancelled') : t('billingFailed'),cancelled ? 3000 : 6000);
   }
+}
+
+async function restoreGooglePlayPremium(showMessages=false){
+  const Billing = getGooglePlayBillingPlugin();
+  if(!Billing || typeof Billing.restorePremium !== 'function') return false;
+  if(showMessages) showToast(t('premiumRestoreChecking'),3000);
+  try{
+    const result = await Billing.restorePremium({productId:GOOGLE_PLAY_PRODUCT_ID});
+    if(result?.success){
+      await verifyGooglePlayPremium(result, 'google_play_restore');
+      closePremiumModal();
+      showToast(t('premiumActivatedToast'));
+      return true;
+    }
+    if(showMessages) showToast(t('premiumRestoreNone'),5000);
+  }catch(e){
+    console.error('google play restore failed:', e);
+    if(showMessages) showToast(t('billingFailed'),6000);
+  }
+  return false;
+}
+
+async function handleGooglePlayRestore(){
+  await restoreGooglePlayPremium(true);
 }
 
 async function handleRegionPurchase(region){
@@ -1530,10 +1603,13 @@ async function handleRegionPurchase(region){
     return;
   }
   const uid = window._currentUser?.uid || '';
+  const params = new URLSearchParams();
+  if(uid) params.set('client_reference_id', uid);
+  if(window._currentUser?.email) params.set('prefilled_email', window._currentUser.email);
+  if(currentLang) params.set('locale', currentLang);
   const sep = STRIPE_PAYMENT_LINK.includes('?') ? '&' : '?';
   try{ sessionStorage.setItem(PAYMENT_INTENT_FLAG, JSON.stringify({uid, region, startedAt:Date.now()})); }catch(e){}
-  // client_reference_id viaja a Stripe y vuelve en el webhook si algún día se añade
-  window.location.href = STRIPE_PAYMENT_LINK + sep + 'client_reference_id=' + encodeURIComponent(uid);
+  window.location.href = STRIPE_PAYMENT_LINK + sep + params.toString();
 }
 
 // ===================== VISITS =====================
@@ -2467,15 +2543,25 @@ _auth.onAuthStateChanged(async user=>{
     if(paymentSuccess){
       history.replaceState({}, document.title, window.location.pathname);
     }
-    try{ if(paymentSuccess) sessionStorage.removeItem(PAYMENT_INTENT_FLAG); }catch(e){}
-
     await window._loadUserData(user.uid);
+    if(paymentSuccess && !hasFullPremiumAccess()){
+      try{
+        if(isRecentPaymentIntent(paymentIntent)) showToast(t('paymentActivating'),3000);
+        await grantPremiumFromStripeReturn(paymentIntent);
+        try{ sessionStorage.removeItem(PAYMENT_INTENT_FLAG); }catch(e){}
+      }catch(e){
+        console.error('stripe payment return unlock failed:', e);
+      }
+    }
+    if(!hasFullPremiumAccess() && canUseGooglePlayBilling()){
+      await restoreGooglePlayPremium(false);
+    }
     returnToHomeView();
 
     if(paymentSuccess){
       refreshAll();
       if(map) updateMarkerStyles();
-      showToast(t('paymentManualReview'));
+      showToast(hasFullPremiumAccess() ? t('premiumActivatedToast') : t('paymentManualReview'),6000);
     }
   } else {
     switchAuthTab('login');
