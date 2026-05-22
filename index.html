@@ -1038,7 +1038,7 @@ function getCertificateSummary(country, certificateSanctuaries){
 function getMarkerDisplayPositions(){
   if(markerDisplayPositions) return markerDisplayPositions;
   const threshold = 0.012;
-  const offsetRadius = 0.008;
+  const offsetRadius = 0.45;
   markerDisplayPositions = {};
   const ordered = [...sanctuaries].sort((a,b)=>a.id-b.id);
   const assigned = new Set();
@@ -1784,6 +1784,9 @@ function updateMarkerStyles(){
     if(!map.hasLayer(markers[s.id])) markers[s.id].addTo(map);
     const highlight=!!activeRouteFilter&&inRoute;
     markers[s.id].setIcon(createMarkerIcon(s,visited,highlight));
+    if(typeof markers[s.id].setZIndexOffset === 'function'){
+      markers[s.id].setZIndexOffset(highlight ? 1200 : visited ? 300 : 900);
+    }
     markers[s.id].setOpacity(1);
     markers[s.id].unbindPopup();
     markers[s.id].bindPopup(buildPopupContent(s),{maxWidth:280,closeButton:true});

@@ -9,7 +9,12 @@ Peregrin uses Google Play Billing inside the Android app and Stripe for the web.
 - Type: one-time product / in-app product
 - Product ID: `peregrin_premium_all`
 - Suggested name: `Peregrin Premium`
-- Price: `EUR 2.99`, configured manually in Play Console
+- Intended buyer-facing price: `EUR 2.99`
+- Play Console price must be checked in the purchase sheet before release. If
+  Play adds Spanish VAT on top of the configured amount, do not leave the base
+  price at `EUR 2.99` while the app says `2.99`. Either use a tax-inclusive
+  pricing/template option for EU countries, or set the Spain base price to about
+  `EUR 2.47` so `2.47 + 21% VAT` rounds to `2.99`.
 - Benefit: permanent unlock for all countries, Premium guides, private journal,
   certificates, routes, and achievements
 
@@ -179,4 +184,3 @@ unlock remains available as a support fallback.
 
 The app does not store the full purchase token in `users`; it stores a server-side
 hash. The full token is used only inside the Cloud Function to query Google Play.
-
