@@ -15,7 +15,7 @@ especially in a new Codex conversation.
 - Web root file: `index.html`
 - Capacitor web directory: `www`
 - Android packaged web assets: `android/app/src/main/assets/public`
-- Current Android version after the payment recovery work: `versionCode 31`, `versionName 1.0.30`
+- Current Android version after the Philippines pack release: `versionCode 33`, `versionName 1.0.32`
 
 The web app is mostly a static app. Android is the same web app packaged through
 Capacitor, plus native Google Play Billing code.
@@ -179,4 +179,3 @@ que Santiago lo pida explicitamente.
 
 That prompt matters because the durable context should live in the repo, not only
 in one long chat.
-

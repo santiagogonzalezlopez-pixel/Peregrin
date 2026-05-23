@@ -3,12 +3,26 @@ const path = require("path");
 const vm = require("vm");
 
 const projectRoot = path.resolve(__dirname, "..");
-const appDataPath = path.join(projectRoot, "www", "app-data.js");
-const source = fs.readFileSync(appDataPath, "utf8");
-
 const context = { window: {}, console };
 vm.createContext(context);
-vm.runInContext(source, context);
+
+function runDataScript(filePath) {
+  const source = fs.readFileSync(filePath, "utf8");
+  vm.runInContext(source, context, { filename: filePath });
+}
+
+const webRoot = path.join(projectRoot, "www");
+runDataScript(path.join(webRoot, "app-data.js"));
+
+const contentPacksPath = path.join(webRoot, "content-packs");
+if (fs.existsSync(contentPacksPath)) {
+  for (const fileName of fs
+    .readdirSync(contentPacksPath)
+    .filter((file) => file.endsWith(".js"))
+    .sort()) {
+    runDataScript(path.join(contentPacksPath, fileName));
+  }
+}
 
 const data = context.window.PEREGRIN_DATA;
 const sanctuaryIds = new Set();

@@ -494,6 +494,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 
 <script src="app-data.js"></script>
 <script src="route-guides.js"></script>
+<script src="content-packs/philippines.js"></script>
 <script>
 // ===================== I18N =====================
 const i18n = {
@@ -526,7 +527,7 @@ const i18n = {
     premiumLater:'Maybe later', premiumUnlockRegion:'Unlock', premiumUnlockAll:'Unlock everything',
     premiumPriceEurope:'€2.99', premiumPriceAmericas:'€2.99', premiumPriceAsia:'€2.99', premiumPriceAll:'€2.99',
     premiumLabelEurope:'Europe', premiumLabelAmericas:'Americas', premiumLabelAsia:'Asia', premiumLabelAll:'All countries',
-    premiumSubEurope:'11 countries · 58 sanctuaries', premiumSubAmericas:'8 countries · 36 sanctuaries', premiumSubAsia:'4 countries · 17 sanctuaries', premiumSubAll:'23 countries · 111 sanctuaries · Best value',
+    premiumSubEurope:'11 countries · 58 sanctuaries', premiumSubAmericas:'8 countries · 36 sanctuaries', premiumSubAsia:'4 countries · 30 sanctuaries', premiumSubAll:'23 countries · 124 sanctuaries · Best value',
     premiumOnetime:'One-time payment · Yours forever', premiumGooglePlayNote:'Secure one-time payment with Google Play', premiumAlreadyUnlocked:'Unlocked', premiumActivatedToast:'Premium activated. Thank you!',
     premiumRestoreCta:'Restore purchase', premiumRestoreChecking:'Checking your purchase…', premiumRestoreNone:'No pending Premium purchase found.',
     premiumCodeCta:'Use premium code', premiumCodePrompt:'Enter your premium code:', premiumCodeInvalid:'Invalid premium code.', premiumCodeApplied:'Premium activated with code.',
@@ -593,7 +594,7 @@ const i18n = {
     premiumLater:'Quizás más adelante', premiumUnlockRegion:'Desbloquear', premiumUnlockAll:'Desbloquear todo',
     premiumPriceEurope:'2,99 €', premiumPriceAmericas:'2,99 €', premiumPriceAsia:'2,99 €', premiumPriceAll:'2,99 €',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'América', premiumLabelAsia:'Asia', premiumLabelAll:'Todos los países',
-    premiumSubEurope:'11 países · 58 santuarios', premiumSubAmericas:'8 países · 36 santuarios', premiumSubAsia:'4 países · 17 santuarios', premiumSubAll:'23 países · 111 santuarios · Mejor valor',
+    premiumSubEurope:'11 países · 58 santuarios', premiumSubAmericas:'8 países · 36 santuarios', premiumSubAsia:'4 países · 30 santuarios', premiumSubAll:'23 países · 124 santuarios · Mejor valor',
     premiumOnetime:'Pago único · Tuyo para siempre', premiumGooglePlayNote:'Pago único seguro con Google Play', premiumAlreadyUnlocked:'Desbloqueado', premiumActivatedToast:'Premium activado. ¡Gracias!',
     premiumRestoreCta:'Restaurar compra', premiumRestoreChecking:'Comprobando tu compra…', premiumRestoreNone:'No se ha encontrado ninguna compra Premium pendiente.',
     premiumCodeCta:'Tengo un código Premium', premiumCodePrompt:'Introduce tu código Premium:', premiumCodeInvalid:'Código Premium no válido.', premiumCodeApplied:'Premium activado con código.',
@@ -660,7 +661,7 @@ const i18n = {
     premiumLater:'Peut-être plus tard', premiumUnlockRegion:'Débloquer', premiumUnlockAll:'Tout débloquer',
     premiumPriceEurope:'2,99 €', premiumPriceAmericas:'2,99 €', premiumPriceAsia:'2,99 €', premiumPriceAll:'2,99 €',
     premiumLabelEurope:'Europe', premiumLabelAmericas:'Amériques', premiumLabelAsia:'Asie', premiumLabelAll:'Tous les pays',
-    premiumSubEurope:'11 pays · 58 sanctuaires', premiumSubAmericas:'8 pays · 36 sanctuaires', premiumSubAsia:'4 pays · 17 sanctuaires', premiumSubAll:'23 pays · 111 sanctuaires · Meilleure offre',
+    premiumSubEurope:'11 pays · 58 sanctuaires', premiumSubAmericas:'8 pays · 36 sanctuaires', premiumSubAsia:'4 pays · 30 sanctuaires', premiumSubAll:'23 pays · 124 sanctuaires · Meilleure offre',
     premiumOnetime:'Paiement unique · À vous pour toujours', premiumGooglePlayNote:'Paiement unique sécurisé avec Google Play', premiumAlreadyUnlocked:'Débloqué', premiumActivatedToast:'Premium activé. Merci !',
     premiumRestoreCta:'Restaurer l’achat', premiumRestoreChecking:'Vérification de votre achat…', premiumRestoreNone:'Aucun achat Premium en attente trouvé.',
     premiumCodeCta:'J’ai un code Premium', premiumCodePrompt:'Entrez votre code Premium :', premiumCodeInvalid:'Code Premium invalide.', premiumCodeApplied:'Premium activé avec code.',
@@ -727,7 +728,7 @@ const i18n = {
     premiumLater:'Forse più tardi', premiumUnlockRegion:'Sblocca', premiumUnlockAll:'Sblocca tutto',
     premiumPriceEurope:'€ 2,99', premiumPriceAmericas:'€ 2,99', premiumPriceAsia:'€ 2,99', premiumPriceAll:'€ 2,99',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'Americhe', premiumLabelAsia:'Asia', premiumLabelAll:'Tutti i paesi',
-    premiumSubEurope:'11 paesi · 58 santuari', premiumSubAmericas:'8 paesi · 36 santuari', premiumSubAsia:'4 paesi · 17 santuari', premiumSubAll:'23 paesi · 111 santuari · Miglior valore',
+    premiumSubEurope:'11 paesi · 58 santuari', premiumSubAmericas:'8 paesi · 36 santuari', premiumSubAsia:'4 paesi · 30 santuari', premiumSubAll:'23 paesi · 124 santuari · Miglior valore',
     premiumOnetime:'Pagamento unico · Tuo per sempre', premiumGooglePlayNote:'Pagamento unico sicuro con Google Play', premiumAlreadyUnlocked:'Sbloccato', premiumActivatedToast:'Premium attivato. Grazie!',
     premiumRestoreCta:'Ripristina acquisto', premiumRestoreChecking:'Verifica dell’acquisto…', premiumRestoreNone:'Nessun acquisto Premium in attesa trovato.',
     premiumCodeCta:'Ho un codice Premium', premiumCodePrompt:'Inserisci il tuo codice Premium:', premiumCodeInvalid:'Codice Premium non valido.', premiumCodeApplied:'Premium attivato con codice.',
@@ -794,7 +795,7 @@ const i18n = {
     premiumLater:'Talvez mais tarde', premiumUnlockRegion:'Desbloquear', premiumUnlockAll:'Desbloquear tudo',
     premiumPriceEurope:'€2,99', premiumPriceAmericas:'€2,99', premiumPriceAsia:'€2,99', premiumPriceAll:'€2,99',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'Américas', premiumLabelAsia:'Ásia', premiumLabelAll:'Todos os países',
-    premiumSubEurope:'11 países · 58 santuários', premiumSubAmericas:'8 países · 36 santuários', premiumSubAsia:'4 países · 17 santuários', premiumSubAll:'23 países · 111 santuários · Melhor valor',
+    premiumSubEurope:'11 países · 58 santuários', premiumSubAmericas:'8 países · 36 santuários', premiumSubAsia:'4 países · 30 santuários', premiumSubAll:'23 países · 124 santuários · Melhor valor',
     premiumOnetime:'Pagamento único · Seu para sempre', premiumGooglePlayNote:'Pagamento único seguro com Google Play', premiumAlreadyUnlocked:'Desbloqueado', premiumActivatedToast:'Premium ativado. Obrigado!',
     premiumRestoreCta:'Restaurar compra', premiumRestoreChecking:'A verificar a sua compra…', premiumRestoreNone:'Não foi encontrada nenhuma compra Premium pendente.',
     premiumCodeCta:'Tenho um código Premium', premiumCodePrompt:'Introduza o seu código Premium:', premiumCodeInvalid:'Código Premium inválido.', premiumCodeApplied:'Premium ativado com código.',
