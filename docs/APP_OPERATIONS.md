@@ -1,6 +1,6 @@
 # Peregrin Passport operations
 
-Last updated: 2026-05-21
+Last updated: 2026-05-23
 
 This is the operating map for Peregrin Passport. Read this before making changes,
 especially in a new Codex conversation.
@@ -15,7 +15,7 @@ especially in a new Codex conversation.
 - Web root file: `index.html`
 - Capacitor web directory: `www`
 - Android packaged web assets: `android/app/src/main/assets/public`
-- Current Android version after the Philippines pack release: `versionCode 33`, `versionName 1.0.32`
+- Current Android version after the shareable route cards release: `versionCode 34`, `versionName 1.0.33`
 
 The web app is mostly a static app. Android is the same web app packaged through
 Capacitor, plus native Google Play Billing code.
