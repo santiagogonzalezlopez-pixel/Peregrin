@@ -2367,6 +2367,7 @@ function renderRoutes(){
           ${stops[0]?`<div class="route-first-stop"><span>${t('routeFirstStop')}</span>${sd(stops[0]).city}</div>`:''}
           <div class="route-stops">${stops.map(s=>`<span class="route-stop" style="${isVisited(s.id)?'background:var(--gold-light);color:var(--brown);font-weight:600':''}">${sd(s).city}</span>`).join('')}</div>
           <div class="route-action-hint">${t('routeTapHint')}</div>
+          ${window.PeregrinShareCards?.routeButton(r, vc) || ''}
           ${hasGuide?`<button class="route-guide-btn ${guideUnlocked?'':'locked'}" onclick="openRouteGuide('${r.id}', event)">${guideUnlocked?t('routeGuideCta'):t('routeGuideLocked')}</button>`:''}
         </div>
       </div>`;
@@ -2601,6 +2602,7 @@ _auth.onAuthStateChanged(async user=>{
 }
 _authReady.then(startAuthStateListener).catch(startAuthStateListener);
 </script>
+<script src="share-cards.js"></script>
 <script src="certificates.js"></script>
 </body>
 </html>
