@@ -189,20 +189,28 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .cert-btn:active{transform:scale(0.98);}
 
 /* ACHIEVEMENTS */
-.achievements-screen{background:var(--cream);padding:20px;}
-.achievement-card{background:var(--white);border-radius:14px;padding:18px;margin-bottom:12px;box-shadow:var(--shadow);display:flex;align-items:center;gap:16px;}
-.achievement-card.locked{opacity:0.5;}
-.achievement-card.unlocked{border-left:4px solid var(--gold);}
-.achievement-icon{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
-.achievement-card.unlocked .achievement-icon{background:linear-gradient(135deg,var(--gold),var(--gold-light));}
-.achievement-card.locked .achievement-icon{background:var(--cream-dark);}
-.achievement-symbol{width:26px;height:26px;color:var(--burgundy-dark);display:block;}
+.achievements-screen{background:linear-gradient(180deg,var(--cream),#fff8ea);padding:20px;}
+.achievement-card{position:relative;overflow:hidden;background:linear-gradient(135deg,#fffaf0 0%,#fff 58%,#f4ead6 100%);border:1px solid rgba(197,150,58,.22);border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:0 10px 26px rgba(62,39,35,.08);display:flex;align-items:center;gap:15px;}
+.achievement-card::before{content:"";position:absolute;inset:0 auto 0 0;width:6px;background:linear-gradient(180deg,var(--gold-light),var(--gold));opacity:.35;}
+.achievement-card::after{content:"";position:absolute;right:-32px;top:-52px;width:124px;height:124px;border-radius:50%;border:1px solid rgba(197,150,58,.18);}
+.achievement-card.locked{opacity:.78;filter:saturate(.82);}
+.achievement-card.unlocked{border-color:rgba(197,150,58,.58);box-shadow:0 14px 32px rgba(114,47,55,.12);}
+.achievement-card.unlocked::before{opacity:1;}
+.achievement-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;position:relative;z-index:1;box-shadow:inset 0 0 0 2px rgba(255,255,255,.55),0 8px 18px rgba(62,39,35,.12);}
+.achievement-card.unlocked .achievement-icon{background:radial-gradient(circle at 32% 24%,#fff2bc 0%,var(--gold-light) 36%,var(--gold) 100%);}
+.achievement-card.locked .achievement-icon{background:linear-gradient(135deg,var(--cream-dark),#f8edda);}
+.achievement-symbol{width:27px;height:27px;color:var(--burgundy-dark);display:block;}
 .achievement-card.locked .achievement-symbol{color:var(--brown-light);}
-.achievement-info{flex:1;}
-.achievement-name{font-family:'Crimson Pro',serif;font-size:16px;font-weight:600;margin-bottom:2px;}
-.achievement-desc{font-size:12px;color:var(--brown-light);line-height:1.4;}
-.achievement-progress{height:4px;background:var(--cream-dark);border-radius:2px;margin-top:8px;overflow:hidden;}
-.achievement-progress-bar{height:100%;background:var(--gold);border-radius:2px;transition:width 0.5s ease;}
+.achievement-info{flex:1;min-width:0;position:relative;z-index:1;}
+.achievement-topline{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:5px;}
+.achievement-status{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--brown-light);background:rgba(109,76,65,.1);border-radius:999px;padding:4px 8px;white-space:nowrap;}
+.achievement-card.unlocked .achievement-status{color:var(--burgundy-dark);background:rgba(232,201,122,.55);}
+.achievement-percent{font-family:'Crimson Pro',serif;font-size:17px;font-weight:800;color:var(--burgundy);}
+.achievement-name{font-family:'Crimson Pro',serif;font-size:18px;font-weight:700;margin-bottom:3px;color:var(--brown);}
+.achievement-desc{font-size:12.5px;color:var(--brown-light);line-height:1.42;}
+.achievement-progress{height:7px;background:rgba(109,76,65,.12);border-radius:999px;margin-top:10px;overflow:hidden;}
+.achievement-progress-bar{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:999px;transition:width 0.5s ease;}
+.achievement-card.locked .achievement-progress-bar{background:linear-gradient(90deg,#a9957c,#d8c6aa);}
 
 /* ROUTES */
 .routes-screen{background:var(--cream);padding:20px;}
@@ -511,6 +519,7 @@ const i18n = {
     achievementsTitle:'Pilgrim Achievements', routesTitle:'Pilgrimage Routes',
     profileTitle:'My pilgrim profile', viewPassport:'View my passport',
     myAchievements:'My achievements', pilgrimageRoutes:'Pilgrimage routes', routeVisited:'visited',
+    achievementUnlocked:'Unlocked', achievementInProgress:'In progress',
     resetVisits:'Reset my visits', resetConfirm:'Are you sure you want to reset all your visits?',
     resetDone:'Visits reset', registerVisit:'Register visit', visited_btn:'Visited',
     removeVisit:'Visited — Remove visit', viewDetails:'View full details',
@@ -578,6 +587,7 @@ const i18n = {
     achievementsTitle:'Logros del peregrino', routesTitle:'Rutas de peregrinación',
     profileTitle:'Mi perfil peregrino', viewPassport:'Ver mi pasaporte',
     myAchievements:'Mis logros', pilgrimageRoutes:'Rutas de peregrinación', routeVisited:'visitados',
+    achievementUnlocked:'Desbloqueado', achievementInProgress:'En curso',
     resetVisits:'Reiniciar mis visitas', resetConfirm:'¿Seguro que quieres reiniciar todas tus visitas?',
     resetDone:'Visitas reiniciadas', registerVisit:'Registrar visita', visited_btn:'Visitado',
     removeVisit:'Visitado — Quitar visita', viewDetails:'Ver ficha completa',
@@ -645,6 +655,7 @@ const i18n = {
     achievementsTitle:'Réalisations du pèlerin', routesTitle:'Itinéraires de pèlerinage',
     profileTitle:'Mon profil de pèlerin', viewPassport:'Voir mon passeport',
     myAchievements:'Mes réalisations', pilgrimageRoutes:'Itinéraires de pèlerinage', routeVisited:'visités',
+    achievementUnlocked:'Débloqué', achievementInProgress:'En cours',
     resetVisits:'Réinitialiser mes visites', resetConfirm:'Voulez-vous vraiment réinitialiser toutes vos visites ?',
     resetDone:'Visites réinitialisées', registerVisit:'Enregistrer la visite', visited_btn:'Visité',
     removeVisit:'Visité — Retirer la visite', viewDetails:'Voir la fiche complète',
@@ -712,6 +723,7 @@ const i18n = {
     achievementsTitle:'Traguardi del pellegrino', routesTitle:'Itinerari di pellegrinaggio',
     profileTitle:'Il mio profilo pellegrino', viewPassport:'Vedi il mio passaporto',
     myAchievements:'I miei traguardi', pilgrimageRoutes:'Itinerari di pellegrinaggio', routeVisited:'visitati',
+    achievementUnlocked:'Sbloccato', achievementInProgress:'In corso',
     resetVisits:'Reimposta le mie visite', resetConfirm:'Sei sicuro di voler reimpostare tutte le tue visite?',
     resetDone:'Visite reimpostate', registerVisit:'Registra visita', visited_btn:'Visitato',
     removeVisit:'Visitato — Rimuovi visita', viewDetails:'Vedi scheda completa',
@@ -779,6 +791,7 @@ const i18n = {
     achievementsTitle:'Conquistas do peregrino', routesTitle:'Rotas de peregrinação',
     profileTitle:'O meu perfil de peregrino', viewPassport:'Ver o meu passaporte',
     myAchievements:'As minhas conquistas', pilgrimageRoutes:'Rotas de peregrinação', routeVisited:'visitados',
+    achievementUnlocked:'Desbloqueada', achievementInProgress:'Em curso',
     resetVisits:'Reiniciar as minhas visitas', resetConfirm:'Tem a certeza de que quer reiniciar todas as suas visitas?',
     resetDone:'Visitas reiniciadas', registerVisit:'Registar visita', visited_btn:'Visitado',
     removeVisit:'Visitado — Remover visita', viewDetails:'Ver ficha completa',
@@ -2337,12 +2350,18 @@ function renderAchievements(){
       else if(a.special==='asia2'){const asiaIds=new Set(['ph','in','kr','jp']);const n=new Set([...visitedCountries].filter(x=>asiaIds.has(x))).size;progress=Math.min(n/2,1);unlocked=n>=2;}
       else if(a.condition){progress=Math.min(vc/a.total,1);unlocked=a.condition(vc);}
       else if(a.ids){const done=a.ids.filter(id=>isVisited(id)).length;progress=done/a.total;unlocked=done>=a.total;}
+      const local=a[currentLang]||a.en;
+      const percent=Math.round(progress*100);
       return `<div class="achievement-card ${unlocked?'unlocked':'locked'}">
-        <div class="achievement-icon">${achievementSymbolSvg(a)}</div>
+        <div class="achievement-icon" aria-hidden="true">${achievementSymbolSvg(a)}</div>
         <div class="achievement-info">
-          <div class="achievement-name">${(a[currentLang]||a.en).name}</div>
-          <div class="achievement-desc">${(a[currentLang]||a.en).desc}</div>
-          <div class="achievement-progress"><div class="achievement-progress-bar" style="width:${progress*100}%"></div></div>
+          <div class="achievement-topline">
+            <span class="achievement-status">${unlocked?t('achievementUnlocked'):t('achievementInProgress')}</span>
+            <span class="achievement-percent">${percent}%</span>
+          </div>
+          <div class="achievement-name">${local.name}</div>
+          <div class="achievement-desc">${local.desc}</div>
+          <div class="achievement-progress"><div class="achievement-progress-bar" style="width:${percent}%"></div></div>
         </div>
       </div>`;
     }).join('')}`;

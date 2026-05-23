@@ -427,43 +427,34 @@
       align: "center"
     });
 
-    roundedRect(ctx, 150, 684, 340, 88, 24, burgundy, null);
-    roundedRect(ctx, 590, 684, 340, 88, 24, "#EFE2CC", "rgba(197,150,58,0.4)", 2);
-    drawText(ctx, `${stops.length}/${stops.length}`, 320, 730, {
+    roundedRect(ctx, 370, 684, 340, 88, 24, burgundy, null);
+    drawText(ctx, `${stops.length}/${stops.length}`, CARD_WIDTH / 2, 730, {
       size: 42,
       family: "'Crimson Pro', serif",
       weight: "700",
       color: goldLight,
       align: "center"
     });
-    drawText(ctx, copy("holyStops").toUpperCase(), 320, 756, {
+    drawText(ctx, copy("holyStops").toUpperCase(), CARD_WIDTH / 2, 756, {
       size: 17,
       weight: "800",
       color: "rgba(253,245,230,0.74)",
       align: "center"
     });
-    drawText(ctx, copy("intention"), 760, 738, {
-      size: 24,
-      family: "'Crimson Pro', serif",
-      style: "italic",
-      weight: "600",
-      color: brown,
-      align: "center"
-    });
 
     const listTop = 812;
+    const listBottom = 1134;
+    const rowHeight = Math.max(38, Math.min(64, Math.floor((listBottom - listTop) / Math.max(stops.length, 1))));
+    const stopNameSize = stops.length > 6 ? 22 : 25;
+    const stopNameLines = rowHeight >= 56 ? 2 : 1;
     stops.forEach((stop, index) => {
       const d = typeof sd === "function" ? sd(stop) : stop;
-      const y = listTop + index * 46;
-      const stopName = clampLines(ctx, d.name || stop.name, 710, 1, {
-        size: 25,
+      const y = listTop + index * rowHeight;
+      const stopName = clampLines(ctx, d.name || stop.name, 760, stopNameLines, {
+        size: stopNameSize,
         family: "'Crimson Pro', serif",
         weight: "700"
-      })[0];
-      const stopCity = clampLines(ctx, d.city || stop.city || "", 710, 1, {
-        size: 18,
-        weight: "600"
-      })[0];
+      });
       roundedRect(ctx, 134, y - 26, 42, 42, 21, index % 2 ? "#F5E6CC" : "#E8C97A", null);
       drawText(ctx, String(index + 1), 155, y + 3, {
         size: 22,
@@ -472,16 +463,13 @@
         align: "center",
         baseline: "middle"
       });
-      drawText(ctx, stopName, 196, y - 2, {
-        size: 25,
-        family: "'Crimson Pro', serif",
-        weight: "700",
-        color: brown
-      });
-      drawText(ctx, stopCity, 196, y + 25, {
-        size: 18,
-        weight: "600",
-        color: muted
+      stopName.forEach((line, lineIndex) => {
+        drawText(ctx, line, 196, y - 2 + (lineIndex * 26), {
+          size: stopNameSize,
+          family: "'Crimson Pro', serif",
+          weight: "700",
+          color: brown
+        });
       });
     });
 

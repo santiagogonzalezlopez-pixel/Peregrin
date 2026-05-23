@@ -382,29 +382,29 @@
       en:'"Traveller, there is no path, the path is made by walking"',
       es:'"Caminante, no hay camino, se hace camino al andar"',
       fr:'"Voyageur, il n\'y a pas de chemin, le chemin se fait en marchant"',
-      it:'"Viandante, non c\'e sentiero, il sentiero si fa camminando"',
-      pt:'"Caminhante, nao ha caminho, o caminho faz-se ao andar"'
+      it:'"Viandante, non c\'è sentiero, il sentiero si fa camminando"',
+      pt:'"Caminhante, não há caminho, o caminho faz-se ao andar"'
     };
     const subtitles = {
       en:"THE DIGITAL PASSPORT OF THE CATHOLIC PILGRIM",
-      es:"EL PASAPORTE DIGITAL DEL PEREGRINO CATOLICO",
-      fr:"LE PASSEPORT NUMERIQUE DU PELERIN CATHOLIQUE",
+      es:"EL PASAPORTE DIGITAL DEL PEREGRINO CATÓLICO",
+      fr:"LE PASSEPORT NUMÉRIQUE DU PÈLERIN CATHOLIQUE",
       it:"IL PASSAPORTO DIGITALE DEL PELLEGRINO CATTOLICO",
-      pt:"O PASSAPORTE DIGITAL DO PEREGRINO CATOLICO"
+      pt:"O PASSAPORTE DIGITAL DO PEREGRINO CATÓLICO"
     };
     const footers = {
       en:"PEREGRIN - THE DIGITAL PASSPORT OF THE CATHOLIC PILGRIM",
-      es:"PEREGRIN - EL PASAPORTE DIGITAL DEL PEREGRINO CATOLICO",
-      fr:"PEREGRIN - LE PASSEPORT NUMERIQUE DU PELERIN CATHOLIQUE",
+      es:"PEREGRIN - EL PASAPORTE DIGITAL DEL PEREGRINO CATÓLICO",
+      fr:"PEREGRIN - LE PASSEPORT NUMÉRIQUE DU PÈLERIN CATHOLIQUE",
       it:"PEREGRIN - IL PASSAPORTO DIGITALE DEL PELLEGRINO CATTOLICO",
-      pt:"PEREGRIN - O PASSAPORTE DIGITAL DO PEREGRINO CATOLICO"
+      pt:"PEREGRIN - O PASSAPORTE DIGITAL DO PEREGRINO CATÓLICO"
     };
     const meta = {
       en:{completed:"Completed pilgrimage", sanctuaries:"SANCTUARIES", issuedBy:"Issued by Peregrin", certNo:"Certificate No."},
-      es:{completed:"Peregrinacion completada", sanctuaries:"SANTUARIOS", issuedBy:"Emitido por Peregrin", certNo:"Certificado n.o"},
-      fr:{completed:"Pelerinage accompli", sanctuaries:"SANCTUAIRES", issuedBy:"Emis par Peregrin", certNo:"Certificat n.o"},
+      es:{completed:"Peregrinación completada", sanctuaries:"SANTUARIOS", issuedBy:"Emitido por Peregrin", certNo:"Certificado n.º"},
+      fr:{completed:"Pèlerinage accompli", sanctuaries:"SANCTUAIRES", issuedBy:"Émis par Peregrin", certNo:"Certificat n.º"},
       it:{completed:"Pellegrinaggio compiuto", sanctuaries:"SANTUARI", issuedBy:"Emesso da Peregrin", certNo:"Certificato n."},
-      pt:{completed:"Peregrinacao concluida", sanctuaries:"SANTUARIOS", issuedBy:"Emitido por Peregrin", certNo:"Certificado n.o"}
+      pt:{completed:"Peregrinação concluída", sanctuaries:"SANTUÁRIOS", issuedBy:"Emitido por Peregrin", certNo:"Certificado n.º"}
     };
     const metaText = meta[currentLang] || meta.en;
 
