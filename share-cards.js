@@ -1,11 +1,10 @@
 (() => {
   const CARD_WIDTH = 1080;
   const CARD_HEIGHT = 1350;
-  const SHAREABLE_ROUTE_IDS = new Set(["ph-visita-iglesia-manila"]);
 
   const COPY = {
     en: {
-      button: "Share completion card",
+      button: "Share route card",
       previewTitle: "Route card ready",
       previewHint: "Open it here first, then share or download it whenever you want.",
       share: "Share card",
@@ -21,13 +20,17 @@
       holyStops: "holy stops",
       completedOn: "Completed on",
       madeWith: "Made with Peregrin Passport",
-      intention: "Seven churches. One pilgrim memory.",
-      footer: "Discover holy places. Mark your pilgrimages. Keep the memory."
+      intention: "Pilgrimage completed. Memory kept.",
+      footer: "Discover holy places. Mark your pilgrimages. Keep the memory.",
+      scopeEurope: "Europe",
+      scopeAmericas: "Americas",
+      scopeAsia: "Asia",
+      scopeMixed: "Pilgrim route"
     },
     es: {
       button: "Compartir tarjeta de ruta",
       previewTitle: "Tarjeta de ruta lista",
-      previewHint: "Primero puedes verla aqui; despues, compartirla o descargarla cuando quieras.",
+      previewHint: "Primero puedes verla aquí; después, compartirla o descargarla cuando quieras.",
       share: "Compartir tarjeta",
       download: "Descargar imagen",
       close: "Cerrar",
@@ -36,33 +39,41 @@
       downloaded: "Tarjeta descargada",
       failed: "No hemos podido preparar la tarjeta.",
       incomplete: "Completa todas las paradas para desbloquear esta tarjeta.",
-      completed: "Ruta de peregrinacion completada",
+      completed: "Ruta de peregrinación completada",
       pilgrim: "Peregrino de Peregrin",
       holyStops: "lugares santos",
       completedOn: "Completada el",
       madeWith: "Creado con Peregrin Passport",
-      intention: "Siete iglesias. Un recuerdo peregrino.",
-      footer: "Descubre lugares santos. Marca tus peregrinaciones. Guarda la memoria."
+      intention: "Peregrinación completada. Memoria guardada.",
+      footer: "Descubre lugares santos. Marca tus peregrinaciones. Guarda la memoria.",
+      scopeEurope: "Europa",
+      scopeAmericas: "América",
+      scopeAsia: "Asia",
+      scopeMixed: "Ruta peregrina"
     },
     fr: {
-      button: "Partager la carte",
-      previewTitle: "Carte de route prete",
-      previewHint: "Vous pouvez d'abord la voir ici, puis la partager ou la telecharger.",
+      button: "Partager la carte de route",
+      previewTitle: "Carte de route prête",
+      previewHint: "Vous pouvez d’abord la voir ici, puis la partager ou la télécharger.",
       share: "Partager la carte",
-      download: "Telecharger l'image",
+      download: "Télécharger l’image",
       close: "Fermer",
-      ready: "Carte prete a partager",
-      saved: "Carte enregistree sur votre appareil",
-      downloaded: "Carte telechargee",
-      failed: "Impossible de preparer la carte.",
-      incomplete: "Completez toutes les etapes pour debloquer cette carte.",
-      completed: "Route de pelerinage terminee",
-      pilgrim: "Pelerin Peregrin",
+      ready: "Carte prête à partager",
+      saved: "Carte enregistrée sur votre appareil",
+      downloaded: "Carte téléchargée",
+      failed: "Impossible de préparer la carte.",
+      incomplete: "Complétez toutes les étapes pour débloquer cette carte.",
+      completed: "Route de pèlerinage terminée",
+      pilgrim: "Pèlerin Peregrin",
       holyStops: "lieux saints",
-      completedOn: "Terminee le",
-      madeWith: "Cree avec Peregrin Passport",
-      intention: "Sept eglises. Une memoire de pelerin.",
-      footer: "Decouvrez des lieux saints. Marquez vos pelerinages. Gardez la memoire."
+      completedOn: "Terminée le",
+      madeWith: "Créé avec Peregrin Passport",
+      intention: "Pèlerinage terminé. Mémoire gardée.",
+      footer: "Découvrez des lieux saints. Marquez vos pèlerinages. Gardez la mémoire.",
+      scopeEurope: "Europe",
+      scopeAmericas: "Amériques",
+      scopeAsia: "Asie",
+      scopeMixed: "Route pèlerine"
     },
     it: {
       button: "Condividi scheda percorso",
@@ -81,28 +92,36 @@
       holyStops: "luoghi santi",
       completedOn: "Completato il",
       madeWith: "Creato con Peregrin Passport",
-      intention: "Sette chiese. Una memoria pellegrina.",
-      footer: "Scopri luoghi santi. Segna i pellegrinaggi. Custodisci la memoria."
+      intention: "Pellegrinaggio completato. Memoria custodita.",
+      footer: "Scopri luoghi santi. Segna i pellegrinaggi. Custodisci la memoria.",
+      scopeEurope: "Europa",
+      scopeAmericas: "Americhe",
+      scopeAsia: "Asia",
+      scopeMixed: "Percorso pellegrino"
     },
     pt: {
-      button: "Partilhar cartao da rota",
-      previewTitle: "Cartao da rota pronto",
-      previewHint: "Pode ve-lo primeiro aqui e depois partilhar ou descarregar.",
-      share: "Partilhar cartao",
+      button: "Partilhar cartão da rota",
+      previewTitle: "Cartão da rota pronto",
+      previewHint: "Pode vê-lo primeiro aqui e depois partilhar ou descarregar.",
+      share: "Partilhar cartão",
       download: "Descarregar imagem",
       close: "Fechar",
-      ready: "Cartao pronto para partilhar",
-      saved: "Cartao guardado no seu dispositivo",
-      downloaded: "Cartao descarregado",
-      failed: "Nao foi possivel preparar o cartao.",
-      incomplete: "Complete todas as paragens para desbloquear este cartao.",
-      completed: "Rota de peregrinacao concluida",
+      ready: "Cartão pronto para partilhar",
+      saved: "Cartão guardado no seu dispositivo",
+      downloaded: "Cartão descarregado",
+      failed: "Não foi possível preparar o cartão.",
+      incomplete: "Complete todas as paragens para desbloquear este cartão.",
+      completed: "Rota de peregrinação concluída",
       pilgrim: "Peregrino Peregrin",
       holyStops: "lugares santos",
-      completedOn: "Concluida em",
+      completedOn: "Concluída em",
       madeWith: "Criado com Peregrin Passport",
-      intention: "Sete igrejas. Uma memoria peregrina.",
-      footer: "Descubra lugares santos. Marque peregrinacoes. Guarde a memoria."
+      intention: "Peregrinação concluída. Memória guardada.",
+      footer: "Descubra lugares santos. Marque peregrinações. Guarde a memória.",
+      scopeEurope: "Europa",
+      scopeAmericas: "Américas",
+      scopeAsia: "Ásia",
+      scopeMixed: "Rota peregrina"
     }
   };
 
@@ -141,7 +160,7 @@
   }
 
   function routeButton(route, visitedCount){
-    if(!route || !SHAREABLE_ROUTE_IDS.has(route.id)) return "";
+    if(!route) return "";
     if(visitedCount < route.stops.length) return "";
     return `<button type="button" class="route-share-btn" onclick="event.stopPropagation();window.PeregrinShareCards.open('${escapeHtml(route.id)}')">${escapeHtml(copy("button"))}</button>`;
   }
@@ -156,6 +175,23 @@
     }catch(e){
       return [];
     }
+  }
+
+  function routeScopeLabel(stops){
+    try{
+      const countryIds = [...new Set(stops.map(stop => stop.country).filter(Boolean))];
+      if(countryIds.length === 1){
+        const country = countries.find(item => item.id === countryIds[0]);
+        return country ? cn(country) : copy("scopeMixed");
+      }
+      const regions = [...new Set(countryIds.map(id => getRegion(id)).filter(Boolean))];
+      if(regions.length === 1){
+        if(regions[0] === "europe") return copy("scopeEurope");
+        if(regions[0] === "americas") return copy("scopeAmericas");
+        if(regions[0] === "asia") return copy("scopeAsia");
+      }
+    }catch(e){}
+    return copy("scopeMixed");
   }
 
   function getPilgrimName(){
@@ -323,6 +359,7 @@
     const brown = "#3E2723";
     const muted = "#6D4C41";
     const routeName = routeLabel(route);
+    const scopeLabel = routeScopeLabel(stops);
     const completionDate = formatCompletionDate(route);
     const pilgrim = getPilgrimName();
 
@@ -347,7 +384,10 @@
       color: goldLight,
       align: "center"
     });
-    drawText(ctx, "PHILIPPINES", CARD_WIDTH / 2, 128, {
+    drawText(ctx, clampLines(ctx, scopeLabel.toUpperCase(), 780, 1, {
+      size: 20,
+      weight: "800"
+    })[0], CARD_WIDTH / 2, 128, {
       size: 20,
       weight: "800",
       color: "rgba(253,245,230,0.72)",
@@ -548,13 +588,13 @@
     link.remove();
   }
 
-  async function shareImage(dataUrl, fileName, nativeFile){
+  async function shareImage(dataUrl, fileName, nativeFile, route){
     if(nativeFile?.uri && isNative()){
       const Share = plugin("Share");
       if(Share?.share){
         try{
           await Share.share({
-            title: routeLabel(getRoute("ph-visita-iglesia-manila")),
+            title: routeLabel(route),
             text: copy("madeWith"),
             files: [nativeFile.uri],
             dialogTitle: copy("share")
@@ -572,7 +612,7 @@
         const blob = await (await fetch(dataUrl)).blob();
         const file = new File([blob], fileName, {type:"image/png"});
         if(!navigator.canShare || navigator.canShare({files:[file]})){
-          await navigator.share({title: copy("previewTitle"), text: copy("madeWith"), files: [file]});
+          await navigator.share({title: routeLabel(route), text: copy("madeWith"), files: [file]});
           toast(copy("ready"));
           return;
         }
@@ -600,7 +640,7 @@
     return null;
   }
 
-  function showPreview(dataUrl, fileName){
+  function showPreview(dataUrl, fileName, route){
     ensureStyles();
     const previous = document.getElementById("route-share-overlay");
     if(previous) previous.remove();
@@ -647,7 +687,7 @@
       setBusy(true);
       try{
         if(!savedNativeFile?.ok) savedNativeFile = await saveNative(dataUrl, fileName);
-        await shareImage(dataUrl, fileName, savedNativeFile);
+        await shareImage(dataUrl, fileName, savedNativeFile, route);
       }finally{
         setBusy(false);
       }
@@ -671,7 +711,7 @@
 
   async function open(routeId){
     const route = getRoute(routeId);
-    if(!route || !SHAREABLE_ROUTE_IDS.has(route.id)) return;
+    if(!route) return;
     if(!routeIsComplete(route)){
       toast(copy("incomplete"));
       return;
@@ -679,7 +719,7 @@
     ensureStyles();
     try{
       const {dataUrl, fileName} = await buildCard(route);
-      showPreview(dataUrl, fileName);
+      showPreview(dataUrl, fileName, route);
       toast(copy("ready"));
     }catch(e){
       console.error("route completion card failed:", e);
