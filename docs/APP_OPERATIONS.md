@@ -1,6 +1,6 @@
 # Peregrin Passport operations
 
-Last updated: 2026-05-23
+Last updated: 2026-05-24
 
 This is the operating map for Peregrin Passport. Read this before making changes,
 especially in a new Codex conversation.
@@ -15,7 +15,8 @@ especially in a new Codex conversation.
 - Web root file: `index.html`
 - Capacitor web directory: `www`
 - Android packaged web assets: `android/app/src/main/assets/public`
-- Current Android version after the shareable route cards release: `versionCode 34`, `versionName 1.0.33`
+- Current Android version after the Africa production checkpoint: `versionCode 39`, `versionName 1.0.38`
+- Current publication status confirmed by Santiago: Google Play production.
 
 The web app is mostly a static app. Android is the same web app packaged through
 Capacitor, plus native Google Play Billing code.
@@ -112,6 +113,15 @@ npx.cmd firebase deploy --only firestore:rules --project peregrin-d7611
 
 Only deploy a Function after confirming its region, environment variables, secrets,
 runtime, and source match the intended production behavior.
+
+## Production discipline
+
+Peregrin is now in production. Work should assume real users, real purchases and
+real public-store consequences.
+
+The current production checkpoint is documented in `docs/PROJECT_CONTEXT.md`.
+Near-term product work should prioritize beauty and shareability, especially
+achievement seals, passport stamps and save/share moments.
 
 ## Release discipline
 
