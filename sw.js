@@ -1,4 +1,4 @@
-const CACHE_NAME = 'peregrin-v21';
+const CACHE_NAME = 'peregrin-v22';
 const SCOPE_PATH = new URL(self.registration.scope).pathname.replace(/\/$/, '');
 const appPath = path => `${SCOPE_PATH}${path}`.replace(/\/{2,}/g, '/');
 const APP_SHELL = [
@@ -22,7 +22,7 @@ const APP_SHELL = [
   appPath('/assets/routes/poland.png'),
   appPath('/assets/routes/americas.png'),
   appPath('/assets/routes/asia.png'),
-  appPath('/assets/routes/africa.svg')
+  appPath('/assets/routes/africa.png')
 ];
 
 self.addEventListener('install', e => {
@@ -42,6 +42,15 @@ self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
   const accept = e.request.headers.get('accept') || '';
   const isHtmlRequest = e.request.mode === 'navigate' || accept.includes('text/html');
+  const preferNetwork = ['script', 'style', 'image', 'font', 'worker'].includes(e.request.destination)
+    || /\.(?:js|css|png|svg|json|webmanifest)$/i.test(url.pathname);
+  const networkFetch = () => fetch(e.request).then(response => {
+    if (response && response.ok) {
+      const copy = response.clone();
+      caches.open(CACHE_NAME).then(cache => cache.put(e.request, copy));
+    }
+    return response;
+  }).catch(() => null);
   e.respondWith(
     url.origin !== self.location.origin
       ? fetch(e.request).catch(() => caches.match(e.request))
@@ -53,15 +62,8 @@ self.addEventListener('fetch', e => {
             }
             return response;
           }).catch(() => caches.match(e.request).then(cached => cached || caches.match(appPath('/index.html'))))
-        : caches.match(e.request).then(cached => {
-            const networkFetch = fetch(e.request).then(response => {
-              if (response && response.ok) {
-                const copy = response.clone();
-                caches.open(CACHE_NAME).then(cache => cache.put(e.request, copy));
-              }
-              return response;
-            }).catch(() => null);
-            return cached || networkFetch;
-          })
+        : preferNetwork
+          ? networkFetch().then(response => response || caches.match(e.request))
+          : caches.match(e.request).then(cached => cached || networkFetch())
   );
 });

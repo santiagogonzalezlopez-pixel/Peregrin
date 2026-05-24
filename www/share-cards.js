@@ -24,6 +24,7 @@
       footer: "Discover holy places. Mark your pilgrimages. Keep the memory.",
       scopeEurope: "Europe",
       scopeAmericas: "Americas",
+      scopeAfrica: "Africa",
       scopeAsia: "Asia",
       scopeMixed: "Pilgrim route"
     },
@@ -48,6 +49,7 @@
       footer: "Descubre lugares santos. Marca tus peregrinaciones. Guarda la memoria.",
       scopeEurope: "Europa",
       scopeAmericas: "América",
+      scopeAfrica: "África",
       scopeAsia: "Asia",
       scopeMixed: "Ruta peregrina"
     },
@@ -72,6 +74,7 @@
       footer: "Découvrez des lieux saints. Marquez vos pèlerinages. Gardez la mémoire.",
       scopeEurope: "Europe",
       scopeAmericas: "Amériques",
+      scopeAfrica: "Afrique",
       scopeAsia: "Asie",
       scopeMixed: "Route pèlerine"
     },
@@ -96,6 +99,7 @@
       footer: "Scopri luoghi santi. Segna i pellegrinaggi. Custodisci la memoria.",
       scopeEurope: "Europa",
       scopeAmericas: "Americhe",
+      scopeAfrica: "Africa",
       scopeAsia: "Asia",
       scopeMixed: "Percorso pellegrino"
     },
@@ -120,6 +124,7 @@
       footer: "Descubra lugares santos. Marque peregrinações. Guarde a memória.",
       scopeEurope: "Europa",
       scopeAmericas: "Américas",
+      scopeAfrica: "África",
       scopeAsia: "Ásia",
       scopeMixed: "Rota peregrina"
     }
@@ -188,6 +193,7 @@
       if(regions.length === 1){
         if(regions[0] === "europe") return copy("scopeEurope");
         if(regions[0] === "americas") return copy("scopeAmericas");
+        if(regions[0] === "africa") return copy("scopeAfrica");
         if(regions[0] === "asia") return copy("scopeAsia");
       }
     }catch(e){}
