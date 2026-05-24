@@ -1,4 +1,4 @@
-const CACHE_NAME = 'peregrin-v22';
+const CACHE_NAME = 'peregrin-v23';
 const SCOPE_PATH = new URL(self.registration.scope).pathname.replace(/\/$/, '');
 const appPath = path => `${SCOPE_PATH}${path}`.replace(/\/{2,}/g, '/');
 const APP_SHELL = [
@@ -22,7 +22,8 @@ const APP_SHELL = [
   appPath('/assets/routes/poland.png'),
   appPath('/assets/routes/americas.png'),
   appPath('/assets/routes/asia.png'),
-  appPath('/assets/routes/africa.png')
+  appPath('/assets/routes/africa.png'),
+  appPath('/assets/sanctuary-hero.png')
 ];
 
 self.addEventListener('install', e => {

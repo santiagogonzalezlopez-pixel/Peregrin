@@ -15,6 +15,14 @@
       downloaded: "Route card downloaded",
       failed: "We could not prepare the route card.",
       incomplete: "Complete every stop to unlock this route card.",
+      achievementPreviewTitle: "Achievement card ready",
+      achievementReady: "Achievement card ready to share",
+      achievementFailed: "We could not prepare the achievement card.",
+      achievementIncomplete: "Unlock this achievement first.",
+      achievementSaved: "Achievement card saved on your device",
+      achievementDownloaded: "Achievement card downloaded",
+      achievementUnlocked: "Achievement unlocked",
+      achievementCompletedOn: "Unlocked on",
       completed: "Completed pilgrimage route",
       pilgrim: "Peregrin pilgrim",
       holyStops: "holy stops",
@@ -40,6 +48,14 @@
       downloaded: "Tarjeta descargada",
       failed: "No hemos podido preparar la tarjeta.",
       incomplete: "Completa todas las paradas para desbloquear esta tarjeta.",
+      achievementPreviewTitle: "Tarjeta de logro lista",
+      achievementReady: "Tarjeta de logro lista para compartir",
+      achievementFailed: "No hemos podido preparar la tarjeta de logro.",
+      achievementIncomplete: "Desbloquea primero este logro.",
+      achievementSaved: "Tarjeta de logro guardada en tu dispositivo",
+      achievementDownloaded: "Tarjeta de logro descargada",
+      achievementUnlocked: "Logro desbloqueado",
+      achievementCompletedOn: "Desbloqueado el",
       completed: "Ruta de peregrinación completada",
       pilgrim: "Peregrino de Peregrin",
       holyStops: "lugares santos",
@@ -65,6 +81,14 @@
       downloaded: "Carte téléchargée",
       failed: "Impossible de préparer la carte.",
       incomplete: "Complétez toutes les étapes pour débloquer cette carte.",
+      achievementPreviewTitle: "Carte de réalisation prête",
+      achievementReady: "Carte de réalisation prête à partager",
+      achievementFailed: "Impossible de préparer la carte de réalisation.",
+      achievementIncomplete: "Débloquez d’abord cette réalisation.",
+      achievementSaved: "Carte de réalisation enregistrée sur votre appareil",
+      achievementDownloaded: "Carte de réalisation téléchargée",
+      achievementUnlocked: "Réalisation débloquée",
+      achievementCompletedOn: "Débloquée le",
       completed: "Route de pèlerinage terminée",
       pilgrim: "Pèlerin Peregrin",
       holyStops: "lieux saints",
@@ -90,6 +114,14 @@
       downloaded: "Scheda scaricata",
       failed: "Non siamo riusciti a preparare la scheda.",
       incomplete: "Completa tutte le tappe per sbloccare questa scheda.",
+      achievementPreviewTitle: "Scheda traguardo pronta",
+      achievementReady: "Scheda traguardo pronta da condividere",
+      achievementFailed: "Non siamo riusciti a preparare la scheda del traguardo.",
+      achievementIncomplete: "Sblocca prima questo traguardo.",
+      achievementSaved: "Scheda traguardo salvata sul dispositivo",
+      achievementDownloaded: "Scheda traguardo scaricata",
+      achievementUnlocked: "Traguardo sbloccato",
+      achievementCompletedOn: "Sbloccato il",
       completed: "Percorso di pellegrinaggio completato",
       pilgrim: "Pellegrino Peregrin",
       holyStops: "luoghi santi",
@@ -115,6 +147,14 @@
       downloaded: "Cartão descarregado",
       failed: "Não foi possível preparar o cartão.",
       incomplete: "Complete todas as paragens para desbloquear este cartão.",
+      achievementPreviewTitle: "Cartão de conquista pronto",
+      achievementReady: "Cartão de conquista pronto para partilhar",
+      achievementFailed: "Não foi possível preparar o cartão da conquista.",
+      achievementIncomplete: "Desbloqueie primeiro esta conquista.",
+      achievementSaved: "Cartão de conquista guardado no seu dispositivo",
+      achievementDownloaded: "Cartão de conquista descarregado",
+      achievementUnlocked: "Conquista desbloqueada",
+      achievementCompletedOn: "Desbloqueada em",
       completed: "Rota de peregrinação concluída",
       pilgrim: "Peregrino Peregrin",
       holyStops: "lugares santos",
@@ -158,10 +198,56 @@
     return localized.name || route?.id || "Route";
   }
 
+  function achievementLabel(achievement){
+    const localized = achievement?.[getLang()] || achievement?.en || achievement || {};
+    return localized.name || achievement?.id || "Achievement";
+  }
+
+  function achievementDescription(achievement){
+    const localized = achievement?.[getLang()] || achievement?.en || achievement || {};
+    return localized.desc || "";
+  }
+
+  function getAchievement(achievementId){
+    try{ return achievements.find(achievement => achievement.id === achievementId); }catch(e){ return null; }
+  }
+
   function routeIsComplete(route){
     return !!route && route.stops.every(id => {
       try{ return isVisited(id); }catch(e){ return false; }
     });
+  }
+
+  function achievementState(achievement){
+    try{
+      const vc = getVisitCount();
+      const visitedCountries = new Set(sanctuaries.filter(s => isVisited(s.id)).map(s => s.country));
+      let progress = 0;
+      let unlocked = false;
+      if(achievement.special === "countries5"){
+        const n = visitedCountries.size;
+        progress = Math.min(n / 5, 1);
+        unlocked = n >= 5;
+      }else if(achievement.special === "americas3"){
+        const n = countVisitedCountriesInRegion(visitedCountries, "americas");
+        progress = Math.min(n / 3, 1);
+        unlocked = n >= 3;
+      }else if(achievement.special === "asia2"){
+        const n = countVisitedCountriesInRegion(visitedCountries, "asia");
+        progress = Math.min(n / 2, 1);
+        unlocked = n >= 2;
+      }else if(achievement.condition){
+        progress = Math.min(vc / achievement.total, 1);
+        unlocked = achievement.condition(vc);
+      }else if(achievement.ids){
+        const done = achievement.ids.filter(id => isVisited(id)).length;
+        progress = done / achievement.total;
+        unlocked = done >= achievement.total;
+      }
+      return {progress, unlocked, percent:Math.round(progress * 100)};
+    }catch(e){
+      return {progress:0, unlocked:false, percent:0};
+    }
   }
 
   function routeButton(route, visitedCount){
@@ -214,6 +300,25 @@
     try{
       const dates = route.stops.map(id => visits[id]).filter(Boolean).sort();
       value = dates[dates.length - 1] || "";
+    }catch(e){}
+    const date = value ? new Date(`${value}T12:00:00`) : new Date();
+    try{
+      return date.toLocaleDateString(getLang(), {year:"numeric", month:"long", day:"numeric"});
+    }catch(e){
+      return date.toISOString().split("T")[0];
+    }
+  }
+
+  function formatAchievementDate(achievement){
+    let value = "";
+    try{
+      if(achievement.ids?.length){
+        const dates = achievement.ids.map(id => visits[id]).filter(Boolean).sort();
+        value = dates[dates.length - 1] || "";
+      }else{
+        const dates = Object.values(visits || {}).filter(Boolean).sort();
+        value = dates[dates.length - 1] || "";
+      }
     }catch(e){}
     const date = value ? new Date(`${value}T12:00:00`) : new Date();
     try{
@@ -506,6 +611,120 @@
     });
   }
 
+  function drawAchievementCard(ctx, achievement, image){
+    const burgundy = "#722F37";
+    const burgundyDark = "#3A1118";
+    const gold = "#C5963A";
+    const goldLight = "#E8C97A";
+    const cream = "#FDF5E6";
+    const brown = "#3E2723";
+    const muted = "#6D4C41";
+    const name = achievementLabel(achievement);
+    const desc = achievementDescription(achievement);
+    const pilgrim = getPilgrimName();
+    const completedOn = formatAchievementDate(achievement);
+
+    const bg = ctx.createLinearGradient(0, 0, 0, CARD_HEIGHT);
+    bg.addColorStop(0, "#1b080d");
+    bg.addColorStop(0.5, "#fff7ea");
+    bg.addColorStop(1, "#f1dfc0");
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, CARD_WIDTH, CARD_HEIGHT);
+
+    drawCoverImage(ctx, image, 0, 0, CARD_WIDTH, 610);
+    const veil = ctx.createLinearGradient(0, 0, 0, 650);
+    veil.addColorStop(0, "rgba(28,8,12,0.16)");
+    veil.addColorStop(0.58, "rgba(45,13,18,0.48)");
+    veil.addColorStop(1, "rgba(45,13,18,0.94)");
+    ctx.fillStyle = veil;
+    ctx.fillRect(0, 0, CARD_WIDTH, 650);
+
+    drawText(ctx, "PEREGRIN PASSPORT", CARD_WIDTH / 2, 84, {
+      size: 26,
+      weight: "800",
+      color: goldLight,
+      align: "center"
+    });
+    drawText(ctx, copy("achievementUnlocked").toUpperCase(), CARD_WIDTH / 2, 132, {
+      size: 22,
+      weight: "800",
+      color: "rgba(253,245,230,0.82)",
+      align: "center"
+    });
+
+    roundedRect(ctx, 90, 500, 900, 614, 44, "#fffaf0", "rgba(197,150,58,0.48)", 3);
+
+    const sealGradient = ctx.createRadialGradient(CARD_WIDTH / 2 - 70, 615, 10, CARD_WIDTH / 2, 695, 158);
+    sealGradient.addColorStop(0, "#fff3bd");
+    sealGradient.addColorStop(0.45, goldLight);
+    sealGradient.addColorStop(1, gold);
+    ctx.fillStyle = sealGradient;
+    ctx.beginPath();
+    ctx.arc(CARD_WIDTH / 2, 678, 116, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255,255,255,0.72)";
+    ctx.lineWidth = 10;
+    ctx.stroke();
+    drawText(ctx, "✦", CARD_WIDTH / 2, 708, {
+      size: 96,
+      family: "'Crimson Pro', serif",
+      weight: "700",
+      color: burgundyDark,
+      align: "center"
+    });
+
+    drawWrappedText(ctx, name, CARD_WIDTH / 2, 862, 780, {
+      size: 72,
+      family: "'Crimson Pro', serif",
+      weight: "700",
+      color: brown,
+      align: "center",
+      maxLines: 2,
+      lineHeight: 74
+    });
+    drawWrappedText(ctx, desc, CARD_WIDTH / 2, 1004, 760, {
+      size: 30,
+      weight: "500",
+      color: muted,
+      align: "center",
+      maxLines: 2,
+      lineHeight: 38
+    });
+
+    drawText(ctx, pilgrim, CARD_WIDTH / 2, 1146, {
+      size: 36,
+      family: "'Crimson Pro', serif",
+      weight: "700",
+      color: burgundy,
+      align: "center"
+    });
+    drawText(ctx, `${copy("achievementCompletedOn")} ${completedOn}`, CARD_WIDTH / 2, 1192, {
+      size: 22,
+      weight: "700",
+      color: muted,
+      align: "center"
+    });
+
+    const footer = ctx.createLinearGradient(0, 1232, CARD_WIDTH, CARD_HEIGHT);
+    footer.addColorStop(0, burgundy);
+    footer.addColorStop(1, burgundyDark);
+    ctx.fillStyle = footer;
+    ctx.fillRect(0, 1232, CARD_WIDTH, 118);
+    drawText(ctx, "PEREGRIN", CARD_WIDTH / 2, 1282, {
+      size: 42,
+      family: "'Crimson Pro', serif",
+      weight: "700",
+      color: cream,
+      align: "center"
+    });
+    drawText(ctx, copy("footer"), CARD_WIDTH / 2, 1322, {
+      size: 22,
+      weight: "600",
+      color: "rgba(253,245,230,0.76)",
+      align: "center"
+    });
+  }
+
   async function buildCard(route){
     await waitForFonts();
     const canvas = document.createElement("canvas");
@@ -518,6 +737,20 @@
     return {
       dataUrl: canvas.toDataURL("image/png"),
       fileName: `Peregrin_${safeFilePart(routeLabel(route))}_${new Date().getFullYear()}.png`
+    };
+  }
+
+  async function buildAchievementCard(achievement){
+    await waitForFonts();
+    const canvas = document.createElement("canvas");
+    canvas.width = CARD_WIDTH;
+    canvas.height = CARD_HEIGHT;
+    const ctx = canvas.getContext("2d");
+    const image = await loadImage("assets/sanctuary-hero.png");
+    drawAchievementCard(ctx, achievement, image);
+    return {
+      dataUrl: canvas.toDataURL("image/png"),
+      fileName: `Peregrin_${safeFilePart(achievementLabel(achievement))}_${new Date().getFullYear()}.png`
     };
   }
 
@@ -582,18 +815,22 @@
     link.remove();
   }
 
-  async function shareImage(dataUrl, fileName, nativeFile, route){
+  function entityLabel(entity){
+    return entity?.__shareLabel || routeLabel(entity);
+  }
+
+  async function shareImage(dataUrl, fileName, nativeFile, entity){
     if(nativeFile?.uri && isNative()){
       const Share = plugin("Share");
       if(Share?.share){
         try{
           await Share.share({
-            title: routeLabel(route),
+            title: entityLabel(entity),
             text: copy("madeWith"),
             files: [nativeFile.uri],
             dialogTitle: copy("share")
           });
-          toast(copy("ready"));
+          toast(entity?.__readyToast || copy("ready"));
           return;
         }catch(e){
           return;
@@ -606,8 +843,8 @@
         const blob = await (await fetch(dataUrl)).blob();
         const file = new File([blob], fileName, {type:"image/png"});
         if(!navigator.canShare || navigator.canShare({files:[file]})){
-          await navigator.share({title: routeLabel(route), text: copy("madeWith"), files: [file]});
-          toast(copy("ready"));
+          await navigator.share({title: entityLabel(entity), text: copy("madeWith"), files: [file]});
+          toast(entity?.__readyToast || copy("ready"));
           return;
         }
       }catch(e){
@@ -619,25 +856,29 @@
     toast(copy("downloaded"));
   }
 
-  async function downloadForUser(dataUrl, fileName, nativeFile){
+  async function downloadForUser(dataUrl, fileName, nativeFile, kind="route"){
+    const savedCopy = kind === "achievement" ? copy("achievementSaved") : copy("saved");
+    const downloadedCopy = kind === "achievement" ? copy("achievementDownloaded") : copy("downloaded");
     if(nativeFile?.ok){
-      toast(copy("saved"));
+      toast(savedCopy);
       return nativeFile;
     }
     const saved = await saveNative(dataUrl, fileName);
     if(saved?.ok){
-      toast(copy("saved"));
+      toast(savedCopy);
       return saved;
     }
     downloadImage(dataUrl, fileName);
-    toast(copy("downloaded"));
+    toast(downloadedCopy);
     return null;
   }
 
-  function showPreview(dataUrl, fileName, route){
+  function showPreview(dataUrl, fileName, entity, kind="route"){
     ensureStyles();
     const previous = document.getElementById("route-share-overlay");
     if(previous) previous.remove();
+    const previewTitle = kind === "achievement" ? copy("achievementPreviewTitle") : copy("previewTitle");
+    const readyToast = kind === "achievement" ? copy("achievementReady") : copy("ready");
 
     const overlay = document.createElement("div");
     overlay.id = "route-share-overlay";
@@ -645,11 +886,11 @@
     overlay.innerHTML = `
       <div class="route-share-dialog" role="dialog" aria-modal="true" aria-labelledby="route-share-title">
         <div class="route-share-head">
-          <div class="route-share-title" id="route-share-title">${escapeHtml(copy("previewTitle"))}</div>
+          <div class="route-share-title" id="route-share-title">${escapeHtml(previewTitle)}</div>
           <div class="route-share-hint">${escapeHtml(copy("previewHint"))}</div>
         </div>
         <div class="route-share-body">
-          <img class="route-share-img" alt="${escapeHtml(copy("previewTitle"))}" src="${dataUrl}">
+          <img class="route-share-img" alt="${escapeHtml(previewTitle)}" src="${dataUrl}">
         </div>
         <div class="route-share-actions">
           <button type="button" class="route-share-native">${escapeHtml(copy("share"))}</button>
@@ -681,7 +922,7 @@
       setBusy(true);
       try{
         if(!savedNativeFile?.ok) savedNativeFile = await saveNative(dataUrl, fileName);
-        await shareImage(dataUrl, fileName, savedNativeFile, route);
+        await shareImage(dataUrl, fileName, savedNativeFile, {...entity, __readyToast: readyToast});
       }finally{
         setBusy(false);
       }
@@ -690,7 +931,7 @@
       if(busy) return;
       setBusy(true);
       try{
-        savedNativeFile = await downloadForUser(dataUrl, fileName, savedNativeFile);
+        savedNativeFile = await downloadForUser(dataUrl, fileName, savedNativeFile, kind);
       }finally{
         setBusy(false);
       }
@@ -721,9 +962,31 @@
     }
   }
 
+  async function openAchievement(achievementId){
+    const achievement = getAchievement(achievementId);
+    if(!achievement) return;
+    if(!achievementState(achievement).unlocked){
+      toast(copy("achievementIncomplete"));
+      return;
+    }
+    ensureStyles();
+    try{
+      const {dataUrl, fileName} = await buildAchievementCard(achievement);
+      showPreview(dataUrl, fileName, {
+        __shareLabel: achievementLabel(achievement),
+        __readyToast: copy("achievementReady")
+      }, "achievement");
+      toast(copy("achievementReady"));
+    }catch(e){
+      console.error("achievement card failed:", e);
+      toast(copy("achievementFailed"), 5000);
+    }
+  }
+
   window.PeregrinShareCards = {
     routeButton,
-    open
+    open,
+    openAchievement
   };
 
   if(document.readyState === "loading"){
