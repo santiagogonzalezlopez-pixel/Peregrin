@@ -187,6 +187,8 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .stamp-name{font-family:'Crimson Pro',serif;font-size:16px;line-height:1.08;font-weight:700;color:var(--brown);margin:0 auto;position:relative;z-index:1;}
 .stamp-date{width:100%;margin-top:auto;padding-top:10px;border-top:1px solid rgba(197,150,58,.22);font-size:9.5px;color:#8a6c48;font-weight:800;text-transform:uppercase;letter-spacing:.08em;position:relative;z-index:1;}
 .stamp-visited-label{display:block;margin-bottom:2px;font-size:8.5px;color:var(--gold);letter-spacing:.13em;}
+.passport-share-btn{width:100%;margin:-2px 0 24px;padding:15px 18px;border:none;border-radius:16px;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--brown);font-family:'Crimson Pro',serif;font-size:18px;font-weight:800;letter-spacing:.01em;box-shadow:0 14px 32px rgba(197,150,58,.30);cursor:pointer;}
+.passport-share-btn:active{transform:scale(.985);}
 .empty-state{text-align:center;padding:40px 20px;color:var(--brown-light);}
 .empty-state-icon{font-size:48px;margin-bottom:12px;opacity:0.4;}
 .empty-state-text{font-size:14px;line-height:1.6;}
@@ -528,7 +530,7 @@ const i18n = {
     achievementsTitle:'Pilgrim Achievements', routesTitle:'Pilgrimage Routes',
     profileTitle:'My pilgrim profile', viewPassport:'View my passport',
     myAchievements:'My achievements', pilgrimageRoutes:'Pilgrimage routes', routeVisited:'visited',
-    achievementUnlocked:'Unlocked', achievementInProgress:'In progress', achievementShareHint:'Tap to share', achievementSharePreparing:'Preparing achievement card...',
+    achievementUnlocked:'Unlocked', achievementInProgress:'In progress', achievementShareHint:'Tap to share', achievementSharePreparing:'Preparing achievement card...', sharePassport:'Share my passport', passportSharePreparing:'Preparing pilgrim passport...',
     resetVisits:'Reset my visits', resetConfirm:'Are you sure you want to reset all your visits?',
     resetDone:'Visits reset', registerVisit:'Register visit', visited_btn:'Visited',
     removeVisit:'Visited — Remove visit', viewDetails:'View full details',
@@ -596,7 +598,7 @@ const i18n = {
     achievementsTitle:'Logros del peregrino', routesTitle:'Rutas de peregrinación',
     profileTitle:'Mi perfil peregrino', viewPassport:'Ver mi pasaporte',
     myAchievements:'Mis logros', pilgrimageRoutes:'Rutas de peregrinación', routeVisited:'visitados',
-    achievementUnlocked:'Desbloqueado', achievementInProgress:'En curso', achievementShareHint:'Toca para compartir', achievementSharePreparing:'Preparando tarjeta de logro...',
+    achievementUnlocked:'Desbloqueado', achievementInProgress:'En curso', achievementShareHint:'Toca para compartir', achievementSharePreparing:'Preparando tarjeta de logro...', sharePassport:'Compartir mi pasaporte', passportSharePreparing:'Preparando pasaporte peregrino...',
     resetVisits:'Reiniciar mis visitas', resetConfirm:'¿Seguro que quieres reiniciar todas tus visitas?',
     resetDone:'Visitas reiniciadas', registerVisit:'Registrar visita', visited_btn:'Visitado',
     removeVisit:'Visitado — Quitar visita', viewDetails:'Ver ficha completa',
@@ -664,7 +666,7 @@ const i18n = {
     achievementsTitle:'Réalisations du pèlerin', routesTitle:'Itinéraires de pèlerinage',
     profileTitle:'Mon profil de pèlerin', viewPassport:'Voir mon passeport',
     myAchievements:'Mes réalisations', pilgrimageRoutes:'Itinéraires de pèlerinage', routeVisited:'visités',
-    achievementUnlocked:'Débloqué', achievementInProgress:'En cours', achievementShareHint:'Touchez pour partager', achievementSharePreparing:'Préparation de la carte...',
+    achievementUnlocked:'Débloqué', achievementInProgress:'En cours', achievementShareHint:'Touchez pour partager', achievementSharePreparing:'Préparation de la carte...', sharePassport:'Partager mon passeport', passportSharePreparing:'Préparation du passeport pèlerin...',
     resetVisits:'Réinitialiser mes visites', resetConfirm:'Voulez-vous vraiment réinitialiser toutes vos visites ?',
     resetDone:'Visites réinitialisées', registerVisit:'Enregistrer la visite', visited_btn:'Visité',
     removeVisit:'Visité — Retirer la visite', viewDetails:'Voir la fiche complète',
@@ -732,7 +734,7 @@ const i18n = {
     achievementsTitle:'Traguardi del pellegrino', routesTitle:'Itinerari di pellegrinaggio',
     profileTitle:'Il mio profilo pellegrino', viewPassport:'Vedi il mio passaporto',
     myAchievements:'I miei traguardi', pilgrimageRoutes:'Itinerari di pellegrinaggio', routeVisited:'visitati',
-    achievementUnlocked:'Sbloccato', achievementInProgress:'In corso', achievementShareHint:'Tocca per condividere', achievementSharePreparing:'Preparazione della scheda...',
+    achievementUnlocked:'Sbloccato', achievementInProgress:'In corso', achievementShareHint:'Tocca per condividere', achievementSharePreparing:'Preparazione della scheda...', sharePassport:'Condividi il mio passaporto', passportSharePreparing:'Preparazione del passaporto pellegrino...',
     resetVisits:'Reimposta le mie visite', resetConfirm:'Sei sicuro di voler reimpostare tutte le tue visite?',
     resetDone:'Visite reimpostate', registerVisit:'Registra visita', visited_btn:'Visitato',
     removeVisit:'Visitato — Rimuovi visita', viewDetails:'Vedi scheda completa',
@@ -800,7 +802,7 @@ const i18n = {
     achievementsTitle:'Conquistas do peregrino', routesTitle:'Rotas de peregrinação',
     profileTitle:'O meu perfil de peregrino', viewPassport:'Ver o meu passaporte',
     myAchievements:'As minhas conquistas', pilgrimageRoutes:'Rotas de peregrinação', routeVisited:'visitados',
-    achievementUnlocked:'Desbloqueada', achievementInProgress:'Em curso', achievementShareHint:'Toque para partilhar', achievementSharePreparing:'A preparar cartão de conquista...',
+    achievementUnlocked:'Desbloqueada', achievementInProgress:'Em curso', achievementShareHint:'Toque para partilhar', achievementSharePreparing:'A preparar cartão de conquista...', sharePassport:'Partilhar o meu passaporte', passportSharePreparing:'A preparar passaporte peregrino...',
     resetVisits:'Reiniciar as minhas visitas', resetConfirm:'Tem a certeza de que quer reiniciar todas as suas visitas?',
     resetDone:'Visitas reiniciadas', registerVisit:'Registar visita', visited_btn:'Visitado',
     removeVisit:'Visitado — Remover visita', viewDetails:'Ver ficha completa',
@@ -2380,7 +2382,8 @@ function renderPassport(){
             <div class="stamp-date"><span class="stamp-visited-label">${t('stampVisitedLabel')}</span>${formatVisitDate(visits[s.id])}</div>
           </div>`;
         }).join('')}
-      </div>`:`
+      </div>
+      <button class="passport-share-btn" onclick="openPassportShareCard()">✦ ${t('sharePassport')}</button>`:`
       <div class="empty-state">
         <div class="empty-state-icon">🕊️</div>
         <div class="empty-state-text">${t('noVisits').replace('\\n','<br>')}</div>
@@ -2409,6 +2412,14 @@ function openAchievementCard(id){
     window.PeregrinShareCards.openAchievement(id);
   }else{
     showToast(t('achievementSharePreparing'));
+  }
+}
+
+function openPassportShareCard(){
+  if(window.PeregrinShareCards?.openPassport){
+    window.PeregrinShareCards.openPassport();
+  }else{
+    showToast(t('passportSharePreparing'));
   }
 }
 

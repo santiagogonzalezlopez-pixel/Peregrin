@@ -26,6 +26,20 @@
       achievementReason: "for reaching this milestone and keeping the memory of the pilgrimage.",
       achievementUnlocked: "Achievement unlocked",
       achievementCompletedOn: "Unlocked on",
+      passportPreviewTitle: "Your pilgrim passport is ready",
+      passportPreviewHint: "Open it here first, then share or download it whenever you want.",
+      passportShareAction: "Share passport",
+      passportReady: "Passport ready to share",
+      passportFailed: "We could not prepare your passport.",
+      passportNoVisits: "Register at least one visit to share your passport.",
+      passportSaved: "Passport saved on your device",
+      passportDownloaded: "Passport downloaded",
+      passportShareLabel: "PEREGRIN PASSPORT",
+      passportStamps: "pilgrim stamps",
+      passportCountries: "countries",
+      passportAchievements: "achievements",
+      passportMore: "more stamps in Peregrin",
+      passportLatest: "Sacred places visited",
       completed: "Completed pilgrimage route",
       pilgrim: "Peregrin pilgrim",
       holyStops: "holy stops",
@@ -62,6 +76,20 @@
       achievementReason: "por alcanzar este hito y guardar memoria de su camino peregrino.",
       achievementUnlocked: "Logro desbloqueado",
       achievementCompletedOn: "Desbloqueado el",
+      passportPreviewTitle: "Tu pasaporte peregrino está listo",
+      passportPreviewHint: "Primero puedes verlo aquí; después, compartirlo o descargarlo cuando quieras.",
+      passportShareAction: "Compartir pasaporte",
+      passportReady: "Pasaporte listo para compartir",
+      passportFailed: "No hemos podido preparar tu pasaporte.",
+      passportNoVisits: "Registra al menos una visita para compartir tu pasaporte.",
+      passportSaved: "Pasaporte guardado en tu dispositivo",
+      passportDownloaded: "Pasaporte descargado",
+      passportShareLabel: "PEREGRIN PASSPORT",
+      passportStamps: "sellos peregrinos",
+      passportCountries: "países",
+      passportAchievements: "logros",
+      passportMore: "sellos más en Peregrin",
+      passportLatest: "Lugares santos visitados",
       completed: "Ruta de peregrinación completada",
       pilgrim: "Peregrino de Peregrin",
       holyStops: "lugares santos",
@@ -98,6 +126,20 @@
       achievementReason: "pour avoir atteint cette étape et gardé la mémoire du pèlerinage.",
       achievementUnlocked: "Réalisation débloquée",
       achievementCompletedOn: "Débloquée le",
+      passportPreviewTitle: "Votre passeport pèlerin est prêt",
+      passportPreviewHint: "Vous pouvez d’abord le voir ici, puis le partager ou le télécharger.",
+      passportShareAction: "Partager le passeport",
+      passportReady: "Passeport prêt à partager",
+      passportFailed: "Impossible de préparer votre passeport.",
+      passportNoVisits: "Enregistrez au moins une visite pour partager votre passeport.",
+      passportSaved: "Passeport enregistré sur votre appareil",
+      passportDownloaded: "Passeport téléchargé",
+      passportShareLabel: "PEREGRIN PASSPORT",
+      passportStamps: "tampons pèlerins",
+      passportCountries: "pays",
+      passportAchievements: "réalisations",
+      passportMore: "tampons de plus dans Peregrin",
+      passportLatest: "Lieux saints visités",
       completed: "Route de pèlerinage terminée",
       pilgrim: "Pèlerin Peregrin",
       holyStops: "lieux saints",
@@ -134,6 +176,20 @@
       achievementReason: "per aver raggiunto questo traguardo e custodito la memoria del pellegrinaggio.",
       achievementUnlocked: "Traguardo sbloccato",
       achievementCompletedOn: "Sbloccato il",
+      passportPreviewTitle: "Il tuo passaporto pellegrino è pronto",
+      passportPreviewHint: "Puoi prima visualizzarlo qui, poi condividerlo o scaricarlo.",
+      passportShareAction: "Condividi passaporto",
+      passportReady: "Passaporto pronto da condividere",
+      passportFailed: "Non siamo riusciti a preparare il passaporto.",
+      passportNoVisits: "Registra almeno una visita per condividere il passaporto.",
+      passportSaved: "Passaporto salvato sul dispositivo",
+      passportDownloaded: "Passaporto scaricato",
+      passportShareLabel: "PEREGRIN PASSPORT",
+      passportStamps: "timbri pellegrini",
+      passportCountries: "paesi",
+      passportAchievements: "traguardi",
+      passportMore: "altri timbri in Peregrin",
+      passportLatest: "Luoghi santi visitati",
       completed: "Percorso di pellegrinaggio completato",
       pilgrim: "Pellegrino Peregrin",
       holyStops: "luoghi santi",
@@ -170,6 +226,20 @@
       achievementReason: "por alcançar este marco e guardar a memória da peregrinação.",
       achievementUnlocked: "Conquista desbloqueada",
       achievementCompletedOn: "Desbloqueada em",
+      passportPreviewTitle: "O seu passaporte peregrino está pronto",
+      passportPreviewHint: "Pode vê-lo primeiro aqui e depois partilhar ou descarregar.",
+      passportShareAction: "Partilhar passaporte",
+      passportReady: "Passaporte pronto para partilhar",
+      passportFailed: "Não foi possível preparar o seu passaporte.",
+      passportNoVisits: "Registe pelo menos uma visita para partilhar o seu passaporte.",
+      passportSaved: "Passaporte guardado no seu dispositivo",
+      passportDownloaded: "Passaporte descarregado",
+      passportShareLabel: "PEREGRIN PASSPORT",
+      passportStamps: "selos peregrinos",
+      passportCountries: "países",
+      passportAchievements: "conquistas",
+      passportMore: "mais selos no Peregrin",
+      passportLatest: "Lugares santos visitados",
       completed: "Rota de peregrinação concluída",
       pilgrim: "Peregrino Peregrin",
       holyStops: "lugares santos",
@@ -225,6 +295,23 @@
 
   function getAchievement(achievementId){
     try{ return achievements.find(achievement => achievement.id === achievementId); }catch(e){ return null; }
+  }
+
+  function sanctuaryLabel(sanctuary){
+    const localized = sanctuary?.[getLang()] || sanctuary?.en || sanctuary || {};
+    return localized.name || sanctuary?.name || "";
+  }
+
+  function countryLabel(country){
+    try{
+      if(typeof cn === "function") return cn(country);
+    }catch(e){}
+    const lang = getLang();
+    if(lang !== "en"){
+      const key = `name${lang.charAt(0).toUpperCase()}${lang.slice(1)}`;
+      if(country?.[key]) return country[key];
+    }
+    return country?.name || "";
   }
 
   function routeIsComplete(route){
@@ -340,6 +427,39 @@
       return date.toLocaleDateString(getLang(), {year:"numeric", month:"long", day:"numeric"});
     }catch(e){
       return date.toISOString().split("T")[0];
+    }
+  }
+
+  function formatVisitDate(value){
+    const date = value ? new Date(`${value}T12:00:00`) : new Date();
+    try{
+      return date.toLocaleDateString(getLang(), {day:"numeric", month:"short", year:"numeric"}).replace(/\./g, "");
+    }catch(e){
+      return value || date.toISOString().split("T")[0];
+    }
+  }
+
+  function getVisitedStamps(){
+    try{
+      return Object.entries(visits || {})
+        .map(([id, date]) => {
+          const sanctuary = sanctuaries.find(item => String(item.id) === String(id));
+          if(!sanctuary) return null;
+          const country = countries.find(item => item.id === sanctuary.country);
+          return {id, date, sanctuary, country};
+        })
+        .filter(Boolean)
+        .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")) || Number(b.id) - Number(a.id));
+    }catch(e){
+      return [];
+    }
+  }
+
+  function getUnlockedAchievementCount(){
+    try{
+      return achievements.filter(achievement => achievementState(achievement).unlocked).length;
+    }catch(e){
+      return 0;
     }
   }
 
@@ -804,6 +924,313 @@
     });
   }
 
+  function drawPassportSealMark(ctx, x, y, radius, colors, index=0){
+    const {burgundy, burgundyDark, gold, goldLight, cream} = colors;
+    const seal = ctx.createRadialGradient(x - radius * 0.38, y - radius * 0.45, 6, x, y, radius);
+    seal.addColorStop(0, "#8c404a");
+    seal.addColorStop(0.54, burgundy);
+    seal.addColorStop(1, burgundyDark);
+    ctx.fillStyle = seal;
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = gold;
+    ctx.lineWidth = 4;
+    ctx.stroke();
+    ctx.strokeStyle = "rgba(253,245,230,0.22)";
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    ctx.arc(x, y, radius - 8, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.save();
+    ctx.strokeStyle = cream;
+    ctx.fillStyle = cream;
+    ctx.lineWidth = 3.4;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    if(index % 3 === 0){
+      ctx.beginPath();
+      ctx.moveTo(x - 20, y + 17);
+      ctx.lineTo(x + 20, y + 17);
+      ctx.moveTo(x - 14, y + 17);
+      ctx.lineTo(x - 14, y - 9);
+      ctx.lineTo(x, y - 24);
+      ctx.lineTo(x + 14, y - 9);
+      ctx.lineTo(x + 14, y + 17);
+      ctx.moveTo(x - 5, y + 17);
+      ctx.lineTo(x - 5, y + 2);
+      ctx.quadraticCurveTo(x - 5, y - 8, x, y - 8);
+      ctx.quadraticCurveTo(x + 5, y - 8, x + 5, y + 2);
+      ctx.lineTo(x + 5, y + 17);
+      ctx.stroke();
+    }else if(index % 3 === 1){
+      ctx.beginPath();
+      ctx.moveTo(x, y - 28);
+      ctx.lineTo(x, y + 23);
+      ctx.moveTo(x - 15, y - 12);
+      ctx.lineTo(x + 15, y - 12);
+      ctx.moveTo(x - 22, y + 23);
+      ctx.lineTo(x + 22, y + 23);
+      ctx.stroke();
+    }else{
+      ctx.beginPath();
+      ctx.moveTo(x - 24, y + 20);
+      ctx.lineTo(x + 24, y + 20);
+      ctx.moveTo(x - 18, y + 18);
+      ctx.lineTo(x - 2, y - 18);
+      ctx.lineTo(x + 8, y + 1);
+      ctx.lineTo(x + 14, y - 9);
+      ctx.lineTo(x + 25, y + 18);
+      ctx.stroke();
+    }
+    drawDiamond(ctx, x + radius - 10, y - radius + 10, 9, goldLight);
+    ctx.restore();
+  }
+
+  function drawPassportStat(ctx, x, y, value, label, colors){
+    roundedRect(ctx, x, y, 250, 106, 26, "rgba(114,47,55,0.08)", "rgba(197,150,58,0.38)", 1.4);
+    drawText(ctx, value, x + 125, y + 50, {
+      size: 46,
+      family: "'Crimson Pro', serif",
+      weight: "700",
+      color: colors.burgundy,
+      align: "center"
+    });
+    drawText(ctx, String(label || "").toUpperCase(), x + 125, y + 82, {
+      size: 16,
+      weight: "800",
+      color: "rgba(62,39,35,0.58)",
+      align: "center"
+    });
+  }
+
+  function drawPassportStamp(ctx, stamp, x, y, width, height, colors, index){
+    const {burgundy, burgundyDark, gold, goldLight, cream, brown, muted} = colors;
+    ctx.save();
+    roundedRect(ctx, x, y, width, height, 22, "#fffdf6", "rgba(197,150,58,0.42)", 1.5);
+    ctx.setLineDash([9, 7]);
+    roundedRect(ctx, x + 9, y + 9, width - 18, height - 18, 17, null, "rgba(197,150,58,0.38)", 1.2);
+    ctx.setLineDash([]);
+
+    if(stamp?.more){
+      const centerX = x + width / 2;
+      drawPassportSealMark(ctx, centerX, y + 56, 42, colors, index);
+      drawText(ctx, `+${stamp.more}`, centerX, y + 68, {
+        size: 36,
+        family: "'Crimson Pro', serif",
+        weight: "700",
+        color: goldLight,
+        align: "center"
+      });
+      drawWrappedText(ctx, copy("passportMore"), centerX, y + 118, width - 46, {
+        size: 22,
+        weight: "800",
+        color: brown,
+        align: "center",
+        maxLines: 2,
+        lineHeight: 28
+      });
+      ctx.restore();
+      return;
+    }
+
+    const countryName = countryLabel(stamp.country);
+    const placeName = sanctuaryLabel(stamp.sanctuary);
+    const date = formatVisitDate(stamp.date);
+    const tight = height <= 132;
+    const narrow = width < 350;
+
+    drawPassportSealMark(ctx, x + 64, y + 68, 42, colors, index);
+    drawText(ctx, (countryName || "Peregrin").toUpperCase(), x + 126, y + 42, {
+      size: 15,
+      weight: "800",
+      color: burgundy,
+      maxLines: 1
+    });
+    drawWrappedText(ctx, placeName, x + 126, tight ? y + 66 : y + 76, width - 150, {
+      size: height > 145 ? 28 : tight ? 18 : 22,
+      family: "'Crimson Pro', serif",
+      weight: "700",
+      color: brown,
+      maxLines: tight && narrow ? 1 : 2,
+      lineHeight: height > 145 ? 30 : tight ? 20 : 26
+    });
+    drawText(ctx, date, x + 126, y + height - (tight ? 13 : 25), {
+      size: tight ? 13 : 15,
+      weight: "800",
+      color: muted
+    });
+    drawText(ctx, "P", x + width - 26, y + 36, {
+      size: 20,
+      family: "'Crimson Pro', serif",
+      weight: "700",
+      color: "rgba(197,150,58,0.70)",
+      align: "center"
+    });
+    ctx.restore();
+  }
+
+  function drawPassportCard(ctx, stamps, image){
+    const colors = {
+      burgundy: "#722F37",
+      burgundyDark: "#3A1118",
+      gold: "#C5963A",
+      goldLight: "#E8C97A",
+      cream: "#FDF5E6",
+      brown: "#3E2723",
+      muted: "#6D4C41"
+    };
+    const {burgundy, burgundyDark, gold, goldLight, cream, brown, muted} = colors;
+    const pilgrim = getPilgrimName();
+    const countriesVisited = new Set(stamps.map(stamp => stamp.sanctuary?.country).filter(Boolean)).size;
+    const achievementsUnlocked = getUnlockedAchievementCount();
+
+    const bg = ctx.createLinearGradient(0, 0, 0, CARD_HEIGHT);
+    bg.addColorStop(0, "#16070b");
+    bg.addColorStop(0.30, "#351017");
+    bg.addColorStop(0.31, "#f8ebd3");
+    bg.addColorStop(1, "#fff8ea");
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, CARD_WIDTH, CARD_HEIGHT);
+
+    drawCoverImage(ctx, image, 0, 0, CARD_WIDTH, 500);
+    const veil = ctx.createLinearGradient(0, 0, 0, 530);
+    veil.addColorStop(0, "rgba(22,7,11,0.16)");
+    veil.addColorStop(0.56, "rgba(22,7,11,0.48)");
+    veil.addColorStop(1, "rgba(22,7,11,0.94)");
+    ctx.fillStyle = veil;
+    ctx.fillRect(0, 0, CARD_WIDTH, 530);
+
+    drawText(ctx, copy("passportShareLabel"), CARD_WIDTH / 2, 86, {
+      size: 38,
+      weight: "800",
+      color: goldLight,
+      align: "center"
+    });
+    drawText(ctx, "PILGRIM RECORD", CARD_WIDTH / 2, 128, {
+      size: 19,
+      weight: "800",
+      color: "rgba(253,245,230,0.78)",
+      align: "center"
+    });
+
+    ctx.shadowColor = "rgba(58,17,24,0.26)";
+    ctx.shadowBlur = 34;
+    ctx.shadowOffsetY = 24;
+    roundedRect(ctx, 64, 250, 952, 944, 44, "#fffaf0", "rgba(197,150,58,0.86)", 4);
+    ctx.shadowColor = "transparent";
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetY = 0;
+    roundedRect(ctx, 94, 280, 892, 884, 30, null, "rgba(232,201,122,0.70)", 2);
+
+    ctx.save();
+    const emblemX = CARD_WIDTH / 2;
+    const emblemY = 332;
+    const emblem = ctx.createRadialGradient(emblemX - 13, emblemY - 16, 4, emblemX, emblemY, 42);
+    emblem.addColorStop(0, "#fff0aa");
+    emblem.addColorStop(0.46, goldLight);
+    emblem.addColorStop(1, gold);
+    ctx.fillStyle = emblem;
+    ctx.beginPath();
+    ctx.arc(emblemX, emblemY, 38, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255,250,240,0.86)";
+    ctx.lineWidth = 5;
+    ctx.stroke();
+    ctx.strokeStyle = "rgba(114,47,55,0.20)";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(emblemX, emblemY, 29, 0, Math.PI * 2);
+    ctx.stroke();
+    roundedRect(ctx, emblemX - 5, emblemY - 24, 10, 48, 5, burgundy, null);
+    roundedRect(ctx, emblemX - 24, emblemY - 5, 48, 10, 5, burgundy, null);
+    [[-21, -21], [21, -21], [-21, 21], [21, 21]].forEach(([dx, dy]) => {
+      roundedRect(ctx, emblemX + dx - 2.5, emblemY + dy - 8, 5, 16, 2.5, burgundy, null);
+      roundedRect(ctx, emblemX + dx - 8, emblemY + dy - 2.5, 16, 5, 2.5, burgundy, null);
+    });
+    ctx.restore();
+    drawText(ctx, pilgrim, CARD_WIDTH / 2, 420, {
+      size: 62,
+      family: "'Crimson Pro', serif",
+      weight: "700",
+      color: brown,
+      align: "center"
+    });
+    drawText(ctx, copy("passportLatest").toUpperCase(), CARD_WIDTH / 2, 468, {
+      size: 20,
+      weight: "800",
+      color: "rgba(114,47,55,0.70)",
+      align: "center"
+    });
+
+    drawPassportStat(ctx, 126, 506, String(stamps.length), copy("passportStamps"), colors);
+    drawPassportStat(ctx, 415, 506, String(countriesVisited), copy("passportCountries"), colors);
+    drawPassportStat(ctx, 704, 506, String(achievementsUnlocked), copy("passportAchievements"), colors);
+
+    const maxVisible = 12;
+    let visibleStamps = stamps.slice(0, maxVisible);
+    const extraCount = stamps.length - maxVisible;
+    if(extraCount > 0) visibleStamps = [...stamps.slice(0, maxVisible - 1), {more: extraCount + 1}];
+
+    const count = visibleStamps.length;
+    const cols = count <= 8 ? 2 : 3;
+    const gap = cols === 2 ? (count > 6 ? 10 : 18) : 20;
+    const totalWidth = 828;
+    const stampWidth = Math.floor((totalWidth - gap * (cols - 1)) / cols);
+    const stampHeight = count <= 4 ? 174 : count <= 6 ? 150 : count <= 8 ? 122 : 124;
+    const startX = (CARD_WIDTH - totalWidth) / 2;
+    const startY = count <= 4 ? 660 : count <= 6 ? 636 : 624;
+    const rows = Math.ceil(count / cols);
+    const stampsBottom = startY + rows * stampHeight + (rows - 1) * gap;
+
+    visibleStamps.forEach((stamp, index) => {
+      const col = index % cols;
+      const row = Math.floor(index / cols);
+      const itemsInLastRow = count % cols || cols;
+      const isCenteredLastItem = row === rows - 1 && itemsInLastRow === 1 && cols === 2;
+      drawPassportStamp(
+        ctx,
+        stamp,
+        isCenteredLastItem ? (CARD_WIDTH - stampWidth) / 2 : startX + col * (stampWidth + gap),
+        startY + row * (stampHeight + gap),
+        stampWidth,
+        stampHeight,
+        colors,
+        index
+      );
+    });
+
+    if(stampsBottom < 1126){
+      drawText(ctx, "PEREGRIN", CARD_WIDTH / 2, 1158, {
+        size: 28,
+        family: "'Crimson Pro', serif",
+        weight: "700",
+        color: "rgba(114,47,55,0.78)",
+        align: "center"
+      });
+    }
+
+    const footer = ctx.createLinearGradient(0, 1215, CARD_WIDTH, CARD_HEIGHT);
+    footer.addColorStop(0, burgundy);
+    footer.addColorStop(1, burgundyDark);
+    ctx.fillStyle = footer;
+    ctx.fillRect(0, 1215, CARD_WIDTH, 135);
+    drawText(ctx, "PEREGRIN", CARD_WIDTH / 2, 1272, {
+      size: 44,
+      family: "'Crimson Pro', serif",
+      weight: "700",
+      color: cream,
+      align: "center"
+    });
+    drawText(ctx, copy("footer"), CARD_WIDTH / 2, 1320, {
+      size: 24,
+      weight: "600",
+      color: "rgba(253,245,230,0.76)",
+      align: "center"
+    });
+  }
+
   async function buildCard(route){
     await waitForFonts();
     const canvas = document.createElement("canvas");
@@ -830,6 +1257,20 @@
     return {
       dataUrl: canvas.toDataURL("image/png"),
       fileName: `Peregrin_${safeFilePart(achievementLabel(achievement))}_${new Date().getFullYear()}.png`
+    };
+  }
+
+  async function buildPassportCard(stamps){
+    await waitForFonts();
+    const canvas = document.createElement("canvas");
+    canvas.width = CARD_WIDTH;
+    canvas.height = CARD_HEIGHT;
+    const ctx = canvas.getContext("2d");
+    const image = await loadImage("assets/sanctuary-hero.png");
+    drawPassportCard(ctx, stamps, image);
+    return {
+      dataUrl: canvas.toDataURL("image/png"),
+      fileName: `Peregrin_Passport_${new Date().getFullYear()}.png`
     };
   }
 
@@ -932,12 +1373,20 @@
     }
 
     downloadImage(dataUrl, fileName);
-    toast(copy("downloaded"));
+    toast(entity?.__downloadedToast || copy("downloaded"));
   }
 
   async function downloadForUser(dataUrl, fileName, nativeFile, kind="route"){
-    const savedCopy = kind === "achievement" ? copy("achievementSaved") : copy("saved");
-    const downloadedCopy = kind === "achievement" ? copy("achievementDownloaded") : copy("downloaded");
+    const savedCopy = kind === "achievement"
+      ? copy("achievementSaved")
+      : kind === "passport"
+        ? copy("passportSaved")
+        : copy("saved");
+    const downloadedCopy = kind === "achievement"
+      ? copy("achievementDownloaded")
+      : kind === "passport"
+        ? copy("passportDownloaded")
+        : copy("downloaded");
     if(nativeFile?.ok){
       toast(savedCopy);
       return nativeFile;
@@ -956,8 +1405,23 @@
     ensureStyles();
     const previous = document.getElementById("route-share-overlay");
     if(previous) previous.remove();
-    const previewTitle = kind === "achievement" ? copy("achievementPreviewTitle") : copy("previewTitle");
-    const readyToast = kind === "achievement" ? copy("achievementReady") : copy("ready");
+    const previewTitle = kind === "achievement"
+      ? copy("achievementPreviewTitle")
+      : kind === "passport"
+        ? copy("passportPreviewTitle")
+        : copy("previewTitle");
+    const previewHint = kind === "passport" ? copy("passportPreviewHint") : copy("previewHint");
+    const shareAction = kind === "passport" ? copy("passportShareAction") : copy("share");
+    const readyToast = kind === "achievement"
+      ? copy("achievementReady")
+      : kind === "passport"
+        ? copy("passportReady")
+        : copy("ready");
+    const downloadedToast = kind === "achievement"
+      ? copy("achievementDownloaded")
+      : kind === "passport"
+        ? copy("passportDownloaded")
+        : copy("downloaded");
 
     const overlay = document.createElement("div");
     overlay.id = "route-share-overlay";
@@ -966,13 +1430,13 @@
       <div class="route-share-dialog" role="dialog" aria-modal="true" aria-labelledby="route-share-title">
         <div class="route-share-head">
           <div class="route-share-title" id="route-share-title">${escapeHtml(previewTitle)}</div>
-          <div class="route-share-hint">${escapeHtml(copy("previewHint"))}</div>
+          <div class="route-share-hint">${escapeHtml(previewHint)}</div>
         </div>
         <div class="route-share-body">
           <img class="route-share-img" alt="${escapeHtml(previewTitle)}" src="${dataUrl}">
         </div>
         <div class="route-share-actions">
-          <button type="button" class="route-share-native">${escapeHtml(copy("share"))}</button>
+          <button type="button" class="route-share-native">${escapeHtml(shareAction)}</button>
           <button type="button" class="route-share-download">${escapeHtml(copy("download"))}</button>
           <button type="button" class="route-share-close">${escapeHtml(copy("close"))}</button>
         </div>
@@ -1001,7 +1465,7 @@
       setBusy(true);
       try{
         if(!savedNativeFile?.ok) savedNativeFile = await saveNative(dataUrl, fileName);
-        await shareImage(dataUrl, fileName, savedNativeFile, {...entity, __readyToast: readyToast});
+        await shareImage(dataUrl, fileName, savedNativeFile, {...entity, __readyToast: readyToast, __downloadedToast: downloadedToast});
       }finally{
         setBusy(false);
       }
@@ -1062,10 +1526,32 @@
     }
   }
 
+  async function openPassport(){
+    const stamps = getVisitedStamps();
+    if(!stamps.length){
+      toast(copy("passportNoVisits"), 5000);
+      return;
+    }
+    ensureStyles();
+    try{
+      const {dataUrl, fileName} = await buildPassportCard(stamps);
+      showPreview(dataUrl, fileName, {
+        __shareLabel: copy("passportShareLabel"),
+        __readyToast: copy("passportReady"),
+        __downloadedToast: copy("passportDownloaded")
+      }, "passport");
+      toast(copy("passportReady"));
+    }catch(e){
+      console.error("passport card failed:", e);
+      toast(copy("passportFailed"), 5000);
+    }
+  }
+
   window.PeregrinShareCards = {
     routeButton,
     open,
-    openAchievement
+    openAchievement,
+    openPassport
   };
 
   if(document.readyState === "loading"){
