@@ -1,6 +1,6 @@
 # Peregrin project context
 
-Last updated: 2026-05-24
+Last updated: 2026-05-25
 
 ## Current milestone
 
@@ -8,7 +8,8 @@ Peregrin is now in production on Google Play.
 
 This is the first stable production baseline after the tester phase, the Google
 Play Billing work, the Premium unlock fixes, the certificate fixes, the route
-image refresh, and the Africa content pack.
+image refresh, the Africa content pack, the achievement diplomas and the
+shareable pilgrim passport.
 
 Treat this moment as a production checkpoint: future work should improve the app,
 not reopen broad risky refactors unless there is a clear reason.
@@ -24,8 +25,8 @@ not reopen broad risky refactors unless there is a clear reason.
 ## Current release baseline
 
 - Last built AAB: `android/app/build/outputs/bundle/release/app-release.aab`
-- Current Android version in repo: `versionCode 39`, `versionName 1.0.38`
-- Latest production-prep commit at this checkpoint: `7f1bfd9`
+- Current Android version in repo: `versionCode 42`, `versionName 1.0.41`
+- Latest production-prep commit at this checkpoint: `15853d6`
 - Content total after Africa pack: 30 countries, 132 sanctuaries, 11 routes
 
 ## What is considered stable
@@ -40,6 +41,8 @@ not reopen broad risky refactors unless there is a clear reason.
 - Map filtering for countries/routes.
 - Route cards with photographic banners.
 - Africa pack added as a first African presence.
+- Achievement diplomas with share/download preview.
+- Shareable `PEREGRIN PASSPORT` image generated from obtained stamps.
 
 ## Known external caveat
 
@@ -66,9 +69,19 @@ beauty, shareability and emotional reward.
 
 Priority direction:
 
-- Make achievement seals more beautiful and collectible.
-- Make passport stamps more premium, devotional and shareable.
-- Improve visual reward moments so users want to save, show and share them.
+- Do not add more quantity by default. The next useful pass is aesthetic and
+  emotional: make existing moments more desirable to open, save and share.
+- Make individual passport stamps more like real collectible pilgrimage stamps:
+  textured, circular, elegant and date/country aware.
+- Improve sanctuary detail imagery with category-based sacred visuals instead of
+  one repeated generic image.
+- Consider a simple `My memories` / `My path` screen using existing local/user
+  data: latest visits, unlocked achievements, countries in progress and passport
+  sharing.
+- Improve Premium copy so the value is framed as a richer pilgrimage memory, not
+  only a country unlock.
+- Do a small visual-detail pass for spacing, long translations, buttons, empty
+  states and navigation icons.
 - Keep payment code, billing code and production release mechanics stable unless
   there is a real bug.
 - Avoid big rewrites while the production app is behaving correctly.

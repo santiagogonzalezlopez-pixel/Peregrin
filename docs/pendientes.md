@@ -1,6 +1,6 @@
 # Pendientes Peregrin
 
-Last updated: 2026-05-24
+Last updated: 2026-05-25
 
 ## Production watch
 
@@ -13,12 +13,22 @@ Last updated: 2026-05-24
 
 ## Highest-value next improvements
 
-- Redesign achievement seals so they feel collectible, elegant and worth sharing.
-- Redesign passport stamps so the passport becomes visually desirable, not only
-  functional.
-- Create better share cards for achievements and passport progress, optimized for
-  WhatsApp, Instagram Stories and family/group sharing.
-- Improve the visual language of map markers only if we can do it safely and
+- Next round should be a polish round, not a quantity/content expansion round.
+- Redesign the individual passport stamps so they feel like real collectible
+  pilgrimage stamps: texture, circular seal language, sanctuary name, country and
+  date treated like an elegant postmark.
+- Improve sanctuary detail cards with higher-quality generic sacred imagery,
+  preferably by category: cathedral, Marian basilica, monastery, mountain,
+  relic, Holy Land, etc.
+- Consider a simple `My memories` / `My path` screen without new backend:
+  latest visits, unlocked achievements, countries in progress and a clear
+  passport-share action.
+- Rework Premium copy so it does not feel like "pay to unlock countries" only,
+  but like "keep and share a richer pilgrimage memory": routes, certificates,
+  beautiful passport, achievements and saved milestones.
+- Do a small visual-detail pass across spacing, long translated strings, buttons,
+  empty states and navigation icons.
+- Improve the visual language of map markers only if it can be done safely and
   consistently without destabilizing the map.
 
 ## Growth and visibility
