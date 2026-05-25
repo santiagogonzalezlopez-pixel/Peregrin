@@ -14,6 +14,9 @@ Last updated: 2026-05-25
 ## Highest-value next improvements
 
 - Next round should be a polish round, not a quantity/content expansion round.
+- Explore a stronger visit-registration flow: to earn a stamp, the pilgrim
+  should write a private note and a public comment/tip for other pilgrims. This
+  would make "I was here" feel more meaningful than a tap from the sofa.
 - Redesign the individual passport stamps so they feel like real collectible
   pilgrimage stamps: texture, circular seal language, sanctuary name, country and
   date treated like an elegant postmark.
@@ -35,9 +38,26 @@ Last updated: 2026-05-25
 
 - Prepare a small sharing loop: complete route/country, see beautiful result,
   share/save image.
+- Turn each visit into memory plus contribution: private note for the user,
+  public practical/devotional comment for the community, and then the stamp.
 - Review Play Store screenshots after the production version settles.
 - Consider a focused landing page or custom listing for the strongest market
   packs once real usage data exists.
+
+## Visit authenticity idea
+
+- Goal: reduce fake/empty stamp collecting and make every stamp carry a small
+  memory.
+- Safe first version: require a private note plus a public comment before
+  registering a sanctuary visit.
+- Keep the comment short, link-free and moderate/reportable with existing
+  comment safeguards.
+- Do not require GPS in the first version; it can create permission, privacy and
+  false-negative problems.
+- Possible later version: optional "verified nearby" badge if the user grants
+  location and is physically near the sanctuary.
+- Product tone: not policing pilgrims, but asking them to leave a trace of the
+  pilgrimage for themselves and a helpful note for others.
 
 ## External admin
 

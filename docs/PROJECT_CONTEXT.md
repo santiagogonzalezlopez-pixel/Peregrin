@@ -78,6 +78,9 @@ Priority direction:
 - Consider a simple `My memories` / `My path` screen using existing local/user
   data: latest visits, unlocked achievements, countries in progress and passport
   sharing.
+- Consider making each stamp require a small act of memory/contribution: a
+  private note for the pilgrim and a public comment/tip for others before the
+  visit is registered.
 - Improve Premium copy so the value is framed as a richer pilgrimage memory, not
   only a country unlock.
 - Do a small visual-detail pass for spacing, long translations, buttons, empty
@@ -85,6 +88,14 @@ Priority direction:
 - Keep payment code, billing code and production release mechanics stable unless
   there is a real bug.
 - Avoid big rewrites while the production app is behaving correctly.
+
+Visit authenticity principle:
+
+- Prefer "leave a trace of your pilgrimage" over "prove you were there".
+- A safe first version is notes/comments required before earning a stamp.
+- GPS should be optional and later, as a "verified nearby" enhancement, because
+  mandatory location can create privacy friction, permission issues and false
+  negatives at real sanctuaries.
 
 ## Operating principle
 
