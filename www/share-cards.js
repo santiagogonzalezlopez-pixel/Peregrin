@@ -21,6 +21,9 @@
       achievementIncomplete: "Unlock this achievement first.",
       achievementSaved: "Achievement card saved on your device",
       achievementDownloaded: "Achievement card downloaded",
+      achievementDiplomaTitle: "Achievement diploma",
+      achievementAwardedTo: "Awarded to",
+      achievementReason: "for reaching this milestone and keeping the memory of the pilgrimage.",
       achievementUnlocked: "Achievement unlocked",
       achievementCompletedOn: "Unlocked on",
       completed: "Completed pilgrimage route",
@@ -54,6 +57,9 @@
       achievementIncomplete: "Desbloquea primero este logro.",
       achievementSaved: "Tarjeta de logro guardada en tu dispositivo",
       achievementDownloaded: "Tarjeta de logro descargada",
+      achievementDiplomaTitle: "Diploma de logro",
+      achievementAwardedTo: "Otorgado a",
+      achievementReason: "por alcanzar este hito y guardar memoria de su camino peregrino.",
       achievementUnlocked: "Logro desbloqueado",
       achievementCompletedOn: "Desbloqueado el",
       completed: "Ruta de peregrinación completada",
@@ -87,6 +93,9 @@
       achievementIncomplete: "Débloquez d’abord cette réalisation.",
       achievementSaved: "Carte de réalisation enregistrée sur votre appareil",
       achievementDownloaded: "Carte de réalisation téléchargée",
+      achievementDiplomaTitle: "Diplôme de réalisation",
+      achievementAwardedTo: "Attribué à",
+      achievementReason: "pour avoir atteint cette étape et gardé la mémoire du pèlerinage.",
       achievementUnlocked: "Réalisation débloquée",
       achievementCompletedOn: "Débloquée le",
       completed: "Route de pèlerinage terminée",
@@ -120,6 +129,9 @@
       achievementIncomplete: "Sblocca prima questo traguardo.",
       achievementSaved: "Scheda traguardo salvata sul dispositivo",
       achievementDownloaded: "Scheda traguardo scaricata",
+      achievementDiplomaTitle: "Diploma di traguardo",
+      achievementAwardedTo: "Assegnato a",
+      achievementReason: "per aver raggiunto questo traguardo e custodito la memoria del pellegrinaggio.",
       achievementUnlocked: "Traguardo sbloccato",
       achievementCompletedOn: "Sbloccato il",
       completed: "Percorso di pellegrinaggio completato",
@@ -153,6 +165,9 @@
       achievementIncomplete: "Desbloqueie primeiro esta conquista.",
       achievementSaved: "Cartão de conquista guardado no seu dispositivo",
       achievementDownloaded: "Cartão de conquista descarregado",
+      achievementDiplomaTitle: "Diploma de conquista",
+      achievementAwardedTo: "Atribuído a",
+      achievementReason: "por alcançar este marco e guardar a memória da peregrinação.",
       achievementUnlocked: "Conquista desbloqueada",
       achievementCompletedOn: "Desbloqueada em",
       completed: "Rota de peregrinação concluída",
@@ -611,6 +626,18 @@
     });
   }
 
+  function drawDiamond(ctx, x, y, radius, color){
+    ctx.beginPath();
+    ctx.moveTo(x, y - radius);
+    ctx.quadraticCurveTo(x + radius * 0.55, y - radius * 0.55, x + radius, y);
+    ctx.quadraticCurveTo(x + radius * 0.55, y + radius * 0.55, x, y + radius);
+    ctx.quadraticCurveTo(x - radius * 0.55, y + radius * 0.55, x - radius, y);
+    ctx.quadraticCurveTo(x - radius * 0.55, y - radius * 0.55, x, y - radius);
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.fill();
+  }
+
   function drawAchievementCard(ctx, achievement, image){
     const burgundy = "#722F37";
     const burgundyDark = "#3A1118";
@@ -620,105 +647,157 @@
     const brown = "#3E2723";
     const muted = "#6D4C41";
     const name = achievementLabel(achievement);
-    const desc = achievementDescription(achievement);
     const pilgrim = getPilgrimName();
     const completedOn = formatAchievementDate(achievement);
 
     const bg = ctx.createLinearGradient(0, 0, 0, CARD_HEIGHT);
     bg.addColorStop(0, "#1b080d");
-    bg.addColorStop(0.5, "#fff7ea");
-    bg.addColorStop(1, "#f1dfc0");
+    bg.addColorStop(0.42, "#fff8ea");
+    bg.addColorStop(1, "#ecd7ae");
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, CARD_WIDTH, CARD_HEIGHT);
 
-    drawCoverImage(ctx, image, 0, 0, CARD_WIDTH, 610);
-    const veil = ctx.createLinearGradient(0, 0, 0, 650);
-    veil.addColorStop(0, "rgba(28,8,12,0.16)");
-    veil.addColorStop(0.58, "rgba(45,13,18,0.48)");
-    veil.addColorStop(1, "rgba(45,13,18,0.94)");
+    drawCoverImage(ctx, image, 0, 0, CARD_WIDTH, 560);
+    const veil = ctx.createLinearGradient(0, 0, 0, 590);
+    veil.addColorStop(0, "rgba(28,8,12,0.20)");
+    veil.addColorStop(0.58, "rgba(45,13,18,0.35)");
+    veil.addColorStop(1, "rgba(45,13,18,0.90)");
     ctx.fillStyle = veil;
-    ctx.fillRect(0, 0, CARD_WIDTH, 650);
+    ctx.fillRect(0, 0, CARD_WIDTH, 590);
 
-    drawText(ctx, "PEREGRIN PASSPORT", CARD_WIDTH / 2, 84, {
-      size: 26,
+    drawText(ctx, "PEREGRIN", CARD_WIDTH / 2, 72, {
+      size: 34,
       weight: "800",
       color: goldLight,
-      align: "center"
+      align: "center",
+      letterSpacing: 0
     });
-    drawText(ctx, copy("achievementUnlocked").toUpperCase(), CARD_WIDTH / 2, 132, {
+    drawText(ctx, copy("achievementDiplomaTitle").toUpperCase(), CARD_WIDTH / 2, 116, {
       size: 22,
       weight: "800",
-      color: "rgba(253,245,230,0.82)",
+      color: "rgba(253,245,230,0.92)",
       align: "center"
     });
 
-    roundedRect(ctx, 90, 500, 900, 614, 44, "#fffaf0", "rgba(197,150,58,0.48)", 3);
+    ctx.shadowColor = "rgba(58,17,24,0.22)";
+    ctx.shadowBlur = 26;
+    ctx.shadowOffsetY = 20;
+    roundedRect(ctx, 90, 360, 900, 790, 42, "#fffaf0", "rgba(197,150,58,0.90)", 4);
+    ctx.shadowColor = "transparent";
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetY = 0;
+    roundedRect(ctx, 118, 388, 844, 734, 28, null, "rgba(232,201,122,0.80)", 2);
 
-    const sealGradient = ctx.createRadialGradient(CARD_WIDTH / 2 - 70, 615, 10, CARD_WIDTH / 2, 695, 158);
-    sealGradient.addColorStop(0, "#fff3bd");
-    sealGradient.addColorStop(0.45, goldLight);
+    ctx.strokeStyle = "rgba(232,201,122,0.48)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(164, 452);
+    ctx.bezierCurveTo(270, 405, 360, 430, 450, 455);
+    ctx.bezierCurveTo(500, 468, 550, 468, 620, 448);
+    ctx.bezierCurveTo(745, 412, 830, 420, 916, 456);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(164, 1058);
+    ctx.bezierCurveTo(270, 1105, 360, 1080, 450, 1055);
+    ctx.bezierCurveTo(500, 1042, 550, 1042, 620, 1062);
+    ctx.bezierCurveTo(745, 1098, 830, 1090, 916, 1054);
+    ctx.stroke();
+
+    const sealGradient = ctx.createRadialGradient(CARD_WIDTH / 2 - 62, 455, 10, CARD_WIDTH / 2, 506, 128);
+    sealGradient.addColorStop(0, "#fff0aa");
+    sealGradient.addColorStop(0.48, goldLight);
     sealGradient.addColorStop(1, gold);
     ctx.fillStyle = sealGradient;
     ctx.beginPath();
-    ctx.arc(CARD_WIDTH / 2, 678, 116, 0, Math.PI * 2);
+    ctx.arc(CARD_WIDTH / 2, 506, 94, 0, Math.PI * 2);
     ctx.fill();
-    ctx.strokeStyle = "rgba(255,255,255,0.72)";
-    ctx.lineWidth = 10;
+    ctx.strokeStyle = "rgba(255,255,255,0.82)";
+    ctx.lineWidth = 9;
     ctx.stroke();
-    drawText(ctx, "✦", CARD_WIDTH / 2, 708, {
-      size: 96,
-      family: "'Crimson Pro', serif",
-      weight: "700",
-      color: burgundyDark,
-      align: "center"
-    });
+    drawDiamond(ctx, CARD_WIDTH / 2, 506, 36, burgundyDark);
 
-    drawWrappedText(ctx, name, CARD_WIDTH / 2, 862, 780, {
-      size: 72,
+    const titleStartY = 650;
+    const titleHeight = drawWrappedText(ctx, name, CARD_WIDTH / 2, titleStartY, 760, {
+      size: 68,
       family: "'Crimson Pro', serif",
       weight: "700",
       color: brown,
       align: "center",
       maxLines: 2,
-      lineHeight: 74
+      lineHeight: 70
     });
-    drawWrappedText(ctx, desc, CARD_WIDTH / 2, 1004, 760, {
-      size: 30,
+    const ruleY = titleStartY + titleHeight + 18;
+    ctx.strokeStyle = "rgba(197,150,58,0.70)";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(260, ruleY);
+    ctx.lineTo(820, ruleY);
+    ctx.stroke();
+
+    const awardedY = ruleY + 64;
+    drawText(ctx, copy("achievementAwardedTo").toUpperCase(), CARD_WIDTH / 2, awardedY, {
+      size: 24,
+      weight: "800",
+      color: burgundy,
+      align: "center"
+    });
+
+    const pilgrimY = awardedY + 80;
+    drawWrappedText(ctx, pilgrim, CARD_WIDTH / 2, pilgrimY, 760, {
+      size: 52,
+      family: "'Crimson Pro', serif",
+      weight: "700",
+      color: burgundy,
+      align: "center",
+      maxLines: 2,
+      lineHeight: 54
+    });
+
+    const reasonY = pilgrimY + 74;
+    const reasonHeight = drawWrappedText(ctx, copy("achievementReason"), CARD_WIDTH / 2, reasonY, 700, {
+      size: 26,
       weight: "500",
       color: muted,
       align: "center",
       maxLines: 2,
-      lineHeight: 38
+      lineHeight: 36
     });
 
-    drawText(ctx, pilgrim, CARD_WIDTH / 2, 1146, {
-      size: 36,
+    const dateY = reasonY + reasonHeight + 54;
+    drawText(ctx, `${copy("achievementCompletedOn")} ${completedOn}`.toUpperCase(), CARD_WIDTH / 2, dateY, {
+      size: 22,
+      weight: "800",
+      color: "rgba(109,76,65,0.90)",
+      align: "center"
+    });
+
+    ctx.beginPath();
+    ctx.arc(CARD_WIDTH / 2, 1115, 30, 0, Math.PI * 2);
+    ctx.strokeStyle = gold;
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    drawText(ctx, "P", CARD_WIDTH / 2, 1124, {
+      size: 25,
       family: "'Crimson Pro', serif",
       weight: "700",
       color: burgundy,
       align: "center"
     });
-    drawText(ctx, `${copy("achievementCompletedOn")} ${completedOn}`, CARD_WIDTH / 2, 1192, {
-      size: 22,
-      weight: "700",
-      color: muted,
-      align: "center"
-    });
 
-    const footer = ctx.createLinearGradient(0, 1232, CARD_WIDTH, CARD_HEIGHT);
+    const footer = ctx.createLinearGradient(0, 1215, CARD_WIDTH, CARD_HEIGHT);
     footer.addColorStop(0, burgundy);
     footer.addColorStop(1, burgundyDark);
     ctx.fillStyle = footer;
-    ctx.fillRect(0, 1232, CARD_WIDTH, 118);
-    drawText(ctx, "PEREGRIN", CARD_WIDTH / 2, 1282, {
-      size: 42,
+    ctx.fillRect(0, 1215, CARD_WIDTH, 135);
+    drawText(ctx, "PEREGRIN", CARD_WIDTH / 2, 1272, {
+      size: 44,
       family: "'Crimson Pro', serif",
       weight: "700",
       color: cream,
       align: "center"
     });
-    drawText(ctx, copy("footer"), CARD_WIDTH / 2, 1322, {
-      size: 22,
+    drawText(ctx, copy("footer"), CARD_WIDTH / 2, 1320, {
+      size: 24,
       weight: "600",
       color: "rgba(253,245,230,0.76)",
       align: "center"

@@ -175,13 +175,18 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .stat-num{font-family:'Crimson Pro',serif;font-size:28px;font-weight:700;color:var(--gold-light);}
 .stat-label{font-size:10px;opacity:0.7;text-transform:uppercase;letter-spacing:1px;}
 .passport-section-title{font-family:'Crimson Pro',serif;font-size:20px;font-weight:600;margin-bottom:14px;color:var(--brown);}
-.stamp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px;}
-.stamp-card{background:var(--white);border-radius:12px;padding:16px;box-shadow:var(--shadow);position:relative;overflow:hidden;cursor:pointer;}
-.stamp-card::after{content:'✓';position:absolute;top:8px;right:10px;width:22px;height:22px;background:var(--gold);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
-.stamp-icon{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--burgundy),var(--burgundy-dark));border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:10px;box-shadow:inset 0 0 0 1px rgba(253,245,230,0.1);}
-.stamp-symbol{width:22px;height:22px;color:var(--cream);display:block;}
-.stamp-name{font-family:'Crimson Pro',serif;font-size:14px;font-weight:600;margin-bottom:2px;}
-.stamp-date{font-size:11px;color:var(--brown-light);}
+.stamp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:20px;}
+.stamp-card{background:linear-gradient(145deg,#fffdf8 0%,#fffaf0 68%,#f1dfc0 100%);border:1px solid rgba(197,150,58,.48);border-radius:18px;padding:13px 12px 12px;box-shadow:0 12px 28px rgba(62,39,35,.10);position:relative;overflow:hidden;cursor:pointer;min-height:178px;display:flex;flex-direction:column;text-align:center;align-items:center;transition:transform .16s ease,box-shadow .16s ease;}
+.stamp-card:active{transform:scale(.985);}
+.stamp-card::before{content:"";position:absolute;inset:7px;border:1px dashed rgba(197,150,58,.54);border-radius:14px;pointer-events:none;}
+.stamp-card::after{content:'✓';position:absolute;top:10px;right:10px;width:25px;height:25px;background:radial-gradient(circle at 35% 28%,var(--gold-light),var(--gold));color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;box-shadow:0 2px 8px rgba(62,39,35,.16);z-index:2;}
+.stamp-country{align-self:stretch;padding:0 28px 0 2px;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.10em;color:rgba(114,47,55,.66);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:1;}
+.stamp-icon{width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 35% 25%,#8b3c47 0%,var(--burgundy) 56%,var(--burgundy-dark) 100%);border:3px double var(--gold);display:flex;align-items:center;justify-content:center;margin:15px auto 12px;box-shadow:inset 0 0 0 2px rgba(253,245,230,.10),0 8px 16px rgba(62,39,35,.16);position:relative;z-index:1;}
+.stamp-icon::after{content:"";position:absolute;inset:6px;border:1px solid rgba(253,245,230,.22);border-radius:50%;}
+.stamp-symbol{width:30px;height:30px;color:var(--cream);display:block;position:relative;z-index:1;filter:drop-shadow(0 1px 0 rgba(0,0,0,.22));}
+.stamp-name{font-family:'Crimson Pro',serif;font-size:16px;line-height:1.08;font-weight:700;color:var(--brown);margin:0 auto;position:relative;z-index:1;}
+.stamp-date{width:100%;margin-top:auto;padding-top:10px;border-top:1px solid rgba(197,150,58,.22);font-size:9.5px;color:#8a6c48;font-weight:800;text-transform:uppercase;letter-spacing:.08em;position:relative;z-index:1;}
+.stamp-visited-label{display:block;margin-bottom:2px;font-size:8.5px;color:var(--gold);letter-spacing:.13em;}
 .empty-state{text-align:center;padding:40px 20px;color:var(--brown-light);}
 .empty-state-icon{font-size:48px;margin-bottom:12px;opacity:0.4;}
 .empty-state-text{font-size:14px;line-height:1.6;}
@@ -519,7 +524,7 @@ const i18n = {
     emailPlaceholder:'Email address', passwordPlaceholder:'Password', namePlaceholder:'Your full name',
     continueGoogle:'Continue with Google', signOut:'Sign out',
     passportTitle:'Pilgrim Passport', visited:'Visited', remaining:'Remaining',
-    stampsCollected:'Stamps collected', noVisits:"You haven't registered any visits yet.\nExplore the map and begin your pilgrimage!",
+    stampsCollected:'Stamps collected', stampVisitedLabel:'Visited', noVisits:"You haven't registered any visits yet.\nExplore the map and begin your pilgrimage!",
     achievementsTitle:'Pilgrim Achievements', routesTitle:'Pilgrimage Routes',
     profileTitle:'My pilgrim profile', viewPassport:'View my passport',
     myAchievements:'My achievements', pilgrimageRoutes:'Pilgrimage routes', routeVisited:'visited',
@@ -587,7 +592,7 @@ const i18n = {
     emailPlaceholder:'Correo electrónico', passwordPlaceholder:'Contraseña', namePlaceholder:'Tu nombre completo',
     continueGoogle:'Continuar con Google', signOut:'Cerrar sesión',
     passportTitle:'Pasaporte Peregrino', visited:'Visitados', remaining:'Pendientes',
-    stampsCollected:'Sellos obtenidos', noVisits:"Aún no has registrado ninguna visita.\n¡Explora el mapa y comienza tu peregrinación!",
+    stampsCollected:'Sellos obtenidos', stampVisitedLabel:'Visitado', noVisits:"Aún no has registrado ninguna visita.\n¡Explora el mapa y comienza tu peregrinación!",
     achievementsTitle:'Logros del peregrino', routesTitle:'Rutas de peregrinación',
     profileTitle:'Mi perfil peregrino', viewPassport:'Ver mi pasaporte',
     myAchievements:'Mis logros', pilgrimageRoutes:'Rutas de peregrinación', routeVisited:'visitados',
@@ -655,7 +660,7 @@ const i18n = {
     emailPlaceholder:'Adresse e-mail', passwordPlaceholder:'Mot de passe', namePlaceholder:'Votre nom complet',
     continueGoogle:'Continuer avec Google', signOut:'Se déconnecter',
     passportTitle:'Passeport du Pèlerin', visited:'Visités', remaining:'Restants',
-    stampsCollected:'Tampons collectés', noVisits:"Vous n'avez pas encore enregistré de visite.\nExplorez la carte et commencez votre pèlerinage !",
+    stampsCollected:'Tampons collectés', stampVisitedLabel:'Visité', noVisits:"Vous n'avez pas encore enregistré de visite.\nExplorez la carte et commencez votre pèlerinage !",
     achievementsTitle:'Réalisations du pèlerin', routesTitle:'Itinéraires de pèlerinage',
     profileTitle:'Mon profil de pèlerin', viewPassport:'Voir mon passeport',
     myAchievements:'Mes réalisations', pilgrimageRoutes:'Itinéraires de pèlerinage', routeVisited:'visités',
@@ -723,7 +728,7 @@ const i18n = {
     emailPlaceholder:'Indirizzo e-mail', passwordPlaceholder:'Password', namePlaceholder:'Il tuo nome completo',
     continueGoogle:'Continua con Google', signOut:'Esci',
     passportTitle:'Passaporto del Pellegrino', visited:'Visitati', remaining:'Rimanenti',
-    stampsCollected:'Timbri raccolti', noVisits:"Non hai ancora registrato nessuna visita.\nEsplora la mappa e inizia il tuo pellegrinaggio!",
+    stampsCollected:'Timbri raccolti', stampVisitedLabel:'Visitato', noVisits:"Non hai ancora registrato nessuna visita.\nEsplora la mappa e inizia il tuo pellegrinaggio!",
     achievementsTitle:'Traguardi del pellegrino', routesTitle:'Itinerari di pellegrinaggio',
     profileTitle:'Il mio profilo pellegrino', viewPassport:'Vedi il mio passaporto',
     myAchievements:'I miei traguardi', pilgrimageRoutes:'Itinerari di pellegrinaggio', routeVisited:'visitati',
@@ -791,7 +796,7 @@ const i18n = {
     emailPlaceholder:'Endereço de e-mail', passwordPlaceholder:'Palavra-passe', namePlaceholder:'O seu nome completo',
     continueGoogle:'Continuar com Google', signOut:'Sair',
     passportTitle:'Passaporte do Peregrino', visited:'Visitados', remaining:'Restantes',
-    stampsCollected:'Selos recolhidos', noVisits:"Ainda não registou nenhuma visita.\nExplore o mapa e comece a sua peregrinação!",
+    stampsCollected:'Selos recolhidos', stampVisitedLabel:'Visitado', noVisits:"Ainda não registou nenhuma visita.\nExplore o mapa e comece a sua peregrinação!",
     achievementsTitle:'Conquistas do peregrino', routesTitle:'Rotas de peregrinação',
     profileTitle:'O meu perfil de peregrino', viewPassport:'Ver o meu passaporte',
     myAchievements:'As minhas conquistas', pilgrimageRoutes:'Rotas de peregrinação', routeVisited:'visitados',
@@ -2116,6 +2121,17 @@ function formatCommentDate(comment){
   return new Date(value).toLocaleDateString(getCommentLocale(), {day:'numeric', month:'short', year:'numeric'});
 }
 
+function formatVisitDate(value){
+  if(!value) return '';
+  const date = new Date(`${value}T12:00:00`);
+  if(Number.isNaN(date.getTime())) return value;
+  try{
+    return date.toLocaleDateString(getCommentLocale(), {day:'2-digit', month:'short', year:'numeric'}).replace(/\./g,'');
+  }catch(e){
+    return value;
+  }
+}
+
 function updateCommentCounter(sanctuaryId){
   const input = document.getElementById(`comment-input-${sanctuaryId}`);
   const counter = document.getElementById(`comment-counter-${sanctuaryId}`);
@@ -2354,12 +2370,16 @@ function renderPassport(){
     ${visitedList.length>0?`
       <div class="passport-section-title">${t('stampsCollected')}</div>
       <div class="stamp-grid">
-        ${visitedList.map(s=>`
+        ${visitedList.map(s=>{
+          const country=countries.find(c=>c.id===s.country);
+          return `
           <div class="stamp-card" onclick="openModal(${s.id})">
+            <div class="stamp-country">${country?.flag||''} ${country?cn(country):''}</div>
             <div class="stamp-icon">${sanctuarySymbolSvg(s,'stamp-symbol')}</div>
             <div class="stamp-name">${sd(s).name}</div>
-            <div class="stamp-date">${visits[s.id]}</div>
-          </div>`).join('')}
+            <div class="stamp-date"><span class="stamp-visited-label">${t('stampVisitedLabel')}</span>${formatVisitDate(visits[s.id])}</div>
+          </div>`;
+        }).join('')}
       </div>`:`
       <div class="empty-state">
         <div class="empty-state-icon">🕊️</div>
@@ -2565,7 +2585,7 @@ if('serviceWorker' in navigator){
     window.__peregrinSwRefreshing = true;
     window.location.reload();
   });
-  navigator.serviceWorker.register('sw.js?v=23').then(reg => reg.update?.()).catch(()=>{});
+  navigator.serviceWorker.register('sw.js?v=24').then(reg => reg.update?.()).catch(()=>{});
 }
 
 // ===================== INIT =====================
