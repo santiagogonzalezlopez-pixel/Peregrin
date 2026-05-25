@@ -93,9 +93,11 @@ Visit authenticity principle:
 
 - Prefer "leave a trace of your pilgrimage" over "prove you were there".
 - A safe first version is notes/comments required before earning a stamp.
-- GPS should be optional and later, as a "verified nearby" enhancement, because
-  mandatory location can create privacy friction, permission issues and false
-  negatives at real sanctuaries.
+- Do not require GPS/geolocation for stamps. It would be unfair to real pilgrims
+  who visited sanctuaries before installing Peregrin and should not have to
+  travel again just to claim a memory.
+- Avoid a "prove where you are" tone; the product should validate memory and
+  contribution, not police physical presence.
 
 ## Operating principle
 

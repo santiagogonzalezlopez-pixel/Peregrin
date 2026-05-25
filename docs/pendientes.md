@@ -52,10 +52,11 @@ Last updated: 2026-05-25
   registering a sanctuary visit.
 - Keep the comment short, link-free and moderate/reportable with existing
   comment safeguards.
-- Do not require GPS in the first version; it can create permission, privacy and
-  false-negative problems.
-- Possible later version: optional "verified nearby" badge if the user grants
-  location and is physically near the sanctuary.
+- Do not require GPS/geolocation for stamps. It would be unfair to real pilgrims
+  who visited sanctuaries before installing Peregrin and should not have to
+  travel again just to claim a memory.
+- Avoid a "prove where you are" tone; the product should validate memory and
+  contribution, not police physical presence.
 - Product tone: not policing pilgrims, but asking them to leave a trace of the
   pilgrimage for themselves and a helpful note for others.
 
