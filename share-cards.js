@@ -512,6 +512,32 @@
     ctx.fillText(String(text || ""), x, y);
   }
 
+  function drawFittedText(ctx, text, x, y, maxWidth, options={}){
+    const {
+      size=32,
+      family="'Jost', sans-serif",
+      weight="400",
+      style="normal",
+      minSize=Math.max(10, Math.floor(size * 0.72))
+    } = options;
+    let fittedSize = size;
+    let value = String(text || "");
+    while(fittedSize > minSize){
+      ctx.font = `${style} ${weight} ${fittedSize}px ${family}`;
+      if(ctx.measureText(value).width <= maxWidth) break;
+      fittedSize -= 1;
+    }
+    ctx.font = `${style} ${weight} ${fittedSize}px ${family}`;
+    if(ctx.measureText(value).width > maxWidth){
+      while(value.length > 4 && ctx.measureText(`${value}...`).width > maxWidth){
+        value = value.slice(0, -1).trimEnd();
+      }
+      value = `${value}...`;
+    }
+    drawText(ctx, value, x, y, {...options, size:fittedSize});
+    return value;
+  }
+
   function splitLines(ctx, text, maxWidth, options={}){
     const size = options.size || 32;
     const family = options.family || "'Jost', sans-serif";
@@ -1005,31 +1031,87 @@
     });
   }
 
+  function getPassportLayout(stampCount){
+    const cols = stampCount <= 1 ? 1 : 2;
+    const gap = 22;
+    const totalWidth = cols === 1 ? 520 : 860;
+    const stampWidth = cols === 1 ? totalWidth : Math.floor((totalWidth - gap) / 2);
+    const stampHeight = 160;
+    const startY = 620;
+    const rows = Math.max(1, Math.ceil(stampCount / cols));
+    const stampsBottom = stampCount
+      ? startY + rows * stampHeight + (rows - 1) * gap
+      : startY;
+    const footerHeight = 135;
+    const footerTop = Math.max(CARD_HEIGHT - footerHeight, stampsBottom + 72);
+    const canvasHeight = footerTop + footerHeight;
+    return {
+      cols,
+      gap,
+      totalWidth,
+      stampWidth,
+      stampHeight,
+      startX: (CARD_WIDTH - totalWidth) / 2,
+      startY,
+      rows,
+      stampsBottom,
+      footerTop,
+      footerHeight,
+      canvasHeight
+    };
+  }
+
+  function drawStampPerforation(ctx, x, y, width, height){
+    ctx.save();
+    ctx.fillStyle = "rgba(197,150,58,0.18)";
+    const radius = 3.2;
+    const step = 18;
+    for(let px = x + 22; px < x + width - 18; px += step){
+      ctx.beginPath();
+      ctx.arc(px, y + 8, radius, 0, Math.PI * 2);
+      ctx.arc(px, y + height - 8, radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    for(let py = y + 24; py < y + height - 18; py += step){
+      ctx.beginPath();
+      ctx.arc(x + 8, py, radius, 0, Math.PI * 2);
+      ctx.arc(x + width - 8, py, radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+
   function drawPassportStamp(ctx, stamp, x, y, width, height, colors, index){
     const {burgundy, burgundyDark, gold, goldLight, cream, brown, muted} = colors;
     ctx.save();
-    roundedRect(ctx, x, y, width, height, 22, "#fffdf6", "rgba(197,150,58,0.42)", 1.5);
+    ctx.shadowColor = "rgba(58,17,24,0.10)";
+    ctx.shadowBlur = 12;
+    ctx.shadowOffsetY = 5;
+    roundedRect(ctx, x, y, width, height, 22, "#fffdf6", "rgba(197,150,58,0.46)", 1.5);
+    ctx.shadowColor = "transparent";
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetY = 0;
+    drawStampPerforation(ctx, x, y, width, height);
     ctx.setLineDash([9, 7]);
-    roundedRect(ctx, x + 9, y + 9, width - 18, height - 18, 17, null, "rgba(197,150,58,0.38)", 1.2);
+    roundedRect(ctx, x + 14, y + 14, width - 28, height - 28, 16, null, "rgba(197,150,58,0.42)", 1.2);
     ctx.setLineDash([]);
 
     if(stamp?.more){
       const centerX = x + width / 2;
-      drawPassportSealMark(ctx, centerX, y + 56, 42, colors, index);
-      drawText(ctx, `+${stamp.more}`, centerX, y + 68, {
+      drawPassportSealMark(ctx, centerX, y + 66, 42, colors, index);
+      drawText(ctx, `+${stamp.more}`, centerX, y + 78, {
         size: 36,
         family: "'Crimson Pro', serif",
         weight: "700",
         color: goldLight,
         align: "center"
       });
-      drawWrappedText(ctx, copy("passportMore"), centerX, y + 118, width - 46, {
-        size: 22,
+      drawFittedText(ctx, copy("passportMore"), centerX, y + 124, width - 46, {
+        size: 20,
+        minSize: 12,
         weight: "800",
         color: brown,
-        align: "center",
-        maxLines: 2,
-        lineHeight: 28
+        align: "center"
       });
       ctx.restore();
       return;
@@ -1038,35 +1120,34 @@
     const countryName = countryLabel(stamp.country);
     const placeName = sanctuaryLabel(stamp.sanctuary);
     const date = formatVisitDate(stamp.date);
-    const tight = height <= 132;
-    const narrow = width < 350;
 
-    drawPassportSealMark(ctx, x + 64, y + 68, 42, colors, index);
-    drawText(ctx, (countryName || "Peregrin").toUpperCase(), x + 126, y + 42, {
-      size: 15,
-      weight: "800",
-      color: burgundy,
-      maxLines: 1
+    drawPassportSealMark(ctx, x + 80, y + 80, 48, colors, index);
+    drawDiamond(ctx, x + 116, y + 38, 9, goldLight);
+    drawText(ctx, "P", x + width - 34, y + 42, {
+      size: 22,
+      family: "'Crimson Pro', serif",
+      weight: "700",
+      color: "rgba(197,150,58,0.78)",
+      align: "center"
     });
-    drawWrappedText(ctx, placeName, x + 126, tight ? y + 66 : y + 76, width - 150, {
-      size: height > 145 ? 28 : tight ? 18 : 22,
+    drawFittedText(ctx, (countryName || "Peregrin").toUpperCase(), x + 148, y + 45, width - 196, {
+      size: 14,
+      minSize: 10,
+      weight: "800",
+      color: burgundy
+    });
+    drawWrappedText(ctx, placeName, x + 148, y + 80, width - 178, {
+      size: 23,
       family: "'Crimson Pro', serif",
       weight: "700",
       color: brown,
-      maxLines: tight && narrow ? 1 : 2,
-      lineHeight: height > 145 ? 30 : tight ? 20 : 26
+      maxLines: 2,
+      lineHeight: 25
     });
-    drawText(ctx, date, x + 126, y + height - (tight ? 13 : 25), {
-      size: tight ? 13 : 15,
+    drawText(ctx, date, x + 148, y + height - 24, {
+      size: 14,
       weight: "800",
       color: muted
-    });
-    drawText(ctx, "P", x + width - 26, y + 36, {
-      size: 20,
-      family: "'Crimson Pro', serif",
-      weight: "700",
-      color: "rgba(197,150,58,0.70)",
-      align: "center"
     });
     ctx.restore();
   }
@@ -1085,22 +1166,25 @@
     const pilgrim = getPilgrimName();
     const countriesVisited = new Set(stamps.map(stamp => stamp.sanctuary?.country).filter(Boolean)).size;
     const achievementsUnlocked = getUnlockedAchievementCount();
+    const layout = getPassportLayout(stamps.length);
+    const passportHeight = ctx.canvas?.height || layout.canvasHeight;
+    const footerTop = passportHeight - layout.footerHeight;
 
-    const bg = ctx.createLinearGradient(0, 0, 0, CARD_HEIGHT);
+    const bg = ctx.createLinearGradient(0, 0, 0, passportHeight);
     bg.addColorStop(0, "#16070b");
-    bg.addColorStop(0.30, "#351017");
-    bg.addColorStop(0.31, "#f8ebd3");
+    bg.addColorStop(0.16, "#351017");
+    bg.addColorStop(0.17, "#f8ebd3");
     bg.addColorStop(1, "#fff8ea");
     ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, CARD_WIDTH, CARD_HEIGHT);
+    ctx.fillRect(0, 0, CARD_WIDTH, passportHeight);
 
-    drawCoverImage(ctx, image, 0, 0, CARD_WIDTH, 500);
-    const veil = ctx.createLinearGradient(0, 0, 0, 530);
+    drawCoverImage(ctx, image, 0, 0, CARD_WIDTH, 420);
+    const veil = ctx.createLinearGradient(0, 0, 0, 460);
     veil.addColorStop(0, "rgba(22,7,11,0.16)");
     veil.addColorStop(0.56, "rgba(22,7,11,0.48)");
     veil.addColorStop(1, "rgba(22,7,11,0.94)");
     ctx.fillStyle = veil;
-    ctx.fillRect(0, 0, CARD_WIDTH, 530);
+    ctx.fillRect(0, 0, CARD_WIDTH, 460);
 
     drawText(ctx, copy("passportShareLabel"), CARD_WIDTH / 2, 86, {
       size: 38,
@@ -1118,15 +1202,15 @@
     ctx.shadowColor = "rgba(58,17,24,0.26)";
     ctx.shadowBlur = 34;
     ctx.shadowOffsetY = 24;
-    roundedRect(ctx, 64, 250, 952, 944, 44, "#fffaf0", "rgba(197,150,58,0.86)", 4);
+    roundedRect(ctx, 64, 226, 952, footerTop - 246, 44, "#fffaf0", "rgba(197,150,58,0.86)", 4);
     ctx.shadowColor = "transparent";
     ctx.shadowBlur = 0;
     ctx.shadowOffsetY = 0;
-    roundedRect(ctx, 94, 280, 892, 884, 30, null, "rgba(232,201,122,0.70)", 2);
+    roundedRect(ctx, 94, 258, 892, footerTop - 310, 30, null, "rgba(232,201,122,0.70)", 2);
 
     ctx.save();
     const emblemX = CARD_WIDTH / 2;
-    const emblemY = 332;
+    const emblemY = 310;
     const emblem = ctx.createRadialGradient(emblemX - 13, emblemY - 16, 4, emblemX, emblemY, 42);
     emblem.addColorStop(0, "#fff0aa");
     emblem.addColorStop(0.46, goldLight);
@@ -1150,49 +1234,40 @@
       roundedRect(ctx, emblemX + dx - 8, emblemY + dy - 2.5, 16, 5, 2.5, burgundy, null);
     });
     ctx.restore();
-    drawText(ctx, pilgrim, CARD_WIDTH / 2, 420, {
-      size: 62,
+    drawFittedText(ctx, pilgrim, CARD_WIDTH / 2, 395, 760, {
+      size: 58,
+      minSize: 36,
       family: "'Crimson Pro', serif",
       weight: "700",
       color: brown,
       align: "center"
     });
-    drawText(ctx, copy("passportLatest").toUpperCase(), CARD_WIDTH / 2, 468, {
+    drawText(ctx, copy("passportLatest").toUpperCase(), CARD_WIDTH / 2, 438, {
       size: 20,
       weight: "800",
       color: "rgba(114,47,55,0.70)",
       align: "center"
     });
 
-    drawPassportStat(ctx, 126, 506, String(stamps.length), copy("passportStamps"), colors);
-    drawPassportStat(ctx, 415, 506, String(countriesVisited), copy("passportCountries"), colors);
-    drawPassportStat(ctx, 704, 506, String(achievementsUnlocked), copy("passportAchievements"), colors);
+    drawPassportStat(ctx, 126, 476, String(stamps.length), copy("passportStamps"), colors);
+    drawPassportStat(ctx, 415, 476, String(countriesVisited), copy("passportCountries"), colors);
+    drawPassportStat(ctx, 704, 476, String(achievementsUnlocked), copy("passportAchievements"), colors);
 
-    const maxVisible = 12;
-    let visibleStamps = stamps.slice(0, maxVisible);
-    const extraCount = stamps.length - maxVisible;
-    if(extraCount > 0) visibleStamps = [...stamps.slice(0, maxVisible - 1), {more: extraCount + 1}];
-
+    const visibleStamps = stamps;
     const count = visibleStamps.length;
-    const cols = count <= 8 ? 2 : 3;
-    const gap = cols === 2 ? (count > 6 ? 10 : 18) : 20;
-    const totalWidth = 828;
-    const stampWidth = Math.floor((totalWidth - gap * (cols - 1)) / cols);
-    const stampHeight = count <= 4 ? 174 : count <= 6 ? 150 : count <= 8 ? 122 : 124;
-    const startX = (CARD_WIDTH - totalWidth) / 2;
-    const startY = count <= 4 ? 660 : count <= 6 ? 636 : 624;
-    const rows = Math.ceil(count / cols);
-    const stampsBottom = startY + rows * stampHeight + (rows - 1) * gap;
+    const {cols, gap, stampWidth, stampHeight, startX, startY, rows, stampsBottom} = layout;
 
     visibleStamps.forEach((stamp, index) => {
       const col = index % cols;
       const row = Math.floor(index / cols);
       const itemsInLastRow = count % cols || cols;
-      const isCenteredLastItem = row === rows - 1 && itemsInLastRow === 1 && cols === 2;
+      const itemsInRow = row === rows - 1 ? itemsInLastRow : cols;
+      const rowWidth = (itemsInRow * stampWidth) + ((itemsInRow - 1) * gap);
+      const rowStartX = row === rows - 1 && itemsInRow < cols ? (CARD_WIDTH - rowWidth) / 2 : startX;
       drawPassportStamp(
         ctx,
         stamp,
-        isCenteredLastItem ? (CARD_WIDTH - stampWidth) / 2 : startX + col * (stampWidth + gap),
+        rowStartX + col * (stampWidth + gap),
         startY + row * (stampHeight + gap),
         stampWidth,
         stampHeight,
@@ -1201,8 +1276,8 @@
       );
     });
 
-    if(stampsBottom < 1126){
-      drawText(ctx, "PEREGRIN", CARD_WIDTH / 2, 1158, {
+    if(stampsBottom < footerTop - 48){
+      drawText(ctx, "PEREGRIN", CARD_WIDTH / 2, footerTop - 52, {
         size: 28,
         family: "'Crimson Pro', serif",
         weight: "700",
@@ -1211,19 +1286,19 @@
       });
     }
 
-    const footer = ctx.createLinearGradient(0, 1215, CARD_WIDTH, CARD_HEIGHT);
+    const footer = ctx.createLinearGradient(0, footerTop, CARD_WIDTH, passportHeight);
     footer.addColorStop(0, burgundy);
     footer.addColorStop(1, burgundyDark);
     ctx.fillStyle = footer;
-    ctx.fillRect(0, 1215, CARD_WIDTH, 135);
-    drawText(ctx, "PEREGRIN", CARD_WIDTH / 2, 1272, {
+    ctx.fillRect(0, footerTop, CARD_WIDTH, layout.footerHeight);
+    drawText(ctx, "PEREGRIN", CARD_WIDTH / 2, footerTop + 57, {
       size: 44,
       family: "'Crimson Pro', serif",
       weight: "700",
       color: cream,
       align: "center"
     });
-    drawText(ctx, copy("footer"), CARD_WIDTH / 2, 1320, {
+    drawText(ctx, copy("footer"), CARD_WIDTH / 2, footerTop + 105, {
       size: 24,
       weight: "600",
       color: "rgba(253,245,230,0.76)",
@@ -1264,7 +1339,7 @@
     await waitForFonts();
     const canvas = document.createElement("canvas");
     canvas.width = CARD_WIDTH;
-    canvas.height = CARD_HEIGHT;
+    canvas.height = getPassportLayout(stamps.length).canvasHeight;
     const ctx = canvas.getContext("2d");
     const image = await loadImage("assets/sanctuary-hero.png");
     drawPassportCard(ctx, stamps, image);
