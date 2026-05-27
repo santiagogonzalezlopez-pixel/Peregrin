@@ -7,7 +7,7 @@
   },
   "scripts": {
     "lint": "node --check index.js",
-    "deploy": "firebase deploy --only functions:verifyGooglePlayPurchase,functions:stripeWebhook,firestore:rules --project peregrin-d7611"
+    "deploy": "firebase deploy --only functions:verifyGooglePlayPurchase,functions:stripeWebhook,functions:notifyNewSanctuaryComment,functions:notifyReportedSanctuaryComment,firestore:rules --project peregrin-d7611"
   },
   "dependencies": {
     "firebase-admin": "^13.9.0",
