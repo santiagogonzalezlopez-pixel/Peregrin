@@ -537,7 +537,7 @@ const i18n = {
     myAchievements:'My achievements', pilgrimageRoutes:'Pilgrimage routes', routeVisited:'visited',
     achievementUnlocked:'Unlocked', achievementInProgress:'In progress', achievementShareHint:'Tap to share', achievementSharePreparing:'Preparing achievement card...', sharePassport:'Share my passport', passportSharePreparing:'Preparing pilgrim passport...',
     resetVisits:'Reset my visits', resetConfirm:'Are you sure you want to reset all your visits?',
-    resetDone:'Visits reset', registerVisit:'Register visit', visited_btn:'Visited',
+    resetDone:'Visits reset', registerVisit:"I've been here", realVisitConfirm:'Peregrin is a passport for real pilgrimages. Mark this sanctuary only if you have visited it personally.\n\nHave you really been here?', visited_btn:'Visited',
     removeVisit:'Visited — Remove visit', viewDetails:'View full details',
     howToGet:'How to get there', howToGetFull:'How to get there — Google Maps', moreInfoFull:'More information — Wikipedia',
     descLabel:'Description', histLabel:'History', prayerLabel:"Pilgrim's Prayer",
@@ -605,7 +605,7 @@ const i18n = {
     myAchievements:'Mis logros', pilgrimageRoutes:'Rutas de peregrinación', routeVisited:'visitados',
     achievementUnlocked:'Desbloqueado', achievementInProgress:'En curso', achievementShareHint:'Toca para compartir', achievementSharePreparing:'Preparando tarjeta de logro...', sharePassport:'Compartir mi pasaporte', passportSharePreparing:'Preparando pasaporte peregrino...',
     resetVisits:'Reiniciar mis visitas', resetConfirm:'¿Seguro que quieres reiniciar todas tus visitas?',
-    resetDone:'Visitas reiniciadas', registerVisit:'Registrar visita', visited_btn:'Visitado',
+    resetDone:'Visitas reiniciadas', registerVisit:'He estado aquí', realVisitConfirm:'Peregrin es un pasaporte de peregrinación real. Marca este santuario solo si lo has visitado personalmente.\n\n¿Has estado aquí de verdad?', visited_btn:'Visitado',
     removeVisit:'Visitado — Quitar visita', viewDetails:'Ver ficha completa',
     howToGet:'Cómo llegar', howToGetFull:'Cómo llegar — Google Maps', moreInfoFull:'Más información — Wikipedia',
     descLabel:'Descripción', histLabel:'Historia', prayerLabel:'Oración del peregrino',
@@ -673,7 +673,7 @@ const i18n = {
     myAchievements:'Mes réalisations', pilgrimageRoutes:'Itinéraires de pèlerinage', routeVisited:'visités',
     achievementUnlocked:'Débloqué', achievementInProgress:'En cours', achievementShareHint:'Touchez pour partager', achievementSharePreparing:'Préparation de la carte...', sharePassport:'Partager mon passeport', passportSharePreparing:'Préparation du passeport pèlerin...',
     resetVisits:'Réinitialiser mes visites', resetConfirm:'Voulez-vous vraiment réinitialiser toutes vos visites ?',
-    resetDone:'Visites réinitialisées', registerVisit:'Enregistrer la visite', visited_btn:'Visité',
+    resetDone:'Visites réinitialisées', registerVisit:'Je l’ai visité', realVisitConfirm:'Peregrin est un passeport de pèlerinage réel. Marquez ce sanctuaire seulement si vous l’avez visité personnellement.\n\nL’avez-vous vraiment visité ?', visited_btn:'Visité',
     removeVisit:'Visité — Retirer la visite', viewDetails:'Voir la fiche complète',
     howToGet:"S'y rendre", howToGetFull:"S'y rendre — Google Maps", moreInfoFull:'Plus d’informations — Wikipédia',
     descLabel:'Description', histLabel:'Histoire', prayerLabel:'Prière du pèlerin',
@@ -741,7 +741,7 @@ const i18n = {
     myAchievements:'I miei traguardi', pilgrimageRoutes:'Itinerari di pellegrinaggio', routeVisited:'visitati',
     achievementUnlocked:'Sbloccato', achievementInProgress:'In corso', achievementShareHint:'Tocca per condividere', achievementSharePreparing:'Preparazione della scheda...', sharePassport:'Condividi il mio passaporto', passportSharePreparing:'Preparazione del passaporto pellegrino...',
     resetVisits:'Reimposta le mie visite', resetConfirm:'Sei sicuro di voler reimpostare tutte le tue visite?',
-    resetDone:'Visite reimpostate', registerVisit:'Registra visita', visited_btn:'Visitato',
+    resetDone:'Visite reimpostate', registerVisit:"L'ho visitato", realVisitConfirm:'Peregrin è un passaporto di pellegrinaggio reale. Segna questo santuario solo se lo hai visitato personalmente.\n\nLo hai visitato davvero?', visited_btn:'Visitato',
     removeVisit:'Visitato — Rimuovi visita', viewDetails:'Vedi scheda completa',
     howToGet:'Come arrivare', howToGetFull:'Come arrivare — Google Maps', moreInfoFull:'Maggiori informazioni — Wikipedia',
     descLabel:'Descrizione', histLabel:'Storia', prayerLabel:'Preghiera del pellegrino',
@@ -809,7 +809,7 @@ const i18n = {
     myAchievements:'As minhas conquistas', pilgrimageRoutes:'Rotas de peregrinação', routeVisited:'visitados',
     achievementUnlocked:'Desbloqueada', achievementInProgress:'Em curso', achievementShareHint:'Toque para partilhar', achievementSharePreparing:'A preparar cartão de conquista...', sharePassport:'Partilhar o meu passaporte', passportSharePreparing:'A preparar passaporte peregrino...',
     resetVisits:'Reiniciar as minhas visitas', resetConfirm:'Tem a certeza de que quer reiniciar todas as suas visitas?',
-    resetDone:'Visitas reiniciadas', registerVisit:'Registar visita', visited_btn:'Visitado',
+    resetDone:'Visitas reiniciadas', registerVisit:'Estive aqui', realVisitConfirm:'Peregrin é um passaporte de peregrinação real. Marque este santuário apenas se o visitou pessoalmente.\n\nEsteve aqui de verdade?', visited_btn:'Visitado',
     removeVisit:'Visitado — Remover visita', viewDetails:'Ver ficha completa',
     howToGet:'Como chegar', howToGetFull:'Como chegar — Google Maps', moreInfoFull:'Mais informação — Wikipédia',
     descLabel:'Descrição', histLabel:'História', prayerLabel:'Oração do peregrino',
@@ -1681,7 +1681,10 @@ function toggleVisit(id){
   const s=sanctuaries.find(x=>x.id===id);
   if(!isCountryUnlocked(s.country)){openPremiumModal();return;}
   if(visits[id]){delete visits[id];}
-  else{visits[id]=new Date().toISOString().split('T')[0];showToast(t('visitToast')(sd(s).name));}
+  else{
+    if(!window.confirm(t('realVisitConfirm'))) return;
+    visits[id]=new Date().toISOString().split('T')[0];showToast(t('visitToast')(sd(s).name));
+  }
   saveVisits();refreshAll();updateMarkerStyles();
 }
 
