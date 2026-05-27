@@ -175,18 +175,23 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .stat-num{font-family:'Crimson Pro',serif;font-size:28px;font-weight:700;color:var(--gold-light);}
 .stat-label{font-size:10px;opacity:0.7;text-transform:uppercase;letter-spacing:1px;}
 .passport-section-title{font-family:'Crimson Pro',serif;font-size:20px;font-weight:600;margin-bottom:14px;color:var(--brown);}
-.stamp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:20px;}
-.stamp-card{background:linear-gradient(145deg,#fffdf8 0%,#fffaf0 68%,#f1dfc0 100%);border:1px solid rgba(197,150,58,.48);border-radius:18px;padding:13px 12px 12px;box-shadow:0 12px 28px rgba(62,39,35,.10);position:relative;overflow:hidden;cursor:pointer;min-height:178px;display:flex;flex-direction:column;text-align:center;align-items:center;transition:transform .16s ease,box-shadow .16s ease;}
+.stamp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-bottom:20px;}
+.stamp-card{background:radial-gradient(circle at 18% 14%,rgba(255,255,255,.96),transparent 34%),linear-gradient(145deg,#fffdf7 0%,#fff7e8 58%,#ead4aa 100%);border:1px solid rgba(197,150,58,.54);border-radius:20px;padding:14px 12px 13px;box-shadow:0 14px 30px rgba(62,39,35,.11),inset 0 0 0 1px rgba(255,255,255,.62);position:relative;overflow:hidden;cursor:pointer;min-height:202px;display:flex;flex-direction:column;text-align:center;align-items:center;transition:transform .16s ease,box-shadow .16s ease;}
 .stamp-card:active{transform:scale(.985);}
-.stamp-card::before{content:"";position:absolute;inset:7px;border:1px dashed rgba(197,150,58,.54);border-radius:14px;pointer-events:none;}
-.stamp-card::after{content:'✓';position:absolute;top:10px;right:10px;width:25px;height:25px;background:radial-gradient(circle at 35% 28%,var(--gold-light),var(--gold));color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;box-shadow:0 2px 8px rgba(62,39,35,.16);z-index:2;}
-.stamp-country{align-self:stretch;padding:0 28px 0 2px;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.10em;color:rgba(114,47,55,.66);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:1;}
-.stamp-icon{width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 35% 25%,#8b3c47 0%,var(--burgundy) 56%,var(--burgundy-dark) 100%);border:3px double var(--gold);display:flex;align-items:center;justify-content:center;margin:15px auto 12px;box-shadow:inset 0 0 0 2px rgba(253,245,230,.10),0 8px 16px rgba(62,39,35,.16);position:relative;z-index:1;}
-.stamp-icon::after{content:"";position:absolute;inset:6px;border:1px solid rgba(253,245,230,.22);border-radius:50%;}
-.stamp-symbol{width:30px;height:30px;color:var(--cream);display:block;position:relative;z-index:1;filter:drop-shadow(0 1px 0 rgba(0,0,0,.22));}
-.stamp-name{font-family:'Crimson Pro',serif;font-size:16px;line-height:1.08;font-weight:700;color:var(--brown);margin:0 auto;position:relative;z-index:1;}
-.stamp-date{width:100%;margin-top:auto;padding-top:10px;border-top:1px solid rgba(197,150,58,.22);font-size:9.5px;color:#8a6c48;font-weight:800;text-transform:uppercase;letter-spacing:.08em;position:relative;z-index:1;}
-.stamp-visited-label{display:block;margin-bottom:2px;font-size:8.5px;color:var(--gold);letter-spacing:.13em;}
+.stamp-card::before{content:"";position:absolute;inset:8px;border:1px dashed rgba(197,150,58,.58);border-radius:15px;pointer-events:none;}
+.stamp-card::after{content:'✓';position:absolute;top:12px;right:12px;width:27px;height:27px;background:radial-gradient(circle at 35% 28%,var(--gold-light),var(--gold));color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;box-shadow:0 3px 9px rgba(62,39,35,.17);z-index:3;}
+.stamp-country{align-self:stretch;padding:0 30px 0 2px;font-size:9.5px;font-weight:900;text-transform:uppercase;letter-spacing:.13em;color:rgba(114,47,55,.70);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:2;}
+.stamp-postmark{position:absolute;left:-22px;top:20px;width:96px;height:96px;border:2px solid rgba(114,47,55,.12);border-radius:50%;z-index:1;}
+.stamp-postmark::before,.stamp-postmark::after{content:"";position:absolute;left:17px;right:8px;height:1px;background:rgba(114,47,55,.12);}
+.stamp-postmark::before{top:36px;transform:rotate(-8deg);}
+.stamp-postmark::after{top:50px;transform:rotate(-8deg);}
+.stamp-icon{width:78px;height:78px;border-radius:50%;background:radial-gradient(circle at 33% 24%,#9d4c57 0%,var(--burgundy) 52%,var(--burgundy-dark) 100%);border:4px double var(--gold);display:flex;align-items:center;justify-content:center;margin:16px auto 12px;box-shadow:inset 0 0 0 2px rgba(253,245,230,.12),0 9px 18px rgba(62,39,35,.18);position:relative;z-index:2;}
+.stamp-icon::before{content:"PEREGRIN";position:absolute;top:7px;left:50%;transform:translateX(-50%);font-size:6px;font-weight:900;letter-spacing:.12em;color:rgba(253,245,230,.58);}
+.stamp-icon::after{content:"";position:absolute;inset:8px;border:1px solid rgba(253,245,230,.23);border-radius:50%;}
+.stamp-symbol{width:34px;height:34px;color:var(--cream);display:block;position:relative;z-index:1;filter:drop-shadow(0 1px 0 rgba(0,0,0,.22));}
+.stamp-name{font-family:'Crimson Pro',serif;font-size:16.5px;line-height:1.05;font-weight:800;color:var(--brown);margin:0 auto;position:relative;z-index:2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.stamp-date{width:100%;margin-top:auto;padding-top:9px;border-top:1px solid rgba(197,150,58,.22);font-size:9.5px;color:#8a6c48;font-weight:900;text-transform:uppercase;letter-spacing:.09em;position:relative;z-index:2;}
+.stamp-visited-label{display:block;margin-bottom:2px;font-size:8.5px;color:var(--gold);letter-spacing:.15em;}
 .passport-share-btn{width:100%;margin:-2px 0 24px;padding:15px 18px;border:none;border-radius:16px;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--brown);font-family:'Crimson Pro',serif;font-size:18px;font-weight:800;letter-spacing:.01em;box-shadow:0 14px 32px rgba(197,150,58,.30);cursor:pointer;}
 .passport-share-btn:active{transform:scale(.985);}
 .empty-state{text-align:center;padding:40px 20px;color:var(--brown-light);}
@@ -540,24 +545,24 @@ const i18n = {
     certDownloaded:'Certificate downloaded', certSaved:'Certificate saved on your device', certReady:'Certificate ready to share', certFailed:'We could not prepare the certificate.', certTitle:'Pilgrimage Certificate', certPreviewTitle:'Your certificate is ready', certPreviewHint:'Open it here first, then share or download it whenever you want.', certShareBtn:'Share certificate', certDownloadBtn:'Download image', certCloseBtn:'Close',
     certText1:'This is to certify that', certText2:'has completed the pilgrimage of all',
     certText3:'Sanctuaries of', certIssued:'Issued on',
-    premiumTitle:'Peregrin Premium', premiumSub:'Unlock all countries across Europe, the Americas, Africa and Asia and carry your pilgrimage further.',
-    premiumCountries:'All countries unlocked', premiumCert:'Pilgrimage certificate per country',
+    premiumTitle:'Peregrin Premium', premiumSub:'Keep a richer memory of your pilgrimage: every country, route, certificate, achievement and shareable passport in one place.',
+    premiumCountries:'All countries and sanctuaries', premiumCert:'Pilgrimage certificate per country',
     premiumRoutes:'All pilgrimage routes', premiumBadges:'All achievements',
-    premiumGuides:'Detailed pilgrim guides', premiumJournal:'Private journal notes', premiumMemory:'A richer pilgrimage memory',
+    premiumGuides:'Full sacred routes and pilgrim guides', premiumJournal:'Private notes for your journey', premiumMemory:'Certificates, achievements and shareable passport',
     premiumLater:'Maybe later', premiumUnlockRegion:'Unlock', premiumUnlockAll:'Unlock everything',
     premiumPriceEurope:'€2.99', premiumPriceAmericas:'€2.99', premiumPriceAsia:'€2.99', premiumPriceAll:'€2.99',
     premiumLabelEurope:'Europe', premiumLabelAmericas:'Americas', premiumLabelAsia:'Asia', premiumLabelAll:'All countries',
-    premiumSubEurope:'11 countries · 58 sanctuaries', premiumSubAmericas:'8 countries · 36 sanctuaries', premiumSubAsia:'4 countries · 30 sanctuaries', premiumSubAll:'30 countries · 132 sanctuaries · Best value',
+    premiumSubEurope:'11 countries · 58 sanctuaries', premiumSubAmericas:'8 countries · 36 sanctuaries', premiumSubAsia:'4 countries · 30 sanctuaries', premiumSubAll:'30 countries · 132 sanctuaries · Full pilgrim memory',
     premiumOnetime:'One-time payment · Yours forever', premiumGooglePlayNote:'Secure one-time payment with Google Play', premiumAlreadyUnlocked:'Unlocked', premiumActivatedToast:'Premium activated. Thank you!',
     premiumRestoreCta:'Restore purchase', premiumRestoreChecking:'Checking your purchase…', premiumRestoreNone:'No pending Premium purchase found.',
     premiumCodeCta:'Use premium code', premiumCodePrompt:'Enter your premium code:', premiumCodeInvalid:'Invalid premium code.', premiumCodeApplied:'Premium activated with code.',
-    premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Unlock all countries, certificates, all routes and all achievements.',
+    premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Keep every route, certificate, achievement and passport memory in one place.',
     testerAccessLabel:'Local access', testerAccessHint:'Only on this device during development', testerUnlockBtn:'Activate local access', testerDisableBtn:'Disable local access',
     testerUnlockPrompt:'Enter the local access code:', testerUnlockEnabled:'Local access enabled on this device.',
     testerUnlockRemoved:'Local access removed from this device.', testerUnlockInvalid:'Incorrect local access code.',
     discoverPremium:'Discover Premium', certsAvailable:'Certificates available',
     language:'Language', countriesTitle:'Countries',
-    unlockPremium:'Premium — unlock all countries',
+    unlockPremium:'Premium — keep the full pilgrim memory',
     rank0:'New Pilgrim', rank1:'First Step', rank5:'Walker of Faith',
     rank10:'Devoted Pilgrim', rank30:'Advanced Pilgrim', rank50:'Master Pilgrim',
     visitToast: n => `${n} registered`,
@@ -608,24 +613,24 @@ const i18n = {
     certDownloaded:'Certificado descargado', certSaved:'Certificado guardado en tu dispositivo', certReady:'Certificado listo para compartir', certFailed:'No hemos podido preparar el certificado.', certTitle:'Certificado de Peregrinación', certPreviewTitle:'Tu certificado está listo', certPreviewHint:'Primero puedes verlo aquí; después, compartirlo o descargarlo cuando quieras.', certShareBtn:'Compartir certificado', certDownloadBtn:'Descargar imagen', certCloseBtn:'Cerrar',
     certText1:'Se certifica que', certText2:'ha completado la peregrinación de los',
     certText3:'Santuarios de', certIssued:'Emitido el',
-    premiumTitle:'Peregrin Premium', premiumSub:'Desbloquea todos los pa\u00edses de Europa, Am\u00e9rica, \u00c1frica y Asia y lleva m\u00e1s lejos tu peregrinaci\u00f3n.',
-    premiumCountries:'Todos los países desbloqueados', premiumCert:'Certificado de peregrinación por país',
+    premiumTitle:'Peregrin Premium', premiumSub:'Guarda una memoria más completa de tu peregrinación: todos los países, rutas, certificados, logros y tu pasaporte compartible en un solo lugar.',
+    premiumCountries:'Todos los países y santuarios', premiumCert:'Certificado de peregrinación por país',
     premiumRoutes:'Todas las rutas de peregrinación', premiumBadges:'Todos los logros',
-    premiumGuides:'Guías peregrinas detalladas', premiumJournal:'Diario privado', premiumMemory:'Una memoria de peregrinación más completa',
+    premiumGuides:'Rutas sagradas y guías peregrinas completas', premiumJournal:'Notas privadas para tu camino', premiumMemory:'Certificados, logros y pasaporte compartible',
     premiumLater:'Quizás más adelante', premiumUnlockRegion:'Desbloquear', premiumUnlockAll:'Desbloquear todo',
     premiumPriceEurope:'2,99 €', premiumPriceAmericas:'2,99 €', premiumPriceAsia:'2,99 €', premiumPriceAll:'2,99 €',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'América', premiumLabelAsia:'Asia', premiumLabelAll:'Todos los países',
-    premiumSubEurope:'11 pa\u00edses · 58 santuarios', premiumSubAmericas:'8 pa\u00edses · 36 santuarios', premiumSubAsia:'4 pa\u00edses · 30 santuarios', premiumSubAll:'30 pa\u00edses · 132 santuarios · Mejor valor',
+    premiumSubEurope:'11 pa\u00edses · 58 santuarios', premiumSubAmericas:'8 pa\u00edses · 36 santuarios', premiumSubAsia:'4 pa\u00edses · 30 santuarios', premiumSubAll:'30 países · 132 santuarios · Memoria peregrina completa',
     premiumOnetime:'Pago único · Tuyo para siempre', premiumGooglePlayNote:'Pago único seguro con Google Play', premiumAlreadyUnlocked:'Desbloqueado', premiumActivatedToast:'Premium activado. ¡Gracias!',
     premiumRestoreCta:'Restaurar compra', premiumRestoreChecking:'Comprobando tu compra…', premiumRestoreNone:'No se ha encontrado ninguna compra Premium pendiente.',
     premiumCodeCta:'Tengo un código Premium', premiumCodePrompt:'Introduce tu código Premium:', premiumCodeInvalid:'Código Premium no válido.', premiumCodeApplied:'Premium activado con código.',
-    premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Desbloquea todos los países, certificados, todas las rutas y todos los logros.',
+    premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Guarda rutas, certificados, logros y tu pasaporte peregrino en un solo lugar.',
     testerAccessLabel:'Acceso local', testerAccessHint:'Solo en este dispositivo durante el desarrollo', testerUnlockBtn:'Activar acceso local', testerDisableBtn:'Desactivar acceso local',
     testerUnlockPrompt:'Introduce el código de acceso local:', testerUnlockEnabled:'Acceso local activado en este dispositivo.',
     testerUnlockRemoved:'Acceso local eliminado de este dispositivo.', testerUnlockInvalid:'Código de acceso local incorrecto.',
     discoverPremium:'Descubrir Premium', certsAvailable:'Certificados disponibles',
     language:'Idioma', countriesTitle:'Países',
-    unlockPremium:'Premium — desbloquea todos los países',
+    unlockPremium:'Premium — guarda toda la memoria peregrina',
     rank0:'Nuevo peregrino', rank1:'Primer paso', rank5:'Caminante de la fe',
     rank10:'Peregrino devoto', rank30:'Peregrino avanzado', rank50:'Peregrino maestro',
     visitToast: n => `${n} registrado`,
@@ -676,24 +681,24 @@ const i18n = {
     certDownloaded:'Certificat téléchargé', certSaved:'Certificat enregistré sur votre appareil', certReady:'Certificat prêt à être partagé', certFailed:'Nous n’avons pas pu préparer le certificat.', certTitle:'Certificat de Pèlerinage', certPreviewTitle:'Votre certificat est prêt', certPreviewHint:'Vous pouvez d’abord le voir ici, puis le partager ou le télécharger.', certShareBtn:'Partager le certificat', certDownloadBtn:'Télécharger l’image', certCloseBtn:'Fermer',
     certText1:'Il est certifié que', certText2:'a accompli le pèlerinage de tous les',
     certText3:'Sanctuaires de', certIssued:'Délivré le',
-    premiumTitle:'Peregrin Premium', premiumSub:'D\u00e9bloquez tous les pays d\'Europe, des Am\u00e9riques, d\'Afrique et d\'Asie et portez votre p\u00e8lerinage plus loin.',
-    premiumCountries:'Tous les pays débloqués', premiumCert:'Certificat de pèlerinage par pays',
+    premiumTitle:'Peregrin Premium', premiumSub:'Gardez une mémoire plus complète de votre pèlerinage : tous les pays, itinéraires, certificats, réalisations et votre passeport partageable au même endroit.',
+    premiumCountries:'Tous les pays et sanctuaires', premiumCert:'Certificat de pèlerinage par pays',
     premiumRoutes:'Tous les itinéraires de pèlerinage', premiumBadges:'Toutes les réalisations',
-    premiumGuides:'Guides de pèlerinage détaillés', premiumJournal:'Journal privé', premiumMemory:'Une mémoire de pèlerinage plus riche',
+    premiumGuides:'Itinéraires sacrés et guides complets', premiumJournal:'Notes privées pour votre chemin', premiumMemory:'Certificats, réalisations et passeport partageable',
     premiumLater:'Peut-être plus tard', premiumUnlockRegion:'Débloquer', premiumUnlockAll:'Tout débloquer',
     premiumPriceEurope:'2,99 €', premiumPriceAmericas:'2,99 €', premiumPriceAsia:'2,99 €', premiumPriceAll:'2,99 €',
     premiumLabelEurope:'Europe', premiumLabelAmericas:'Amériques', premiumLabelAsia:'Asie', premiumLabelAll:'Tous les pays',
-    premiumSubEurope:'11 pays · 58 sanctuaires', premiumSubAmericas:'8 pays · 36 sanctuaires', premiumSubAsia:'4 pays · 30 sanctuaires', premiumSubAll:'30 pays · 132 sanctuaires · Meilleure offre',
+    premiumSubEurope:'11 pays · 58 sanctuaires', premiumSubAmericas:'8 pays · 36 sanctuaires', premiumSubAsia:'4 pays · 30 sanctuaires', premiumSubAll:'30 pays · 132 sanctuaires · Mémoire pèlerine complète',
     premiumOnetime:'Paiement unique · À vous pour toujours', premiumGooglePlayNote:'Paiement unique sécurisé avec Google Play', premiumAlreadyUnlocked:'Débloqué', premiumActivatedToast:'Premium activé. Merci !',
     premiumRestoreCta:'Restaurer l’achat', premiumRestoreChecking:'Vérification de votre achat…', premiumRestoreNone:'Aucun achat Premium en attente trouvé.',
     premiumCodeCta:'J’ai un code Premium', premiumCodePrompt:'Entrez votre code Premium :', premiumCodeInvalid:'Code Premium invalide.', premiumCodeApplied:'Premium activé avec code.',
-    premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Débloquez tous les pays, certificats, tous les itinéraires et toutes les réalisations.',
+    premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Gardez itinéraires, certificats, réalisations et passeport pèlerin au même endroit.',
     testerAccessLabel:'Accès local', testerAccessHint:'Seulement sur cet appareil en développement', testerUnlockBtn:'Activer l’accès local', testerDisableBtn:'Désactiver l’accès local',
     testerUnlockPrompt:'Entrez le code d’accès local :', testerUnlockEnabled:'Accès local activé sur cet appareil.',
     testerUnlockRemoved:'Accès local supprimé de cet appareil.', testerUnlockInvalid:'Code d’accès local incorrect.',
     discoverPremium:'Découvrir Premium', certsAvailable:'Certificats disponibles',
     language:'Langue', countriesTitle:'Pays',
-    unlockPremium:'Premium — débloquer tous les pays',
+    unlockPremium:'Premium — garder toute la mémoire pèlerine',
     rank0:'Nouveau pèlerin', rank1:'Premier pas', rank5:'Marcheur de la foi',
     rank10:'Pèlerin dévoué', rank30:'Pèlerin avancé', rank50:'Pèlerin maître',
     visitToast: n => `${n} enregistré`,
@@ -744,24 +749,24 @@ const i18n = {
     certDownloaded:'Certificato scaricato', certSaved:'Certificato salvato sul dispositivo', certReady:'Certificato pronto da condividere', certFailed:'Non siamo riusciti a preparare il certificato.', certTitle:'Certificato di Pellegrinaggio', certPreviewTitle:'Il tuo certificato è pronto', certPreviewHint:'Puoi prima visualizzarlo qui, poi condividerlo o scaricarlo.', certShareBtn:'Condividi certificato', certDownloadBtn:'Scarica immagine', certCloseBtn:'Chiudi',
     certText1:'Si certifica che', certText2:'ha completato il pellegrinaggio di tutti i',
     certText3:'Santuari di', certIssued:'Rilasciato il',
-    premiumTitle:'Peregrin Premium', premiumSub:'Sblocca tutti i paesi d\'Europa, delle Americhe, dell\'Africa e dell\'Asia e porta il tuo pellegrinaggio oltre.',
-    premiumCountries:'Tutti i paesi sbloccati', premiumCert:'Certificato di pellegrinaggio per paese',
+    premiumTitle:'Peregrin Premium', premiumSub:'Custodisci una memoria più completa del tuo pellegrinaggio: tutti i paesi, itinerari, certificati, traguardi e passaporto condivisibile in un solo luogo.',
+    premiumCountries:'Tutti i paesi e santuari', premiumCert:'Certificato di pellegrinaggio per paese',
     premiumRoutes:'Tutti gli itinerari di pellegrinaggio', premiumBadges:'Tutti i traguardi',
-    premiumGuides:'Guide di pellegrinaggio dettagliate', premiumJournal:'Diario privato', premiumMemory:'Una memoria di pellegrinaggio più ricca',
+    premiumGuides:'Itinerari sacri e guide complete', premiumJournal:'Note private per il tuo cammino', premiumMemory:'Certificati, traguardi e passaporto condivisibile',
     premiumLater:'Forse più tardi', premiumUnlockRegion:'Sblocca', premiumUnlockAll:'Sblocca tutto',
     premiumPriceEurope:'€ 2,99', premiumPriceAmericas:'€ 2,99', premiumPriceAsia:'€ 2,99', premiumPriceAll:'€ 2,99',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'Americhe', premiumLabelAsia:'Asia', premiumLabelAll:'Tutti i paesi',
-    premiumSubEurope:'11 paesi · 58 santuari', premiumSubAmericas:'8 paesi · 36 santuari', premiumSubAsia:'4 paesi · 30 santuari', premiumSubAll:'30 paesi · 132 santuari · Miglior valore',
+    premiumSubEurope:'11 paesi · 58 santuari', premiumSubAmericas:'8 paesi · 36 santuari', premiumSubAsia:'4 paesi · 30 santuari', premiumSubAll:'30 paesi · 132 santuari · Memoria pellegrina completa',
     premiumOnetime:'Pagamento unico · Tuo per sempre', premiumGooglePlayNote:'Pagamento unico sicuro con Google Play', premiumAlreadyUnlocked:'Sbloccato', premiumActivatedToast:'Premium attivato. Grazie!',
     premiumRestoreCta:'Ripristina acquisto', premiumRestoreChecking:'Verifica dell’acquisto…', premiumRestoreNone:'Nessun acquisto Premium in attesa trovato.',
     premiumCodeCta:'Ho un codice Premium', premiumCodePrompt:'Inserisci il tuo codice Premium:', premiumCodeInvalid:'Codice Premium non valido.', premiumCodeApplied:'Premium attivato con codice.',
-    premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Sblocca tutti i paesi, certificati, tutti gli itinerari e tutti i traguardi.',
+    premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Custodisci itinerari, certificati, traguardi e passaporto pellegrino in un solo luogo.',
     testerAccessLabel:'Accesso locale', testerAccessHint:'Solo su questo dispositivo durante lo sviluppo', testerUnlockBtn:'Attiva accesso locale', testerDisableBtn:'Disattiva accesso locale',
     testerUnlockPrompt:'Inserisci il codice di accesso locale:', testerUnlockEnabled:'Accesso locale attivato su questo dispositivo.',
     testerUnlockRemoved:'Accesso locale rimosso da questo dispositivo.', testerUnlockInvalid:'Codice di accesso locale non corretto.',
     discoverPremium:'Scopri Premium', certsAvailable:'Certificati disponibili',
     language:'Lingua', countriesTitle:'Paesi',
-    unlockPremium:'Premium — sblocca tutti i paesi',
+    unlockPremium:'Premium — custodisci tutta la memoria pellegrina',
     rank0:'Nuovo pellegrino', rank1:'Primo passo', rank5:'Camminatore della fede',
     rank10:'Pellegrino devoto', rank30:'Pellegrino avanzato', rank50:'Pellegrino maestro',
     visitToast: n => `${n} registrato`,
@@ -812,24 +817,24 @@ const i18n = {
     certDownloaded:'Certificado descarregado', certSaved:'Certificado guardado no seu dispositivo', certReady:'Certificado pronto para partilhar', certFailed:'Não foi possível preparar o certificado.', certTitle:'Certificado de Peregrinação', certPreviewTitle:'O seu certificado está pronto', certPreviewHint:'Pode vê-lo primeiro aqui e depois partilhar ou descarregar.', certShareBtn:'Partilhar certificado', certDownloadBtn:'Descarregar imagem', certCloseBtn:'Fechar',
     certText1:'Certifica-se que', certText2:'completou a peregrinação de todos os',
     certText3:'Santuários de', certIssued:'Emitido em',
-    premiumTitle:'Peregrin Premium', premiumSub:'Desbloqueie todos os pa\u00edses da Europa, Am\u00e9ricas, \u00c1frica e \u00c1sia e leve a sua peregrina\u00e7\u00e3o mais longe.',
-    premiumCountries:'Todos os países desbloqueados', premiumCert:'Certificado de peregrinação por país',
+    premiumTitle:'Peregrin Premium', premiumSub:'Guarde uma memória mais completa da sua peregrinação: todos os países, rotas, certificados, conquistas e o seu passaporte partilhável num só lugar.',
+    premiumCountries:'Todos os países e santuários', premiumCert:'Certificado de peregrinação por país',
     premiumRoutes:'Todas as rotas de peregrinação', premiumBadges:'Todas as conquistas',
-    premiumGuides:'Guias de peregrinação detalhados', premiumJournal:'Diário privado', premiumMemory:'Uma memória de peregrinação mais rica',
+    premiumGuides:'Rotas sagradas e guias completos', premiumJournal:'Notas privadas para o seu caminho', premiumMemory:'Certificados, conquistas e passaporte partilhável',
     premiumLater:'Talvez mais tarde', premiumUnlockRegion:'Desbloquear', premiumUnlockAll:'Desbloquear tudo',
     premiumPriceEurope:'€2,99', premiumPriceAmericas:'€2,99', premiumPriceAsia:'€2,99', premiumPriceAll:'€2,99',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'Américas', premiumLabelAsia:'Ásia', premiumLabelAll:'Todos os países',
-    premiumSubEurope:'11 pa\u00edses · 58 santu\u00e1rios', premiumSubAmericas:'8 pa\u00edses · 36 santu\u00e1rios', premiumSubAsia:'4 pa\u00edses · 30 santu\u00e1rios', premiumSubAll:'30 pa\u00edses · 132 santu\u00e1rios · Melhor valor',
+    premiumSubEurope:'11 pa\u00edses · 58 santu\u00e1rios', premiumSubAmericas:'8 pa\u00edses · 36 santu\u00e1rios', premiumSubAsia:'4 pa\u00edses · 30 santu\u00e1rios', premiumSubAll:'30 países · 132 santuários · Memória peregrina completa',
     premiumOnetime:'Pagamento único · Seu para sempre', premiumGooglePlayNote:'Pagamento único seguro com Google Play', premiumAlreadyUnlocked:'Desbloqueado', premiumActivatedToast:'Premium ativado. Obrigado!',
     premiumRestoreCta:'Restaurar compra', premiumRestoreChecking:'A verificar a sua compra…', premiumRestoreNone:'Não foi encontrada nenhuma compra Premium pendente.',
     premiumCodeCta:'Tenho um código Premium', premiumCodePrompt:'Introduza o seu código Premium:', premiumCodeInvalid:'Código Premium inválido.', premiumCodeApplied:'Premium ativado com código.',
-    premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Desbloqueie todos os países, certificados, todas as rotas e todas as conquistas.',
+    premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Guarde rotas, certificados, conquistas e passaporte peregrino num só lugar.',
     testerAccessLabel:'Acesso local', testerAccessHint:'Apenas neste dispositivo durante o desenvolvimento', testerUnlockBtn:'Ativar acesso local', testerDisableBtn:'Desativar acesso local',
     testerUnlockPrompt:'Introduza o código de acesso local:', testerUnlockEnabled:'Acesso local ativado neste dispositivo.',
     testerUnlockRemoved:'Acesso local removido deste dispositivo.', testerUnlockInvalid:'Código de acesso local incorreto.',
     discoverPremium:'Descobrir Premium', certsAvailable:'Certificados disponíveis',
     language:'Idioma', countriesTitle:'Países',
-    unlockPremium:'Premium — desbloquear todos os países',
+    unlockPremium:'Premium — guarda toda a memória peregrina',
     rank0:'Novo peregrino', rank1:'Primeiro passo', rank5:'Caminhante da fé',
     rank10:'Peregrino devoto', rank30:'Peregrino avançado', rank50:'Peregrino mestre',
     visitToast: n => `${n} registado`,
@@ -2376,6 +2381,7 @@ function renderPassport(){
           const country=countries.find(c=>c.id===s.country);
           return `
           <div class="stamp-card" onclick="openModal(${s.id})">
+            <div class="stamp-postmark" aria-hidden="true"></div>
             <div class="stamp-country">${country?.flag||''} ${country?cn(country):''}</div>
             <div class="stamp-icon">${sanctuarySymbolSvg(s,'stamp-symbol')}</div>
             <div class="stamp-name">${sd(s).name}</div>
