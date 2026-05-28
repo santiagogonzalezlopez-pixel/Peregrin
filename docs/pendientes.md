@@ -21,6 +21,8 @@ Recently completed:
 
 - Holy Land prestige pack with 10 Gospel places, one route, one certificate rule
   and one pilgrim hito.
+- First category-based sanctuary hero image pass: Marian, monastery, mountain
+  and martyr/relic imagery.
 
 - Next round should be a polish round, not a quantity/content expansion round.
 - Explore a stronger visit-registration flow: to earn a stamp, the pilgrim
@@ -29,9 +31,8 @@ Recently completed:
 - Redesign the individual passport stamps so they feel like real collectible
   pilgrimage stamps: texture, circular seal language, sanctuary name, country and
   date treated like an elegant postmark.
-- Improve sanctuary detail cards with higher-quality generic sacred imagery,
-  preferably by category: cathedral, Marian basilica, monastery, mountain,
-  relic, Holy Land, etc.
+- Keep refining sanctuary detail imagery over time, preferably adding more
+  categories only when it clearly improves the app.
 - Consider a simple `My memories` / `My path` screen without new backend:
   latest visits, unlocked achievements, countries in progress and a clear
   passport-share action.

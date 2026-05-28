@@ -2018,6 +2018,30 @@ function getSanctuaryInfoUrl(s, d){
   return `https://${wikiLang}.wikipedia.org/w/index.php?search=${encodeURIComponent(query)}`;
 }
 
+function normalizeHeroText(value){
+  return String(value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function getSanctuaryHeroImage(s){
+  const d = sd(s);
+  const text = normalizeHeroText([
+    s?.country, s?.icon, s?.name, s?.type, s?.city, s?.province,
+    d?.name, d?.type, d?.city, d?.province, d?.description
+  ].filter(Boolean).join(' '));
+  if(s?.country === 'hl') return 'assets/routes/holy-land.png';
+  if(text.includes('martyr') || text.includes('martir') || text.includes('blood') || text.includes('sangre') || text.includes('sangue') || text.includes('relic')) return 'assets/sanctuary-hero-martyr.png';
+  if(text.includes('marian') || text.includes('mary') || text.includes('our lady') || text.includes('virgin') || text.includes('senora') || text.includes('vierge') || text.includes('madonna') || text.includes('senhora') || text.includes('annunciation') || text.includes('anunciacion') || text.includes('visitation') || text.includes('carmel')) return 'assets/sanctuary-hero-marian.png';
+  if(text.includes('mount') || text.includes('monte') || text.includes('mont ') || text.includes('gora') || text.includes('hill') || text.includes('mountain')) return 'assets/sanctuary-hero-mountain.png';
+  if(text.includes('monastery') || text.includes('monasterio') || text.includes('monastere') || text.includes('mosteiro') || text.includes('abbey') || text.includes('abadia') || text.includes('abbazia') || text.includes('cloister') || text.includes('carmelite')) return 'assets/sanctuary-hero-monastery.png';
+  return 'assets/sanctuary-hero.png';
+}
+
+function handleSanctuaryHeroError(img){
+  if(!img) return;
+  img.onerror = null;
+  img.src = resolveAssetUrl('assets/sanctuary-hero.png');
+}
+
 async function loadJournalNote(sanctuaryId){
   const input = document.getElementById(`journal-input-${sanctuaryId}`);
   const state = document.getElementById(`journal-state-${sanctuaryId}`);
@@ -2075,7 +2099,7 @@ function openModal(id){
   const infoUrl = getSanctuaryInfoUrl(s, d);
   document.getElementById('modal-content').innerHTML=`
     <div class="modal-handle"></div>
-    <div class="modal-hero hero-${s.country}"><img class="modal-hero-image" src="${resolveAssetUrl('assets/sanctuary-hero.png')}" alt=""><span class="modal-hero-flag">${countries.find(x=>x.id===s.country)?.flag||''}</span><span class="modal-hero-country">${cn(countries.find(x=>x.id===s.country))}</span><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-hero hero-${s.country}"><img class="modal-hero-image" src="${resolveAssetUrl(getSanctuaryHeroImage(s))}" alt="" onerror="handleSanctuaryHeroError(this)"><span class="modal-hero-flag">${countries.find(x=>x.id===s.country)?.flag||''}</span><span class="modal-hero-country">${cn(countries.find(x=>x.id===s.country))}</span><button class="modal-close" onclick="closeModal()">✕</button></div>
     <div class="modal-body">
       <div class="modal-type">${d.type}</div>
       <div class="modal-title">${d.name}</div>

@@ -25,7 +25,7 @@ not reopen broad risky refactors unless there is a clear reason.
 ## Current release baseline
 
 - Last built AAB: `android/app/build/outputs/bundle/release/app-release.aab`
-- Current Android version in repo: `versionCode 47`, `versionName 1.0.46`
+- Current Android version in repo: `versionCode 48`, `versionName 1.0.47`
 - Latest production checkpoint before later updates: `15853d6`
 - Content total after Holy Land pack: 31 countries, 142 sanctuaries, 12 routes
 
@@ -40,6 +40,7 @@ not reopen broad risky refactors unless there is a clear reason.
 - Onboarding and "what is Peregrin" explanation.
 - Map filtering for countries/routes.
 - Route cards with photographic banners.
+- Sanctuary detail cards with category-based sacred hero imagery.
 - Africa pack added as a first African presence.
 - Holy Land prestige pack added as a focused Gospel-route expansion.
 - Achievement diplomas with share/download preview.
