@@ -1,6 +1,6 @@
 # Pendientes Peregrin
 
-Last updated: 2026-05-25
+Last updated: 2026-05-28
 
 ## Production watch
 
@@ -8,10 +8,19 @@ Last updated: 2026-05-25
 - Confirm that Premium purchases keep unlocking correctly in production.
 - Confirm that Africa content, routes and certificates behave correctly for real
   users.
+- Confirm that the new Holy Land route, certificate and hito behave correctly for
+  real users.
+- After Holy Land settles, review global/continent coverage to see whether any
+  major pilgrim region still feels conspicuously absent.
 - If any user pays but remains blocked, follow
   `docs/PAYMENT_INCIDENT_RUNBOOK.md` before changing code.
 
 ## Highest-value next improvements
+
+Recently completed:
+
+- Holy Land prestige pack with 10 Gospel places, one route, one certificate rule
+  and one pilgrim hito.
 
 - Next round should be a polish round, not a quantity/content expansion round.
 - Explore a stronger visit-registration flow: to earn a stamp, the pilgrim
@@ -78,7 +87,6 @@ Last updated: 2026-05-25
 
 ## Possible future themes
 
-- Holy Land prestige pack, with careful editorial tone.
 - Guadalupe/Mexico Spanish-first pack.
 - Rome/Jubilee-style premium pack.
 - Korea/WYD 2027 pilgrim pack.

@@ -1,6 +1,6 @@
 # Peregrin project context
 
-Last updated: 2026-05-25
+Last updated: 2026-05-28
 
 ## Current milestone
 
@@ -8,8 +8,8 @@ Peregrin is now in production on Google Play.
 
 This is the first stable production baseline after the tester phase, the Google
 Play Billing work, the Premium unlock fixes, the certificate fixes, the route
-image refresh, the Africa content pack, the achievement diplomas and the
-shareable pilgrim passport.
+image refresh, the Africa and Holy Land content packs, the achievement diplomas
+and the shareable pilgrim passport.
 
 Treat this moment as a production checkpoint: future work should improve the app,
 not reopen broad risky refactors unless there is a clear reason.
@@ -25,9 +25,9 @@ not reopen broad risky refactors unless there is a clear reason.
 ## Current release baseline
 
 - Last built AAB: `android/app/build/outputs/bundle/release/app-release.aab`
-- Current Android version in repo: `versionCode 42`, `versionName 1.0.41`
-- Latest production-prep commit at this checkpoint: `15853d6`
-- Content total after Africa pack: 30 countries, 132 sanctuaries, 11 routes
+- Current Android version in repo: `versionCode 47`, `versionName 1.0.46`
+- Latest production checkpoint before later updates: `15853d6`
+- Content total after Holy Land pack: 31 countries, 142 sanctuaries, 12 routes
 
 ## What is considered stable
 
@@ -41,6 +41,7 @@ not reopen broad risky refactors unless there is a clear reason.
 - Map filtering for countries/routes.
 - Route cards with photographic banners.
 - Africa pack added as a first African presence.
+- Holy Land prestige pack added as a focused Gospel-route expansion.
 - Achievement diplomas with share/download preview.
 - Shareable `PEREGRIN PASSPORT` image generated from obtained stamps.
 
@@ -53,13 +54,13 @@ Stripe Dashboard, not by creating a new payment link or changing payment code.
 Recommended Stripe product description:
 
 ```text
-Unlock all 30 countries, 132 sanctuaries, every certificate, route and achievement. One-time payment, yours forever.
+Unlock all 31 countries, 142 sanctuaries, every certificate, route and achievement. One-time payment, yours forever.
 ```
 
 Spanish equivalent if needed:
 
 ```text
-Desbloquea los 30 paises, 132 santuarios, todos los certificados, rutas y logros. Pago unico, tuyo para siempre.
+Desbloquea los 31 países, 142 santuarios, todos los certificados, rutas y logros. Pago único, tuyo para siempre.
 ```
 
 ## Product direction after production
