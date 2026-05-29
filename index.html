@@ -890,7 +890,7 @@ const AUTH_EMAIL_STORAGE_KEY = 'peregrin_last_email';
 const AUTH_LANG_STORAGE_KEY = 'peregrin_preferred_lang';
 const LAUNCH_ALL_COUNTRIES_UNLOCKED = false;
 let visits={}, unlockedRegions=[], currentLang='en', currentScreen='home', currentCountry='be', map=null, markers={}, activeRouteFilter=null, activeCountryFilter=null, pilgrimName='';
-let markerDisplayPositions=null;
+let markerClusterGroups=null, markerClusterById={}, markerLeaderLines={};
 let shouldReturnHomeOnResume=false;
 let googlePlayPurchaseListenerAttached=false;
 const SUPPORTED_LANGS = [
@@ -1070,11 +1070,11 @@ function getCertificateSummary(country, certificateSanctuaries){
   return rule?.summary?.[currentLang] || rule?.summary?.en || (certificateSanctuaries.length + ' ' + t('certText3') + ' ' + cn(country));
 }
 
-function getMarkerDisplayPositions(){
-  if(markerDisplayPositions) return markerDisplayPositions;
+function getMarkerClusterGroups(){
+  if(markerClusterGroups) return markerClusterGroups;
   const threshold = 0.012;
-  const offsetRadius = 0.45;
-  markerDisplayPositions = {};
+  markerClusterGroups = [];
+  markerClusterById = {};
   const ordered = [...sanctuaries].sort((a,b)=>a.id-b.id);
   const assigned = new Set();
 
@@ -1087,24 +1087,89 @@ function getMarkerDisplayPositions(){
     );
 
     cluster.forEach(item => assigned.add(item.id));
-
-    if(cluster.length===1){
-      markerDisplayPositions[seed.id] = {lat:seed.lat, lng:seed.lng};
-      return;
+    if(cluster.length>1){
+      markerClusterGroups.push(cluster);
+      cluster.forEach(item => markerClusterById[item.id] = cluster);
     }
-
-    const centerLat = cluster.reduce((sum,item)=>sum+item.lat,0)/cluster.length;
-    const centerLng = cluster.reduce((sum,item)=>sum+item.lng,0)/cluster.length;
-    cluster.forEach((item,index)=>{
-      const angle = (Math.PI*2*index)/cluster.length;
-      markerDisplayPositions[item.id] = {
-        lat:centerLat + Math.sin(angle)*offsetRadius,
-        lng:centerLng + Math.cos(angle)*offsetRadius
-      };
-    });
   });
 
-  return markerDisplayPositions;
+  return markerClusterGroups;
+}
+
+function isMarkerVisibleForFilter(s){
+  const inRoute=!activeRouteFilter||activeRouteFilter.includes(s.id);
+  const inCountry=!activeCountryFilter||s.country===activeCountryFilter;
+  return activeRouteFilter ? inRoute : inCountry;
+}
+
+function getSpreadCandidateIds(){
+  if(activeRouteFilter) return new Set(activeRouteFilter);
+  if(activeCountryFilter) return new Set(sanctuaries.filter(s=>s.country===activeCountryFilter).map(s=>s.id));
+  if(map && map.getZoom()>=10) return new Set(sanctuaries.map(s=>s.id));
+  return new Set();
+}
+
+function getMarkerLayoutPosition(s, visibleIds){
+  getMarkerClusterGroups();
+  const cluster = markerClusterById[s.id];
+  if(!map || !cluster || !visibleIds.has(s.id)) return {lat:s.lat, lng:s.lng, spread:false};
+
+  const spreadZoom = activeRouteFilter || activeCountryFilter ? 8 : 10;
+  if(map.getZoom()<spreadZoom) return {lat:s.lat, lng:s.lng, spread:false};
+
+  const visibleCluster = cluster.filter(item=>visibleIds.has(item.id));
+  if(visibleCluster.length<2) return {lat:s.lat, lng:s.lng, spread:false};
+
+  const centerLat = visibleCluster.reduce((sum,item)=>sum+item.lat,0)/visibleCluster.length;
+  const centerLng = visibleCluster.reduce((sum,item)=>sum+item.lng,0)/visibleCluster.length;
+  const centerPoint = map.latLngToLayerPoint([centerLat, centerLng]);
+  const index = visibleCluster.findIndex(item=>item.id===s.id);
+  const radius = visibleCluster.length===2 ? 20 : Math.min(24, 18 + visibleCluster.length*2);
+  const angle = visibleCluster.length===2
+    ? (index===0 ? Math.PI : 0)
+    : (-Math.PI/2 + (Math.PI*2*index)/visibleCluster.length);
+  const displayPoint = L.point(centerPoint.x + Math.cos(angle)*radius, centerPoint.y + Math.sin(angle)*radius);
+  const display = map.layerPointToLatLng(displayPoint);
+  return {lat:display.lat, lng:display.lng, spread:true};
+}
+
+function setMarkerLeaderLine(s, pos, visible){
+  const existing = markerLeaderLines[s.id];
+  if(!map || !visible || !pos.spread){
+    if(existing){
+      map.removeLayer(existing);
+      delete markerLeaderLines[s.id];
+    }
+    return;
+  }
+
+  const latlngs = [[s.lat,s.lng],[pos.lat,pos.lng]];
+  if(existing){
+    existing.setLatLngs(latlngs);
+    if(!map.hasLayer(existing)) existing.addTo(map);
+    return;
+  }
+
+  markerLeaderLines[s.id] = L.polyline(latlngs,{
+    color:'#8a5a24',
+    weight:1.5,
+    opacity:0.55,
+    dashArray:'4 5',
+    interactive:false
+  }).addTo(map);
+}
+
+function applyMarkerLayout(){
+  if(!map) return;
+  const visibleIds = getSpreadCandidateIds();
+  sanctuaries.forEach(s=>{
+    const marker = markers[s.id];
+    if(!marker) return;
+    const visible = isMarkerVisibleForFilter(s) && map.hasLayer(marker);
+    const pos = visible ? getMarkerLayoutPosition(s, visibleIds) : {lat:s.lat, lng:s.lng, spread:false};
+    marker.setLatLng([pos.lat,pos.lng]);
+    setMarkerLeaderLine(s, pos, visible);
+  });
 }
 
 // ===================== FIREBASE =====================
@@ -1802,29 +1867,29 @@ function initMap(){
   map=L.map('map',{zoomControl:false,tap:false,tapTolerance:15}).setView([25,15],3);
   L.control.zoom({position:'topright'}).addTo(map);
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'© OpenStreetMap © CARTO',maxZoom:18}).addTo(map);
-  const displayPositions = getMarkerDisplayPositions();
   sanctuaries.forEach(s=>{
-    const pos = displayPositions[s.id] || {lat:s.lat,lng:s.lng};
-    const marker=L.marker([pos.lat,pos.lng],{icon:createMarkerIcon(s,false,false)}).addTo(map);
+    const marker=L.marker([s.lat,s.lng],{icon:createMarkerIcon(s,false,false)}).addTo(map);
     markers[s.id]=marker;
     marker.bindPopup(buildPopupContent(s),{maxWidth:280,closeButton:true});
   });
+  getMarkerClusterGroups();
+  map.on('zoomend moveend', applyMarkerLayout);
+  applyMarkerLayout();
 }
 
 function updateMarkerStyles(){
   if(!map) return;
   sanctuaries.forEach(s=>{
     const visited=isVisited(s.id);
-    const inRoute=!activeRouteFilter||activeRouteFilter.includes(s.id);
-    const inCountry=!activeCountryFilter||s.country===activeCountryFilter;
-    const visible=activeRouteFilter ? inRoute : inCountry;
+    const visible=isMarkerVisibleForFilter(s);
     if(!markers[s.id]) return;
     if(!visible){
       if(map.hasLayer(markers[s.id])) map.removeLayer(markers[s.id]);
+      setMarkerLeaderLine(s, {lat:s.lat,lng:s.lng,spread:false}, false);
       return;
     }
     if(!map.hasLayer(markers[s.id])) markers[s.id].addTo(map);
-    const highlight=!!activeRouteFilter&&inRoute;
+    const highlight=!!activeRouteFilter&&activeRouteFilter.includes(s.id);
     markers[s.id].setIcon(createMarkerIcon(s,visited,highlight));
     if(typeof markers[s.id].setZIndexOffset === 'function'){
       markers[s.id].setZIndexOffset(highlight ? 1200 : visited ? 300 : 900);
@@ -1833,22 +1898,24 @@ function updateMarkerStyles(){
     markers[s.id].unbindPopup();
     markers[s.id].bindPopup(buildPopupContent(s),{maxWidth:280,closeButton:true});
   });
+  applyMarkerLayout();
 }
 
 function fitMapToSanctuaries(list){
   if(!map || !list || !list.length) return;
-  const displayPositions = getMarkerDisplayPositions();
-  const points = list.map(s => displayPositions[s.id] || {lat:s.lat,lng:s.lng}).filter(Boolean);
+  const points = list.map(s => ({lat:s.lat,lng:s.lng})).filter(Boolean);
   if(!points.length) return;
   setTimeout(()=>{
     if(!map) return;
     map.invalidateSize();
     if(points.length===1){
       map.setView([points[0].lat, points[0].lng], 8);
+      applyMarkerLayout();
       return;
     }
     const bounds = L.latLngBounds(points.map(p=>[p.lat,p.lng]));
     map.fitBounds(bounds.pad(0.22), {padding:[34,34], maxZoom:8});
+    applyMarkerLayout();
   }, 80);
 }
 
@@ -1867,6 +1934,7 @@ function openSanctuaryPopupAfterFocus(sanctuaryId){
   if(!sanctuaryId || !map || !markers[sanctuaryId]) return;
   setTimeout(()=>{
     if(map && markers[sanctuaryId] && map.hasLayer(markers[sanctuaryId])){
+      applyMarkerLayout();
       markers[sanctuaryId].openPopup();
     }
   }, 560);
