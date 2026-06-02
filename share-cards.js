@@ -51,6 +51,7 @@
       scopeAmericas: "Americas",
       scopeAfrica: "Africa",
       scopeAsia: "Asia",
+      scopeOceania: "Oceânia",
       scopeMixed: "Pilgrim route"
     },
     es: {
@@ -101,6 +102,7 @@
       scopeAmericas: "América",
       scopeAfrica: "África",
       scopeAsia: "Asia",
+      scopeOceania: "Oceanía",
       scopeMixed: "Ruta peregrina"
     },
     fr: {
@@ -151,6 +153,7 @@
       scopeAmericas: "Amériques",
       scopeAfrica: "Afrique",
       scopeAsia: "Asie",
+      scopeOceania: "Océanie",
       scopeMixed: "Route pèlerine"
     },
     it: {
@@ -201,6 +204,7 @@
       scopeAmericas: "Americhe",
       scopeAfrica: "Africa",
       scopeAsia: "Asia",
+      scopeOceania: "Oceania",
       scopeMixed: "Percorso pellegrino"
     },
     pt: {
@@ -251,6 +255,7 @@
       scopeAmericas: "Américas",
       scopeAfrica: "África",
       scopeAsia: "Ásia",
+      scopeOceania: "Oceania",
       scopeMixed: "Rota peregrina"
     }
   };
@@ -383,6 +388,7 @@
         if(regions[0] === "americas") return copy("scopeAmericas");
         if(regions[0] === "africa") return copy("scopeAfrica");
         if(regions[0] === "asia") return copy("scopeAsia");
+        if(regions[0] === "oceania") return copy("scopeOceania");
       }
     }catch(e){}
     return copy("scopeMixed");

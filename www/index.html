@@ -329,7 +329,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .premium-banner-btn{background:linear-gradient(135deg,var(--gold),#b8842e);color:var(--brown);border:none;border-radius:10px;padding:11px 24px;font-family:'Jost',sans-serif;font-size:14px;font-weight:700;cursor:pointer;}
 
 /* TOAST */
-.toast{position:fixed;bottom:90px;left:50%;width:max-content;max-width:min(92vw,420px);transform:translateX(-50%) translateY(30px);background:var(--burgundy);color:var(--cream);padding:12px 20px 12px 16px;border-radius:12px;font-size:14px;font-weight:500;line-height:1.35;text-align:left;z-index:3000;transition:transform 0.35s cubic-bezier(0.16,1,0.3,1),opacity 0.35s;box-shadow:var(--shadow-lg);white-space:normal;overflow-wrap:anywhere;border-left:4px solid var(--gold);opacity:0;pointer-events:none;}
+.toast{position:fixed;bottom:90px;left:50%;width:max-content;max-width:min(92vw,420px);transform:translateX(-50%) translateY(30px);background:var(--burgundy);color:var(--cream);padding:12px 20px 12px 16px;border-radius:12px;font-size:14px;font-weight:500;line-height:1.35;text-align:left;z-index:6000;transition:transform 0.35s cubic-bezier(0.16,1,0.3,1),opacity 0.35s;box-shadow:var(--shadow-lg);white-space:normal;overflow-wrap:anywhere;border-left:4px solid var(--gold);opacity:0;pointer-events:none;}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
 
 /* ONBOARDING */
@@ -446,11 +446,11 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
     <div class="onb-purpose-body" id="onb-purpose-body">Peregrin is a Catholic pilgrimage passport that helps you discover sanctuaries, mark the holy places you have visited, follow sacred routes and keep an ordered memory of your journey. It is meant to accompany your real pilgrimage life with visits, milestones and personal country certificates gathered over time.</div>
   </div>
   <div class="onb-stats">
-    <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-sanctuaries-count">142</div><div class="onb-stat-label" id="onb-stat-sanctuaries-label">Sanctuaries</div></div>
+    <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-sanctuaries-count">150</div><div class="onb-stat-label" id="onb-stat-sanctuaries-label">Sanctuaries</div></div>
     <div class="onb-stat-div"></div>
-    <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-countries-count">31</div><div class="onb-stat-label" id="onb-stat-countries-label">Countries</div></div>
+    <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-countries-count">35</div><div class="onb-stat-label" id="onb-stat-countries-label">Countries</div></div>
     <div class="onb-stat-div"></div>
-    <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-continents-count">4</div><div class="onb-stat-label" id="onb-stat-continents-label">Continents</div></div>
+    <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-continents-count">5</div><div class="onb-stat-label" id="onb-stat-continents-label">Continents</div></div>
   </div>
   <div class="onb-lang-selector" aria-label="Language">
     <div class="lang-buttons" data-dynamic-lang="true"></div>
@@ -520,6 +520,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 <script src="content-packs/philippines.js"></script>
 <script src="content-packs/africa.js"></script>
 <script src="content-packs/holy-land.js"></script>
+<script src="content-packs/oceania.js"></script>
 <script>
 // ===================== I18N =====================
 const i18n = {
@@ -540,12 +541,12 @@ const i18n = {
     resetVisits:'Reset my visits', resetConfirm:'Are you sure you want to reset all your visits?',
     resetDone:'Visits reset', registerVisit:"I've been here", realVisitConfirm:'Peregrin is a passport for real pilgrimages. Mark this sanctuary only if you have visited it personally.\n\nHave you really been here?', visited_btn:'Visited',
     removeVisit:'Visited — Remove visit', viewDetails:'View full details',
-    howToGet:'How to get there', howToGetFull:'How to get there — Google Maps', moreInfoFull:'More information — Wikipedia',
+    howToGet:'How to get there', howToGetFull:'How to get there — Google Maps', moreInfoFull:'More information — Google search',
     descLabel:'Description', histLabel:'History', prayerLabel:"Pilgrim's Prayer",
-    lockBtn:'Open with Premium', certBtn:'Download certificate',
-    certDownloaded:'Certificate downloaded', certSaved:'Certificate saved on your device', certReady:'Certificate ready to share', certFailed:'We could not prepare the certificate.', certTitle:'Pilgrimage Certificate', certPreviewTitle:'Your certificate is ready', certPreviewHint:'Open it here first, then share or download it whenever you want.', certShareBtn:'Share certificate', certDownloadBtn:'Download image', certCloseBtn:'Close',
-    certText1:'Peregrin keeps memory that', certText2:'has completed the pilgrimage of all',
-    certText3:'Sanctuaries of', certIssued:'Issued on',
+    lockBtn:'Open with Premium', certBtn:'Generate certificate',
+    certDownloaded:'Certificate downloaded', certSaved:'Certificate saved on your device', certReady:'Certificate ready to share', certFailed:'We could not prepare the certificate.', certTitle:'Certificate of Pilgrimage', certPreviewTitle:'Your certificate is ready', certPreviewHint:'Review it here first, then share or download it whenever you want.', certShareBtn:'Share certificate', certDownloadBtn:'Download image', certCloseBtn:'Close',
+    certText1:'This personal certificate records that', certText2:'has completed the pilgrimage path for',
+    certText3:'sacred places in', certIssued:'Issued on',
     premiumTitle:'Peregrin Premium', premiumSub:'Keep a richer memory of your pilgrimage: every country, route, certificate, milestone and shareable passport in one place.',
     premiumCountries:'All countries and sanctuaries', premiumCert:'Pilgrimage certificate per country',
     premiumRoutes:'All pilgrimage routes', premiumBadges:'All milestones',
@@ -553,7 +554,7 @@ const i18n = {
     premiumLater:'Maybe later', premiumUnlockRegion:'Access', premiumUnlockAll:'Open full access',
     premiumPriceEurope:'€2.99', premiumPriceAmericas:'€2.99', premiumPriceAsia:'€2.99', premiumPriceAll:'€2.99',
     premiumLabelEurope:'Europe', premiumLabelAmericas:'Americas', premiumLabelAsia:'Asia', premiumLabelAll:'All countries',
-    premiumSubEurope:'11 countries · 58 sanctuaries', premiumSubAmericas:'8 countries · 36 sanctuaries', premiumSubAsia:'5 countries · 40 sanctuaries', premiumSubAll:'31 countries · 142 sanctuaries · Full pilgrim memory',
+    premiumSubEurope:'11 countries · 58 sanctuaries', premiumSubAmericas:'8 countries · 36 sanctuaries', premiumSubAsia:'5 countries · 40 sanctuaries', premiumSubAll:'35 countries · 150 sanctuaries · Full pilgrim memory',
     premiumOnetime:'One-time payment · Yours forever', premiumGooglePlayNote:'Secure one-time payment with Google Play', premiumAlreadyUnlocked:'Full access active', premiumActivatedToast:'Premium activated. Thank you!',
     premiumRestoreCta:'Restore purchase', premiumRestoreChecking:'Checking your purchase…', premiumRestoreNone:'No pending Premium purchase found.',
     premiumCodeCta:'Use premium code', premiumCodePrompt:'Enter your premium code:', premiumCodeInvalid:'Invalid premium code.', premiumCodeApplied:'Premium activated with code.',
@@ -582,7 +583,7 @@ const i18n = {
     billingCancelled:'Purchase cancelled.', profileSaveFailed:'We could not save the name. Please try again.',
     paymentReturnInvalid:'We could not validate your payment return. If you were charged, contact elnuevoeuropeo@gmail.com.',
     paymentActivating:'Activating Premium…', paymentManualReview:'We could not activate Premium yet. Use the Premium code from your email or contact elnuevoeuropeo@gmail.com.',
-    onbStep1:'1 of 3',onbStep2:'2 of 3',onbStep3:'3 of 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Discover sacred places',onbTitle2:'Keep pilgrim stamps',onbTitle3:'Preserve your pilgrimage memory',onbDesc1:'Explore an interactive map of Catholic sanctuaries across Europe, the Americas, Africa and Asia.',onbDesc2:'Register your visits and keep a personal pilgrim passport with the stamps of your journey.',onbDesc3:'When a country path is complete, download a beautiful personal pilgrimage certificate with your name.',onbNext:'Next',onbStart:'Begin my pilgrimage',onbSkip:'Skip',
+    onbStep1:'1 of 3',onbStep2:'2 of 3',onbStep3:'3 of 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Discover sacred places',onbTitle2:'Keep pilgrim stamps',onbTitle3:'Preserve your pilgrimage memory',onbDesc1:'Explore an interactive map of Catholic sanctuaries across Europe, the Americas, Africa, Asia and Oceania.',onbDesc2:'Register your visits and keep a personal pilgrim passport with the stamps of your journey.',onbDesc3:'When a country path is complete, download a beautiful personal pilgrimage certificate with your name.',onbNext:'Next',onbStart:'Begin my pilgrimage',onbSkip:'Skip',
     onbBadgeRoutes:'✨ Sacred routes', onbBadgeCertificates:'📜 Beautiful certificates',
     onbTagline:'The Pilgrim Passport', onbCopy:'Sacred places, living routes and beautifully kept milestones for every pilgrim journey.',
     onbPurposeTitle:'What Peregrin is', onbPurposeBody:'Peregrin is a Catholic pilgrimage passport that helps you discover sanctuaries, mark the holy places you have visited, follow sacred routes and keep an ordered memory of your journey. It is designed to accompany your real pilgrimage life with visits, milestones and personal country certificates gathered over time.',
@@ -608,12 +609,12 @@ const i18n = {
     resetVisits:'Reiniciar mis visitas', resetConfirm:'¿Seguro que quieres reiniciar todas tus visitas?',
     resetDone:'Visitas reiniciadas', registerVisit:'He estado aquí', realVisitConfirm:'Peregrin es un pasaporte de peregrinación real. Marca este santuario solo si lo has visitado personalmente.\n\n¿Has estado aquí de verdad?', visited_btn:'Visitado',
     removeVisit:'Visitado — Quitar visita', viewDetails:'Ver ficha completa',
-    howToGet:'Cómo llegar', howToGetFull:'Cómo llegar — Google Maps', moreInfoFull:'Más información — Wikipedia',
+    howToGet:'Cómo llegar', howToGetFull:'Cómo llegar — Google Maps', moreInfoFull:'Más información — Google',
     descLabel:'Descripción', histLabel:'Historia', prayerLabel:'Oración del peregrino',
-    lockBtn:'Abrir con Premium', certBtn:'Descargar certificado',
-    certDownloaded:'Certificado descargado', certSaved:'Certificado guardado en tu dispositivo', certReady:'Certificado listo para compartir', certFailed:'No hemos podido preparar el certificado.', certTitle:'Certificado de Peregrinación', certPreviewTitle:'Tu certificado está listo', certPreviewHint:'Primero puedes verlo aquí; después, compartirlo o descargarlo cuando quieras.', certShareBtn:'Compartir certificado', certDownloadBtn:'Descargar imagen', certCloseBtn:'Cerrar',
-    certText1:'Peregrin deja constancia de que', certText2:'ha completado la peregrinación de los',
-    certText3:'Santuarios de', certIssued:'Emitido el',
+    lockBtn:'Abrir con Premium', certBtn:'Generar certificado',
+    certDownloaded:'Certificado descargado', certSaved:'Certificado guardado en tu dispositivo', certReady:'Certificado listo para compartir', certFailed:'No hemos podido preparar el certificado.', certTitle:'Certificado de peregrinación', certPreviewTitle:'Tu certificado está listo', certPreviewHint:'Revísalo primero aquí; después, compártelo o descárgalo cuando quieras.', certShareBtn:'Compartir certificado', certDownloadBtn:'Descargar imagen', certCloseBtn:'Cerrar',
+    certText1:'Este certificado personal acredita que', certText2:'ha completado el camino de peregrinación de',
+    certText3:'lugares sagrados de', certIssued:'Emitido el',
     premiumTitle:'Peregrin Premium', premiumSub:'Guarda una memoria más completa de tu peregrinación: todos los países, rutas, certificados, hitos y tu pasaporte compartible en un solo lugar.',
     premiumCountries:'Todos los países y santuarios', premiumCert:'Certificado de peregrinación por país',
     premiumRoutes:'Todas las rutas de peregrinación', premiumBadges:'Todos los hitos',
@@ -621,7 +622,7 @@ const i18n = {
     premiumLater:'Quizás más adelante', premiumUnlockRegion:'Acceder', premiumUnlockAll:'Acceder a todo',
     premiumPriceEurope:'2,99 €', premiumPriceAmericas:'2,99 €', premiumPriceAsia:'2,99 €', premiumPriceAll:'2,99 €',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'América', premiumLabelAsia:'Asia', premiumLabelAll:'Todos los países',
-    premiumSubEurope:'11 pa\u00edses · 58 santuarios', premiumSubAmericas:'8 pa\u00edses · 36 santuarios', premiumSubAsia:'5 pa\u00edses · 40 santuarios', premiumSubAll:'31 países · 142 santuarios · Memoria peregrina completa',
+    premiumSubEurope:'11 pa\u00edses · 58 santuarios', premiumSubAmericas:'8 pa\u00edses · 36 santuarios', premiumSubAsia:'5 pa\u00edses · 40 santuarios', premiumSubAll:'35 países · 150 santuarios · Memoria peregrina completa',
     premiumOnetime:'Pago único · Tuyo para siempre', premiumGooglePlayNote:'Pago único seguro con Google Play', premiumAlreadyUnlocked:'Acceso completo activo', premiumActivatedToast:'Premium activado. ¡Gracias!',
     premiumRestoreCta:'Restaurar compra', premiumRestoreChecking:'Comprobando tu compra…', premiumRestoreNone:'No se ha encontrado ninguna compra Premium pendiente.',
     premiumCodeCta:'Tengo un código Premium', premiumCodePrompt:'Introduce tu código Premium:', premiumCodeInvalid:'Código Premium no válido.', premiumCodeApplied:'Premium activado con código.',
@@ -650,7 +651,7 @@ const i18n = {
     billingCancelled:'Compra cancelada.', profileSaveFailed:'No hemos podido guardar el nombre. Inténtalo de nuevo.',
     paymentReturnInvalid:'No hemos podido validar el retorno del pago. Si se te ha cobrado, escribe a elnuevoeuropeo@gmail.com.',
     paymentActivating:'Activando Premium…', paymentManualReview:'Aún no hemos podido activar Premium. Usa el código Premium de tu email o escribe a elnuevoeuropeo@gmail.com.',
-    onbStep1:'1 de 3',onbStep2:'2 de 3',onbStep3:'3 de 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Descubre lugares sagrados',onbTitle2:'Guarda sellos peregrinos',onbTitle3:'Conserva la memoria de tu camino',onbDesc1:'Explora un mapa interactivo de santuarios católicos en Europa, América, África y Asia.',onbDesc2:'Registra tus visitas y guarda un pasaporte peregrino personal con los sellos de tu camino.',onbDesc3:'Cuando completes el camino de un país, descarga un certificado personal de peregrinación con tu nombre.',onbNext:'Siguiente',onbStart:'Comenzar mi peregrinación',onbSkip:'Saltar',
+    onbStep1:'1 de 3',onbStep2:'2 de 3',onbStep3:'3 de 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Descubre lugares sagrados',onbTitle2:'Guarda sellos peregrinos',onbTitle3:'Conserva la memoria de tu camino',onbDesc1:'Explora un mapa interactivo de santuarios católicos en Europa, América, África, Asia y Oceanía.',onbDesc2:'Registra tus visitas y guarda un pasaporte peregrino personal con los sellos de tu camino.',onbDesc3:'Cuando completes el camino de un país, descarga un certificado personal de peregrinación con tu nombre.',onbNext:'Siguiente',onbStart:'Comenzar mi peregrinación',onbSkip:'Saltar',
     onbBadgeRoutes:'✨ Rutas sagradas', onbBadgeCertificates:'📜 Certificados cuidados',
     onbTagline:'El Pasaporte del Peregrino', onbCopy:'Lugares sagrados, rutas vivas y recuerdos bien guardados para cada peregrinación.',
     onbPurposeTitle:'Qué es Peregrin', onbPurposeBody:'Peregrin es un pasaporte católico de peregrinación que te ayuda a descubrir santuarios, marcar los lugares santos que has visitado, seguir rutas sagradas y guardar una memoria ordenada de tu camino. Está pensado para acompañar tu vida real de peregrino con visitas, hitos y certificados personales por país que vas reuniendo con el tiempo.',
@@ -676,12 +677,12 @@ const i18n = {
     resetVisits:'Réinitialiser mes visites', resetConfirm:'Voulez-vous vraiment réinitialiser toutes vos visites ?',
     resetDone:'Visites réinitialisées', registerVisit:'Je l’ai visité', realVisitConfirm:'Peregrin est un passeport de pèlerinage réel. Marquez ce sanctuaire seulement si vous l’avez visité personnellement.\n\nL’avez-vous vraiment visité ?', visited_btn:'Visité',
     removeVisit:'Visité — Retirer la visite', viewDetails:'Voir la fiche complète',
-    howToGet:"S'y rendre", howToGetFull:"S'y rendre — Google Maps", moreInfoFull:'Plus d’informations — Wikipédia',
+    howToGet:"S'y rendre", howToGetFull:"S'y rendre — Google Maps", moreInfoFull:'Plus d’informations — Google',
     descLabel:'Description', histLabel:'Histoire', prayerLabel:'Prière du pèlerin',
-    lockBtn:'Ouvrir avec Premium', certBtn:'Télécharger le certificat',
-    certDownloaded:'Certificat téléchargé', certSaved:'Certificat enregistré sur votre appareil', certReady:'Certificat prêt à être partagé', certFailed:'Nous n’avons pas pu préparer le certificat.', certTitle:'Certificat de Pèlerinage', certPreviewTitle:'Votre certificat est prêt', certPreviewHint:'Vous pouvez d’abord le voir ici, puis le partager ou le télécharger.', certShareBtn:'Partager le certificat', certDownloadBtn:'Télécharger l’image', certCloseBtn:'Fermer',
-    certText1:'Peregrin garde mémoire que', certText2:'a accompli le pèlerinage de tous les',
-    certText3:'Sanctuaires de', certIssued:'Délivré le',
+    lockBtn:'Ouvrir avec Premium', certBtn:'Générer le certificat',
+    certDownloaded:'Certificat téléchargé', certSaved:'Certificat enregistré sur votre appareil', certReady:'Certificat prêt à être partagé', certFailed:'Nous n’avons pas pu préparer le certificat.', certTitle:'Certificat de pèlerinage', certPreviewTitle:'Votre certificat est prêt', certPreviewHint:'Vérifiez-le d’abord ici, puis partagez-le ou téléchargez-le quand vous le souhaitez.', certShareBtn:'Partager le certificat', certDownloadBtn:'Télécharger l’image', certCloseBtn:'Fermer',
+    certText1:'Ce certificat personnel atteste que', certText2:'a accompli le chemin de pèlerinage de',
+    certText3:'lieux sacrés en', certIssued:'Délivré le',
     premiumTitle:'Peregrin Premium', premiumSub:'Gardez une mémoire plus complète de votre pèlerinage : tous les pays, itinéraires, certificats, jalons et votre passeport partageable au même endroit.',
     premiumCountries:'Tous les pays et sanctuaires', premiumCert:'Certificat de pèlerinage par pays',
     premiumRoutes:'Tous les itinéraires de pèlerinage', premiumBadges:'Tous les jalons',
@@ -689,7 +690,7 @@ const i18n = {
     premiumLater:'Peut-être plus tard', premiumUnlockRegion:'Accéder', premiumUnlockAll:'Accéder à tout',
     premiumPriceEurope:'2,99 €', premiumPriceAmericas:'2,99 €', premiumPriceAsia:'2,99 €', premiumPriceAll:'2,99 €',
     premiumLabelEurope:'Europe', premiumLabelAmericas:'Amériques', premiumLabelAsia:'Asie', premiumLabelAll:'Tous les pays',
-    premiumSubEurope:'11 pays · 58 sanctuaires', premiumSubAmericas:'8 pays · 36 sanctuaires', premiumSubAsia:'5 pays · 40 sanctuaires', premiumSubAll:'31 pays · 142 sanctuaires · Mémoire pèlerine complète',
+    premiumSubEurope:'11 pays · 58 sanctuaires', premiumSubAmericas:'8 pays · 36 sanctuaires', premiumSubAsia:'5 pays · 40 sanctuaires', premiumSubAll:'35 pays · 150 sanctuaires · Mémoire pèlerine complète',
     premiumOnetime:'Paiement unique · À vous pour toujours', premiumGooglePlayNote:'Paiement unique sécurisé avec Google Play', premiumAlreadyUnlocked:'Accès complet actif', premiumActivatedToast:'Premium activé. Merci !',
     premiumRestoreCta:'Restaurer l’achat', premiumRestoreChecking:'Vérification de votre achat…', premiumRestoreNone:'Aucun achat Premium en attente trouvé.',
     premiumCodeCta:'J’ai un code Premium', premiumCodePrompt:'Entrez votre code Premium :', premiumCodeInvalid:'Code Premium invalide.', premiumCodeApplied:'Premium activé avec code.',
@@ -718,7 +719,7 @@ const i18n = {
     billingCancelled:'Achat annulé.', profileSaveFailed:'Nous n’avons pas pu enregistrer le nom. Veuillez réessayer.',
     paymentReturnInvalid:'Nous n’avons pas pu valider le retour du paiement. Si vous avez été débité, écrivez à elnuevoeuropeo@gmail.com.',
     paymentActivating:'Activation de Premium…', paymentManualReview:'Nous n’avons pas encore pu activer Premium. Utilisez le code Premium reçu par e-mail ou écrivez à elnuevoeuropeo@gmail.com.',
-    onbStep1:'1 sur 3',onbStep2:'2 sur 3',onbStep3:'3 sur 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Découvrez des lieux sacrés',onbTitle2:'Gardez vos tampons de pèlerin',onbTitle3:'Préservez la mémoire de votre chemin',onbDesc1:'Explorez une carte interactive des sanctuaires catholiques en Europe, dans les Amériques, en Afrique et en Asie.',onbDesc2:'Enregistrez vos visites et gardez un passeport de pèlerin personnel avec les tampons de votre chemin.',onbDesc3:'Quand le chemin d’un pays est terminé, téléchargez un certificat personnel de pèlerinage à votre nom.',onbNext:'Suivant',onbStart:'Commencer mon pèlerinage',onbSkip:'Passer',
+    onbStep1:'1 sur 3',onbStep2:'2 sur 3',onbStep3:'3 sur 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Découvrez des lieux sacrés',onbTitle2:'Gardez vos tampons de pèlerin',onbTitle3:'Préservez la mémoire de votre chemin',onbDesc1:'Explorez une carte interactive des sanctuaires catholiques en Europe, dans les Amériques, en Afrique, en Asie et en Océanie.',onbDesc2:'Enregistrez vos visites et gardez un passeport de pèlerin personnel avec les tampons de votre chemin.',onbDesc3:'Quand le chemin d’un pays est terminé, téléchargez un certificat personnel de pèlerinage à votre nom.',onbNext:'Suivant',onbStart:'Commencer mon pèlerinage',onbSkip:'Passer',
     onbBadgeRoutes:'✨ Routes sacrées', onbBadgeCertificates:'📜 Beaux certificats',
     onbTagline:'Le Passeport du Pèlerin', onbCopy:'Lieux sacrés, routes vivantes et étapes précieusement gardées pour chaque pèlerinage.',
     onbPurposeTitle:'Qu’est-ce que Peregrin ?', onbPurposeBody:'Peregrin est un passeport catholique de pèlerinage qui vous aide à découvrir des sanctuaires, marquer les lieux saints déjà visités, suivre des routes sacrées et garder une mémoire ordonnée de votre chemin. Il est pensé pour accompagner votre vie réelle de pèlerin avec des visites, des jalons et des certificats personnels par pays recueillis au fil du temps.',
@@ -744,12 +745,12 @@ const i18n = {
     resetVisits:'Reimposta le mie visite', resetConfirm:'Sei sicuro di voler reimpostare tutte le tue visite?',
     resetDone:'Visite reimpostate', registerVisit:"L'ho visitato", realVisitConfirm:'Peregrin è un passaporto di pellegrinaggio reale. Segna questo santuario solo se lo hai visitato personalmente.\n\nLo hai visitato davvero?', visited_btn:'Visitato',
     removeVisit:'Visitato — Rimuovi visita', viewDetails:'Vedi scheda completa',
-    howToGet:'Come arrivare', howToGetFull:'Come arrivare — Google Maps', moreInfoFull:'Maggiori informazioni — Wikipedia',
+    howToGet:'Come arrivare', howToGetFull:'Come arrivare — Google Maps', moreInfoFull:'Maggiori informazioni — Google',
     descLabel:'Descrizione', histLabel:'Storia', prayerLabel:'Preghiera del pellegrino',
-    lockBtn:'Apri con Premium', certBtn:'Scarica certificato',
-    certDownloaded:'Certificato scaricato', certSaved:'Certificato salvato sul dispositivo', certReady:'Certificato pronto da condividere', certFailed:'Non siamo riusciti a preparare il certificato.', certTitle:'Certificato di Pellegrinaggio', certPreviewTitle:'Il tuo certificato è pronto', certPreviewHint:'Puoi prima visualizzarlo qui, poi condividerlo o scaricarlo.', certShareBtn:'Condividi certificato', certDownloadBtn:'Scarica immagine', certCloseBtn:'Chiudi',
-    certText1:'Peregrin conserva memoria che', certText2:'ha completato il pellegrinaggio di tutti i',
-    certText3:'Santuari di', certIssued:'Rilasciato il',
+    lockBtn:'Apri con Premium', certBtn:'Genera certificato',
+    certDownloaded:'Certificato scaricato', certSaved:'Certificato salvato sul dispositivo', certReady:'Certificato pronto da condividere', certFailed:'Non siamo riusciti a preparare il certificato.', certTitle:'Certificato di pellegrinaggio', certPreviewTitle:'Il tuo certificato è pronto', certPreviewHint:'Controllalo prima qui, poi condividilo o scaricalo quando vuoi.', certShareBtn:'Condividi certificato', certDownloadBtn:'Scarica immagine', certCloseBtn:'Chiudi',
+    certText1:'Il presente certificato personale attesta che', certText2:'ha completato il cammino di pellegrinaggio di',
+    certText3:'luoghi sacri in', certIssued:'Rilasciato il',
     premiumTitle:'Peregrin Premium', premiumSub:'Custodisci una memoria più completa del tuo pellegrinaggio: tutti i paesi, itinerari, certificati, traguardi e passaporto condivisibile in un solo luogo.',
     premiumCountries:'Tutti i paesi e santuari', premiumCert:'Certificato di pellegrinaggio per paese',
     premiumRoutes:'Tutti gli itinerari di pellegrinaggio', premiumBadges:'Tutti i traguardi',
@@ -757,7 +758,7 @@ const i18n = {
     premiumLater:'Forse più tardi', premiumUnlockRegion:'Accedi', premiumUnlockAll:'Accedi a tutto',
     premiumPriceEurope:'€ 2,99', premiumPriceAmericas:'€ 2,99', premiumPriceAsia:'€ 2,99', premiumPriceAll:'€ 2,99',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'Americhe', premiumLabelAsia:'Asia', premiumLabelAll:'Tutti i paesi',
-    premiumSubEurope:'11 paesi · 58 santuari', premiumSubAmericas:'8 paesi · 36 santuari', premiumSubAsia:'5 paesi · 40 santuari', premiumSubAll:'31 paesi · 142 santuari · Memoria pellegrina completa',
+    premiumSubEurope:'11 paesi · 58 santuari', premiumSubAmericas:'8 paesi · 36 santuari', premiumSubAsia:'5 paesi · 40 santuari', premiumSubAll:'35 paesi · 150 santuari · Memoria pellegrina completa',
     premiumOnetime:'Pagamento unico · Tuo per sempre', premiumGooglePlayNote:'Pagamento unico sicuro con Google Play', premiumAlreadyUnlocked:'Accesso completo attivo', premiumActivatedToast:'Premium attivato. Grazie!',
     premiumRestoreCta:'Ripristina acquisto', premiumRestoreChecking:'Verifica dell’acquisto…', premiumRestoreNone:'Nessun acquisto Premium in attesa trovato.',
     premiumCodeCta:'Ho un codice Premium', premiumCodePrompt:'Inserisci il tuo codice Premium:', premiumCodeInvalid:'Codice Premium non valido.', premiumCodeApplied:'Premium attivato con codice.',
@@ -786,7 +787,7 @@ const i18n = {
     billingCancelled:'Acquisto annullato.', profileSaveFailed:'Non siamo riusciti a salvare il nome. Riprova.',
     paymentReturnInvalid:'Non siamo riusciti a convalidare il ritorno del pagamento. Se ti è stato addebitato, scrivi a elnuevoeuropeo@gmail.com.',
     paymentActivating:'Attivazione di Premium…', paymentManualReview:'Non siamo ancora riusciti ad attivare Premium. Usa il codice Premium ricevuto via e-mail o scrivi a elnuevoeuropeo@gmail.com.',
-    onbStep1:'1 di 3',onbStep2:'2 di 3',onbStep3:'3 di 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Scopri luoghi sacri',onbTitle2:'Custodisci timbri del pellegrino',onbTitle3:'Conserva la memoria del tuo cammino',onbDesc1:'Esplora una mappa interattiva dei santuari cattolici in Europa, nelle Americhe, in Africa e in Asia.',onbDesc2:'Registra le tue visite e custodisci un passaporto del pellegrino con i timbri del tuo cammino.',onbDesc3:'Quando completi il cammino di un paese, scarica un certificato personale di pellegrinaggio con il tuo nome.',onbNext:'Avanti',onbStart:'Iniziare il mio pellegrinaggio',onbSkip:'Salta',
+    onbStep1:'1 di 3',onbStep2:'2 di 3',onbStep3:'3 di 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Scopri luoghi sacri',onbTitle2:'Custodisci timbri del pellegrino',onbTitle3:'Conserva la memoria del tuo cammino',onbDesc1:'Esplora una mappa interattiva dei santuari cattolici in Europa, nelle Americhe, in Africa, in Asia e in Oceania.',onbDesc2:'Registra le tue visite e custodisci un passaporto del pellegrino con i timbri del tuo cammino.',onbDesc3:'Quando completi il cammino di un paese, scarica un certificato personale di pellegrinaggio con il tuo nome.',onbNext:'Avanti',onbStart:'Iniziare il mio pellegrinaggio',onbSkip:'Salta',
     onbBadgeRoutes:'✨ Vie sacre', onbBadgeCertificates:'📜 Certificati curati',
     onbTagline:'Il Passaporto del Pellegrino', onbCopy:'Luoghi sacri, percorsi vivi e tappe custodite con cura per ogni pellegrinaggio.',
     onbPurposeTitle:'Che cos’è Peregrin?', onbPurposeBody:'Peregrin è un passaporto cattolico di pellegrinaggio che ti aiuta a scoprire santuari, segnare i luoghi santi che hai visitato, seguire itinerari sacri e custodire una memoria ordinata del tuo cammino. È pensato per accompagnare la tua vita reale di pellegrino con visite, traguardi e certificati personali per paese raccolti nel tempo.',
@@ -812,12 +813,12 @@ const i18n = {
     resetVisits:'Reiniciar as minhas visitas', resetConfirm:'Tem a certeza de que quer reiniciar todas as suas visitas?',
     resetDone:'Visitas reiniciadas', registerVisit:'Estive aqui', realVisitConfirm:'Peregrin é um passaporte de peregrinação real. Marque este santuário apenas se o visitou pessoalmente.\n\nEsteve aqui de verdade?', visited_btn:'Visitado',
     removeVisit:'Visitado — Remover visita', viewDetails:'Ver ficha completa',
-    howToGet:'Como chegar', howToGetFull:'Como chegar — Google Maps', moreInfoFull:'Mais informação — Wikipédia',
+    howToGet:'Como chegar', howToGetFull:'Como chegar — Google Maps', moreInfoFull:'Mais informação — Google',
     descLabel:'Descrição', histLabel:'História', prayerLabel:'Oração do peregrino',
-    lockBtn:'Abrir com Premium', certBtn:'Descarregar certificado',
-    certDownloaded:'Certificado descarregado', certSaved:'Certificado guardado no seu dispositivo', certReady:'Certificado pronto para partilhar', certFailed:'Não foi possível preparar o certificado.', certTitle:'Certificado de Peregrinação', certPreviewTitle:'O seu certificado está pronto', certPreviewHint:'Pode vê-lo primeiro aqui e depois partilhar ou descarregar.', certShareBtn:'Partilhar certificado', certDownloadBtn:'Descarregar imagem', certCloseBtn:'Fechar',
-    certText1:'Peregrin guarda memória de que', certText2:'completou a peregrinação de todos os',
-    certText3:'Santuários de', certIssued:'Emitido em',
+    lockBtn:'Abrir com Premium', certBtn:'Gerar certificado',
+    certDownloaded:'Certificado descarregado', certSaved:'Certificado guardado no seu dispositivo', certReady:'Certificado pronto para partilhar', certFailed:'Não foi possível preparar o certificado.', certTitle:'Certificado de peregrinação', certPreviewTitle:'O seu certificado está pronto', certPreviewHint:'Reveja-o primeiro aqui e depois partilhe ou descarregue quando quiser.', certShareBtn:'Partilhar certificado', certDownloadBtn:'Descarregar imagem', certCloseBtn:'Fechar',
+    certText1:'Este certificado pessoal atesta que', certText2:'concluiu o caminho de peregrinação de',
+    certText3:'lugares sagrados em', certIssued:'Emitido em',
     premiumTitle:'Peregrin Premium', premiumSub:'Guarde uma memória mais completa da sua peregrinação: todos os países, rotas, certificados, marcos e o seu passaporte partilhável num só lugar.',
     premiumCountries:'Todos os países e santuários', premiumCert:'Certificado de peregrinação por país',
     premiumRoutes:'Todas as rotas de peregrinação', premiumBadges:'Todos os marcos',
@@ -825,7 +826,7 @@ const i18n = {
     premiumLater:'Talvez mais tarde', premiumUnlockRegion:'Aceder', premiumUnlockAll:'Aceder a tudo',
     premiumPriceEurope:'€2,99', premiumPriceAmericas:'€2,99', premiumPriceAsia:'€2,99', premiumPriceAll:'€2,99',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'Américas', premiumLabelAsia:'Ásia', premiumLabelAll:'Todos os países',
-    premiumSubEurope:'11 pa\u00edses · 58 santu\u00e1rios', premiumSubAmericas:'8 pa\u00edses · 36 santu\u00e1rios', premiumSubAsia:'5 pa\u00edses · 40 santu\u00e1rios', premiumSubAll:'31 países · 142 santuários · Memória peregrina completa',
+    premiumSubEurope:'11 pa\u00edses · 58 santu\u00e1rios', premiumSubAmericas:'8 pa\u00edses · 36 santu\u00e1rios', premiumSubAsia:'5 pa\u00edses · 40 santu\u00e1rios', premiumSubAll:'35 países · 150 santuários · Memória peregrina completa',
     premiumOnetime:'Pagamento único · Seu para sempre', premiumGooglePlayNote:'Pagamento único seguro com Google Play', premiumAlreadyUnlocked:'Acesso completo ativo', premiumActivatedToast:'Premium ativado. Obrigado!',
     premiumRestoreCta:'Restaurar compra', premiumRestoreChecking:'A verificar a sua compra…', premiumRestoreNone:'Não foi encontrada nenhuma compra Premium pendente.',
     premiumCodeCta:'Tenho um código Premium', premiumCodePrompt:'Introduza o seu código Premium:', premiumCodeInvalid:'Código Premium inválido.', premiumCodeApplied:'Premium ativado com código.',
@@ -854,7 +855,7 @@ const i18n = {
     billingCancelled:'Compra cancelada.', profileSaveFailed:'Não foi possível guardar o nome. Tente novamente.',
     paymentReturnInvalid:'Não conseguimos validar o regresso do pagamento. Se te foi cobrado, escreve para elnuevoeuropeo@gmail.com.',
     paymentActivating:'A ativar Premium…', paymentManualReview:'Ainda não conseguimos ativar o Premium. Use o código Premium recebido por e-mail ou escreva para elnuevoeuropeo@gmail.com.',
-    onbStep1:'1 de 3',onbStep2:'2 de 3',onbStep3:'3 de 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Descubra lugares sagrados',onbTitle2:'Guarde selos de peregrino',onbTitle3:'Guarde a memória do seu caminho',onbDesc1:'Explore um mapa interativo de santuários católicos na Europa, nas Américas, em África e na Ásia.',onbDesc2:'Registe as suas visitas e guarde um passaporte de peregrino com os selos do seu caminho.',onbDesc3:'Quando completar o caminho de um país, descarregue um certificado pessoal de peregrinação com o seu nome.',onbNext:'Seguinte',onbStart:'Começar a minha peregrinação',onbSkip:'Saltar',
+    onbStep1:'1 de 3',onbStep2:'2 de 3',onbStep3:'3 de 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Descubra lugares sagrados',onbTitle2:'Guarde selos de peregrino',onbTitle3:'Guarde a memória do seu caminho',onbDesc1:'Explore um mapa interativo de santuários católicos na Europa, nas Américas, em África, na Ásia e na Oceânia.',onbDesc2:'Registe as suas visitas e guarde um passaporte de peregrino com os selos do seu caminho.',onbDesc3:'Quando completar o caminho de um país, descarregue um certificado pessoal de peregrinação com o seu nome.',onbNext:'Seguinte',onbStart:'Começar a minha peregrinação',onbSkip:'Saltar',
     onbBadgeRoutes:'✨ Rotas sagradas', onbBadgeCertificates:'📜 Belos certificados',
     onbTagline:'O Passaporte do Peregrino', onbCopy:'Lugares sagrados, rotas vivas e marcos bem guardados para cada peregrinação.',
     onbPurposeTitle:'O que é o Peregrin?', onbPurposeBody:'O Peregrin é um passaporte católico de peregrinação que o ajuda a descobrir santuários, marcar os lugares santos que já visitou, seguir rotas sagradas e guardar uma memória organizada do seu caminho. Foi pensado para acompanhar a sua vida real de peregrino com visitas, marcos e certificados pessoais por país reunidos ao longo do tempo.',
@@ -2081,9 +2082,9 @@ function renderJournalSection(s){
 }
 
 function getSanctuaryInfoUrl(s, d){
-  const wikiLang = ({en:'en', es:'es', fr:'fr', it:'it', pt:'pt'})[currentLang] || 'en';
-  const query = [d?.name || s?.name, d?.city || s?.city, 'Catholic sanctuary'].filter(Boolean).join(' ');
-  return `https://${wikiLang}.wikipedia.org/w/index.php?search=${encodeURIComponent(query)}`;
+  const country = countries.find(c=>c.id===s?.country);
+  const query = [s?.name, s?.city, country?.name, 'Catholic sanctuary'].filter(Boolean).join(' ');
+  return `https://www.google.com/search?hl=en&q=${encodeURIComponent(query)}`;
 }
 
 function normalizeHeroText(value){
@@ -2411,12 +2412,13 @@ function renderHome(){
 
 function renderExplore(){
   const container=document.querySelector('.explore-screen');
-  const regionOrder = ['europe','americas','africa','asia'];
+  const regionOrder = ['europe','americas','africa','asia','oceania'];
   const regionMeta = {
     europe:{icon:'&#127757;',en:'Europe',es:'Europa',fr:'Europe',it:'Europa',pt:'Europa'},
     americas:{icon:'&#127758;',en:'Americas',es:'Am\u00e9rica',fr:'Am\u00e9riques',it:'Americhe',pt:'Am\u00e9ricas'},
     africa:{icon:'&#127757;',en:'Africa',es:'\u00c1frica',fr:'Afrique',it:'Africa',pt:'\u00c1frica'},
-    asia:{icon:'&#127759;',en:'Asia',es:'Asia',fr:'Asie',it:'Asia',pt:'\u00c1sia'}
+    asia:{icon:'&#127759;',en:'Asia',es:'Asia',fr:'Asie',it:'Asia',pt:'\u00c1sia'},
+    oceania:{icon:'&#127965;',en:'Oceania',es:'Ocean\u00eda',fr:'Oc\u00e9anie',it:'Oceania',pt:'Oce\u00e2nia'}
   };
   const orderedRegions = [...regionOrder, ...Object.keys(regionMap).filter(region=>!regionOrder.includes(region))];
   const regionLabel = region => {
@@ -2454,7 +2456,7 @@ function renderPassport(){
   container.innerHTML=`
     <div class="passport-header">
       <div class="passport-title">${t('passportTitle')}</div>
-      <div class="passport-subtitle">${{en:'Europe · Americas · Africa · Asia',es:'Europa · América · África · Asia',fr:'Europe · Amériques · Afrique · Asie',it:'Europa · Americhe · Africa · Asia',pt:'Europa · Américas · África · Ásia'}[currentLang]||'Europe · Americas · Africa · Asia'} · ${new Date().getFullYear()}</div>
+      <div class="passport-subtitle">${{en:'Europe · Americas · Africa · Asia · Oceania',es:'Europa · América · África · Asia · Oceanía',fr:'Europe · Amériques · Afrique · Asie · Océanie',it:'Europa · Americhe · Africa · Asia · Oceania',pt:'Europa · Américas · África · Ásia · Oceânia'}[currentLang]||'Europe · Americas · Africa · Asia · Oceania'} · ${new Date().getFullYear()}</div>
       <div class="passport-stats">
         <div class="stat-box"><div class="stat-num">${getVisitCount()}</div><div class="stat-label">${t('visited')}</div></div>
         <div class="stat-box"><div class="stat-num">${sanctuaries.length-getVisitCount()}</div><div class="stat-label">${t('remaining')}</div></div>
@@ -2698,7 +2700,7 @@ if('serviceWorker' in navigator){
     window.__peregrinSwRefreshing = true;
     window.location.reload();
   });
-  navigator.serviceWorker.register('sw.js?v=24').then(reg => reg.update?.()).catch(()=>{});
+  navigator.serviceWorker.register('sw.js?v=32').then(reg => reg.update?.()).catch(()=>{});
 }
 
 // ===================== INIT =====================

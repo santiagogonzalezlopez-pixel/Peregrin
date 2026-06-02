@@ -12,6 +12,8 @@ especially in a new Codex conversation.
 - Firebase project: `peregrin-d7611`
 - GitHub repo: `https://github.com/santiagogonzalezlopez-pixel/Peregrin.git`
 - GitHub Pages: `https://santiagogonzalezlopez-pixel.github.io/Peregrin/`
+- Firebase Hosting: `https://peregrin-d7611.web.app`, deployed from `www`
+  through `firebase.json`.
 - Web root file: `index.html`
 - Capacitor web directory: `www`
 - Android packaged web assets: `android/app/src/main/assets/public`

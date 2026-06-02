@@ -1,6 +1,6 @@
 # Peregrin project context
 
-Last updated: 2026-05-28
+Last updated: 2026-06-02
 
 ## Current milestone
 
@@ -8,8 +8,8 @@ Peregrin is now in production on Google Play.
 
 This is the first stable production baseline after the tester phase, the Google
 Play Billing work, the Premium unlock fixes, the certificate fixes, the route
-image refresh, the Africa and Holy Land content packs, the achievement diplomas
-and the shareable pilgrim passport.
+image refresh, the Africa, Holy Land and Oceania content packs, the achievement
+diplomas and the shareable pilgrim passport.
 
 Treat this moment as a production checkpoint: future work should improve the app,
 not reopen broad risky refactors unless there is a clear reason.
@@ -25,9 +25,9 @@ not reopen broad risky refactors unless there is a clear reason.
 ## Current release baseline
 
 - Last built AAB: `android/app/build/outputs/bundle/release/app-release.aab`
-- Current Android version in repo: `versionCode 48`, `versionName 1.0.47`
+- Current Android version in repo: `versionCode 51`, `versionName 1.0.50`
 - Latest production checkpoint before later updates: `15853d6`
-- Content total after Holy Land pack: 31 countries, 142 sanctuaries, 12 routes
+- Content total after Oceania pack: 35 countries, 150 sanctuaries, 13 routes
 
 ## What is considered stable
 
@@ -43,8 +43,22 @@ not reopen broad risky refactors unless there is a clear reason.
 - Sanctuary detail cards with category-based sacred hero imagery.
 - Africa pack added as a first African presence.
 - Holy Land prestige pack added as a focused Gospel-route expansion.
+- Oceania pack added as first Pacific coverage with Australia, New Zealand, Fiji
+  and Papua New Guinea.
 - Achievement diplomas with share/download preview.
 - Shareable `PEREGRIN PASSPORT` image generated from obtained stamps.
+
+## Current release gate
+
+Certificate redesign, Oceania content, Google info-search links and certificate
+download feedback fixes completed on 2026-06-02.
+
+Before the next app bundle:
+
+- Build a fresh AAB only after explicit user go-ahead.
+- Run the release checklist and a final Android/web smoke test.
+- Keep payment code, billing code and release mechanics stable unless a real
+  bug appears.
 
 ## Known external caveat
 
@@ -55,13 +69,13 @@ Stripe Dashboard, not by creating a new payment link or changing payment code.
 Recommended Stripe product description:
 
 ```text
-Unlock all 31 countries, 142 sanctuaries, every certificate, route and achievement. One-time payment, yours forever.
+Unlock all 35 countries, 150 sanctuaries, every certificate, route and achievement. One-time payment, yours forever.
 ```
 
 Spanish equivalent if needed:
 
 ```text
-Desbloquea los 31 países, 142 santuarios, todos los certificados, rutas y logros. Pago único, tuyo para siempre.
+Desbloquea los 35 países, 150 santuarios, todos los certificados, rutas y logros. Pago único, tuyo para siempre.
 ```
 
 ## Product direction after production
@@ -85,6 +99,9 @@ Priority direction:
   visit is registered.
 - Improve Premium copy so the value is framed as a richer pilgrimage memory, not
   only a country unlock.
+- Certificates now have stronger ceremonial text, multilingual polish and a
+  richer photographic/sacred visual treatment; keep future certificate work to
+  small polish unless user asks for another redesign.
 - Do a small visual-detail pass for spacing, long translations, buttons, empty
   states and navigation icons.
 - Keep payment code, billing code and production release mechanics stable unless

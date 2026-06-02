@@ -1,26 +1,35 @@
 # Pendientes Peregrin
 
-Last updated: 2026-05-28
+Last updated: 2026-06-02
 
 ## Production watch
 
 - Watch Play Console for crashes, ANRs, reviews and purchase complaints.
 - Confirm that Premium purchases keep unlocking correctly in production.
-- Confirm that Africa content, routes and certificates behave correctly for real
-  users.
-- Confirm that the new Holy Land route, certificate and hito behave correctly for
-  real users.
-- After Holy Land settles, review global/continent coverage to see whether any
-  major pilgrim region still feels conspicuously absent.
+- Confirm that Africa, Holy Land and Oceania content, routes, certificates and
+  hitos behave correctly for real users.
+- Confirm that all five app continents stay visible in map filters, passport
+  sharing, onboarding and Premium copy after the Oceania deployment.
 - If any user pays but remains blocked, follow
   `docs/PAYMENT_INCIDENT_RUNBOOK.md` before changing code.
 
 ## Highest-value next improvements
 
+Release gate:
+
+- Certificate wording/visuals, Oceania, Google info-search links and certificate
+  download feedback fixes are ready for the next AAB after final smoke checks.
+
 Recently completed:
 
 - Holy Land prestige pack with 10 Gospel places, one route, one certificate rule
   and one pilgrim hito.
+- Oceania pack with 4 countries, 8 sanctuaries, one route, country certificate
+  rules for Australia/New Zealand, fallback rules for Fiji/Papua New Guinea and
+  one pilgrim hito.
+- Certificate redesign: ceremonial wording, reviewed multilingual strings,
+  richer photographic route imagery, formal seal/count layout and QA renders for
+  Spanish, French/Holy Land and Portuguese/Oceania cases.
 - First category-based sanctuary hero image pass: Marian, monastery, mountain
   and martyr/relic imagery.
 
@@ -39,6 +48,8 @@ Recently completed:
 - Rework Premium copy so it does not feel like "pay to unlock countries" only,
   but like "keep and share a richer pilgrimage memory": routes, certificates,
   beautiful passport, achievements and saved milestones.
+- Keep future certificate work to small polish unless user asks for another
+  redesign.
 - Do a small visual-detail pass across spacing, long translated strings, buttons,
   empty states and navigation icons.
 - Improve the visual language of map markers only if it can be done safely and

@@ -13,3 +13,6 @@ android/keystore.properties
 
 # Local Netlify folder
 .netlify
+
+# Local Firebase deploy cache
+.firebase/
