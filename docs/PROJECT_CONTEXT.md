@@ -25,7 +25,7 @@ not reopen broad risky refactors unless there is a clear reason.
 ## Current release baseline
 
 - Last built AAB: `android/app/build/outputs/bundle/release/app-release.aab`
-- Current Android version in repo: `versionCode 51`, `versionName 1.0.50`
+- Current Android version in repo: `versionCode 52`, `versionName 1.0.51`
 - Latest production checkpoint before later updates: `15853d6`
 - Content total after Oceania pack: 35 countries, 150 sanctuaries, 13 routes
 
