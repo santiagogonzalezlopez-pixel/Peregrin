@@ -73,6 +73,38 @@ service cloud.firestore {
         && data.updatedAtIso is string;
     }
 
+    function mutableCommentFields() {
+      return ['text', 'edited', 'updatedAtMs', 'updatedAtIso'];
+    }
+
+    function validCommentEntry(sanctuaryId, data) {
+      return data.keys().hasOnly([
+          'sanctuaryId',
+          'text',
+          'authorName',
+          'authorUid',
+          'createdAtMs',
+          'createdAtIso',
+          'edited',
+          'updatedAtMs',
+          'updatedAtIso'
+        ])
+        && data.authorUid is string
+        && data.authorName is string
+        && data.authorName.size() > 0
+        && data.authorName.size() <= 80
+        && data.text is string
+        && data.text.size() >= 3
+        && data.text.size() <= 280
+        && data.createdAtMs is int
+        && data.createdAtIso is string
+        && data.sanctuaryId is string
+        && data.sanctuaryId == sanctuaryId
+        && (!('edited' in data) || data.edited is bool)
+        && (!('updatedAtMs' in data) || data.updatedAtMs is int)
+        && (!('updatedAtIso' in data) || data.updatedAtIso is string);
+    }
+
     match /users/{userId} {
       allow read: if isOwner(userId);
       allow create: if isOwner(userId)
@@ -91,7 +123,7 @@ service cloud.firestore {
         allow read: if isPremiumOwner(userId);
         allow create, update: if isPremiumOwner(userId)
           && validJournalEntry(sanctuaryId, request.resource.data);
-        allow delete: if false;
+        allow delete: if isOwner(userId);
       }
     }
 
@@ -100,18 +132,17 @@ service cloud.firestore {
 
       allow create: if signedIn()
         && request.resource.data.authorUid == request.auth.uid
-        && request.resource.data.authorName is string
-        && request.resource.data.authorName.size() > 0
-        && request.resource.data.authorName.size() <= 80
-        && request.resource.data.text is string
-        && request.resource.data.text.size() >= 3
-        && request.resource.data.text.size() <= 280
-        && request.resource.data.createdAtMs is int
-        && request.resource.data.createdAtIso is string
-        && request.resource.data.sanctuaryId is string
-        && request.resource.data.sanctuaryId == sanctuaryId;
+        && validCommentEntry(sanctuaryId, request.resource.data);
 
-      allow update, delete: if false;
+      allow update: if signedIn()
+        && resource.data.authorUid == request.auth.uid
+        && request.resource.data.authorUid == resource.data.authorUid
+        && request.resource.data.sanctuaryId == sanctuaryId
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(mutableCommentFields())
+        && validCommentEntry(sanctuaryId, request.resource.data);
+
+      allow delete: if signedIn()
+        && resource.data.authorUid == request.auth.uid;
 
       match /reports/{reporterUid} {
         allow read: if false;

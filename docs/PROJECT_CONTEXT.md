@@ -1,6 +1,6 @@
 # Peregrin project context
 
-Last updated: 2026-06-02
+Last updated: 2026-06-05
 
 ## Current milestone
 
@@ -47,11 +47,13 @@ not reopen broad risky refactors unless there is a clear reason.
   and Papua New Guinea.
 - Achievement diplomas with share/download preview.
 - Shareable `PEREGRIN PASSPORT` image generated from obtained stamps.
+- Pilgrims can edit/delete their own public sanctuary comments and delete their
+  own private journal notes.
 
 ## Current release gate
 
-Certificate redesign, Oceania content, Google info-search links and certificate
-download feedback fixes completed on 2026-06-02.
+Comment/note editing controls added on 2026-06-05 after user feedback. The pass
+allows users to correct or delete their own sanctuary comments and private notes.
 
 Before the next app bundle:
 

@@ -296,14 +296,19 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .comment-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px;font-size:11px;color:var(--brown-light);}
 .comment-author{font-weight:700;color:var(--burgundy);}
 .comment-text{font-size:13px;line-height:1.6;color:var(--brown);white-space:pre-wrap;word-break:break-word;}
+.comment-owner-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
 .comment-report{margin-top:8px;padding:0;border:none;background:transparent;color:var(--brown-light);font-family:'Jost',sans-serif;font-size:11px;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
+.comment-owner-actions .comment-report{margin-top:0;}
+.comment-danger{color:#9f2f3b;}
 .comment-report:hover{color:var(--burgundy);}
 .comment-state{font-size:12px;color:var(--brown-light);line-height:1.6;padding:4px 2px;}
 .journal-box{background:linear-gradient(135deg,#fffaf0,#f3e7d3);border:1px solid var(--cream-dark);border-radius:14px;padding:13px;}
 .journal-textarea{width:100%;min-height:110px;resize:vertical;padding:12px 14px;border:2px solid var(--cream-dark);border-radius:12px;font-family:'Jost',sans-serif;font-size:13px;line-height:1.55;color:var(--brown);background:var(--white);outline:none;}
 .journal-textarea:focus{border-color:var(--gold);}
-.journal-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;}
+.journal-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;flex-wrap:wrap;}
+.journal-buttons{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .journal-save{padding:10px 14px;border:none;border-radius:10px;background:var(--burgundy);color:var(--cream);font-family:'Jost',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
+.journal-delete{padding:10px 12px;border:1px solid var(--cream-dark);border-radius:10px;background:rgba(255,255,255,.62);color:var(--brown-light);font-family:'Jost',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
 .premium-teaser{background:linear-gradient(135deg,rgba(197,150,58,.18),rgba(114,47,55,.08));border:1px solid rgba(197,150,58,.38);border-radius:13px;padding:12px;font-size:12.5px;line-height:1.55;color:var(--brown);}
 .route-guide-btn{width:100%;margin-top:12px;padding:11px 14px;border:none;border-radius:11px;background:linear-gradient(135deg,var(--burgundy),var(--burgundy-dark));color:var(--cream);font-family:'Jost',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
 .route-guide-btn.locked{background:linear-gradient(135deg,var(--gold),#b8842e);color:var(--brown);}
@@ -590,7 +595,7 @@ const i18n = {
     onbStatSanctuaries:'Sanctuaries', onbStatCountries:'Countries', onbStatContinents:'Continents',
     onbCta:'Begin your pilgrimage ✦',
     homeKicker:'', homeTitle:'Sacred atlas', homeCopy:'', homePrimary:'Open map', homeRoutes:'Routes', homePassport:'Passport', homeNote:'', homeStatSanctuaries:'Sanctuaries', homeStatCountries:'Countries', homeStatRoutes:'Routes',
-    navWorld:'World',editName:'Edit my name', editNamePrompt:'Enter your pilgrim name:', viewIntro:'View intro', mapHelpCta:'Peregrin', aboutTitle:'What is Peregrin?', aboutBody:'Peregrin is a digital pilgrimage passport for Catholic pilgrims. It helps you discover sanctuaries, register your visits and keep the memory of your journey with routes, milestones and personal certificates.', pageTitle:'Peregrin — Your pilgrim passport', pilgrimFallback:'Pilgrim', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium activated locally', testerPremiumOff:'Premium deactivated locally', mapFilterCountry:'Showing only this country', mapFilterRoute:'Showing only this route', mapFilterShowAll:'Show all', routeTapHint:'Tap to see this route on the map', routeFirstStop:'First stop', commentsTitle:'Pilgrim comments', commentsPlaceholder:'Share a tip, a practical note or a short impression for other pilgrims...', commentsHint:'Visible to other signed-in pilgrims.', commentsSubmit:'Post comment', commentsLoading:'Loading comments...', commentsEmpty:'No comments yet. Be the first to leave one.', commentsUnavailable:'Comments are not available right now.', commentsPosted:'Comment posted', commentsTooShort:'Write at least 3 characters.', commentsSignIn:'Sign in to leave comments.', commentsNoLinks:'Links are not allowed in comments for now.', commentsReport:'Report', commentsReported:'Comment reported. Thank you.', commentsSlowDown:(seconds)=>`Please wait ${seconds}s before posting again.`, createdBy:'Created with faith by', feedbackMsg:'Suggestions and feedback always welcome',
+    navWorld:'World',editName:'Edit my name', editNamePrompt:'Enter your pilgrim name:', viewIntro:'View intro', mapHelpCta:'Peregrin', aboutTitle:'What is Peregrin?', aboutBody:'Peregrin is a digital pilgrimage passport for Catholic pilgrims. It helps you discover sanctuaries, register your visits and keep the memory of your journey with routes, milestones and personal certificates.', pageTitle:'Peregrin — Your pilgrim passport', pilgrimFallback:'Pilgrim', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium activated locally', testerPremiumOff:'Premium deactivated locally', mapFilterCountry:'Showing only this country', mapFilterRoute:'Showing only this route', mapFilterShowAll:'Show all', routeTapHint:'Tap to see this route on the map', routeFirstStop:'First stop', commentsTitle:'Pilgrim comments', commentsPlaceholder:'Share a tip, a practical note or a short impression for other pilgrims...', commentsHint:'Visible to other signed-in pilgrims.', commentsSubmit:'Post comment', commentsLoading:'Loading comments...', commentsEmpty:'No comments yet. Be the first to leave one.', commentsUnavailable:'Comments are not available right now.', commentsPosted:'Comment posted', commentsUpdated:'Comment updated', commentsDeleted:'Comment deleted', commentsEdited:'edited', commentsEdit:'Edit', commentsDelete:'Delete', commentsEditPrompt:'Edit your comment:', commentsDeleteConfirm:'Delete this comment?', commentsTooShort:'Write at least 3 characters.', commentsSignIn:'Sign in to leave comments.', commentsNoLinks:'Links are not allowed in comments for now.', commentsReport:'Report', commentsReported:'Comment reported. Thank you.', commentsSlowDown:(seconds)=>`Please wait ${seconds}s before posting again.`, journalDelete:'Delete note', journalDeleteConfirm:'Delete this private note?', journalDeleted:'Private note deleted', createdBy:'Created with faith by', feedbackMsg:'Suggestions and feedback always welcome',
   },
   es: {
     appSubtitle:'Tu pasaporte peregrino', navHome:'Inicio', navMap:'Mapa', navCountries:'Países',
@@ -658,7 +663,7 @@ const i18n = {
     onbStatSanctuaries:'Santuarios', onbStatCountries:'Países', onbStatContinents:'Continentes',
     onbCta:'Comenzar mi peregrinación ✦',
     homeKicker:'', homeTitle:'Atlas sagrado', homeCopy:'', homePrimary:'Ver mapa', homeRoutes:'Rutas', homePassport:'Pasaporte', homeNote:'', homeStatSanctuaries:'Santuarios', homeStatCountries:'Países', homeStatRoutes:'Rutas',
-    navWorld:'Mundo',editName:'Editar mi nombre', editNamePrompt:'Introduce tu nombre de peregrino:', viewIntro:'Ver introducción', mapHelpCta:'Peregrin', aboutTitle:'¿Qué es Peregrin?', aboutBody:'Peregrin es un pasaporte digital de peregrinación católica. Te ayuda a descubrir santuarios, registrar tus visitas y guardar la memoria de tu camino con rutas, hitos y certificados personales.', pageTitle:'Peregrin — Tu pasaporte peregrino', pilgrimFallback:'Peregrino', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium activado en local', testerPremiumOff:'Premium desactivado en local', mapFilterCountry:'Mostrando solo este país', mapFilterRoute:'Mostrando solo esta ruta', mapFilterShowAll:'Ver todo', routeTapHint:'Toca para verla en el mapa', routeFirstStop:'Primera parada', commentsTitle:'Comentarios de peregrinos', commentsPlaceholder:'Comparte un consejo, una nota práctica o una impresión breve para otros peregrinos...', commentsHint:'Visible para otros peregrinos con sesión iniciada.', commentsSubmit:'Publicar comentario', commentsLoading:'Cargando comentarios...', commentsEmpty:'Todavía no hay comentarios. Sé el primero en dejar uno.', commentsUnavailable:'Los comentarios no están disponibles ahora mismo.', commentsPosted:'Comentario publicado', commentsTooShort:'Escribe al menos 3 caracteres.', commentsSignIn:'Inicia sesión para dejar comentarios.', commentsNoLinks:'Por ahora no se permiten enlaces en los comentarios.', commentsReport:'Reportar', commentsReported:'Comentario reportado. Gracias.', commentsSlowDown:(seconds)=>`Espera ${seconds}s antes de volver a comentar.`, createdBy:'Creado con fe por', feedbackMsg:'Sugerencias y comentarios siempre bienvenidos',
+    navWorld:'Mundo',editName:'Editar mi nombre', editNamePrompt:'Introduce tu nombre de peregrino:', viewIntro:'Ver introducción', mapHelpCta:'Peregrin', aboutTitle:'¿Qué es Peregrin?', aboutBody:'Peregrin es un pasaporte digital de peregrinación católica. Te ayuda a descubrir santuarios, registrar tus visitas y guardar la memoria de tu camino con rutas, hitos y certificados personales.', pageTitle:'Peregrin — Tu pasaporte peregrino', pilgrimFallback:'Peregrino', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium activado en local', testerPremiumOff:'Premium desactivado en local', mapFilterCountry:'Mostrando solo este país', mapFilterRoute:'Mostrando solo esta ruta', mapFilterShowAll:'Ver todo', routeTapHint:'Toca para verla en el mapa', routeFirstStop:'Primera parada', commentsTitle:'Comentarios de peregrinos', commentsPlaceholder:'Comparte un consejo, una nota práctica o una impresión breve para otros peregrinos...', commentsHint:'Visible para otros peregrinos con sesión iniciada.', commentsSubmit:'Publicar comentario', commentsLoading:'Cargando comentarios...', commentsEmpty:'Todavía no hay comentarios. Sé el primero en dejar uno.', commentsUnavailable:'Los comentarios no están disponibles ahora mismo.', commentsPosted:'Comentario publicado', commentsUpdated:'Comentario actualizado', commentsDeleted:'Comentario borrado', commentsEdited:'editado', commentsEdit:'Editar', commentsDelete:'Borrar', commentsEditPrompt:'Edita tu comentario:', commentsDeleteConfirm:'¿Borrar este comentario?', commentsTooShort:'Escribe al menos 3 caracteres.', commentsSignIn:'Inicia sesión para dejar comentarios.', commentsNoLinks:'Por ahora no se permiten enlaces en los comentarios.', commentsReport:'Reportar', commentsReported:'Comentario reportado. Gracias.', commentsSlowDown:(seconds)=>`Espera ${seconds}s antes de volver a comentar.`, journalDelete:'Borrar nota', journalDeleteConfirm:'¿Borrar esta nota privada?', journalDeleted:'Nota privada borrada', createdBy:'Creado con fe por', feedbackMsg:'Sugerencias y comentarios siempre bienvenidos',
   },
   fr: {
     appSubtitle:'Votre passeport de pèlerin', navHome:'Accueil', navMap:'Carte', navCountries:'Pays',
@@ -726,7 +731,7 @@ const i18n = {
     onbStatSanctuaries:'Sanctuaires', onbStatCountries:'Pays', onbStatContinents:'Continents',
     onbCta:'Commencer mon pèlerinage ✦',
     homeKicker:'', homeTitle:'Atlas sacré', homeCopy:'', homePrimary:'Ouvrir la carte', homeRoutes:'Itinéraires', homePassport:'Passeport', homeNote:'', homeStatSanctuaries:'Sanctuaires', homeStatCountries:'Pays', homeStatRoutes:'Itinéraires',
-    navWorld:'Monde',editName:'Modifier mon nom', editNamePrompt:'Entrez votre nom de pèlerin :', viewIntro:'Voir l’introduction', mapHelpCta:'Peregrin', aboutTitle:'Qu’est-ce que Peregrin ?', aboutBody:'Peregrin est un passeport numérique de pèlerinage catholique. Il vous aide à découvrir des sanctuaires, enregistrer vos visites et garder la mémoire de votre chemin avec des itinéraires, jalons et certificats personnels.', pageTitle:'Peregrin — Votre passeport de pèlerin', pilgrimFallback:'Pèlerin', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium activé en local', testerPremiumOff:'Premium désactivé en local', mapFilterCountry:'Affichage de ce pays uniquement', mapFilterRoute:'Affichage de cet itinéraire uniquement', mapFilterShowAll:'Tout afficher', routeTapHint:'Touchez pour voir cet itinéraire sur la carte', routeFirstStop:'Première étape', commentsTitle:'Commentaires des pèlerins', commentsPlaceholder:'Partagez un conseil, une note pratique ou une brève impression pour les autres pèlerins...', commentsHint:'Visible aux autres pèlerins connectés.', commentsSubmit:'Publier', commentsLoading:'Chargement des commentaires...', commentsEmpty:'Aucun commentaire pour le moment. Soyez le premier à en laisser un.', commentsUnavailable:'Les commentaires ne sont pas disponibles pour le moment.', commentsPosted:'Commentaire publié', commentsTooShort:'Écrivez au moins 3 caractères.', commentsSignIn:'Connectez-vous pour laisser un commentaire.', commentsNoLinks:'Les liens ne sont pas autorisés dans les commentaires pour le moment.', commentsReport:'Signaler', commentsReported:'Commentaire signalé. Merci.', commentsSlowDown:(seconds)=>`Attendez ${seconds}s avant de publier à nouveau.`, createdBy:'Créé avec foi par', feedbackMsg:'Suggestions et commentaires toujours bienvenus',
+    navWorld:'Monde',editName:'Modifier mon nom', editNamePrompt:'Entrez votre nom de pèlerin :', viewIntro:'Voir l’introduction', mapHelpCta:'Peregrin', aboutTitle:'Qu’est-ce que Peregrin ?', aboutBody:'Peregrin est un passeport numérique de pèlerinage catholique. Il vous aide à découvrir des sanctuaires, enregistrer vos visites et garder la mémoire de votre chemin avec des itinéraires, jalons et certificats personnels.', pageTitle:'Peregrin — Votre passeport de pèlerin', pilgrimFallback:'Pèlerin', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium activé en local', testerPremiumOff:'Premium désactivé en local', mapFilterCountry:'Affichage de ce pays uniquement', mapFilterRoute:'Affichage de cet itinéraire uniquement', mapFilterShowAll:'Tout afficher', routeTapHint:'Touchez pour voir cet itinéraire sur la carte', routeFirstStop:'Première étape', commentsTitle:'Commentaires des pèlerins', commentsPlaceholder:'Partagez un conseil, une note pratique ou une brève impression pour les autres pèlerins...', commentsHint:'Visible aux autres pèlerins connectés.', commentsSubmit:'Publier', commentsLoading:'Chargement des commentaires...', commentsEmpty:'Aucun commentaire pour le moment. Soyez le premier à en laisser un.', commentsUnavailable:'Les commentaires ne sont pas disponibles pour le moment.', commentsPosted:'Commentaire publié', commentsUpdated:'Commentaire mis à jour', commentsDeleted:'Commentaire supprimé', commentsEdited:'modifié', commentsEdit:'Modifier', commentsDelete:'Supprimer', commentsEditPrompt:'Modifiez votre commentaire :', commentsDeleteConfirm:'Supprimer ce commentaire ?', commentsTooShort:'Écrivez au moins 3 caractères.', commentsSignIn:'Connectez-vous pour laisser un commentaire.', commentsNoLinks:'Les liens ne sont pas autorisés dans les commentaires pour le moment.', commentsReport:'Signaler', commentsReported:'Commentaire signalé. Merci.', commentsSlowDown:(seconds)=>`Attendez ${seconds}s avant de publier à nouveau.`, journalDelete:'Supprimer la note', journalDeleteConfirm:'Supprimer cette note privée ?', journalDeleted:'Note privée supprimée', createdBy:'Créé avec foi par', feedbackMsg:'Suggestions et commentaires toujours bienvenus',
   },
   it: {
     appSubtitle:'Il tuo passaporto del pellegrino', navHome:'Inizio', navMap:'Mappa', navCountries:'Paesi',
@@ -794,7 +799,7 @@ const i18n = {
     onbStatSanctuaries:'Santuari', onbStatCountries:'Paesi', onbStatContinents:'Continenti',
     onbCta:'Iniziare il mio pellegrinaggio ✦',
     homeKicker:'', homeTitle:'Atlante sacro', homeCopy:'', homePrimary:'Apri la mappa', homeRoutes:'Itinerari', homePassport:'Passaporto', homeNote:'', homeStatSanctuaries:'Santuari', homeStatCountries:'Paesi', homeStatRoutes:'Itinerari',
-    navWorld:'Mondo',editName:'Modifica il mio nome', editNamePrompt:'Inserisci il tuo nome di pellegrino:', viewIntro:'Vedi introduzione', mapHelpCta:'Peregrin', aboutTitle:'Che cos’è Peregrin?', aboutBody:'Peregrin è un passaporto digitale di pellegrinaggio cattolico. Ti aiuta a scoprire santuari, registrare le visite e custodire il ricordo del tuo cammino con itinerari, traguardi e certificati personali.', pageTitle:'Peregrin — Il tuo passaporto del pellegrino', pilgrimFallback:'Pellegrino', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium attivato in locale', testerPremiumOff:'Premium disattivato in locale', mapFilterCountry:'Mostra solo questo paese', mapFilterRoute:'Mostra solo questo itinerario', mapFilterShowAll:'Mostra tutto', routeTapHint:'Tocca per vedere l’itinerario sulla mappa', routeFirstStop:'Prima tappa', commentsTitle:'Commenti dei pellegrini', commentsPlaceholder:'Condividi un consiglio, una nota pratica o una breve impressione per altri pellegrini...', commentsHint:'Visibile agli altri pellegrini con accesso.', commentsSubmit:'Pubblica', commentsLoading:'Caricamento commenti...', commentsEmpty:'Ancora nessun commento. Sii il primo a lasciarne uno.', commentsUnavailable:'I commenti non sono disponibili in questo momento.', commentsPosted:'Commento pubblicato', commentsTooShort:'Scrivi almeno 3 caratteri.', commentsSignIn:'Accedi per lasciare commenti.', commentsNoLinks:'Per ora i link non sono consentiti nei commenti.', commentsReport:'Segnala', commentsReported:'Commento segnalato. Grazie.', commentsSlowDown:(seconds)=>`Attendi ${seconds}s prima di pubblicare di nuovo.`, createdBy:'Creato con fede da', feedbackMsg:'Suggerimenti e commenti sempre benvenuti',
+    navWorld:'Mondo',editName:'Modifica il mio nome', editNamePrompt:'Inserisci il tuo nome di pellegrino:', viewIntro:'Vedi introduzione', mapHelpCta:'Peregrin', aboutTitle:'Che cos’è Peregrin?', aboutBody:'Peregrin è un passaporto digitale di pellegrinaggio cattolico. Ti aiuta a scoprire santuari, registrare le visite e custodire il ricordo del tuo cammino con itinerari, traguardi e certificati personali.', pageTitle:'Peregrin — Il tuo passaporto del pellegrino', pilgrimFallback:'Pellegrino', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium attivato in locale', testerPremiumOff:'Premium disattivato in locale', mapFilterCountry:'Mostra solo questo paese', mapFilterRoute:'Mostra solo questo itinerario', mapFilterShowAll:'Mostra tutto', routeTapHint:'Tocca per vedere l’itinerario sulla mappa', routeFirstStop:'Prima tappa', commentsTitle:'Commenti dei pellegrini', commentsPlaceholder:'Condividi un consiglio, una nota pratica o una breve impressione per altri pellegrini...', commentsHint:'Visibile agli altri pellegrini con accesso.', commentsSubmit:'Pubblica', commentsLoading:'Caricamento commenti...', commentsEmpty:'Ancora nessun commento. Sii il primo a lasciarne uno.', commentsUnavailable:'I commenti non sono disponibili in questo momento.', commentsPosted:'Commento pubblicato', commentsUpdated:'Commento aggiornato', commentsDeleted:'Commento eliminato', commentsEdited:'modificato', commentsEdit:'Modifica', commentsDelete:'Elimina', commentsEditPrompt:'Modifica il tuo commento:', commentsDeleteConfirm:'Eliminare questo commento?', commentsTooShort:'Scrivi almeno 3 caratteri.', commentsSignIn:'Accedi per lasciare commenti.', commentsNoLinks:'Per ora i link non sono consentiti nei commenti.', commentsReport:'Segnala', commentsReported:'Commento segnalato. Grazie.', commentsSlowDown:(seconds)=>`Attendi ${seconds}s prima di pubblicare di nuovo.`, journalDelete:'Elimina nota', journalDeleteConfirm:'Eliminare questa nota privata?', journalDeleted:'Nota privata eliminata', createdBy:'Creato con fede da', feedbackMsg:'Suggerimenti e commenti sempre benvenuti',
   },
   pt: {
     appSubtitle:'O seu passaporte de peregrino', navHome:'Início', navMap:'Mapa', navCountries:'Países',
@@ -862,7 +867,7 @@ const i18n = {
     onbStatSanctuaries:'Santuários', onbStatCountries:'Países', onbStatContinents:'Continentes',
     onbCta:'Começar a minha peregrinação ✦',
     homeKicker:'', homeTitle:'Atlas sagrado', homeCopy:'', homePrimary:'Abrir mapa', homeRoutes:'Rotas', homePassport:'Passaporte', homeNote:'', homeStatSanctuaries:'Santuários', homeStatCountries:'Países', homeStatRoutes:'Rotas',
-    navWorld:'Mundo',editName:'Editar o meu nome', editNamePrompt:'Introduza o seu nome de peregrino:', viewIntro:'Ver introdução', mapHelpCta:'Peregrin', aboutTitle:'O que é o Peregrin?', aboutBody:'Peregrin é um passaporte digital de peregrinação católica. Ajuda-o a descobrir santuários, registar as suas visitas e guardar a memória do seu caminho com rotas, marcos e certificados pessoais.', pageTitle:'Peregrin — O seu passaporte de peregrino', pilgrimFallback:'Peregrino', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium ativado localmente', testerPremiumOff:'Premium desativado localmente', mapFilterCountry:'A mostrar apenas este país', mapFilterRoute:'A mostrar apenas esta rota', mapFilterShowAll:'Ver tudo', routeTapHint:'Toque para ver esta rota no mapa', routeFirstStop:'Primeira paragem', commentsTitle:'Comentários de peregrinos', commentsPlaceholder:'Partilhe uma dica, uma nota prática ou uma impressão breve para outros peregrinos...', commentsHint:'Visível para outros peregrinos com sessão iniciada.', commentsSubmit:'Publicar comentário', commentsLoading:'A carregar comentários...', commentsEmpty:'Ainda não há comentários. Seja o primeiro a deixar um.', commentsUnavailable:'Os comentários não estão disponíveis neste momento.', commentsPosted:'Comentário publicado', commentsTooShort:'Escreva pelo menos 3 caracteres.', commentsSignIn:'Inicie sessão para deixar comentários.', commentsNoLinks:'Por agora não são permitidos links nos comentários.', commentsReport:'Reportar', commentsReported:'Comentário reportado. Obrigado.', commentsSlowDown:(seconds)=>`Espere ${seconds}s antes de voltar a comentar.`, createdBy:'Criado com fé por', feedbackMsg:'Sugestões e comentários sempre bem-vindos',
+    navWorld:'Mundo',editName:'Editar o meu nome', editNamePrompt:'Introduza o seu nome de peregrino:', viewIntro:'Ver introdução', mapHelpCta:'Peregrin', aboutTitle:'O que é o Peregrin?', aboutBody:'Peregrin é um passaporte digital de peregrinação católica. Ajuda-o a descobrir santuários, registar as suas visitas e guardar a memória do seu caminho com rotas, marcos e certificados pessoais.', pageTitle:'Peregrin — O seu passaporte de peregrino', pilgrimFallback:'Peregrino', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium ativado localmente', testerPremiumOff:'Premium desativado localmente', mapFilterCountry:'A mostrar apenas este país', mapFilterRoute:'A mostrar apenas esta rota', mapFilterShowAll:'Ver tudo', routeTapHint:'Toque para ver esta rota no mapa', routeFirstStop:'Primeira paragem', commentsTitle:'Comentários de peregrinos', commentsPlaceholder:'Partilhe uma dica, uma nota prática ou uma impressão breve para outros peregrinos...', commentsHint:'Visível para outros peregrinos com sessão iniciada.', commentsSubmit:'Publicar comentário', commentsLoading:'A carregar comentários...', commentsEmpty:'Ainda não há comentários. Seja o primeiro a deixar um.', commentsUnavailable:'Os comentários não estão disponíveis neste momento.', commentsPosted:'Comentário publicado', commentsUpdated:'Comentário atualizado', commentsDeleted:'Comentário eliminado', commentsEdited:'editado', commentsEdit:'Editar', commentsDelete:'Eliminar', commentsEditPrompt:'Edite o seu comentário:', commentsDeleteConfirm:'Eliminar este comentário?', commentsTooShort:'Escreva pelo menos 3 caracteres.', commentsSignIn:'Inicie sessão para deixar comentários.', commentsNoLinks:'Por agora não são permitidos links nos comentários.', commentsReport:'Reportar', commentsReported:'Comentário reportado. Obrigado.', commentsSlowDown:(seconds)=>`Espere ${seconds}s antes de voltar a comentar.`, journalDelete:'Eliminar nota', journalDeleteConfirm:'Eliminar esta nota privada?', journalDeleted:'Nota privada eliminada', createdBy:'Criado com fé por', feedbackMsg:'Sugestões e comentários sempre bem-vindos',
   }
 };
 if(window.PEREGRIN_PREMIUM_I18N){
@@ -2074,7 +2079,10 @@ function renderJournalSection(s){
       <textarea class="journal-textarea" id="journal-input-${s.id}" maxlength="1000" placeholder="${t('journalPlaceholder')}"></textarea>
       <div class="journal-actions">
         <div class="comment-hint" id="journal-state-${s.id}">${t('journalLoading')}</div>
-        <button class="journal-save" onclick="saveJournalNote(${s.id})">${t('journalSave')}</button>
+        <div class="journal-buttons">
+          <button class="journal-delete" onclick="deleteJournalNote(${s.id})">${t('journalDelete')}</button>
+          <button class="journal-save" onclick="saveJournalNote(${s.id})">${t('journalSave')}</button>
+        </div>
       </div>
       <div class="comment-hint" style="margin-top:8px;">${t('journalHint')}</div>
     </div>
@@ -2156,6 +2164,26 @@ async function saveJournalNote(sanctuaryId){
   }
 }
 
+async function deleteJournalNote(sanctuaryId){
+  const input = document.getElementById(`journal-input-${sanctuaryId}`);
+  const state = document.getElementById(`journal-state-${sanctuaryId}`);
+  if(!input || !state || !window._currentUser?.uid) return;
+  if(!confirm(t('journalDeleteConfirm'))) return;
+  if(typeof window._fbDeleteJournalNote !== 'function'){
+    showToast(t('journalUnavailable'));
+    return;
+  }
+  try{
+    await window._fbDeleteJournalNote(window._currentUser.uid, sanctuaryId);
+    input.value = '';
+    state.textContent = '';
+    showToast(t('journalDeleted'));
+  }catch(e){
+    console.error('deleteJournalNote failed:', e);
+    showToast(t('journalUnavailable'));
+  }
+}
+
 function openModal(id){
   const s=sanctuaries.find(x=>x.id===id);if(!s)return;
   const locked=!isCountryUnlocked(s.country);
@@ -2216,6 +2244,16 @@ function escapeHtml(value){
     .replace(/'/g,'&#39;');
 }
 
+function escapeJsString(value){
+  return String(value ?? '')
+    .replace(/\\/g,'\\\\')
+    .replace(/'/g,"\\'")
+    .replace(/\r/g,'\\r')
+    .replace(/\n/g,'\\n')
+    .replace(/\u2028/g,'\\u2028')
+    .replace(/\u2029/g,'\\u2029');
+}
+
 function getCommentLocale(){
   return ({en:'en-GB',es:'es-ES',fr:'fr-FR',it:'it-IT',pt:'pt-PT'})[currentLang] || 'en-GB';
 }
@@ -2244,8 +2282,21 @@ function updateCommentCounter(sanctuaryId){
 }
 
 const COMMENT_COOLDOWN_MS = 45000;
+const sanctuaryCommentCache = new Map();
 function normalizeCommentText(text){
   return String(text || '').replace(/\s+/g, ' ').trim();
+}
+function validateCommentText(text){
+  const normalized = normalizeCommentText(text);
+  if(normalized.length < 3){
+    showToast(t('commentsTooShort'));
+    return '';
+  }
+  if(/(?:https?:\/\/|www\.)/i.test(normalized)){
+    showToast(t('commentsNoLinks'));
+    return '';
+  }
+  return normalized;
 }
 function getCommentCooldownKey(sanctuaryId){
   const userKey = window._currentUser?.uid || 'anon';
@@ -2271,21 +2322,33 @@ async function loadSanctuaryComments(sanctuaryId){
   try{
     const snap = await window._fbListSanctuaryComments(sanctuaryId, 12);
     const comments = snap.docs.map(doc => ({id:doc.id, ...doc.data()}));
+    comments.forEach(comment => sanctuaryCommentCache.set(`${sanctuaryId}:${comment.id}`, comment));
     if(!document.getElementById(`comments-list-${sanctuaryId}`)) return;
     if(!comments.length){
       listEl.innerHTML = `<div class="comment-state">${t('commentsEmpty')}</div>`;
       return;
     }
-    listEl.innerHTML = comments.map(comment => `
-      <div class="comment-item">
-        <div class="comment-meta">
-          <span class="comment-author">${escapeHtml(comment.authorName || t('pilgrimFallback'))}</span>
-          <span>${escapeHtml(formatCommentDate(comment))}</span>
+    listEl.innerHTML = comments.map(comment => {
+      const commentIdArg = escapeHtml(escapeJsString(comment.id));
+      const isOwnComment = !!comment.authorUid && comment.authorUid === window._currentUser?.uid;
+      const dateLabel = `${formatCommentDate(comment)}${comment.edited ? ` · ${t('commentsEdited')}` : ''}`;
+      const actions = isOwnComment
+        ? `<div class="comment-owner-actions">
+            <button class="comment-report" onclick="editSanctuaryComment(${sanctuaryId}, '${commentIdArg}')">${t('commentsEdit')}</button>
+            <button class="comment-report comment-danger" onclick="deleteSanctuaryComment(${sanctuaryId}, '${commentIdArg}')">${t('commentsDelete')}</button>
+          </div>`
+        : `<button class="comment-report" onclick="reportSanctuaryComment(${sanctuaryId}, '${commentIdArg}')">${t('commentsReport')}</button>`;
+      return `
+        <div class="comment-item">
+          <div class="comment-meta">
+            <span class="comment-author">${escapeHtml(comment.authorName || t('pilgrimFallback'))}</span>
+            <span>${escapeHtml(dateLabel)}</span>
+          </div>
+          <div class="comment-text">${escapeHtml(comment.text || '')}</div>
+          ${actions}
         </div>
-        <div class="comment-text">${escapeHtml(comment.text || '')}</div>
-        <button class="comment-report" onclick="reportSanctuaryComment(${sanctuaryId}, '${escapeHtml(comment.id)}')">${t('commentsReport')}</button>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }catch(e){
     console.error('loadSanctuaryComments failed:', e);
     if(document.getElementById(`comments-list-${sanctuaryId}`)){
@@ -2303,14 +2366,8 @@ async function submitSanctuaryComment(sanctuaryId){
     return;
   }
   const text = normalizeCommentText(input.value);
-  if(text.length < 3){
-    showToast(t('commentsTooShort'));
-    return;
-  }
-  if(/(?:https?:\/\/|www\.)/i.test(text)){
-    showToast(t('commentsNoLinks'));
-    return;
-  }
+  const validatedText = validateCommentText(text);
+  if(!validatedText) return;
   const remainingCooldown = getCommentCooldownRemaining(sanctuaryId);
   if(remainingCooldown > 0){
     showToast(t('commentsSlowDown')(Math.ceil(remainingCooldown / 1000)));
@@ -2327,7 +2384,7 @@ async function submitSanctuaryComment(sanctuaryId){
     const sanctuaryKey = String(sanctuaryId);
     await window._fbAddSanctuaryComment(sanctuaryId, {
       sanctuaryId: sanctuaryKey,
-      text,
+      text: validatedText,
       authorName,
       authorUid: window._currentUser?.uid || null,
       createdAtMs: now,
@@ -2343,6 +2400,66 @@ async function submitSanctuaryComment(sanctuaryId){
     showToast(t('commentsUnavailable'));
   }finally{
     button.disabled = false;
+  }
+}
+
+async function editSanctuaryComment(sanctuaryId, commentId){
+  if(!window._currentUser?.uid){
+    showToast(t('commentsSignIn'));
+    return;
+  }
+  const cached = sanctuaryCommentCache.get(`${sanctuaryId}:${commentId}`);
+  if(!cached || cached.authorUid !== window._currentUser.uid){
+    showToast(t('commentsUnavailable'));
+    return;
+  }
+  const proposed = prompt(t('commentsEditPrompt'), cached.text || '');
+  if(proposed === null) return;
+  const text = validateCommentText(proposed);
+  if(!text || text === normalizeCommentText(cached.text || '')) return;
+  if(typeof window._fbUpdateSanctuaryComment !== 'function'){
+    showToast(t('commentsUnavailable'));
+    return;
+  }
+  try{
+    const now = Date.now();
+    await window._fbUpdateSanctuaryComment(sanctuaryId, commentId, {
+      text,
+      edited: true,
+      updatedAtMs: now,
+      updatedAtIso: new Date(now).toISOString()
+    });
+    showToast(t('commentsUpdated'));
+    await loadSanctuaryComments(sanctuaryId);
+  }catch(e){
+    console.error('editSanctuaryComment failed:', e);
+    showToast(t('commentsUnavailable'));
+  }
+}
+
+async function deleteSanctuaryComment(sanctuaryId, commentId){
+  if(!window._currentUser?.uid){
+    showToast(t('commentsSignIn'));
+    return;
+  }
+  const cached = sanctuaryCommentCache.get(`${sanctuaryId}:${commentId}`);
+  if(!cached || cached.authorUid !== window._currentUser.uid){
+    showToast(t('commentsUnavailable'));
+    return;
+  }
+  if(!confirm(t('commentsDeleteConfirm'))) return;
+  if(typeof window._fbDeleteSanctuaryComment !== 'function'){
+    showToast(t('commentsUnavailable'));
+    return;
+  }
+  try{
+    await window._fbDeleteSanctuaryComment(sanctuaryId, commentId);
+    sanctuaryCommentCache.delete(`${sanctuaryId}:${commentId}`);
+    showToast(t('commentsDeleted'));
+    await loadSanctuaryComments(sanctuaryId);
+  }catch(e){
+    console.error('deleteSanctuaryComment failed:', e);
+    showToast(t('commentsUnavailable'));
   }
 }
 
@@ -2700,7 +2817,7 @@ if('serviceWorker' in navigator){
     window.__peregrinSwRefreshing = true;
     window.location.reload();
   });
-  navigator.serviceWorker.register('sw.js?v=32').then(reg => reg.update?.()).catch(()=>{});
+  navigator.serviceWorker.register('sw.js?v=33').then(reg => reg.update?.()).catch(()=>{});
 }
 
 // ===================== INIT =====================
@@ -2757,8 +2874,11 @@ window._fbSetDoc       = (uid,d) => _db.collection('users').doc(uid).set(d,{merg
 window._fbVerifyGooglePlayPurchase = (data) => _functions.httpsCallable('verifyGooglePlayPurchase')(data);
 window._fbGetJournalNote = (uid, sanctuaryId) => _db.collection('users').doc(uid).collection('journal').doc(String(sanctuaryId)).get();
 window._fbSetJournalNote = (uid, sanctuaryId, data) => _db.collection('users').doc(uid).collection('journal').doc(String(sanctuaryId)).set(data,{merge:true});
+window._fbDeleteJournalNote = (uid, sanctuaryId) => _db.collection('users').doc(uid).collection('journal').doc(String(sanctuaryId)).delete();
 window._fbListSanctuaryComments = (sanctuaryId, limitCount=12) => _db.collection('sanctuaries').doc(String(sanctuaryId)).collection('comments').orderBy('createdAtMs','desc').limit(limitCount).get();
 window._fbAddSanctuaryComment = (sanctuaryId, data) => _db.collection('sanctuaries').doc(String(sanctuaryId)).collection('comments').add(data);
+window._fbUpdateSanctuaryComment = (sanctuaryId, commentId, data) => _db.collection('sanctuaries').doc(String(sanctuaryId)).collection('comments').doc(String(commentId)).set(data, {merge:true});
+window._fbDeleteSanctuaryComment = (sanctuaryId, commentId) => _db.collection('sanctuaries').doc(String(sanctuaryId)).collection('comments').doc(String(commentId)).delete();
 window._fbReportSanctuaryComment = (sanctuaryId, commentId, data) => _db.collection('sanctuaries').doc(String(sanctuaryId)).collection('comments').doc(String(commentId)).collection('reports').doc(String(data.reporterUid)).set(data, {merge:true});
 
 function startAuthStateListener(){

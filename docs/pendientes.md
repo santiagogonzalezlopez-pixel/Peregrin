@@ -1,6 +1,6 @@
 # Pendientes Peregrin
 
-Last updated: 2026-06-02
+Last updated: 2026-06-05
 
 ## Production watch
 
@@ -12,13 +12,15 @@ Last updated: 2026-06-02
   sharing, onboarding and Premium copy after the Oceania deployment.
 - If any user pays but remains blocked, follow
   `docs/PAYMENT_INCIDENT_RUNBOOK.md` before changing code.
+- Watch for any Firestore permission errors around editing/deleting own comments
+  or deleting private journal notes after the next deploy.
 
 ## Highest-value next improvements
 
 Release gate:
 
-- Certificate wording/visuals, Oceania, Google info-search links and certificate
-  download feedback fixes are ready for the next AAB after final smoke checks.
+- Comment/note editing controls are ready for the next release after final smoke
+  checks. Firestore rules were deployed on 2026-06-05.
 
 Recently completed:
 
@@ -32,6 +34,8 @@ Recently completed:
   Spanish, French/Holy Land and Portuguese/Oceania cases.
 - First category-based sanctuary hero image pass: Marian, monastery, mountain
   and martyr/relic imagery.
+- Edit/delete controls for a pilgrim's own public sanctuary comments, plus delete
+  control for private journal notes.
 
 - Next round should be a polish round, not a quantity/content expansion round.
 - Explore a stronger visit-registration flow: to earn a stamp, the pilgrim
