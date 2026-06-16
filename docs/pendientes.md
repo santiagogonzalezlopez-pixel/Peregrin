@@ -1,6 +1,6 @@
 # Pendientes Peregrin
 
-Last updated: 2026-06-05
+Last updated: 2026-06-16
 
 ## Production watch
 
@@ -44,6 +44,10 @@ Recently completed:
 - Redesign the individual passport stamps so they feel like real collectible
   pilgrimage stamps: texture, circular seal language, sanctuary name, country and
   date treated like an elegant postmark.
+- Next update idea: make each individual sanctuary visit/stamp shareable as its
+  own beautiful image, even without completing a route, unlocking an achievement
+  or generating a full passport. Example: a pilgrim visits Sagrada Familia and
+  can immediately save/share a polished Sagrada Familia stamp memory.
 - Keep refining sanctuary detail imagery over time, preferably adding more
   categories only when it clearly improves the app.
 - Consider a simple `My memories` / `My path` screen without new backend:
