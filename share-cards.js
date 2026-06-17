@@ -40,6 +40,17 @@
       passportAchievements: "milestones",
       passportMore: "more stamps in Peregrin",
       passportLatest: "Sacred places visited",
+      visitStampPreviewTitle: "Visit stamp ready",
+      visitStampPreviewHint: "A single sanctuary memory, ready to share or download.",
+      visitStampShareAction: "Share stamp",
+      visitStampReady: "Visit stamp ready to share",
+      visitStampFailed: "We could not prepare this visit stamp.",
+      visitStampMissing: "Register this visit first to share its stamp.",
+      visitStampSaved: "Visit stamp saved on your device",
+      visitStampDownloaded: "Visit stamp downloaded",
+      visitStampLabel: "PILGRIM VISIT STAMP",
+      visitStampVisited: "Visited",
+      visitStampMemory: "A sacred place kept in Peregrin.",
       completed: "Completed pilgrimage route",
       pilgrim: "Peregrin pilgrim",
       holyStops: "holy stops",
@@ -91,6 +102,17 @@
       passportAchievements: "hitos",
       passportMore: "sellos más en Peregrin",
       passportLatest: "Lugares santos visitados",
+      visitStampPreviewTitle: "Sello de visita listo",
+      visitStampPreviewHint: "Un recuerdo de este santuario, listo para compartir o descargar.",
+      visitStampShareAction: "Compartir sello",
+      visitStampReady: "Sello listo para compartir",
+      visitStampFailed: "No hemos podido preparar este sello.",
+      visitStampMissing: "Registra primero esta visita para compartir su sello.",
+      visitStampSaved: "Sello guardado en tu dispositivo",
+      visitStampDownloaded: "Sello descargado",
+      visitStampLabel: "SELLO DE VISITA PEREGRINA",
+      visitStampVisited: "Visitado",
+      visitStampMemory: "Un lugar santo guardado en Peregrin.",
       completed: "Ruta de peregrinación completada",
       pilgrim: "Peregrino de Peregrin",
       holyStops: "lugares santos",
@@ -142,6 +164,17 @@
       passportAchievements: "jalons",
       passportMore: "tampons de plus dans Peregrin",
       passportLatest: "Lieux saints visités",
+      visitStampPreviewTitle: "Tampon de visite prêt",
+      visitStampPreviewHint: "Un souvenir de ce sanctuaire, prêt à partager ou télécharger.",
+      visitStampShareAction: "Partager le tampon",
+      visitStampReady: "Tampon prêt à partager",
+      visitStampFailed: "Impossible de préparer ce tampon de visite.",
+      visitStampMissing: "Enregistrez d'abord cette visite pour partager son tampon.",
+      visitStampSaved: "Tampon enregistré sur votre appareil",
+      visitStampDownloaded: "Tampon téléchargé",
+      visitStampLabel: "TAMPON DE VISITE PÈLERINE",
+      visitStampVisited: "Visité",
+      visitStampMemory: "Un lieu saint gardé dans Peregrin.",
       completed: "Route de pèlerinage terminée",
       pilgrim: "Pèlerin Peregrin",
       holyStops: "lieux saints",
@@ -193,6 +226,17 @@
       passportAchievements: "traguardi",
       passportMore: "altri timbri in Peregrin",
       passportLatest: "Luoghi santi visitati",
+      visitStampPreviewTitle: "Timbro di visita pronto",
+      visitStampPreviewHint: "Un ricordo di questo santuario, pronto da condividere o scaricare.",
+      visitStampShareAction: "Condividi timbro",
+      visitStampReady: "Timbro pronto da condividere",
+      visitStampFailed: "Non siamo riusciti a preparare questo timbro.",
+      visitStampMissing: "Registra prima questa visita per condividere il timbro.",
+      visitStampSaved: "Timbro salvato sul dispositivo",
+      visitStampDownloaded: "Timbro scaricato",
+      visitStampLabel: "TIMBRO DI VISITA PELLEGRINA",
+      visitStampVisited: "Visitato",
+      visitStampMemory: "Un luogo santo custodito in Peregrin.",
       completed: "Percorso di pellegrinaggio completato",
       pilgrim: "Pellegrino Peregrin",
       holyStops: "luoghi santi",
@@ -244,6 +288,17 @@
       passportAchievements: "marcos",
       passportMore: "mais selos no Peregrin",
       passportLatest: "Lugares santos visitados",
+      visitStampPreviewTitle: "Selo de visita pronto",
+      visitStampPreviewHint: "Uma memória deste santuário, pronta para partilhar ou descarregar.",
+      visitStampShareAction: "Partilhar selo",
+      visitStampReady: "Selo pronto para partilhar",
+      visitStampFailed: "Não foi possível preparar este selo.",
+      visitStampMissing: "Registe primeiro esta visita para partilhar o respetivo selo.",
+      visitStampSaved: "Selo guardado no seu dispositivo",
+      visitStampDownloaded: "Selo descarregado",
+      visitStampLabel: "SELO DE VISITA PEREGRINA",
+      visitStampVisited: "Visitado",
+      visitStampMemory: "Um lugar santo guardado no Peregrin.",
       completed: "Rota de peregrinação concluída",
       pilgrim: "Peregrino Peregrin",
       holyStops: "lugares santos",
@@ -459,6 +514,26 @@
     }catch(e){
       return [];
     }
+  }
+
+  function getVisitStamp(sanctuaryId){
+    try{
+      const sanctuary = sanctuaries.find(item => String(item.id) === String(sanctuaryId));
+      if(!sanctuary) return null;
+      const date = visits?.[sanctuary.id] || visits?.[String(sanctuary.id)];
+      if(!date) return null;
+      const country = countries.find(item => item.id === sanctuary.country);
+      return {id:sanctuary.id, date, sanctuary, country};
+    }catch(e){
+      return null;
+    }
+  }
+
+  function sanctuaryHeroImage(sanctuary){
+    try{
+      if(typeof getSanctuaryHeroImage === "function") return getSanctuaryHeroImage(sanctuary);
+    }catch(e){}
+    return "assets/sanctuary-hero.png";
   }
 
   function getUnlockedAchievementCount(){
@@ -1158,6 +1233,142 @@
     ctx.restore();
   }
 
+  function drawVisitStampCard(ctx, stamp, image){
+    const colors = {
+      burgundy: "#722F37",
+      burgundyDark: "#3A1118",
+      gold: "#C5963A",
+      goldLight: "#E8C97A",
+      cream: "#FDF5E6",
+      brown: "#3E2723",
+      muted: "#6D4C41"
+    };
+    const {burgundy, burgundyDark, gold, goldLight, cream, brown, muted} = colors;
+    const sanctuary = stamp.sanctuary;
+    const d = typeof sd === "function" ? sd(sanctuary) : sanctuary;
+    const placeName = d?.name || sanctuaryLabel(sanctuary);
+    const countryName = countryLabel(stamp.country);
+    const location = [d?.city || sanctuary?.city, d?.province || sanctuary?.province, countryName].filter(Boolean).join(" · ");
+    const visitDate = formatVisitDate(stamp.date);
+    const pilgrim = getPilgrimName();
+
+    const bg = ctx.createLinearGradient(0, 0, 0, CARD_HEIGHT);
+    bg.addColorStop(0, "#230B11");
+    bg.addColorStop(0.48, cream);
+    bg.addColorStop(1, "#F2DFC1");
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, CARD_WIDTH, CARD_HEIGHT);
+
+    drawCoverImage(ctx, image, 0, 0, CARD_WIDTH, 560);
+    const veil = ctx.createLinearGradient(0, 0, 0, 620);
+    veil.addColorStop(0, "rgba(35,11,17,0.10)");
+    veil.addColorStop(0.56, "rgba(35,11,17,0.44)");
+    veil.addColorStop(1, "rgba(35,11,17,0.94)");
+    ctx.fillStyle = veil;
+    ctx.fillRect(0, 0, CARD_WIDTH, 620);
+
+    drawText(ctx, "PEREGRIN", CARD_WIDTH / 2, 82, {
+      size: 46,
+      family: "'Crimson Pro', serif",
+      weight: "700",
+      color: cream,
+      align: "center"
+    });
+    drawText(ctx, copy("visitStampLabel"), CARD_WIDTH / 2, 124, {
+      size: 20,
+      weight: "800",
+      color: goldLight,
+      align: "center"
+    });
+
+    drawWrappedText(ctx, placeName, CARD_WIDTH / 2, 282, 860, {
+      size: 68,
+      family: "'Crimson Pro', serif",
+      weight: "700",
+      color: cream,
+      align: "center",
+      maxLines: 2,
+      lineHeight: 74
+    });
+
+    ctx.shadowColor = "rgba(58,17,24,0.32)";
+    ctx.shadowBlur = 34;
+    ctx.shadowOffsetY = 22;
+    roundedRect(ctx, 86, 438, 908, 724, 44, "#FFF9EE", "rgba(197,150,58,0.72)", 4);
+    ctx.shadowColor = "transparent";
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetY = 0;
+
+    drawStampPerforation(ctx, 118, 470, 844, 660);
+    ctx.setLineDash([14, 10]);
+    roundedRect(ctx, 132, 488, 816, 624, 34, null, "rgba(197,150,58,0.52)", 2);
+    ctx.setLineDash([]);
+
+    drawText(ctx, copy("visitStampVisited").toUpperCase(), CARD_WIDTH / 2, 548, {
+      size: 24,
+      weight: "900",
+      color: "rgba(114,47,55,0.70)",
+      align: "center"
+    });
+
+    drawPassportSealMark(ctx, CARD_WIDTH / 2, 664, 104, colors, Number(stamp.id) || 0);
+    drawDiamond(ctx, 652, 570, 13, goldLight);
+    drawDiamond(ctx, 428, 758, 10, gold);
+
+    drawWrappedText(ctx, placeName, CARD_WIDTH / 2, 850, 730, {
+      size: 58,
+      family: "'Crimson Pro', serif",
+      weight: "700",
+      color: brown,
+      align: "center",
+      maxLines: 3,
+      lineHeight: 62
+    });
+
+    drawFittedText(ctx, location, CARD_WIDTH / 2, 1018, 720, {
+      size: 25,
+      minSize: 17,
+      weight: "700",
+      color: muted,
+      align: "center"
+    });
+
+    roundedRect(ctx, 304, 1056, 472, 64, 22, burgundy, null);
+    drawText(ctx, visitDate.toUpperCase(), CARD_WIDTH / 2, 1097, {
+      size: 23,
+      weight: "900",
+      color: goldLight,
+      align: "center"
+    });
+
+    drawFittedText(ctx, pilgrim, CARD_WIDTH / 2, 1212, 760, {
+      size: 36,
+      minSize: 24,
+      family: "'Crimson Pro', serif",
+      weight: "700",
+      color: burgundy,
+      align: "center"
+    });
+    drawText(ctx, copy("visitStampMemory"), CARD_WIDTH / 2, 1255, {
+      size: 22,
+      weight: "600",
+      color: "rgba(62,39,35,0.74)",
+      align: "center"
+    });
+
+    const footer = ctx.createLinearGradient(0, 1288, CARD_WIDTH, CARD_HEIGHT);
+    footer.addColorStop(0, burgundy);
+    footer.addColorStop(1, burgundyDark);
+    ctx.fillStyle = footer;
+    ctx.fillRect(0, 1288, CARD_WIDTH, 62);
+    drawText(ctx, copy("madeWith"), CARD_WIDTH / 2, 1328, {
+      size: 22,
+      weight: "800",
+      color: "rgba(253,245,230,0.80)",
+      align: "center"
+    });
+  }
+
   function drawPassportCard(ctx, stamps, image){
     const colors = {
       burgundy: "#722F37",
@@ -1355,6 +1566,20 @@
     };
   }
 
+  async function buildVisitStampCard(stamp){
+    await waitForFonts();
+    const canvas = document.createElement("canvas");
+    canvas.width = CARD_WIDTH;
+    canvas.height = CARD_HEIGHT;
+    const ctx = canvas.getContext("2d");
+    const image = await loadImage(sanctuaryHeroImage(stamp.sanctuary));
+    drawVisitStampCard(ctx, stamp, image);
+    return {
+      dataUrl: canvas.toDataURL("image/png"),
+      fileName: `Peregrin_Stamp_${safeFilePart(sanctuaryLabel(stamp.sanctuary))}_${new Date().getFullYear()}.png`
+    };
+  }
+
   function ensureStyles(){
     if(document.getElementById("route-share-card-styles")) return;
     const style = document.createElement("style");
@@ -1462,12 +1687,16 @@
       ? copy("achievementSaved")
       : kind === "passport"
         ? copy("passportSaved")
-        : copy("saved");
+        : kind === "visitStamp"
+          ? copy("visitStampSaved")
+          : copy("saved");
     const downloadedCopy = kind === "achievement"
       ? copy("achievementDownloaded")
       : kind === "passport"
         ? copy("passportDownloaded")
-        : copy("downloaded");
+        : kind === "visitStamp"
+          ? copy("visitStampDownloaded")
+          : copy("downloaded");
     if(nativeFile?.ok){
       toast(savedCopy);
       return nativeFile;
@@ -1490,19 +1719,33 @@
       ? copy("achievementPreviewTitle")
       : kind === "passport"
         ? copy("passportPreviewTitle")
-        : copy("previewTitle");
-    const previewHint = kind === "passport" ? copy("passportPreviewHint") : copy("previewHint");
-    const shareAction = kind === "passport" ? copy("passportShareAction") : copy("share");
+        : kind === "visitStamp"
+          ? copy("visitStampPreviewTitle")
+          : copy("previewTitle");
+    const previewHint = kind === "passport"
+      ? copy("passportPreviewHint")
+      : kind === "visitStamp"
+        ? copy("visitStampPreviewHint")
+        : copy("previewHint");
+    const shareAction = kind === "passport"
+      ? copy("passportShareAction")
+      : kind === "visitStamp"
+        ? copy("visitStampShareAction")
+        : copy("share");
     const readyToast = kind === "achievement"
       ? copy("achievementReady")
       : kind === "passport"
         ? copy("passportReady")
-        : copy("ready");
+        : kind === "visitStamp"
+          ? copy("visitStampReady")
+          : copy("ready");
     const downloadedToast = kind === "achievement"
       ? copy("achievementDownloaded")
       : kind === "passport"
         ? copy("passportDownloaded")
-        : copy("downloaded");
+        : kind === "visitStamp"
+          ? copy("visitStampDownloaded")
+          : copy("downloaded");
 
     const overlay = document.createElement("div");
     overlay.id = "route-share-overlay";
@@ -1628,11 +1871,33 @@
     }
   }
 
+  async function openVisitStamp(sanctuaryId){
+    const stamp = getVisitStamp(sanctuaryId);
+    if(!stamp){
+      toast(copy("visitStampMissing"), 5000);
+      return;
+    }
+    ensureStyles();
+    try{
+      const {dataUrl, fileName} = await buildVisitStampCard(stamp);
+      showPreview(dataUrl, fileName, {
+        __shareLabel: sanctuaryLabel(stamp.sanctuary),
+        __readyToast: copy("visitStampReady"),
+        __downloadedToast: copy("visitStampDownloaded")
+      }, "visitStamp");
+      toast(copy("visitStampReady"));
+    }catch(e){
+      console.error("visit stamp card failed:", e);
+      toast(copy("visitStampFailed"), 5000);
+    }
+  }
+
   window.PeregrinShareCards = {
     routeButton,
     open,
     openAchievement,
-    openPassport
+    openPassport,
+    openVisitStamp
   };
 
   if(document.readyState === "loading"){

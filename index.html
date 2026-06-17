@@ -96,8 +96,8 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .header-sub{font-size:11px;opacity:0.7;letter-spacing:0.5px;font-weight:300;}
 .header-right{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);padding:6px 12px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;}
 .main{flex:1;overflow:hidden;position:relative;}
-.screen{position:absolute;inset:0;overflow-y:auto;transition:opacity 0.3s,transform 0.3s;opacity:0;pointer-events:none;transform:translateY(8px);}
-.screen.active{opacity:1;pointer-events:all;transform:translateY(0);}
+.screen{position:absolute;inset:0;overflow-y:auto;transition:opacity 0.3s,transform 0.3s;opacity:0;pointer-events:none;transform:translateY(8px);z-index:0;}
+.screen.active{opacity:1;pointer-events:all;transform:translateY(0);z-index:2;}
 .bottom-nav{display:flex;background:var(--white);border-top:1px solid var(--cream-dark);flex-shrink:0;z-index:1000;padding-bottom:env(safe-area-inset-bottom,0);}
 .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 4px 10px;cursor:pointer;transition:all 0.2s;border:none;background:none;color:var(--brown-light);font-family:'Jost',sans-serif;font-size:10px;font-weight:500;gap:3px;position:relative;}
 .nav-item.active{color:var(--burgundy);}
@@ -180,7 +180,9 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .stamp-card:active{transform:scale(.985);}
 .stamp-card::before{content:"";position:absolute;inset:8px;border:1px dashed rgba(197,150,58,.58);border-radius:15px;pointer-events:none;}
 .stamp-card::after{content:'✓';position:absolute;top:12px;right:12px;width:27px;height:27px;background:radial-gradient(circle at 35% 28%,var(--gold-light),var(--gold));color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;box-shadow:0 3px 9px rgba(62,39,35,.17);z-index:3;}
-.stamp-country{align-self:stretch;padding:0 30px 0 2px;font-size:9.5px;font-weight:900;text-transform:uppercase;letter-spacing:.13em;color:rgba(114,47,55,.70);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:2;}
+.stamp-country{align-self:stretch;padding:0 30px;font-size:9.5px;font-weight:900;text-transform:uppercase;letter-spacing:.13em;color:rgba(114,47,55,.70);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:2;}
+.stamp-share-chip{position:absolute;top:12px;left:12px;width:27px;height:27px;border:none;border-radius:50%;background:rgba(255,250,240,.92);color:var(--burgundy);font-size:13px;font-weight:900;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 9px rgba(62,39,35,.15);z-index:4;cursor:pointer;}
+.stamp-share-chip:active{transform:scale(.94);}
 .stamp-postmark{position:absolute;left:-22px;top:20px;width:96px;height:96px;border:2px solid rgba(114,47,55,.12);border-radius:50%;z-index:1;}
 .stamp-postmark::before,.stamp-postmark::after{content:"";position:absolute;left:17px;right:8px;height:1px;background:rgba(114,47,55,.12);}
 .stamp-postmark::before{top:36px;transform:rotate(-8deg);}
@@ -294,6 +296,8 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .modal-prayer{background:var(--cream);border-left:3px solid var(--gold);padding:14px 16px;border-radius:0 10px 10px 0;font-family:'Crimson Pro',serif;font-size:15px;font-style:italic;line-height:1.7;color:var(--brown);}
 .modal-visit-btn{width:100%;padding:14px;border:none;border-radius:12px;font-family:'Jost',sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:10px;transition:all 0.2s;background:var(--burgundy);color:var(--cream);}
 .modal-visit-btn.visited-btn{background:var(--cream-dark);color:var(--gold);}
+.modal-share-stamp-btn{width:100%;padding:13px;border:2px solid rgba(197,150,58,.42);border-radius:12px;font-family:'Jost',sans-serif;font-size:14px;font-weight:800;cursor:pointer;margin-top:10px;background:linear-gradient(135deg,#fffaf0,#f3e7d3);color:var(--burgundy);}
+.modal-share-stamp-btn:active{transform:scale(.985);}
 .modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,0.4);color:white;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;}
 .modal-maps-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;border:2px solid var(--cream-dark);border-radius:12px;background:none;color:var(--brown-light);font-family:'Jost',sans-serif;font-size:14px;font-weight:500;text-decoration:none;margin-top:10px;cursor:pointer;transition:all 0.2s;}
 .modal-info-btn{background:linear-gradient(135deg,#fffaf0,#f3e7d3);color:var(--burgundy);border-color:rgba(197,150,58,.42);font-weight:700;}
@@ -560,7 +564,7 @@ const i18n = {
     achievementsTitle:'Pilgrim Milestones', routesTitle:'Pilgrimage Routes',
     profileTitle:'My pilgrim profile', viewPassport:'View my passport',
     myAchievements:'My milestones', pilgrimageRoutes:'Pilgrimage routes', routeVisited:'visited',
-    achievementUnlocked:'Milestone reached', achievementInProgress:'On the way', achievementShareHint:'Tap to share this milestone', achievementSharePreparing:'Preparing milestone card...', sharePassport:'Share my passport', passportSharePreparing:'Preparing pilgrim passport...',
+    achievementUnlocked:'Milestone reached', achievementInProgress:'On the way', achievementShareHint:'Tap to share this milestone', achievementSharePreparing:'Preparing milestone card...', sharePassport:'Share my passport', shareStamp:'Share this stamp', shareStampShort:'Share', passportSharePreparing:'Preparing pilgrim passport...', stampSharePreparing:'Preparing visit stamp...',
     resetVisits:'Reset my visits', resetConfirm:'Are you sure you want to reset all your visits?', exitAppConfirm:'Are you sure you want to exit Peregrin?',
     resetDone:'Visits reset', registerVisit:"I've been here", realVisitConfirm:'Peregrin is a passport for real pilgrimages. Mark this sanctuary only if you have visited it personally.\n\nHave you really been here?', visited_btn:'Visited',
     removeVisit:'Visited — Remove visit', viewDetails:'View full details',
@@ -629,7 +633,7 @@ const i18n = {
     achievementsTitle:'Hitos del peregrino', routesTitle:'Rutas de peregrinación',
     profileTitle:'Mi perfil peregrino', viewPassport:'Ver mi pasaporte',
     myAchievements:'Mis hitos', pilgrimageRoutes:'Rutas de peregrinación', routeVisited:'visitados',
-    achievementUnlocked:'Hito alcanzado', achievementInProgress:'En camino', achievementShareHint:'Toca para compartir este hito', achievementSharePreparing:'Preparando tarjeta de hito...', sharePassport:'Compartir mi pasaporte', passportSharePreparing:'Preparando pasaporte peregrino...',
+    achievementUnlocked:'Hito alcanzado', achievementInProgress:'En camino', achievementShareHint:'Toca para compartir este hito', achievementSharePreparing:'Preparando tarjeta de hito...', sharePassport:'Compartir mi pasaporte', shareStamp:'Compartir este sello', shareStampShort:'Compartir', passportSharePreparing:'Preparando pasaporte peregrino...', stampSharePreparing:'Preparando sello de visita...',
     resetVisits:'Reiniciar mis visitas', resetConfirm:'¿Seguro que quieres reiniciar todas tus visitas?', exitAppConfirm:'¿Seguro que quieres salir de Peregrin?',
     resetDone:'Visitas reiniciadas', registerVisit:'He estado aquí', realVisitConfirm:'Peregrin es un pasaporte de peregrinación real. Marca este santuario solo si lo has visitado personalmente.\n\n¿Has estado aquí de verdad?', visited_btn:'Visitado',
     removeVisit:'Visitado — Quitar visita', viewDetails:'Ver ficha completa',
@@ -698,7 +702,7 @@ const i18n = {
     achievementsTitle:'Jalons du pèlerin', routesTitle:'Itinéraires de pèlerinage',
     profileTitle:'Mon profil de pèlerin', viewPassport:'Voir mon passeport',
     myAchievements:'Mes jalons', pilgrimageRoutes:'Itinéraires de pèlerinage', routeVisited:'visités',
-    achievementUnlocked:'Jalon atteint', achievementInProgress:'En chemin', achievementShareHint:'Touchez pour partager ce jalon', achievementSharePreparing:'Préparation de la carte de jalon...', sharePassport:'Partager mon passeport', passportSharePreparing:'Préparation du passeport pèlerin...',
+    achievementUnlocked:'Jalon atteint', achievementInProgress:'En chemin', achievementShareHint:'Touchez pour partager ce jalon', achievementSharePreparing:'Préparation de la carte de jalon...', sharePassport:'Partager mon passeport', shareStamp:'Partager ce tampon', shareStampShort:'Partager', passportSharePreparing:'Préparation du passeport pèlerin...', stampSharePreparing:'Préparation du tampon de visite...',
     resetVisits:'Réinitialiser mes visites', resetConfirm:'Voulez-vous vraiment réinitialiser toutes vos visites ?', exitAppConfirm:'Voulez-vous vraiment quitter Peregrin ?',
     resetDone:'Visites réinitialisées', registerVisit:'Je l’ai visité', realVisitConfirm:'Peregrin est un passeport de pèlerinage réel. Marquez ce sanctuaire seulement si vous l’avez visité personnellement.\n\nL’avez-vous vraiment visité ?', visited_btn:'Visité',
     removeVisit:'Visité — Retirer la visite', viewDetails:'Voir la fiche complète',
@@ -767,7 +771,7 @@ const i18n = {
     achievementsTitle:'Traguardi del pellegrino', routesTitle:'Itinerari di pellegrinaggio',
     profileTitle:'Il mio profilo pellegrino', viewPassport:'Vedi il mio passaporto',
     myAchievements:'I miei traguardi', pilgrimageRoutes:'Itinerari di pellegrinaggio', routeVisited:'visitati',
-    achievementUnlocked:'Traguardo raggiunto', achievementInProgress:'In cammino', achievementShareHint:'Tocca per condividere questo traguardo', achievementSharePreparing:'Preparazione della scheda traguardo...', sharePassport:'Condividi il mio passaporto', passportSharePreparing:'Preparazione del passaporto pellegrino...',
+    achievementUnlocked:'Traguardo raggiunto', achievementInProgress:'In cammino', achievementShareHint:'Tocca per condividere questo traguardo', achievementSharePreparing:'Preparazione della scheda traguardo...', sharePassport:'Condividi il mio passaporto', shareStamp:'Condividi questo timbro', shareStampShort:'Condividi', passportSharePreparing:'Preparazione del passaporto pellegrino...', stampSharePreparing:'Preparazione del timbro di visita...',
     resetVisits:'Reimposta le mie visite', resetConfirm:'Sei sicuro di voler reimpostare tutte le tue visite?', exitAppConfirm:'Vuoi davvero uscire da Peregrin?',
     resetDone:'Visite reimpostate', registerVisit:"L'ho visitato", realVisitConfirm:'Peregrin è un passaporto di pellegrinaggio reale. Segna questo santuario solo se lo hai visitato personalmente.\n\nLo hai visitato davvero?', visited_btn:'Visitato',
     removeVisit:'Visitato — Rimuovi visita', viewDetails:'Vedi scheda completa',
@@ -836,7 +840,7 @@ const i18n = {
     achievementsTitle:'Marcos do peregrino', routesTitle:'Rotas de peregrinação',
     profileTitle:'O meu perfil de peregrino', viewPassport:'Ver o meu passaporte',
     myAchievements:'Os meus marcos', pilgrimageRoutes:'Rotas de peregrinação', routeVisited:'visitados',
-    achievementUnlocked:'Marco alcançado', achievementInProgress:'Em caminho', achievementShareHint:'Toque para partilhar este marco', achievementSharePreparing:'A preparar cartão de marco...', sharePassport:'Partilhar o meu passaporte', passportSharePreparing:'A preparar passaporte peregrino...',
+    achievementUnlocked:'Marco alcançado', achievementInProgress:'Em caminho', achievementShareHint:'Toque para partilhar este marco', achievementSharePreparing:'A preparar cartão de marco...', sharePassport:'Partilhar o meu passaporte', shareStamp:'Partilhar este selo', shareStampShort:'Partilhar', passportSharePreparing:'A preparar passaporte peregrino...', stampSharePreparing:'A preparar selo de visita...',
     resetVisits:'Reiniciar as minhas visitas', resetConfirm:'Tem a certeza de que quer reiniciar todas as suas visitas?', exitAppConfirm:'Tem a certeza de que quer sair do Peregrin?',
     resetDone:'Visitas reiniciadas', registerVisit:'Estive aqui', realVisitConfirm:'Peregrin é um passaporte de peregrinação real. Marque este santuário apenas se o visitou pessoalmente.\n\nEsteve aqui de verdade?', visited_btn:'Visitado',
     removeVisit:'Visitado — Remover visita', viewDetails:'Ver ficha completa',
@@ -2313,6 +2317,7 @@ function openModal(id){
       ${locked
         ? `<button class="modal-premium-btn" onclick="openPremiumModal()">🔒 ${t('lockBtn')}</button>`
         : `<button class="modal-visit-btn ${visited?'visited-btn':''}" onclick="toggleVisit(${s.id});openModal(${s.id});">${visited?t('removeVisit'):'📝 '+t('registerVisit')}</button>`}
+      ${visited ? `<button class="modal-share-stamp-btn" onclick="openVisitStampShareCard(${s.id})">✦ ${t('shareStamp')}</button>` : ''}
       <a class="modal-maps-btn" href="https://www.google.com/maps/search/${encodeURIComponent(d.name+' '+d.city)}/@${s.lat},${s.lng},17z" target="_blank" rel="noopener">🗺️ ${t('howToGetFull')}</a>
       <a class="modal-maps-btn modal-info-btn" href="${infoUrl}" target="_blank" rel="noopener">🔎 ${t('moreInfoFull')}</a>
     </div>`;
@@ -2782,6 +2787,7 @@ function renderPassport(){
           const country=countries.find(c=>c.id===s.country);
           return `
           <div class="stamp-card" onclick="openModal(${s.id})">
+            <button class="stamp-share-chip" type="button" title="${escapeHtml(t('shareStamp'))}" aria-label="${escapeHtml(t('shareStamp'))}" onclick="event.stopPropagation();openVisitStampShareCard(${s.id})">✦</button>
             <div class="stamp-postmark" aria-hidden="true"></div>
             <div class="stamp-country">${country?.flag||''} ${country?cn(country):''}</div>
             <div class="stamp-icon">${sanctuarySymbolSvg(s,'stamp-symbol')}</div>
@@ -2827,6 +2833,14 @@ function openPassportShareCard(){
     window.PeregrinShareCards.openPassport();
   }else{
     showToast(t('passportSharePreparing'));
+  }
+}
+
+function openVisitStampShareCard(id){
+  if(window.PeregrinShareCards?.openVisitStamp){
+    window.PeregrinShareCards.openVisitStamp(id);
+  }else{
+    showToast(t('stampSharePreparing'));
   }
 }
 
@@ -3003,7 +3017,7 @@ if('serviceWorker' in navigator){
     window.__peregrinSwRefreshing = true;
     window.location.reload();
   });
-  navigator.serviceWorker.register('sw.js?v=34').then(reg => reg.update?.()).catch(()=>{});
+  navigator.serviceWorker.register('sw.js?v=35').then(reg => reg.update?.()).catch(()=>{});
 }
 
 // ===================== INIT =====================
