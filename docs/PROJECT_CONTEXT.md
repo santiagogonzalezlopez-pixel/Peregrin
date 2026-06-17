@@ -1,6 +1,6 @@
 # Peregrin project context
 
-Last updated: 2026-06-05
+Last updated: 2026-06-17
 
 ## Current milestone
 
@@ -25,9 +25,9 @@ not reopen broad risky refactors unless there is a clear reason.
 ## Current release baseline
 
 - Last built AAB: `android/app/build/outputs/bundle/release/app-release.aab`
-- Current Android version in repo: `versionCode 52`, `versionName 1.0.51`
-- Latest production checkpoint before later updates: `15853d6`
-- Content total after Oceania pack: 35 countries, 150 sanctuaries, 13 routes
+- Current Android version in repo: `versionCode 56`, `versionName 1.0.55`
+- Latest production checkpoint before later updates: `afe049c`
+- Current content total: 35 countries, 163 sanctuaries, 15 routes
 
 ## What is considered stable
 
@@ -71,13 +71,13 @@ Stripe Dashboard, not by creating a new payment link or changing payment code.
 Recommended Stripe product description:
 
 ```text
-Unlock all 35 countries, 150 sanctuaries, every certificate, route and achievement. One-time payment, yours forever.
+Unlock all 35 countries, 163 sanctuaries, every certificate, route and achievement. One-time payment, yours forever.
 ```
 
 Spanish equivalent if needed:
 
 ```text
-Desbloquea los 35 países, 150 santuarios, todos los certificados, rutas y logros. Pago único, tuyo para siempre.
+Desbloquea los 35 países, 163 santuarios, todos los certificados, rutas y logros. Pago único, tuyo para siempre.
 ```
 
 ## Product direction after production

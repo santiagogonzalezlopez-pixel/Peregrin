@@ -28,6 +28,11 @@ Release gate:
 
 Recently completed:
 
+- Compact global map markers: when the full world map is shown at low zoom, the
+  map now uses small dot markers; full sanctuary icons return when zooming in or
+  filtering by country/route.
+- Catholic atlas content audit created:
+  `docs/CATHOLIC_ATLAS_CONTENT_AUDIT_2026-06-17.md`.
 - Holy Land prestige pack with 10 Gospel places, one route, one certificate rule
   and one pilgrim hito.
 - Oceania pack with 4 countries, 8 sanctuaries, one route, country certificate
