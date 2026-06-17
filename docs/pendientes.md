@@ -21,6 +21,10 @@ Release gate:
 
 - Comment/note editing controls are ready for the next release after final smoke
   checks. Firestore rules were deployed on 2026-06-05.
+- Next content strategy pass: research which major Catholic cathedrals,
+  basilicas, shrines and pilgrimage sanctuaries are still missing, grouped by
+  country/continent and prioritized by Catholic relevance, pilgrimage value and
+  recognizability.
 
 Recently completed:
 
