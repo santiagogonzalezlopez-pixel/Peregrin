@@ -158,6 +158,10 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .custom-marker.visited-marker{background:linear-gradient(135deg,var(--gold),var(--gold-light));border:4px solid var(--burgundy-dark);width:42px!important;height:42px!important;box-shadow:0 0 0 5px rgba(197,150,58,0.28),0 4px 14px rgba(0,0,0,0.4);}
 .custom-marker.route-highlight-marker{border-width:4px;box-shadow:0 0 0 5px rgba(197,150,58,0.45),0 4px 14px rgba(0,0,0,0.5);}
 .custom-marker.locked-marker{background:#9E9E9E;border-color:#757575;opacity:0.7;}
+.custom-marker.map-dot-marker{width:11px!important;height:11px!important;border:2px solid rgba(253,245,230,.92);box-shadow:0 0 0 1px rgba(114,47,55,.32),0 2px 6px rgba(62,39,35,.20);background:var(--burgundy);}
+.custom-marker.map-dot-marker.visited-marker{width:13px!important;height:13px!important;border:2px solid var(--burgundy-dark);background:var(--gold);box-shadow:0 0 0 2px rgba(197,150,58,.22),0 2px 7px rgba(62,39,35,.22);}
+.custom-marker.map-dot-marker.locked-marker{background:#8c8c8c;border-color:rgba(255,255,255,.82);opacity:.58;}
+.custom-marker.map-dot-marker .marker-symbol,.custom-marker.map-dot-marker .visited-check,.custom-marker.map-dot-marker .lock-badge{display:none;}
 .marker-symbol{width:18px;height:18px;color:var(--cream);display:block;filter:drop-shadow(0 1px 0 rgba(0,0,0,0.22));}
 .visited-marker .marker-symbol{width:22px;height:22px;color:var(--burgundy-dark);}
 .locked-marker .marker-symbol{color:#eeeeee;}
@@ -1934,15 +1938,24 @@ function sanctuarySymbolSvg(s, className='marker-symbol'){
   return `<svg ${common}>${paths[key] || paths.church}</svg>`;
 }
 
+function isCompactMapMarkerView(){
+  return !!(map && !activeRouteFilter && !activeCountryFilter && map.getZoom() <= 5);
+}
+
 function createMarkerIcon(s,visited,highlight){
   const locked=!isCountryUnlocked(s.country);
+  const compact=isCompactMapMarkerView();
   let cls='custom-marker';
   if(visited) cls+=' visited-marker';
   else if(locked) cls+=' locked-marker';
+  if(compact) cls+=' map-dot-marker';
   if(highlight) cls+=' route-highlight-marker';
   const badge=visited?'<span class="visited-check">✓</span>':locked?'<span class="lock-badge">🔒</span>':'';
+  const iconSize=compact ? (visited ? [17,17] : [15,15]) : (visited ? [42,42] : [32,32]);
+  const iconAnchor=compact ? (visited ? [8,8] : [7,7]) : (visited ? [21,21] : [16,16]);
+  const popupAnchor=compact ? [0,-8] : [0,visited?-24:-18];
   return L.divIcon({className:'',html:`<div class="${cls}">${sanctuarySymbolSvg(s)}${badge}</div>`,
-    iconSize:visited?[42,42]:[32,32],iconAnchor:visited?[21,21]:[16,16],popupAnchor:[0,visited?-24:-18]});
+    iconSize,iconAnchor,popupAnchor});
 }
 
 function buildPopupContent(s){
@@ -1972,7 +1985,8 @@ function initMap(){
     marker.bindPopup(buildPopupContent(s),{maxWidth:280,closeButton:true});
   });
   getMarkerClusterGroups();
-  map.on('zoomend moveend', applyMarkerLayout);
+  map.on('zoomend', updateMarkerStyles);
+  map.on('moveend', applyMarkerLayout);
   applyMarkerLayout();
 }
 
