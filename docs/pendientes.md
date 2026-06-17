@@ -21,10 +21,9 @@ Release gate:
 
 - Comment/note editing controls are ready for the next release after final smoke
   checks. Firestore rules were deployed on 2026-06-05.
-- Next content strategy pass: research which major Catholic cathedrals,
-  basilicas, shrines and pilgrimage sanctuaries are still missing, grouped by
-  country/continent and prioritized by Catholic relevance, pilgrimage value and
-  recognizability.
+- Next content expansion should follow the locked pilgrimage shortlist in
+  `docs/PILGRIMAGE_CORE_SHORTLIST_2026-06-17.md`. Start with the Rome and Italy
+  pack, ideally adding the Seven Pilgrim Churches of Rome as a coherent route.
 
 Recently completed:
 
@@ -33,6 +32,8 @@ Recently completed:
   filtering by country/route.
 - Catholic atlas content audit created:
   `docs/CATHOLIC_ATLAS_CONTENT_AUDIT_2026-06-17.md`.
+- Pilgrimage core shortlist created:
+  `docs/PILGRIMAGE_CORE_SHORTLIST_2026-06-17.md`.
 - Holy Land prestige pack with 10 Gospel places, one route, one certificate rule
   and one pilgrim hito.
 - Oceania pack with 4 countries, 8 sanctuaries, one route, country certificate
