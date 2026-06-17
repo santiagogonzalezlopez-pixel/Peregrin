@@ -1,6 +1,6 @@
 # Pendientes Peregrin
 
-Last updated: 2026-06-16
+Last updated: 2026-06-17
 
 ## Production watch
 
@@ -108,6 +108,8 @@ Recently completed:
 ## Possible future themes
 
 - Guadalupe/Mexico Spanish-first pack.
+- Caribbean sanctuary pass, starting with Dominican Republic research and any
+  major Catholic pilgrimage places there.
 - Rome/Jubilee-style premium pack.
 - Korea/WYD 2027 pilgrim pack.
 - Apple App Store feasibility pass, once Android production has settled.
