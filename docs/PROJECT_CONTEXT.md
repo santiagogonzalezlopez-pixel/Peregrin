@@ -100,7 +100,9 @@ Priority direction:
 - Do not add more quantity by default. The next useful pass is aesthetic and
   emotional: make existing moments more desirable to open, save and share.
 - Make individual passport stamps more like real collectible pilgrimage stamps:
-  textured, circular, elegant and date/country aware.
+  textured, circular, elegant and date/country aware. First visual polish pass
+  completed on 2026-06-18 for on-screen passport stamps and shareable passport
+  cards.
 - Improve sanctuary detail imagery with category-based sacred visuals instead of
   one repeated generic image.
 - Consider a simple `My memories` / `My path` screen using existing local/user

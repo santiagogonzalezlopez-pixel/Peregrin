@@ -1162,6 +1162,42 @@
     ctx.restore();
   }
 
+  function drawStampPaperTexture(ctx, x, y, width, height, alpha=0.08){
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.strokeStyle = "#8b6a43";
+    ctx.lineWidth = 1;
+    for(let i = 0; i < 9; i++){
+      const py = y + 22 + (i * (height - 44) / 8);
+      ctx.beginPath();
+      ctx.moveTo(x + 24, py);
+      ctx.bezierCurveTo(x + width * 0.34, py - 8, x + width * 0.66, py + 8, x + width - 24, py);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawPassportPostmark(ctx, x, y, radius, color="rgba(114,47,55,0.16)"){
+    ctx.save();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(x, y, radius, -0.22, Math.PI * 1.72);
+    ctx.stroke();
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.arc(x, y, radius - 11, 0.12, Math.PI * 1.86);
+    ctx.stroke();
+    for(let i = 0; i < 3; i++){
+      const ly = y - 12 + (i * 12);
+      ctx.beginPath();
+      ctx.moveTo(x + radius * 0.28, ly);
+      ctx.lineTo(x + radius * 1.34, ly - 8);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
   function drawPassportStamp(ctx, stamp, x, y, width, height, colors, index){
     const {burgundy, burgundyDark, gold, goldLight, cream, brown, muted} = colors;
     ctx.save();
@@ -1172,6 +1208,7 @@
     ctx.shadowColor = "transparent";
     ctx.shadowBlur = 0;
     ctx.shadowOffsetY = 0;
+    drawStampPaperTexture(ctx, x + 18, y + 18, width - 36, height - 36, 0.055);
     drawStampPerforation(ctx, x, y, width, height);
     ctx.setLineDash([9, 7]);
     roundedRect(ctx, x + 14, y + 14, width - 28, height - 28, 16, null, "rgba(197,150,58,0.42)", 1.2);
@@ -1202,6 +1239,7 @@
     const placeName = sanctuaryLabel(stamp.sanctuary);
     const date = formatVisitDate(stamp.date);
 
+    drawPassportPostmark(ctx, x + width - 82, y + 48, 42, "rgba(114,47,55,0.14)");
     drawPassportSealMark(ctx, x + 80, y + 80, 48, colors, index);
     drawDiamond(ctx, x + 116, y + 38, 9, goldLight);
     drawText(ctx, "P", x + width - 34, y + 42, {
@@ -1300,6 +1338,7 @@
     ctx.shadowOffsetY = 0;
 
     drawStampPerforation(ctx, 118, 470, 844, 660);
+    drawStampPaperTexture(ctx, 156, 512, 768, 556, 0.065);
     ctx.setLineDash([14, 10]);
     roundedRect(ctx, 132, 488, 816, 624, 34, null, "rgba(197,150,58,0.52)", 2);
     ctx.setLineDash([]);
@@ -1311,6 +1350,7 @@
       align: "center"
     });
 
+    drawPassportPostmark(ctx, 716, 630, 74, "rgba(114,47,55,0.16)");
     drawPassportSealMark(ctx, CARD_WIDTH / 2, 664, 104, colors, Number(stamp.id) || 0);
     drawDiamond(ctx, 652, 570, 13, goldLight);
     drawDiamond(ctx, 428, 758, 10, gold);
