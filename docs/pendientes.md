@@ -15,6 +15,10 @@ Last updated: 2026-06-18
   `docs/PAYMENT_INCIDENT_RUNBOOK.md` before changing code.
 - Watch for any Firestore permission errors around editing/deleting own comments
   or deleting private journal notes after the next deploy.
+- Comment notification emails are active through Brevo SMTP after the
+  2026-06-18 deploy of `notifyNewSanctuaryComment` and
+  `notifyReportedSanctuaryComment`. Keep the SMTP key rotated if it is ever
+  exposed.
 
 ## Highest-value next improvements
 
@@ -31,6 +35,11 @@ Release gate:
 
 Recently completed:
 
+- Android release 60 / 1.0.59 built with the passport stamp visual polish.
+- Comment notification emails fixed with Brevo SMTP and verified in Firebase
+  logs.
+- First passport stamp visual polish pass: textured on-screen stamps and more
+  collectible shareable passport/stamp cards.
 - Americas/Caribbean pack with 10 pilgrimage places, ten new countries and two
   pilgrimage hitos.
 - Asia/Africa pack with 11 pilgrimage places, ten new countries and two
@@ -59,31 +68,22 @@ Recently completed:
 - Edit/delete controls for a pilgrim's own public sanctuary comments, plus delete
   control for private journal notes.
 
-- Next round should be a polish round, not a quantity/content expansion round.
-- Explore a stronger visit-registration flow: to earn a stamp, the pilgrim
-  should write a private note and a public comment/tip for other pilgrims. This
-  would make "I was here" feel more meaningful than a tap from the sofa.
-- Redesign the individual passport stamps so they feel like real collectible
-  pilgrimage stamps: texture, circular seal language, sanctuary name, country and
-  date treated like an elegant postmark.
-- Next update idea: make each individual sanctuary visit/stamp shareable as its
-  own beautiful image, even without completing a route, unlocking an achievement
-  or generating a full passport. Example: a pilgrim visits Sagrada Familia and
-  can immediately save/share a polished Sagrada Familia stamp memory.
-- Keep refining sanctuary detail imagery over time, preferably adding more
-  categories only when it clearly improves the app.
-- Consider a simple `My memories` / `My path` screen without new backend:
-  latest visits, unlocked achievements, countries in progress and a clear
-  passport-share action.
-- Rework Premium copy so it does not feel like "pay to unlock countries" only,
-  but like "keep and share a richer pilgrimage memory": routes, certificates,
-  beautiful passport, achievements and saved milestones.
-- Keep future certificate work to small polish unless user asks for another
-  redesign.
+Next version should stay limited to three low-risk priorities:
+
+- Improve sanctuary detail hero imagery with a few stronger sacred photographic
+  categories, without per-sanctuary custom art.
+- Add a lightweight `My memories` / `My path` section using existing data:
+  latest visits, countries in progress, milestones and passport sharing.
 - Do a small visual-detail pass across spacing, long translated strings, buttons,
   empty states and navigation icons.
-- Improve the visual language of map markers only if it can be done safely and
-  consistently without destabilizing the map.
+
+Avoid for the next version:
+
+- Do not add more pilgrimage content unless a first-division omission is found.
+- Do not require notes/comments before earning a stamp yet; it is conceptually
+  good but risks destabilizing registration and comments.
+- Do not touch payments, login, comments or certificate generation unless a real
+  bug appears.
 
 ## Growth and visibility
 
