@@ -8,9 +8,9 @@ Peregrin is now in production on Google Play.
 
 This is the first stable production baseline after the tester phase, the Google
 Play Billing work, the Premium unlock fixes, the certificate fixes, the route
-image refresh, the Africa, Holy Land, Oceania, Rome/Italy, France/Europe and
-Americas/Caribbean content packs, the achievement diplomas and the shareable
-pilgrim passport.
+image refresh, the Africa, Holy Land, Oceania, Rome/Italy, France/Europe,
+Americas/Caribbean and Asia/Africa content packs, the achievement diplomas and
+the shareable pilgrim passport.
 
 Treat this moment as a production checkpoint: future work should improve the app,
 not reopen broad risky refactors unless there is a clear reason.
@@ -28,7 +28,9 @@ not reopen broad risky refactors unless there is a clear reason.
 - Last built AAB: `android/app/build/outputs/bundle/release/app-release.aab`
 - Current Android version in repo: `versionCode 58`, `versionName 1.0.57`
 - Latest production checkpoint before later updates: `afe049c`
-- Current content total: 52 countries, 197 sanctuaries, 16 routes
+- Current repo/web content total: 62 countries, 208 sanctuaries, 16 routes
+- Note: the Asia/Africa pack was added after the uploaded `versionCode 58` AAB;
+  build a fresh AAB only after explicit user go-ahead.
 
 ## What is considered stable
 
@@ -51,6 +53,8 @@ not reopen broad risky refactors unless there is a clear reason.
 - France/Europe pack added with 14 major pilgrimage places from the locked
   shortlist, seven new countries and two related achievements.
 - Americas/Caribbean pack added with 10 major pilgrimage places from the locked
+  shortlist, ten new countries and two related achievements.
+- Asia/Africa pack added with 11 major pilgrimage places from the locked
   shortlist, ten new countries and two related achievements.
 - Achievement diplomas with share/download preview.
 - Shareable `PEREGRIN PASSPORT` image generated from obtained stamps.
@@ -78,13 +82,13 @@ Stripe Dashboard, not by creating a new payment link or changing payment code.
 Recommended Stripe product description:
 
 ```text
-Unlock all 52 countries, 197 sanctuaries, every certificate, route and achievement. One-time payment, yours forever.
+Unlock all 62 countries, 208 sanctuaries, every certificate, route and achievement. One-time payment, yours forever.
 ```
 
 Spanish equivalent if needed:
 
 ```text
-Desbloquea los 52 países, 197 santuarios, todos los certificados, rutas y logros. Pago único, tuyo para siempre.
+Desbloquea los 62 países, 208 santuarios, todos los certificados, rutas y logros. Pago único, tuyo para siempre.
 ```
 
 ## Product direction after production

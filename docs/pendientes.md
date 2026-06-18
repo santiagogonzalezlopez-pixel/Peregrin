@@ -6,9 +6,9 @@ Last updated: 2026-06-18
 
 - Watch Play Console for crashes, ANRs, reviews and purchase complaints.
 - Confirm that Premium purchases keep unlocking correctly in production.
-- Confirm that Africa, Holy Land, Oceania, Rome/Italy, France/Europe and
-  Americas/Caribbean content, routes, certificates and hitos behave correctly for
-  real users.
+- Confirm that Africa, Holy Land, Oceania, Rome/Italy, France/Europe,
+  Americas/Caribbean and Asia/Africa content, routes, certificates and hitos
+  behave correctly for real users.
 - Confirm that all five app continents stay visible in map filters, passport
   sharing, onboarding and Premium copy after the Oceania deployment.
 - If any user pays but remains blocked, follow
@@ -20,16 +20,20 @@ Last updated: 2026-06-18
 
 Release gate:
 
-- Rome/Italy, France/Europe and Americas/Caribbean packs are ready after data
-  audit and smoke checks. Together they add 34 major pilgrimage places,
-  seventeen new countries, the Seven Pilgrim Churches of Rome route and six
-  hitos.
-- Next content expansion should follow the locked pilgrimage shortlist in
-  `docs/PILGRIMAGE_CORE_SHORTLIST_2026-06-17.md`. Next chunk: Asia and Africa.
+- Rome/Italy, France/Europe, Americas/Caribbean and Asia/Africa packs are ready
+  after data audit and smoke checks. Together they add 45 major pilgrimage
+  places, twenty-seven new countries, the Seven Pilgrim Churches of Rome route
+  and eight hitos.
+- The locked pilgrimage shortlist in
+  `docs/PILGRIMAGE_CORE_SHORTLIST_2026-06-17.md` is complete. Future content
+  additions should be deliberate first-division pilgrim places, not quantity for
+  quantity's sake.
 
 Recently completed:
 
 - Americas/Caribbean pack with 10 pilgrimage places, ten new countries and two
+  pilgrimage hitos.
+- Asia/Africa pack with 11 pilgrimage places, ten new countries and two
   pilgrimage hitos.
 - Rome/Italy pack with 10 pilgrimage places, the Seven Pilgrim Churches of Rome
   route, multilingual guide copy and two pilgrimage hitos.

@@ -476,9 +476,9 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
     <div class="onb-purpose-body" id="onb-purpose-body">Peregrin is a Catholic pilgrimage passport that helps you discover sanctuaries, mark the holy places you have visited, follow sacred routes and keep an ordered memory of your journey. It is meant to accompany your real pilgrimage life with visits, milestones and personal country certificates gathered over time.</div>
   </div>
   <div class="onb-stats">
-    <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-sanctuaries-count">197</div><div class="onb-stat-label" id="onb-stat-sanctuaries-label">Sanctuaries</div></div>
+    <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-sanctuaries-count">208</div><div class="onb-stat-label" id="onb-stat-sanctuaries-label">Sanctuaries</div></div>
     <div class="onb-stat-div"></div>
-    <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-countries-count">52</div><div class="onb-stat-label" id="onb-stat-countries-label">Countries</div></div>
+    <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-countries-count">62</div><div class="onb-stat-label" id="onb-stat-countries-label">Countries</div></div>
     <div class="onb-stat-div"></div>
     <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-continents-count">5</div><div class="onb-stat-label" id="onb-stat-continents-label">Continents</div></div>
   </div>
@@ -555,6 +555,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 <script src="content-packs/rome-italy.js"></script>
 <script src="content-packs/france-europe.js"></script>
 <script src="content-packs/americas-caribbean.js"></script>
+<script src="content-packs/asia-africa.js"></script>
 <script>
 // ===================== I18N =====================
 const i18n = {
@@ -588,7 +589,7 @@ const i18n = {
     premiumLater:'Maybe later', premiumUnlockRegion:'Access', premiumUnlockAll:'Open full access',
     premiumPriceEurope:'€2.99', premiumPriceAmericas:'€2.99', premiumPriceAsia:'€2.99', premiumPriceAll:'€2.99',
     premiumLabelEurope:'Europe', premiumLabelAmericas:'Americas', premiumLabelAsia:'Asia', premiumLabelAll:'All countries',
-    premiumSubEurope:'16 countries · 92 sanctuaries', premiumSubAmericas:'18 countries · 46 sanctuaries', premiumSubAsia:'7 countries · 43 sanctuaries', premiumSubAll:'52 countries · 197 sanctuaries · Full pilgrim memory',
+    premiumSubEurope:'16 countries · 92 sanctuaries', premiumSubAmericas:'18 countries · 46 sanctuaries', premiumSubAsia:'12 countries · 49 sanctuaries', premiumSubAll:'62 countries · 208 sanctuaries · Full pilgrim memory',
     premiumOnetime:'One-time payment · Yours forever', premiumGooglePlayNote:'Secure one-time payment with Google Play', premiumAlreadyUnlocked:'Full access active', premiumActivatedToast:'Premium activated. Thank you!',
     premiumRestoreCta:'Restore purchase', premiumRestoreChecking:'Checking your purchase…', premiumRestoreNone:'No pending Premium purchase found.',
     premiumCodeCta:'Use premium code', premiumCodePrompt:'Enter your premium code:', premiumCodeInvalid:'Invalid premium code.', premiumCodeApplied:'Premium activated with code.',
@@ -657,7 +658,7 @@ const i18n = {
     premiumLater:'Quizás más adelante', premiumUnlockRegion:'Acceder', premiumUnlockAll:'Acceder a todo',
     premiumPriceEurope:'2,99 €', premiumPriceAmericas:'2,99 €', premiumPriceAsia:'2,99 €', premiumPriceAll:'2,99 €',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'América', premiumLabelAsia:'Asia', premiumLabelAll:'Todos los países',
-    premiumSubEurope:'16 pa\u00edses · 92 santuarios', premiumSubAmericas:'18 pa\u00edses · 46 santuarios', premiumSubAsia:'7 pa\u00edses · 43 santuarios', premiumSubAll:'52 países · 197 santuarios · Memoria peregrina completa',
+    premiumSubEurope:'16 pa\u00edses · 92 santuarios', premiumSubAmericas:'18 pa\u00edses · 46 santuarios', premiumSubAsia:'12 pa\u00edses · 49 santuarios', premiumSubAll:'62 países · 208 santuarios · Memoria peregrina completa',
     premiumOnetime:'Pago único · Tuyo para siempre', premiumGooglePlayNote:'Pago único seguro con Google Play', premiumAlreadyUnlocked:'Acceso completo activo', premiumActivatedToast:'Premium activado. ¡Gracias!',
     premiumRestoreCta:'Restaurar compra', premiumRestoreChecking:'Comprobando tu compra…', premiumRestoreNone:'No se ha encontrado ninguna compra Premium pendiente.',
     premiumCodeCta:'Tengo un código Premium', premiumCodePrompt:'Introduce tu código Premium:', premiumCodeInvalid:'Código Premium no válido.', premiumCodeApplied:'Premium activado con código.',
@@ -726,7 +727,7 @@ const i18n = {
     premiumLater:'Peut-être plus tard', premiumUnlockRegion:'Accéder', premiumUnlockAll:'Accéder à tout',
     premiumPriceEurope:'2,99 €', premiumPriceAmericas:'2,99 €', premiumPriceAsia:'2,99 €', premiumPriceAll:'2,99 €',
     premiumLabelEurope:'Europe', premiumLabelAmericas:'Amériques', premiumLabelAsia:'Asie', premiumLabelAll:'Tous les pays',
-    premiumSubEurope:'16 pays · 92 sanctuaires', premiumSubAmericas:'18 pays · 46 sanctuaires', premiumSubAsia:'7 pays · 43 sanctuaires', premiumSubAll:'52 pays · 197 sanctuaires · Mémoire pèlerine complète',
+    premiumSubEurope:'16 pays · 92 sanctuaires', premiumSubAmericas:'18 pays · 46 sanctuaires', premiumSubAsia:'12 pays · 49 sanctuaires', premiumSubAll:'62 pays · 208 sanctuaires · Mémoire pèlerine complète',
     premiumOnetime:'Paiement unique · À vous pour toujours', premiumGooglePlayNote:'Paiement unique sécurisé avec Google Play', premiumAlreadyUnlocked:'Accès complet actif', premiumActivatedToast:'Premium activé. Merci !',
     premiumRestoreCta:'Restaurer l’achat', premiumRestoreChecking:'Vérification de votre achat…', premiumRestoreNone:'Aucun achat Premium en attente trouvé.',
     premiumCodeCta:'J’ai un code Premium', premiumCodePrompt:'Entrez votre code Premium :', premiumCodeInvalid:'Code Premium invalide.', premiumCodeApplied:'Premium activé avec code.',
@@ -795,7 +796,7 @@ const i18n = {
     premiumLater:'Forse più tardi', premiumUnlockRegion:'Accedi', premiumUnlockAll:'Accedi a tutto',
     premiumPriceEurope:'€ 2,99', premiumPriceAmericas:'€ 2,99', premiumPriceAsia:'€ 2,99', premiumPriceAll:'€ 2,99',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'Americhe', premiumLabelAsia:'Asia', premiumLabelAll:'Tutti i paesi',
-    premiumSubEurope:'16 paesi · 92 santuari', premiumSubAmericas:'18 paesi · 46 santuari', premiumSubAsia:'7 paesi · 43 santuari', premiumSubAll:'52 paesi · 197 santuari · Memoria pellegrina completa',
+    premiumSubEurope:'16 paesi · 92 santuari', premiumSubAmericas:'18 paesi · 46 santuari', premiumSubAsia:'12 paesi · 49 santuari', premiumSubAll:'62 paesi · 208 santuari · Memoria pellegrina completa',
     premiumOnetime:'Pagamento unico · Tuo per sempre', premiumGooglePlayNote:'Pagamento unico sicuro con Google Play', premiumAlreadyUnlocked:'Accesso completo attivo', premiumActivatedToast:'Premium attivato. Grazie!',
     premiumRestoreCta:'Ripristina acquisto', premiumRestoreChecking:'Verifica dell’acquisto…', premiumRestoreNone:'Nessun acquisto Premium in attesa trovato.',
     premiumCodeCta:'Ho un codice Premium', premiumCodePrompt:'Inserisci il tuo codice Premium:', premiumCodeInvalid:'Codice Premium non valido.', premiumCodeApplied:'Premium attivato con codice.',
@@ -864,7 +865,7 @@ const i18n = {
     premiumLater:'Talvez mais tarde', premiumUnlockRegion:'Aceder', premiumUnlockAll:'Aceder a tudo',
     premiumPriceEurope:'€2,99', premiumPriceAmericas:'€2,99', premiumPriceAsia:'€2,99', premiumPriceAll:'€2,99',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'Américas', premiumLabelAsia:'Ásia', premiumLabelAll:'Todos os países',
-    premiumSubEurope:'16 pa\u00edses · 92 santu\u00e1rios', premiumSubAmericas:'18 pa\u00edses · 46 santu\u00e1rios', premiumSubAsia:'7 pa\u00edses · 43 santu\u00e1rios', premiumSubAll:'52 países · 197 santuários · Memória peregrina completa',
+    premiumSubEurope:'16 pa\u00edses · 92 santu\u00e1rios', premiumSubAmericas:'18 pa\u00edses · 46 santu\u00e1rios', premiumSubAsia:'12 pa\u00edses · 49 santu\u00e1rios', premiumSubAll:'62 países · 208 santuários · Memória peregrina completa',
     premiumOnetime:'Pagamento único · Seu para sempre', premiumGooglePlayNote:'Pagamento único seguro com Google Play', premiumAlreadyUnlocked:'Acesso completo ativo', premiumActivatedToast:'Premium ativado. Obrigado!',
     premiumRestoreCta:'Restaurar compra', premiumRestoreChecking:'A verificar a sua compra…', premiumRestoreNone:'Não foi encontrada nenhuma compra Premium pendente.',
     premiumCodeCta:'Tenho um código Premium', premiumCodePrompt:'Introduza o seu código Premium:', premiumCodeInvalid:'Código Premium inválido.', premiumCodeApplied:'Premium ativado com código.',
