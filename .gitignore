@@ -16,3 +16,10 @@ android/keystore.properties
 
 # Local Firebase deploy cache
 .firebase/
+
+# Local secrets and Firebase Functions environment files
+.env*
+functions/.env*
+functions/.secret.local
+!.env.example
+!functions/.env.example
