@@ -6,8 +6,8 @@ Last updated: 2026-06-18
 
 - Watch Play Console for crashes, ANRs, reviews and purchase complaints.
 - Confirm that Premium purchases keep unlocking correctly in production.
-- Confirm that Africa, Holy Land, Oceania and Rome/Italy content, routes,
-  certificates and hitos behave correctly for real users.
+- Confirm that Africa, Holy Land, Oceania, Rome/Italy and France/Europe content,
+  routes, certificates and hitos behave correctly for real users.
 - Confirm that all five app continents stay visible in map filters, passport
   sharing, onboarding and Premium copy after the Oceania deployment.
 - If any user pays but remains blocked, follow
@@ -19,15 +19,19 @@ Last updated: 2026-06-18
 
 Release gate:
 
-- Rome/Italy pack is ready after data audit and smoke checks. It adds 10 major
-  pilgrimage places, the Seven Pilgrim Churches of Rome route and two hitos.
+- Rome/Italy and France/Europe packs are ready after data audit and smoke
+  checks. Together they add 24 major pilgrimage places, seven new countries, the
+  Seven Pilgrim Churches of Rome route and four hitos.
 - Next content expansion should follow the locked pilgrimage shortlist in
-  `docs/PILGRIMAGE_CORE_SHORTLIST_2026-06-17.md`. Next chunk: France and Europe.
+  `docs/PILGRIMAGE_CORE_SHORTLIST_2026-06-17.md`. Next chunk: Americas and
+  Caribbean.
 
 Recently completed:
 
 - Rome/Italy pack with 10 pilgrimage places, the Seven Pilgrim Churches of Rome
   route, multilingual guide copy and two pilgrimage hitos.
+- France/Europe pack with 14 pilgrimage places, seven new countries and two
+  pilgrimage hitos.
 - Compact global map markers: when the full world map is shown at low zoom, the
   map now uses small dot markers; full sanctuary icons return when zooming in or
   filtering by country/route.
