@@ -26,11 +26,10 @@ not reopen broad risky refactors unless there is a clear reason.
 ## Current release baseline
 
 - Last built AAB: `android/app/build/outputs/bundle/release/app-release.aab`
-- Current Android version in repo: `versionCode 58`, `versionName 1.0.57`
+- Current Android version in repo: `versionCode 59`, `versionName 1.0.58`
 - Latest production checkpoint before later updates: `afe049c`
-- Current repo/web content total: 62 countries, 208 sanctuaries, 16 routes
-- Note: the Asia/Africa pack was added after the uploaded `versionCode 58` AAB;
-  build a fresh AAB only after explicit user go-ahead.
+- Current repo/web/Android content total: 62 countries, 208 sanctuaries, 16 routes
+- Latest built AAB includes the Asia/Africa pack.
 
 ## What is considered stable
 
