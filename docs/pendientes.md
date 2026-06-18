@@ -1,13 +1,13 @@
 # Pendientes Peregrin
 
-Last updated: 2026-06-17
+Last updated: 2026-06-18
 
 ## Production watch
 
 - Watch Play Console for crashes, ANRs, reviews and purchase complaints.
 - Confirm that Premium purchases keep unlocking correctly in production.
-- Confirm that Africa, Holy Land and Oceania content, routes, certificates and
-  hitos behave correctly for real users.
+- Confirm that Africa, Holy Land, Oceania and Rome/Italy content, routes,
+  certificates and hitos behave correctly for real users.
 - Confirm that all five app continents stay visible in map filters, passport
   sharing, onboarding and Premium copy after the Oceania deployment.
 - If any user pays but remains blocked, follow
@@ -19,14 +19,15 @@ Last updated: 2026-06-17
 
 Release gate:
 
-- Comment/note editing controls are ready for the next release after final smoke
-  checks. Firestore rules were deployed on 2026-06-05.
+- Rome/Italy pack is ready after data audit and smoke checks. It adds 10 major
+  pilgrimage places, the Seven Pilgrim Churches of Rome route and two hitos.
 - Next content expansion should follow the locked pilgrimage shortlist in
-  `docs/PILGRIMAGE_CORE_SHORTLIST_2026-06-17.md`. Start with the Rome and Italy
-  pack, ideally adding the Seven Pilgrim Churches of Rome as a coherent route.
+  `docs/PILGRIMAGE_CORE_SHORTLIST_2026-06-17.md`. Next chunk: France and Europe.
 
 Recently completed:
 
+- Rome/Italy pack with 10 pilgrimage places, the Seven Pilgrim Churches of Rome
+  route, multilingual guide copy and two pilgrimage hitos.
 - Compact global map markers: when the full world map is shown at low zoom, the
   map now uses small dot markers; full sanctuary icons return when zooming in or
   filtering by country/route.
@@ -120,6 +121,6 @@ Recently completed:
 - Guadalupe/Mexico Spanish-first pack.
 - Caribbean sanctuary pass, starting with Dominican Republic research and any
   major Catholic pilgrimage places there.
-- Rome/Jubilee-style premium pack.
+- Deeper Rome/Jubilee polish only if real usage suggests it.
 - Korea/WYD 2027 pilgrim pack.
 - Apple App Store feasibility pass, once Android production has settled.
