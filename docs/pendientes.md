@@ -52,8 +52,9 @@ Recently completed:
   update or delete.
 - Privacy policy updated to disclose basic app activity events and state that
   they are not used for advertising or behavioural profiling.
-- Stripe product copy updated in the Dashboard and verified on the public
-  Checkout page: `62 paises / 209 santuarios`.
+- Stripe public Checkout copy still needs a Dashboard update after the Milk
+  Grotto addition: it was verified on 2026-06-24 still showing
+  `62 paises / 208 santuarios`; update it to `62 paises / 209 santuarios`.
 - Android release 60 / 1.0.59 built with the passport stamp visual polish.
 - Comment notification emails fixed with Brevo SMTP and verified in Firebase
   logs.
@@ -137,8 +138,8 @@ Avoid for the next version:
 
 ## External admin
 
-- Stripe product copy is current as of 2026-06-20. Keep the existing Payment Link
-  for copy-only updates.
+- Stripe product copy must be updated in the Dashboard to 209 sanctuaries. Keep
+  the existing Payment Link for copy-only updates.
 - Keep the Google Play product ID unchanged: `peregrin_premium_all`.
 - Keep emergency Premium codes available unless there is a deliberate replacement
   plan.

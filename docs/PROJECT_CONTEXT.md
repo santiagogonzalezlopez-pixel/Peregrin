@@ -75,18 +75,19 @@ Before the next app bundle:
 
 ## External admin status
 
-Stripe Dashboard product copy was updated manually and verified on the public
-Checkout page on 2026-06-20. The active Payment Link should keep pointing to the
-same Stripe product/payment flow; do not create a new payment link or change
-payment code for copy-only updates.
+The active Stripe Payment Link still points to the correct payment flow, but the
+public Checkout page was verified on 2026-06-24 and still showed the old copy
+with `208 santuarios`. This is external Stripe product/payment-link metadata and
+must be edited in Stripe Dashboard without creating a new payment link or
+changing payment code.
 
-Current Stripe product description:
+Required Stripe product description:
 
 ```text
 Unlock all 62 countries, 209 sanctuaries, every certificate, route and achievement. One-time payment, yours forever.
 ```
 
-The public Spanish Checkout copy was verified as:
+Required public Spanish Checkout copy:
 
 ```text
 Desbloquea los 62 países, 209 santuarios, todos los certificados, rutas y logros. Pago único, tuyo para siempre.
