@@ -2,6 +2,28 @@
   const CARD_WIDTH = 1080;
   const CARD_HEIGHT = 1350;
 
+  function trackShareEvent(eventName, params={}){
+    if(typeof window.trackEvent === "function"){
+      window.trackEvent(eventName, params);
+    }
+  }
+
+  function shareKindKey(kind){
+    return kind === "visitStamp" ? "stamp" : kind;
+  }
+
+  function shareAnalyticsData(entity={}, kind="route"){
+    const data = {itemId:shareKindKey(kind)};
+    if(kind === "route" && entity.id) data.routeId = entity.id;
+    if(kind === "achievement" && entity.achievementId) data.achievementId = entity.achievementId;
+    if(kind === "passport" && entity.count) data.count = entity.count;
+    if(kind === "visitStamp"){
+      if(entity.sanctuaryId) data.sanctuaryId = entity.sanctuaryId;
+      if(entity.countryId) data.countryId = entity.countryId;
+    }
+    return data;
+  }
+
   const COPY = {
     en: {
       button: "Share route card",
@@ -1753,6 +1775,8 @@
 
   function showPreview(dataUrl, fileName, entity, kind="route"){
     ensureStyles();
+    const analyticsData = shareAnalyticsData(entity, kind);
+    trackShareEvent(`${shareKindKey(kind)}_share_preview_open`, analyticsData);
     const previous = document.getElementById("route-share-overlay");
     if(previous) previous.remove();
     const previewTitle = kind === "achievement"
@@ -1828,8 +1852,10 @@
       if(busy) return;
       setBusy(true);
       try{
+        trackShareEvent(`${shareKindKey(kind)}_share_tap`, analyticsData);
         if(!savedNativeFile?.ok) savedNativeFile = await saveNative(dataUrl, fileName);
         await shareImage(dataUrl, fileName, savedNativeFile, {...entity, __readyToast: readyToast, __downloadedToast: downloadedToast});
+        trackShareEvent(`${shareKindKey(kind)}_share_done`, analyticsData);
       }finally{
         setBusy(false);
       }
@@ -1838,7 +1864,9 @@
       if(busy) return;
       setBusy(true);
       try{
+        trackShareEvent(`${shareKindKey(kind)}_download_tap`, analyticsData);
         savedNativeFile = await downloadForUser(dataUrl, fileName, savedNativeFile, kind);
+        trackShareEvent(`${shareKindKey(kind)}_download_done`, analyticsData);
       }finally{
         setBusy(false);
       }
@@ -1880,6 +1908,7 @@
     try{
       const {dataUrl, fileName} = await buildAchievementCard(achievement);
       showPreview(dataUrl, fileName, {
+        achievementId,
         __shareLabel: achievementLabel(achievement),
         __readyToast: copy("achievementReady")
       }, "achievement");
@@ -1900,6 +1929,7 @@
     try{
       const {dataUrl, fileName} = await buildPassportCard(stamps);
       showPreview(dataUrl, fileName, {
+        count: stamps.length,
         __shareLabel: copy("passportShareLabel"),
         __readyToast: copy("passportReady"),
         __downloadedToast: copy("passportDownloaded")
@@ -1921,6 +1951,8 @@
     try{
       const {dataUrl, fileName} = await buildVisitStampCard(stamp);
       showPreview(dataUrl, fileName, {
+        sanctuaryId,
+        countryId: stamp.sanctuary?.country,
         __shareLabel: sanctuaryLabel(stamp.sanctuary),
         __readyToast: copy("visitStampReady"),
         __downloadedToast: copy("visitStampDownloaded")

@@ -105,6 +105,78 @@ service cloud.firestore {
         && (!('updatedAtIso' in data) || data.updatedAtIso is string);
     }
 
+    function validAnalyticsEvent(data) {
+      return data.keys().hasAll([
+          'event',
+          'uid',
+          'sessionId',
+          'sequence',
+          'createdAtMs',
+          'createdAtIso',
+          'lang',
+          'screen',
+          'platform',
+          'isPremium',
+          'visitCount'
+        ])
+        && data.keys().hasOnly([
+          'event',
+          'uid',
+          'sessionId',
+          'sequence',
+          'createdAtMs',
+          'createdAtIso',
+          'lang',
+          'screen',
+          'platform',
+          'isPremium',
+          'visitCount',
+          'countryId',
+          'sanctuaryId',
+          'routeId',
+          'achievementId',
+          'region',
+          'provider',
+          'outcome',
+          'source',
+          'itemId',
+          'errorCode',
+          'count',
+          'percent'
+        ])
+        && data.event is string
+        && data.event.size() > 0
+        && data.event.size() <= 64
+        && data.uid is string
+        && data.uid == request.auth.uid
+        && data.sessionId is string
+        && data.sessionId.size() > 8
+        && data.sessionId.size() <= 80
+        && data.sequence is int
+        && data.createdAtMs is int
+        && data.createdAtIso is string
+        && data.lang is string
+        && data.lang.size() == 2
+        && data.screen is string
+        && data.screen.size() <= 40
+        && data.platform is string
+        && data.platform.size() <= 20
+        && data.isPremium is bool
+        && data.visitCount is int
+        && (!('countryId' in data) || (data.countryId is string && data.countryId.size() <= 80))
+        && (!('sanctuaryId' in data) || (data.sanctuaryId is string && data.sanctuaryId.size() <= 80))
+        && (!('routeId' in data) || (data.routeId is string && data.routeId.size() <= 80))
+        && (!('achievementId' in data) || (data.achievementId is string && data.achievementId.size() <= 80))
+        && (!('region' in data) || (data.region is string && data.region.size() <= 80))
+        && (!('provider' in data) || (data.provider is string && data.provider.size() <= 80))
+        && (!('outcome' in data) || (data.outcome is string && data.outcome.size() <= 80))
+        && (!('source' in data) || (data.source is string && data.source.size() <= 80))
+        && (!('itemId' in data) || (data.itemId is string && data.itemId.size() <= 80))
+        && (!('errorCode' in data) || (data.errorCode is string && data.errorCode.size() <= 80))
+        && (!('count' in data) || data.count is int)
+        && (!('percent' in data) || data.percent is int);
+    }
+
     match /users/{userId} {
       allow read: if isOwner(userId);
       allow create: if isOwner(userId)
@@ -157,6 +229,11 @@ service cloud.firestore {
           && request.resource.data.createdAtIso is string;
         allow delete: if false;
       }
+    }
+
+    match /analyticsEvents/{eventId} {
+      allow create: if signedIn() && validAnalyticsEvent(request.resource.data);
+      allow read, update, delete: if false;
     }
 
     match /{document=**} {

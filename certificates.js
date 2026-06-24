@@ -6,6 +6,12 @@
     return `rgb(${values[0]}, ${values[1]}, ${values[2]})`;
   }
 
+  function trackCertificateEvent(eventName, params={}){
+    if(typeof window.trackEvent === "function"){
+      window.trackEvent(eventName, params);
+    }
+  }
+
   function roundedRect(ctx, x, y, width, height, radius, fillStyle, strokeStyle, lineWidth=1){
     ctx.beginPath();
     ctx.moveTo(x + radius, y);
@@ -485,7 +491,7 @@
     return null;
   }
 
-  function showCertificatePreview(dataUrl, fileName, nativeFile){
+  function showCertificatePreview(dataUrl, fileName, nativeFile, analyticsData={}){
     ensureCertificatePreviewStyles();
     const previous = document.getElementById("certificate-preview-overlay");
     if(previous) previous.remove();
@@ -535,10 +541,12 @@
       actionInProgress = true;
       setButtonsBusy(true, "share");
       try{
+        trackCertificateEvent("certificate_share_tap", analyticsData);
         if(!savedNativeFile?.ok){
           savedNativeFile = await saveCertificateImageNative(dataUrl, fileName);
         }
         await shareCertificateImage(dataUrl, fileName, savedNativeFile);
+        trackCertificateEvent("certificate_share_done", analyticsData);
       }finally{
         actionInProgress = false;
         setButtonsBusy(false);
@@ -549,7 +557,9 @@
       actionInProgress = true;
       setButtonsBusy(true, "download");
       try{
+        trackCertificateEvent("certificate_download_tap", analyticsData);
         savedNativeFile = await downloadCertificateImageForUser(dataUrl, fileName, savedNativeFile);
+        trackCertificateEvent("certificate_download_done", analyticsData);
       }finally{
         actionInProgress = false;
         setButtonsBusy(false);
@@ -893,7 +903,9 @@
     const dataUrl = canvas.toDataURL("image/png");
 
     try{
-      showCertificatePreview(dataUrl, fileName, null);
+      const analyticsData = {countryId, count:certificateSanctuaries.length};
+      trackCertificateEvent("certificate_preview_open", analyticsData);
+      showCertificatePreview(dataUrl, fileName, null, analyticsData);
       showToast(t("certReady"));
     }catch(e){
       console.error("certificate image preview failed:", e);
@@ -1273,7 +1285,9 @@
     window.PEREGRIN_LAST_CERTIFICATE = {countryId, fileName, certNo, heroSource, language:currentLang};
 
     try{
-      showCertificatePreview(dataUrl, fileName, null);
+      const analyticsData = {countryId, count:certificateSanctuaries.length};
+      trackCertificateEvent("certificate_preview_open", analyticsData);
+      showCertificatePreview(dataUrl, fileName, null, analyticsData);
       showToast(t("certReady"));
     }catch(e){
       console.error("certificate image preview failed:", e);

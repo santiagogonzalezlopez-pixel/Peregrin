@@ -116,6 +116,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .home-actions{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:2px;}
 .home-primary{grid-column:1/-1;border:none;border-radius:14px;background:linear-gradient(135deg,#f1c66d,#c7892d);color:var(--brown);font-family:'Crimson Pro',serif;font-size:19px;font-weight:800;padding:15px 16px;box-shadow:0 16px 30px rgba(197,150,58,0.24);cursor:pointer;}
 .home-secondary{border:1px solid rgba(253,245,230,0.2);border-radius:13px;background:rgba(255,255,255,0.1);color:var(--cream);font-family:'Jost',sans-serif;font-size:13px;font-weight:800;padding:12px 10px;backdrop-filter:blur(12px);cursor:pointer;}
+.home-secondary.home-path{grid-column:1/-1;}
 .home-stats{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:2px;}
 .home-stat{border:1px solid rgba(253,245,230,0.13);border-radius:13px;background:rgba(255,255,255,0.08);padding:10px 8px;text-align:center;backdrop-filter:blur(12px);}
 .home-stat strong{display:block;font-family:'Crimson Pro',serif;font-size:23px;line-height:1;color:var(--gold-light);margin-bottom:4px;}
@@ -347,6 +348,40 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 /* PROFILE */
 .screen-title{font-family:'Crimson Pro',serif;font-size:24px;font-weight:700;color:var(--brown);margin-bottom:20px;}
 .profile-screen{background:var(--cream);padding:20px;}
+.path-screen{background:linear-gradient(180deg,#fff9ec 0%,var(--cream) 46%,#f5e3c7 100%);padding:20px;}
+.path-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--burgundy),var(--burgundy-dark));border:1px solid rgba(232,201,122,.3);border-radius:18px;color:var(--cream);padding:24px 20px;margin-bottom:16px;box-shadow:0 18px 36px rgba(90,26,34,.16);}
+.path-hero::before{content:'✦';position:absolute;right:16px;top:-28px;font-family:'Crimson Pro',serif;font-size:150px;line-height:1;color:rgba(232,201,122,.09);}
+.path-kicker{position:relative;font-size:10px;text-transform:uppercase;letter-spacing:1.7px;color:var(--gold-light);font-weight:900;margin-bottom:7px;}
+.path-title{position:relative;font-family:'Crimson Pro',serif;font-size:28px;line-height:1;font-weight:800;margin-bottom:8px;}
+.path-subtitle{position:relative;font-size:13px;line-height:1.55;color:rgba(253,245,230,.74);max-width:320px;}
+.path-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:16px 0;}
+.path-stat{background:rgba(255,255,255,.1);border:1px solid rgba(253,245,230,.13);border-radius:12px;padding:11px 8px;text-align:center;}
+.path-stat strong{display:block;font-family:'Crimson Pro',serif;font-size:25px;line-height:1;color:var(--gold-light);margin-bottom:4px;}
+.path-stat span{display:block;font-size:9px;line-height:1.15;text-transform:uppercase;letter-spacing:.08em;color:rgba(253,245,230,.67);}
+.path-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
+.path-action{border:none;border-radius:12px;padding:12px 10px;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--brown);font-family:'Jost',sans-serif;font-size:13px;font-weight:900;cursor:pointer;box-shadow:0 12px 26px rgba(197,150,58,.2);}
+.path-action.secondary{background:var(--white);color:var(--burgundy);border:1px solid rgba(197,150,58,.32);box-shadow:var(--shadow);}
+.path-section{margin-bottom:18px;}
+.path-section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:10px;}
+.path-section-title{font-family:'Crimson Pro',serif;font-size:20px;font-weight:800;color:var(--brown);}
+.path-section-note{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);white-space:nowrap;}
+.path-list{display:grid;gap:10px;}
+.path-card{background:var(--white);border:1px solid rgba(197,150,58,.18);border-radius:14px;padding:14px;box-shadow:var(--shadow);cursor:pointer;}
+.path-card:active{transform:scale(.985);}
+.path-card.locked{cursor:default;opacity:.78;}
+.path-card-top{display:flex;align-items:center;gap:12px;}
+.path-card-icon{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#fff5d8,#ecd29b);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--burgundy);}
+.path-card-icon svg{width:22px;height:22px;}
+.path-card-main{flex:1;min-width:0;}
+.path-card-label{font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:3px;}
+.path-card-name{font-family:'Crimson Pro',serif;font-size:18px;font-weight:800;color:var(--brown);line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.path-card-meta{font-size:12px;color:var(--brown-light);margin-top:3px;line-height:1.35;}
+.path-card-count{font-family:'Crimson Pro',serif;font-size:21px;font-weight:900;color:var(--burgundy);padding-left:8px;white-space:nowrap;}
+.path-progress{height:7px;background:rgba(109,76,65,.12);border-radius:999px;margin-top:11px;overflow:hidden;}
+.path-progress-bar{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:999px;}
+.path-empty{background:rgba(255,255,255,.72);border:1px dashed rgba(197,150,58,.45);border-radius:14px;padding:22px 18px;text-align:center;color:var(--brown);}
+.path-empty-title{font-family:'Crimson Pro',serif;font-size:20px;font-weight:800;color:var(--burgundy);margin-bottom:6px;}
+.path-empty-text{font-size:13px;line-height:1.6;color:var(--brown-light);margin-bottom:14px;}
 .profile-card{background:var(--white);border-radius:16px;padding:30px 20px;text-align:center;box-shadow:var(--shadow);margin-bottom:20px;}
 .profile-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--burgundy),var(--gold));display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 12px;}
 .profile-name{font-family:'Crimson Pro',serif;font-size:22px;font-weight:600;}
@@ -515,6 +550,7 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
     </div>
     <div class="screen" id="screen-explore"><div class="explore-screen" style="background:var(--cream);padding:20px;"></div></div>
     <div class="screen" id="screen-passport"><div class="passport-screen"></div></div>
+    <div class="screen" id="screen-path"><div class="path-screen"></div></div>
     <div class="screen" id="screen-achievements"><div class="achievements-screen"></div></div>
     <div class="screen" id="screen-routes"><div class="routes-screen"></div></div>
     <div class="screen" id="screen-profile"><div class="profile-screen"></div></div>
@@ -571,7 +607,11 @@ const i18n = {
     passportTitle:'Pilgrim Passport', visited:'Visited', remaining:'Remaining',
     stampsCollected:'Stamps kept', stampVisitedLabel:'Visited', noVisits:"You haven't registered any visits yet.\nExplore the map and begin your pilgrimage!",
     achievementsTitle:'Pilgrim Milestones', routesTitle:'Pilgrimage Routes',
-    profileTitle:'My pilgrim profile', viewPassport:'View my passport',
+    profileTitle:'My pilgrim profile', viewPassport:'View my passport', myPath:'My path',
+    pathTitle:'My path', pathSubtitle:'Your pilgrimage memory in progress', pathVisitsStat:'Visits', pathCountriesStat:'Countries', pathCertificatesStat:'Certificates',
+    pathLatestVisits:'Latest visits', pathCountriesProgress:'Countries in progress', pathRoutesProgress:'Routes in progress', pathNextMilestones:'Next milestones',
+    pathEmptyTitle:'No memories yet', pathEmptyText:'Open the map and register a real visit to begin your pilgrim path.', pathOpenMap:'Open map', pathSharePassportCta:'Share passport',
+    pathContinue:'Continue', pathComplete:'Complete', pathNoProgress:'No active progress yet', pathNoMilestones:'Your next milestones will appear after your first visit',
     myAchievements:'My milestones', pilgrimageRoutes:'Pilgrimage routes', routeVisited:'visited',
     achievementUnlocked:'Milestone reached', achievementInProgress:'On the way', achievementShareHint:'Tap to share this milestone', achievementSharePreparing:'Preparing milestone card...', sharePassport:'Share my passport', shareStamp:'Share this stamp', shareStampShort:'Share', passportSharePreparing:'Preparing pilgrim passport...', stampSharePreparing:'Preparing visit stamp...',
     resetVisits:'Reset my visits', resetConfirm:'Are you sure you want to reset all your visits?', exitAppConfirm:'Are you sure you want to exit Peregrin?',
@@ -590,7 +630,7 @@ const i18n = {
     premiumLater:'Maybe later', premiumUnlockRegion:'Access', premiumUnlockAll:'Open full access',
     premiumPriceEurope:'€2.99', premiumPriceAmericas:'€2.99', premiumPriceAsia:'€2.99', premiumPriceAll:'€2.99',
     premiumLabelEurope:'Europe', premiumLabelAmericas:'Americas', premiumLabelAsia:'Asia', premiumLabelAll:'All countries',
-    premiumSubEurope:'16 countries · 92 sanctuaries', premiumSubAmericas:'18 countries · 46 sanctuaries', premiumSubAsia:'12 countries · 49 sanctuaries', premiumSubAll:'62 countries · 208 sanctuaries · Full pilgrim memory',
+    premiumSubEurope:'16 countries · 92 sanctuaries', premiumSubAmericas:'18 countries · 46 sanctuaries', premiumSubAsia:'12 countries · 50 sanctuaries', premiumSubAll:'62 countries · 209 sanctuaries · Full pilgrim memory',
     premiumOnetime:'One-time payment · Yours forever', premiumGooglePlayNote:'Secure one-time payment with Google Play', premiumAlreadyUnlocked:'Full access active', premiumActivatedToast:'Premium activated. Thank you!',
     premiumRestoreCta:'Restore purchase', premiumRestoreChecking:'Checking your purchase…', premiumRestoreNone:'No pending Premium purchase found.',
     premiumCodeCta:'Use premium code', premiumCodePrompt:'Enter your premium code:', premiumCodeInvalid:'Invalid premium code.', premiumCodeApplied:'Premium activated with code.',
@@ -640,7 +680,11 @@ const i18n = {
     passportTitle:'Pasaporte Peregrino', visited:'Visitados', remaining:'Pendientes',
     stampsCollected:'Sellos guardados', stampVisitedLabel:'Visitado', noVisits:"Aún no has registrado ninguna visita.\n¡Explora el mapa y comienza tu peregrinación!",
     achievementsTitle:'Hitos del peregrino', routesTitle:'Rutas de peregrinación',
-    profileTitle:'Mi perfil peregrino', viewPassport:'Ver mi pasaporte',
+    profileTitle:'Mi perfil peregrino', viewPassport:'Ver mi pasaporte', myPath:'Mi camino',
+    pathTitle:'Mi camino', pathSubtitle:'La memoria de tu peregrinación en marcha', pathVisitsStat:'Visitas', pathCountriesStat:'Países', pathCertificatesStat:'Certificados',
+    pathLatestVisits:'Últimas visitas', pathCountriesProgress:'Países en marcha', pathRoutesProgress:'Rutas en marcha', pathNextMilestones:'Próximos hitos',
+    pathEmptyTitle:'Todavía no hay recuerdos', pathEmptyText:'Abre el mapa y registra una visita real para comenzar tu camino peregrino.', pathOpenMap:'Abrir mapa', pathSharePassportCta:'Compartir pasaporte',
+    pathContinue:'Continuar', pathComplete:'Completo', pathNoProgress:'Aún no hay progreso activo', pathNoMilestones:'Tus próximos hitos aparecerán tras la primera visita',
     myAchievements:'Mis hitos', pilgrimageRoutes:'Rutas de peregrinación', routeVisited:'visitados',
     achievementUnlocked:'Hito alcanzado', achievementInProgress:'En camino', achievementShareHint:'Toca para compartir este hito', achievementSharePreparing:'Preparando tarjeta de hito...', sharePassport:'Compartir mi pasaporte', shareStamp:'Compartir este sello', shareStampShort:'Compartir', passportSharePreparing:'Preparando pasaporte peregrino...', stampSharePreparing:'Preparando sello de visita...',
     resetVisits:'Reiniciar mis visitas', resetConfirm:'¿Seguro que quieres reiniciar todas tus visitas?', exitAppConfirm:'¿Seguro que quieres salir de Peregrin?',
@@ -659,7 +703,7 @@ const i18n = {
     premiumLater:'Quizás más adelante', premiumUnlockRegion:'Acceder', premiumUnlockAll:'Acceder a todo',
     premiumPriceEurope:'2,99 €', premiumPriceAmericas:'2,99 €', premiumPriceAsia:'2,99 €', premiumPriceAll:'2,99 €',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'América', premiumLabelAsia:'Asia', premiumLabelAll:'Todos los países',
-    premiumSubEurope:'16 pa\u00edses · 92 santuarios', premiumSubAmericas:'18 pa\u00edses · 46 santuarios', premiumSubAsia:'12 pa\u00edses · 49 santuarios', premiumSubAll:'62 países · 208 santuarios · Memoria peregrina completa',
+    premiumSubEurope:'16 pa\u00edses · 92 santuarios', premiumSubAmericas:'18 pa\u00edses · 46 santuarios', premiumSubAsia:'12 pa\u00edses · 50 santuarios', premiumSubAll:'62 países · 209 santuarios · Memoria peregrina completa',
     premiumOnetime:'Pago único · Tuyo para siempre', premiumGooglePlayNote:'Pago único seguro con Google Play', premiumAlreadyUnlocked:'Acceso completo activo', premiumActivatedToast:'Premium activado. ¡Gracias!',
     premiumRestoreCta:'Restaurar compra', premiumRestoreChecking:'Comprobando tu compra…', premiumRestoreNone:'No se ha encontrado ninguna compra Premium pendiente.',
     premiumCodeCta:'Tengo un código Premium', premiumCodePrompt:'Introduce tu código Premium:', premiumCodeInvalid:'Código Premium no válido.', premiumCodeApplied:'Premium activado con código.',
@@ -709,7 +753,11 @@ const i18n = {
     passportTitle:'Passeport du Pèlerin', visited:'Visités', remaining:'Restants',
     stampsCollected:'Tampons gardés', stampVisitedLabel:'Visité', noVisits:"Vous n'avez pas encore enregistré de visite.\nExplorez la carte et commencez votre pèlerinage !",
     achievementsTitle:'Jalons du pèlerin', routesTitle:'Itinéraires de pèlerinage',
-    profileTitle:'Mon profil de pèlerin', viewPassport:'Voir mon passeport',
+    profileTitle:'Mon profil de pèlerin', viewPassport:'Voir mon passeport', myPath:'Mon chemin',
+    pathTitle:'Mon chemin', pathSubtitle:'La mémoire de votre pèlerinage en cours', pathVisitsStat:'Visites', pathCountriesStat:'Pays', pathCertificatesStat:'Certificats',
+    pathLatestVisits:'Dernières visites', pathCountriesProgress:'Pays en cours', pathRoutesProgress:'Itinéraires en cours', pathNextMilestones:'Prochains jalons',
+    pathEmptyTitle:'Aucun souvenir pour le moment', pathEmptyText:'Ouvrez la carte et enregistrez une vraie visite pour commencer votre chemin de pèlerin.', pathOpenMap:'Ouvrir la carte', pathSharePassportCta:'Partager le passeport',
+    pathContinue:'Continuer', pathComplete:'Complet', pathNoProgress:'Aucun progrès actif pour le moment', pathNoMilestones:'Vos prochains jalons apparaîtront après la première visite',
     myAchievements:'Mes jalons', pilgrimageRoutes:'Itinéraires de pèlerinage', routeVisited:'visités',
     achievementUnlocked:'Jalon atteint', achievementInProgress:'En chemin', achievementShareHint:'Touchez pour partager ce jalon', achievementSharePreparing:'Préparation de la carte de jalon...', sharePassport:'Partager mon passeport', shareStamp:'Partager ce tampon', shareStampShort:'Partager', passportSharePreparing:'Préparation du passeport pèlerin...', stampSharePreparing:'Préparation du tampon de visite...',
     resetVisits:'Réinitialiser mes visites', resetConfirm:'Voulez-vous vraiment réinitialiser toutes vos visites ?', exitAppConfirm:'Voulez-vous vraiment quitter Peregrin ?',
@@ -728,7 +776,7 @@ const i18n = {
     premiumLater:'Peut-être plus tard', premiumUnlockRegion:'Accéder', premiumUnlockAll:'Accéder à tout',
     premiumPriceEurope:'2,99 €', premiumPriceAmericas:'2,99 €', premiumPriceAsia:'2,99 €', premiumPriceAll:'2,99 €',
     premiumLabelEurope:'Europe', premiumLabelAmericas:'Amériques', premiumLabelAsia:'Asie', premiumLabelAll:'Tous les pays',
-    premiumSubEurope:'16 pays · 92 sanctuaires', premiumSubAmericas:'18 pays · 46 sanctuaires', premiumSubAsia:'12 pays · 49 sanctuaires', premiumSubAll:'62 pays · 208 sanctuaires · Mémoire pèlerine complète',
+    premiumSubEurope:'16 pays · 92 sanctuaires', premiumSubAmericas:'18 pays · 46 sanctuaires', premiumSubAsia:'12 pays · 50 sanctuaires', premiumSubAll:'62 pays · 209 sanctuaires · Mémoire pèlerine complète',
     premiumOnetime:'Paiement unique · À vous pour toujours', premiumGooglePlayNote:'Paiement unique sécurisé avec Google Play', premiumAlreadyUnlocked:'Accès complet actif', premiumActivatedToast:'Premium activé. Merci !',
     premiumRestoreCta:'Restaurer l’achat', premiumRestoreChecking:'Vérification de votre achat…', premiumRestoreNone:'Aucun achat Premium en attente trouvé.',
     premiumCodeCta:'J’ai un code Premium', premiumCodePrompt:'Entrez votre code Premium :', premiumCodeInvalid:'Code Premium invalide.', premiumCodeApplied:'Premium activé avec code.',
@@ -778,7 +826,11 @@ const i18n = {
     passportTitle:'Passaporto del Pellegrino', visited:'Visitati', remaining:'Rimanenti',
     stampsCollected:'Timbri custoditi', stampVisitedLabel:'Visitato', noVisits:"Non hai ancora registrato nessuna visita.\nEsplora la mappa e inizia il tuo pellegrinaggio!",
     achievementsTitle:'Traguardi del pellegrino', routesTitle:'Itinerari di pellegrinaggio',
-    profileTitle:'Il mio profilo pellegrino', viewPassport:'Vedi il mio passaporto',
+    profileTitle:'Il mio profilo pellegrino', viewPassport:'Vedi il mio passaporto', myPath:'Il mio cammino',
+    pathTitle:'Il mio cammino', pathSubtitle:'La memoria del tuo pellegrinaggio in corso', pathVisitsStat:'Visite', pathCountriesStat:'Paesi', pathCertificatesStat:'Certificati',
+    pathLatestVisits:'Ultime visite', pathCountriesProgress:'Paesi in cammino', pathRoutesProgress:'Itinerari in cammino', pathNextMilestones:'Prossimi traguardi',
+    pathEmptyTitle:'Ancora nessun ricordo', pathEmptyText:'Apri la mappa e registra una visita reale per iniziare il tuo cammino pellegrino.', pathOpenMap:'Apri la mappa', pathSharePassportCta:'Condividi passaporto',
+    pathContinue:'Continua', pathComplete:'Completo', pathNoProgress:'Nessun progresso attivo per ora', pathNoMilestones:'I prossimi traguardi appariranno dopo la prima visita',
     myAchievements:'I miei traguardi', pilgrimageRoutes:'Itinerari di pellegrinaggio', routeVisited:'visitati',
     achievementUnlocked:'Traguardo raggiunto', achievementInProgress:'In cammino', achievementShareHint:'Tocca per condividere questo traguardo', achievementSharePreparing:'Preparazione della scheda traguardo...', sharePassport:'Condividi il mio passaporto', shareStamp:'Condividi questo timbro', shareStampShort:'Condividi', passportSharePreparing:'Preparazione del passaporto pellegrino...', stampSharePreparing:'Preparazione del timbro di visita...',
     resetVisits:'Reimposta le mie visite', resetConfirm:'Sei sicuro di voler reimpostare tutte le tue visite?', exitAppConfirm:'Vuoi davvero uscire da Peregrin?',
@@ -797,7 +849,7 @@ const i18n = {
     premiumLater:'Forse più tardi', premiumUnlockRegion:'Accedi', premiumUnlockAll:'Accedi a tutto',
     premiumPriceEurope:'€ 2,99', premiumPriceAmericas:'€ 2,99', premiumPriceAsia:'€ 2,99', premiumPriceAll:'€ 2,99',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'Americhe', premiumLabelAsia:'Asia', premiumLabelAll:'Tutti i paesi',
-    premiumSubEurope:'16 paesi · 92 santuari', premiumSubAmericas:'18 paesi · 46 santuari', premiumSubAsia:'12 paesi · 49 santuari', premiumSubAll:'62 paesi · 208 santuari · Memoria pellegrina completa',
+    premiumSubEurope:'16 paesi · 92 santuari', premiumSubAmericas:'18 paesi · 46 santuari', premiumSubAsia:'12 paesi · 50 santuari', premiumSubAll:'62 paesi · 209 santuari · Memoria pellegrina completa',
     premiumOnetime:'Pagamento unico · Tuo per sempre', premiumGooglePlayNote:'Pagamento unico sicuro con Google Play', premiumAlreadyUnlocked:'Accesso completo attivo', premiumActivatedToast:'Premium attivato. Grazie!',
     premiumRestoreCta:'Ripristina acquisto', premiumRestoreChecking:'Verifica dell’acquisto…', premiumRestoreNone:'Nessun acquisto Premium in attesa trovato.',
     premiumCodeCta:'Ho un codice Premium', premiumCodePrompt:'Inserisci il tuo codice Premium:', premiumCodeInvalid:'Codice Premium non valido.', premiumCodeApplied:'Premium attivato con codice.',
@@ -847,7 +899,11 @@ const i18n = {
     passportTitle:'Passaporte do Peregrino', visited:'Visitados', remaining:'Restantes',
     stampsCollected:'Selos guardados', stampVisitedLabel:'Visitado', noVisits:"Ainda não registou nenhuma visita.\nExplore o mapa e comece a sua peregrinação!",
     achievementsTitle:'Marcos do peregrino', routesTitle:'Rotas de peregrinação',
-    profileTitle:'O meu perfil de peregrino', viewPassport:'Ver o meu passaporte',
+    profileTitle:'O meu perfil de peregrino', viewPassport:'Ver o meu passaporte', myPath:'O meu caminho',
+    pathTitle:'O meu caminho', pathSubtitle:'A memória da sua peregrinação em progresso', pathVisitsStat:'Visitas', pathCountriesStat:'Países', pathCertificatesStat:'Certificados',
+    pathLatestVisits:'Últimas visitas', pathCountriesProgress:'Países em progresso', pathRoutesProgress:'Rotas em progresso', pathNextMilestones:'Próximos marcos',
+    pathEmptyTitle:'Ainda não há memórias', pathEmptyText:'Abra o mapa e registe uma visita real para começar o seu caminho de peregrino.', pathOpenMap:'Abrir mapa', pathSharePassportCta:'Partilhar passaporte',
+    pathContinue:'Continuar', pathComplete:'Completo', pathNoProgress:'Ainda não há progresso ativo', pathNoMilestones:'Os seus próximos marcos aparecerão depois da primeira visita',
     myAchievements:'Os meus marcos', pilgrimageRoutes:'Rotas de peregrinação', routeVisited:'visitados',
     achievementUnlocked:'Marco alcançado', achievementInProgress:'Em caminho', achievementShareHint:'Toque para partilhar este marco', achievementSharePreparing:'A preparar cartão de marco...', sharePassport:'Partilhar o meu passaporte', shareStamp:'Partilhar este selo', shareStampShort:'Partilhar', passportSharePreparing:'A preparar passaporte peregrino...', stampSharePreparing:'A preparar selo de visita...',
     resetVisits:'Reiniciar as minhas visitas', resetConfirm:'Tem a certeza de que quer reiniciar todas as suas visitas?', exitAppConfirm:'Tem a certeza de que quer sair do Peregrin?',
@@ -866,7 +922,7 @@ const i18n = {
     premiumLater:'Talvez mais tarde', premiumUnlockRegion:'Aceder', premiumUnlockAll:'Aceder a tudo',
     premiumPriceEurope:'€2,99', premiumPriceAmericas:'€2,99', premiumPriceAsia:'€2,99', premiumPriceAll:'€2,99',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'Américas', premiumLabelAsia:'Ásia', premiumLabelAll:'Todos os países',
-    premiumSubEurope:'16 pa\u00edses · 92 santu\u00e1rios', premiumSubAmericas:'18 pa\u00edses · 46 santu\u00e1rios', premiumSubAsia:'12 pa\u00edses · 49 santu\u00e1rios', premiumSubAll:'62 países · 208 santuários · Memória peregrina completa',
+    premiumSubEurope:'16 pa\u00edses · 92 santu\u00e1rios', premiumSubAmericas:'18 pa\u00edses · 46 santu\u00e1rios', premiumSubAsia:'12 pa\u00edses · 50 santu\u00e1rios', premiumSubAll:'62 países · 209 santuários · Memória peregrina completa',
     premiumOnetime:'Pagamento único · Seu para sempre', premiumGooglePlayNote:'Pagamento único seguro com Google Play', premiumAlreadyUnlocked:'Acesso completo ativo', premiumActivatedToast:'Premium ativado. Obrigado!',
     premiumRestoreCta:'Restaurar compra', premiumRestoreChecking:'A verificar a sua compra…', premiumRestoreNone:'Não foi encontrada nenhuma compra Premium pendente.',
     premiumCodeCta:'Tenho um código Premium', premiumCodePrompt:'Introduza o seu código Premium:', premiumCodeInvalid:'Código Premium inválido.', premiumCodeApplied:'Premium ativado com código.',
@@ -928,6 +984,13 @@ const EMERGENCY_PREMIUM_CODES = ['PEREGRIN-388066-6291','PEREGRIN-PREMIUM-2026']
 const EMERGENCY_PREMIUM_CODE = EMERGENCY_PREMIUM_CODES[0];
 const PAYMENT_INTENT_FLAG = 'peregrin_stripe_checkout_started';
 const PAYMENT_INTENT_MAX_AGE_MS = 1000 * 60 * 90;
+const ANALYTICS_ENABLED = true;
+const ANALYTICS_SESSION_ID = (() => {
+  try{
+    if(globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
+  }catch(e){}
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2,10)}`;
+})();
 const AUTH_EMAIL_STORAGE_KEY = 'peregrin_last_email';
 const AUTH_LANG_STORAGE_KEY = 'peregrin_preferred_lang';
 const LAUNCH_ALL_COUNTRIES_UNLOCKED = false;
@@ -936,6 +999,8 @@ let markerClusterGroups=null, markerClusterById={}, markerLeaderLines={};
 let shouldReturnHomeOnResume=false;
 let googlePlayPurchaseListenerAttached=false;
 let nativeBackButtonListenerAttached=false;
+let analyticsSequence=0;
+const analyticsSessionFlags={};
 const SUPPORTED_LANGS = [
   {code:'en', label:'🇬🇧 EN'},
   {code:'es', label:'🇪🇸 ES'},
@@ -1033,9 +1098,11 @@ function attachGooglePlayPurchaseListener(){
         console.error('google play listener server verification failed:', verifyError);
         await grantEmergencyPremiumAfterGooglePlayCharge(result, 'listener_verification_failed');
       }
+      trackEvent('premium_purchase_success', {provider:'google_play', source:'listener'});
       closePremiumModal();
       showToast(t('premiumActivatedToast'));
     }catch(e){
+      trackEvent('premium_purchase_failed', {provider:'google_play', source:'listener', errorCode:e?.code||e?.message||'listener_failed'});
       console.error('google play purchase listener failed:', e);
     }
   });
@@ -1084,6 +1151,67 @@ function hasTesterAccess(){
 function hasFullPremiumAccess(){
   return hasTesterAccess() || unlockedRegions.includes('all');
 }
+
+function analyticsString(value, max=80){
+  if(value===undefined || value===null) return '';
+  return String(value).slice(0, max);
+}
+
+function analyticsNumber(value){
+  const number = Number(value);
+  return Number.isFinite(number) ? Math.round(number) : null;
+}
+
+function cleanAnalyticsParams(params={}){
+  const cleaned={};
+  const stringFields=['countryId','sanctuaryId','routeId','achievementId','region','provider','outcome','source','itemId','errorCode'];
+  stringFields.forEach(key=>{
+    if(params[key]!==undefined && params[key]!==null && params[key]!=='') cleaned[key]=analyticsString(params[key], 80);
+  });
+  ['count','percent'].forEach(key=>{
+    const value=analyticsNumber(params[key]);
+    if(value!==null) cleaned[key]=value;
+  });
+  return cleaned;
+}
+
+function getAnalyticsPlatform(){
+  return isNativeAppRuntime() ? 'android' : 'web';
+}
+
+function trackEvent(eventName, params={}){
+  if(!ANALYTICS_ENABLED || !window._currentUser?.uid || typeof window._fbAddAnalyticsEvent!=='function') return;
+  const now=Date.now();
+  const event=analyticsString(eventName, 64);
+  if(!event) return;
+  const payload={
+    event,
+    uid:window._currentUser.uid,
+    sessionId:ANALYTICS_SESSION_ID,
+    sequence:++analyticsSequence,
+    createdAtMs:now,
+    createdAtIso:new Date(now).toISOString(),
+    lang:analyticsString(currentLang, 2),
+    screen:analyticsString(currentScreen, 40),
+    platform:getAnalyticsPlatform(),
+    isPremium:hasFullPremiumAccess(),
+    visitCount:getVisitCount(),
+    ...cleanAnalyticsParams(params)
+  };
+  window._fbAddAnalyticsEvent(payload).catch(e=>console.warn('analytics event failed:', e));
+}
+
+function trackOncePerSession(key, eventName, params={}){
+  if(analyticsSessionFlags[key]) return;
+  analyticsSessionFlags[key]=true;
+  trackEvent(eventName, params);
+}
+
+function trackScreenView(screen){
+  trackEvent('screen_view', {source:screen});
+}
+
+window.trackEvent = trackEvent;
 
 const { countries, sanctuaries, routes, achievements, regionMap, certificateRules } = window.PEREGRIN_DATA;
 const routeGuides = window.PEREGRIN_ROUTE_GUIDES || {};
@@ -1577,14 +1705,17 @@ async function handlePremiumCodeUnlock(){
   if(code===null) return;
   const normalized = normalizeAccessCode(code);
   if(!isValidPremiumAccessCode(normalized)){
+    trackEvent('premium_code_failed', {errorCode:'invalid_format'});
     showToast(t('premiumCodeInvalid'));
     return;
   }
   try{
     await grantPremiumAccess('code', {premiumCode: normalized});
+    trackEvent('premium_code_success');
     closePremiumModal();
     showToast(t('premiumCodeApplied'));
   }catch(e){
+    trackEvent('premium_code_failed', {errorCode:e?.code||e?.message||'unlock_failed'});
     console.error('premium code unlock failed:', e);
     showToast(t('premiumCodeInvalid'));
   }
@@ -1614,6 +1745,7 @@ function handleTesterAccessToggle(){
 }
 
 function openPremiumModal(){
+  trackEvent('premium_modal_open', {source:currentScreen});
   const allUnlocked = hasFullPremiumAccess() || areAllRegionsUnlocked();
   const testerAccessAvailable = canUseTesterAccess();
   const testerEnabled = testerAccessAvailable && hasTesterAccess();
@@ -1700,6 +1832,7 @@ async function grantEmergencyPremiumAfterGooglePlayCharge(result, reason){
 async function handleGooglePlayPurchase(region){
   const Billing = getGooglePlayBillingPlugin();
   if(!Billing || typeof Billing.purchasePremium !== 'function'){
+    trackEvent('premium_purchase_failed', {provider:'google_play', region, errorCode:'billing_unavailable'});
     showToast(t('billingUnavailable'));
     return;
   }
@@ -1712,15 +1845,18 @@ async function handleGooglePlayPurchase(region){
         console.error('google play server verification failed after charge:', verifyError);
         await grantEmergencyPremiumAfterGooglePlayCharge(result, 'purchase_verification_failed');
       }
+      trackEvent('premium_purchase_success', {provider:'google_play', region, source:'purchase'});
       closePremiumModal();
       showToast(t('premiumActivatedToast'));
       return;
     }
+    trackEvent('premium_purchase_failed', {provider:'google_play', region, errorCode:'empty_result'});
     showToast(t('billingFailed'),6000);
   }catch(e){
     console.error('google play purchase failed:', e);
     const cancelled = isBillingCancelled(e);
     if(!cancelled && await restoreGooglePlayPremium(false)) return;
+    trackEvent(cancelled ? 'premium_purchase_cancelled' : 'premium_purchase_failed', {provider:'google_play', region, errorCode:e?.code||e?.message||'purchase_failed'});
     showToast(cancelled ? t('billingCancelled') : t('billingFailed'),cancelled ? 3000 : 6000);
   }
 }
@@ -1728,6 +1864,7 @@ async function handleGooglePlayPurchase(region){
 async function restoreGooglePlayPremium(showMessages=false){
   const Billing = getGooglePlayBillingPlugin();
   if(!Billing || typeof Billing.restorePremium !== 'function') return false;
+  trackEvent('premium_restore_start', {provider:'google_play'});
   if(showMessages) showToast(t('premiumRestoreChecking'),3000);
   try{
     const result = await Billing.restorePremium({productId:GOOGLE_PLAY_PRODUCT_ID});
@@ -1738,12 +1875,15 @@ async function restoreGooglePlayPremium(showMessages=false){
         console.error('google play server verification failed during restore:', verifyError);
         await grantEmergencyPremiumAfterGooglePlayCharge(result, 'restore_verification_failed');
       }
+      trackEvent('premium_restore_success', {provider:'google_play'});
       closePremiumModal();
       showToast(t('premiumActivatedToast'));
       return true;
     }
+    trackEvent('premium_restore_empty', {provider:'google_play'});
     if(showMessages) showToast(t('premiumRestoreNone'),5000);
   }catch(e){
+    trackEvent('premium_restore_failed', {provider:'google_play', errorCode:e?.code||e?.message||'restore_failed'});
     console.error('google play restore failed:', e);
     if(showMessages) showToast(t('billingFailed'),6000);
   }
@@ -1756,14 +1896,17 @@ async function handleGooglePlayRestore(){
 
 async function handleRegionPurchase(region){
   if(canUseGooglePlayBilling()){
+    trackEvent('premium_purchase_start', {provider:'google_play', region});
     await handleGooglePlayPurchase(region);
     return;
   }
   if(isNativeAppRuntime()){
+    trackEvent('premium_purchase_failed', {provider:'google_play', region, errorCode:'native_billing_unavailable'});
     showToast(t('billingUnavailable'));
     return;
   }
   if(!PREMIUM_CHECKOUT_ENABLED || !STRIPE_PAYMENT_LINK){
+    trackEvent('premium_purchase_failed', {provider:'stripe', region, errorCode:'checkout_unavailable'});
     showToast(t('premiumUnavailable'));
     return;
   }
@@ -1774,6 +1917,7 @@ async function handleRegionPurchase(region){
   if(currentLang) params.set('locale', currentLang);
   const sep = STRIPE_PAYMENT_LINK.includes('?') ? '&' : '?';
   try{ sessionStorage.setItem(PAYMENT_INTENT_FLAG, JSON.stringify({uid, region, startedAt:Date.now()})); }catch(e){}
+  trackEvent('premium_purchase_start', {provider:'stripe', region});
   window.location.href = STRIPE_PAYMENT_LINK + sep + params.toString();
 }
 
@@ -1789,10 +1933,15 @@ function countVisitedCountriesInRegion(visitedCountries, region){
 function toggleVisit(id){
   const s=sanctuaries.find(x=>x.id===id);
   if(!isCountryUnlocked(s.country)){openPremiumModal();return;}
-  if(visits[id]){delete visits[id];}
+  if(visits[id]){
+    delete visits[id];
+    trackEvent('visit_removed', {sanctuaryId:id, countryId:s.country});
+  }
   else{
     if(!window.confirm(t('realVisitConfirm'))) return;
-    visits[id]=new Date().toISOString().split('T')[0];showToast(t('visitToast')(sd(s).name));
+    visits[id]=new Date().toISOString().split('T')[0];
+    trackEvent('visit_registered', {sanctuaryId:id, countryId:s.country});
+    showToast(t('visitToast')(sd(s).name));
   }
   saveVisits();refreshAll();updateMarkerStyles();
 }
@@ -1825,9 +1974,10 @@ function switchScreen(screen){
   const screenEl=document.getElementById('screen-'+screen);
   if(screenEl) screenEl.classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  const navEl=document.querySelector(`[data-screen="${screen}"]`);
+  const navEl=document.querySelector(`[data-screen="${screen==='path'?'profile':screen}"]`);
   if(navEl) navEl.classList.add('active');
   resetScreenScroll(screen);
+  trackScreenView(screen);
   if(screen==='map'&&map){
     setTimeout(()=>map.invalidateSize(),50);
   }
@@ -2094,12 +2244,14 @@ function openRouteGuide(routeId, event){
     event.stopPropagation();
   }
   if(!hasFullPremiumAccess()){
+    trackEvent('locked_route_guide_open', {routeId});
     openPremiumModal();
     return;
   }
   const route = routes.find(r => r.id === routeId);
   const guide = getRouteGuide(routeId);
   if(!route || !guide) return;
+  trackEvent('route_guide_open', {routeId});
   const rd = route[currentLang] || route.es || route.en;
   const vc=route.stops.filter(id=>isVisited(id)).length;
   document.getElementById('modal-content').innerHTML=`
@@ -2135,6 +2287,7 @@ function openRouteGuide(routeId, event){
 function showRouteOnMap(idx){
   const r=routes[idx];
   if(!r) return;
+  trackEvent('route_open', {routeId:r.id || idx});
   activeRouteFilter=r.stops;
   activeCountryFilter=null;
   switchScreen('map');
@@ -2166,6 +2319,7 @@ function focusCountry(cid){
   currentCountry=cid;
   activeCountryFilter=cid;
   activeRouteFilter=null;
+  trackEvent('country_open', {countryId:cid, region:getRegion(cid)});
   const cs=sanctuaries.filter(s=>s.country===cid);
   switchScreen('map');
   updateMarkerStyles();
@@ -2300,9 +2454,11 @@ function openModal(id){
   const s=sanctuaries.find(x=>x.id===id);if(!s)return;
   const locked=!isCountryUnlocked(s.country);
   if(locked){
+    trackEvent('locked_sanctuary_open', {sanctuaryId:id, countryId:s.country, region:getRegion(s.country)});
     openPremiumModal();
     return;
   }
+  trackEvent('sanctuary_open', {sanctuaryId:id, countryId:s.country, region:getRegion(s.country)});
   const d=sd(s), visited=isVisited(s.id);
   const canComment = !!window._currentUser?.uid;
   const infoUrl = getSanctuaryInfoUrl(s, d);
@@ -2709,7 +2865,7 @@ function showToast(msg,duration){
 }
 
 // ===================== RENDER =====================
-function refreshAll(){renderHome();renderExplore();renderPassport();renderAchievements();renderRoutes();renderProfile();}
+function refreshAll(){renderHome();renderExplore();renderPassport();renderPath();renderAchievements();renderRoutes();renderProfile();}
 
 function renderHome(){
   const container=document.querySelector('.home-screen');
@@ -2726,6 +2882,7 @@ function renderHome(){
         <button class="home-primary" onclick="openRealMap()">${t('homePrimary')}</button>
         <button class="home-secondary" onclick="switchScreen('routes')">${t('homeRoutes')}</button>
         <button class="home-secondary" onclick="switchScreen('passport')">${t('homePassport')}</button>
+        <button class="home-secondary home-path" onclick="switchScreen('path')">${t('myPath')}</button>
       </div>
       <div class="home-stats">
         <div class="home-stat"><strong>${sanctuaries.length}</strong><span>${t('homeStatSanctuaries')}</span></div>
@@ -2822,6 +2979,164 @@ function renderPassport(){
       </div>`}`;
 }
 
+function getPathVisitedList(){
+  return sanctuaries
+    .filter(s=>isVisited(s.id))
+    .sort((a,b)=>{
+      const byDate=String(visits[b.id]||'').localeCompare(String(visits[a.id]||''));
+      return byDate || sd(a).name.localeCompare(sd(b).name);
+    });
+}
+
+function getPathCountryProgress(){
+  return countries
+    .map(country=>{
+      const required=getCertificateSanctuaries(country.id);
+      const total=required.length;
+      const visited=required.filter(s=>isVisited(s.id)).length;
+      return {country,total,visited,complete:total>0 && visited>=total,percent:total?Math.round((visited/total)*100):0};
+    })
+    .filter(row=>row.total>0 && row.visited>0 && !row.complete)
+    .sort((a,b)=>b.percent-a.percent || b.visited-a.visited || cn(a.country).localeCompare(cn(b.country)))
+    .slice(0,4);
+}
+
+function getPathRouteProgress(){
+  return routes
+    .map((route,index)=>{
+      const stops=route.stops.map(id=>sanctuaries.find(s=>s.id===id)).filter(Boolean);
+      const visited=stops.filter(s=>isVisited(s.id)).length;
+      const total=stops.length;
+      const nextStop=stops.find(s=>!isVisited(s.id));
+      return {route,index,stops,visited,total,nextStop,percent:total?Math.round((visited/total)*100):0};
+    })
+    .filter(row=>row.total>0 && row.visited>0 && row.visited<row.total)
+    .sort((a,b)=>b.percent-a.percent || b.visited-a.visited)
+    .slice(0,3);
+}
+
+function getPathNextMilestones(){
+  const vc=getVisitCount();
+  const visitedCountries=new Set(sanctuaries.filter(s=>isVisited(s.id)).map(s=>s.country));
+  return achievements
+    .map(a=>({achievement:a, local:a[currentLang]||a.en, ...getAchievementProgressState(a, visitedCountries, vc)}))
+    .filter(row=>!row.unlocked && row.percent>0)
+    .sort((a,b)=>b.percent-a.percent)
+    .slice(0,3);
+}
+
+function renderPathProgress(percent){
+  return `<div class="path-progress"><div class="path-progress-bar" style="width:${Math.max(0,Math.min(100,percent))}%"></div></div>`;
+}
+
+function renderPath(){
+  const container=document.querySelector('.path-screen');
+  if(!container) return;
+  const visitedList=getPathVisitedList();
+  const latestVisits=visitedList.slice(0,4);
+  const visitedCountries=new Set(visitedList.map(s=>s.country));
+  const completedCountries=countries.filter(c=>isCertificateUnlocked(c.id));
+  const countryProgress=getPathCountryProgress();
+  const routeProgress=getPathRouteProgress();
+  const nextMilestones=getPathNextMilestones();
+  const emptyBlock=`
+    <div class="path-empty">
+      <div class="path-empty-title">${t('pathEmptyTitle')}</div>
+      <div class="path-empty-text">${t('pathEmptyText')}</div>
+      <button class="path-action" onclick="openRealMap()">${t('pathOpenMap')}</button>
+    </div>`;
+  container.innerHTML=`
+    <div class="path-hero">
+      <div class="path-kicker">Peregrin</div>
+      <div class="path-title">${t('pathTitle')}</div>
+      <div class="path-subtitle">${t('pathSubtitle')}</div>
+      <div class="path-stats">
+        <div class="path-stat"><strong>${visitedList.length}</strong><span>${t('pathVisitsStat')}</span></div>
+        <div class="path-stat"><strong>${visitedCountries.size}</strong><span>${t('pathCountriesStat')}</span></div>
+        <div class="path-stat"><strong>${completedCountries.length}</strong><span>${t('pathCertificatesStat')}</span></div>
+      </div>
+    </div>
+    <div class="path-actions">
+      <button class="path-action" onclick="openRealMap()">${t('pathOpenMap')}</button>
+      <button class="path-action secondary" onclick="openPassportShareCard()">${t('pathSharePassportCta')}</button>
+    </div>
+    ${visitedList.length?`
+      <div class="path-section">
+        <div class="path-section-head"><div class="path-section-title">${t('pathLatestVisits')}</div><div class="path-section-note">${visitedList.length}</div></div>
+        <div class="path-list">
+          ${latestVisits.map(s=>{
+            const country=countries.find(c=>c.id===s.country);
+            return `<div class="path-card" onclick="openModal(${s.id})">
+              <div class="path-card-top">
+                <div class="path-card-icon">${sanctuarySymbolSvg(s,'achievement-symbol')}</div>
+                <div class="path-card-main">
+                  <div class="path-card-label">${country?cn(country):''}</div>
+                  <div class="path-card-name">${escapeHtml(sd(s).name)}</div>
+                  <div class="path-card-meta">${escapeHtml(sd(s).city)} · ${formatVisitDate(visits[s.id])}</div>
+                </div>
+              </div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+      <div class="path-section">
+        <div class="path-section-head"><div class="path-section-title">${t('pathCountriesProgress')}</div></div>
+        <div class="path-list">
+          ${countryProgress.length?countryProgress.map(row=>`
+            <div class="path-card" onclick="focusCountry('${row.country.id}')">
+              <div class="path-card-top">
+                <div class="path-card-icon">${row.country.flag||'✦'}</div>
+                <div class="path-card-main">
+                  <div class="path-card-label">${t('pathContinue')}</div>
+                  <div class="path-card-name">${cn(row.country)}</div>
+                  <div class="path-card-meta">${row.visited}/${row.total} ${t('visited').toLowerCase()}</div>
+                </div>
+                <div class="path-card-count">${row.percent}%</div>
+              </div>
+              ${renderPathProgress(row.percent)}
+            </div>`).join(''):`<div class="path-card locked"><div class="path-card-meta">${t('pathNoProgress')}</div></div>`}
+        </div>
+      </div>
+      <div class="path-section">
+        <div class="path-section-head"><div class="path-section-title">${t('pathRoutesProgress')}</div></div>
+        <div class="path-list">
+          ${routeProgress.length?routeProgress.map(row=>{
+            const rd=row.route[currentLang]||row.route.en;
+            return `<div class="path-card" onclick="showRouteOnMap(${row.index})">
+              <div class="path-card-top">
+                <div class="path-card-icon">⌁</div>
+                <div class="path-card-main">
+                  <div class="path-card-label">${row.nextStop?escapeHtml(sd(row.nextStop).city):t('pathComplete')}</div>
+                  <div class="path-card-name">${escapeHtml(rd.name)}</div>
+                  <div class="path-card-meta">${row.visited}/${row.total} ${t('routeVisited')}</div>
+                </div>
+                <div class="path-card-count">${row.percent}%</div>
+              </div>
+              ${renderPathProgress(row.percent)}
+            </div>`;
+          }).join(''):`<div class="path-card locked"><div class="path-card-meta">${t('pathNoProgress')}</div></div>`}
+        </div>
+      </div>
+      <div class="path-section">
+        <div class="path-section-head"><div class="path-section-title">${t('pathNextMilestones')}</div></div>
+        <div class="path-list">
+          ${nextMilestones.length?nextMilestones.map(row=>`
+            <div class="path-card locked">
+              <div class="path-card-top">
+                <div class="path-card-icon">${achievementSymbolSvg(row.achievement)}</div>
+                <div class="path-card-main">
+                  <div class="path-card-label">${t('achievementInProgress')}</div>
+                  <div class="path-card-name">${escapeHtml(row.local.name)}</div>
+                  <div class="path-card-meta">${escapeHtml(row.local.desc)}</div>
+                </div>
+                <div class="path-card-count">${row.percent}%</div>
+              </div>
+              ${renderPathProgress(row.percent)}
+            </div>`).join(''):`<div class="path-card locked"><div class="path-card-meta">${t('pathNoMilestones')}</div></div>`}
+        </div>
+      </div>`:emptyBlock}`;
+}
+
 function getAchievementProgressState(a, visitedCountries=new Set(sanctuaries.filter(s=>isVisited(s.id)).map(s=>s.country)), vc=getVisitCount()){
   let progress=0, unlocked=false;
   if(a.special==='countries5'){const n=visitedCountries.size;progress=Math.min(n/5,1);unlocked=n>=5;}
@@ -2840,6 +3155,7 @@ function openAchievementCard(id){
     showToast(t('achievementInProgress'));
     return;
   }
+  trackEvent('achievement_share_open', {achievementId:id});
   if(window.PeregrinShareCards?.openAchievement){
     window.PeregrinShareCards.openAchievement(id);
   }else{
@@ -2848,6 +3164,7 @@ function openAchievementCard(id){
 }
 
 function openPassportShareCard(){
+  trackEvent('passport_share_open');
   if(window.PeregrinShareCards?.openPassport){
     window.PeregrinShareCards.openPassport();
   }else{
@@ -2856,6 +3173,8 @@ function openPassportShareCard(){
 }
 
 function openVisitStampShareCard(id){
+  const s=sanctuaries.find(x=>x.id===id);
+  trackEvent('stamp_share_open', {sanctuaryId:id, countryId:s?.country});
   if(window.PeregrinShareCards?.openVisitStamp){
     window.PeregrinShareCards.openVisitStamp(id);
   }else{
@@ -2948,6 +3267,7 @@ function renderProfile(){
     </div>
     <div class="profile-option" onclick="showOnboarding()"><span class="profile-option-icon">✨</span>${t('viewIntro')}</div>
     <div class="profile-option" onclick="editPilgrimName()"><span class="profile-option-icon">✍️</span>${t('editName')}</div>
+    <div class="profile-option" onclick="switchScreen('path')"><span class="profile-option-icon">🧭</span>${t('myPath')}</div>
     <div class="profile-option" onclick="switchScreen('passport')"><span class="profile-option-icon">📘</span>${t('viewPassport')}</div>
     <div class="profile-option" onclick="switchScreen('achievements')"><span class="profile-option-icon">🏅</span>${t('myAchievements')} (${unlockedCount}/${achievements.length})</div>
     <div class="profile-option" onclick="switchScreen('routes')"><span class="profile-option-icon">🛣️</span>${t('pilgrimageRoutes')}</div>
@@ -3092,6 +3412,7 @@ window._fbSignOut      = ()    => _auth.signOut();
 window._fbGetDoc       = (uid) => _db.collection('users').doc(uid).get();
 window._fbSetDoc       = (uid,d) => _db.collection('users').doc(uid).set(d,{merge:true});
 window._fbVerifyGooglePlayPurchase = (data) => _functions.httpsCallable('verifyGooglePlayPurchase')(data);
+window._fbAddAnalyticsEvent = (data) => _db.collection('analyticsEvents').add(data);
 window._fbGetJournalNote = (uid, sanctuaryId) => _db.collection('users').doc(uid).collection('journal').doc(String(sanctuaryId)).get();
 window._fbSetJournalNote = (uid, sanctuaryId, data) => _db.collection('users').doc(uid).collection('journal').doc(String(sanctuaryId)).set(data,{merge:true});
 window._fbDeleteJournalNote = (uid, sanctuaryId) => _db.collection('users').doc(uid).collection('journal').doc(String(sanctuaryId)).delete();
@@ -3123,12 +3444,15 @@ _auth.onAuthStateChanged(async user=>{
       history.replaceState({}, document.title, window.location.pathname);
     }
     await window._loadUserData(user.uid);
+    trackOncePerSession('app_open', 'app_open', {source:getAnalyticsPlatform()});
     if(paymentSuccess && !hasFullPremiumAccess()){
       try{
         if(isRecentPaymentIntent(paymentIntent)) showToast(t('paymentActivating'),3000);
         await grantPremiumFromStripeReturn(paymentIntent);
+        trackEvent('premium_purchase_success', {provider:'stripe', region:paymentIntent?.region || 'all', source:'stripe_return'});
         try{ sessionStorage.removeItem(PAYMENT_INTENT_FLAG); }catch(e){}
       }catch(e){
+        trackEvent('premium_purchase_failed', {provider:'stripe', region:paymentIntent?.region || 'all', source:'stripe_return', errorCode:e?.code||e?.message||'stripe_return_failed'});
         console.error('stripe payment return unlock failed:', e);
       }
     }
@@ -3140,6 +3464,7 @@ _auth.onAuthStateChanged(async user=>{
     if(paymentSuccess){
       refreshAll();
       if(map) updateMarkerStyles();
+      trackEvent('stripe_return_seen', {outcome:hasFullPremiumAccess() ? 'premium_active' : 'manual_review'});
       showToast(hasFullPremiumAccess() ? t('premiumActivatedToast') : t('paymentManualReview'),6000);
     }
   } else {

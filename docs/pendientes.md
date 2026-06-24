@@ -1,9 +1,12 @@
 # Pendientes Peregrin
 
-Last updated: 2026-06-18
+Last updated: 2026-06-24
 
 ## Production watch
 
+- Fix the Google Play Console Payments profile warning shown on 2026-06-20. The
+  in-app product is active, but monetization trust should not remain with a
+  payments-profile warning.
 - Watch Play Console for crashes, ANRs, reviews and purchase complaints.
 - Confirm that Premium purchases keep unlocking correctly in production.
 - Confirm that Africa, Holy Land, Oceania, Rome/Italy, France/Europe,
@@ -35,6 +38,22 @@ Release gate:
 
 Recently completed:
 
+- Android release 62 / 1.0.61 AAB built with the Milk Grotto added to the Holy
+  Land route and Premium totals updated to 62 countries / 209 sanctuaries.
+- Firebase Hosting and Firestore rules deployed for the analytics-enabled web
+  build.
+- Android release 61 / 1.0.60 AAB built with `My path`, first-party analytics
+  instrumentation and updated privacy policy.
+- `My path` / `Mi camino` section added with existing user data.
+- Privacy-respectful first-party analytics instrumentation added for app opens,
+  screen/country/sanctuary/route opens, visit actions, share/certificate actions
+  and Premium flow outcomes.
+- Firestore `analyticsEvents` rules added: signed-in create only, no client read,
+  update or delete.
+- Privacy policy updated to disclose basic app activity events and state that
+  they are not used for advertising or behavioural profiling.
+- Stripe product copy updated in the Dashboard and verified on the public
+  Checkout page: `62 paises / 209 santuarios`.
 - Android release 60 / 1.0.59 built with the passport stamp visual polish.
 - Comment notification emails fixed with Brevo SMTP and verified in Firebase
   logs.
@@ -55,7 +74,7 @@ Recently completed:
   `docs/CATHOLIC_ATLAS_CONTENT_AUDIT_2026-06-17.md`.
 - Pilgrimage core shortlist created:
   `docs/PILGRIMAGE_CORE_SHORTLIST_2026-06-17.md`.
-- Holy Land prestige pack with 10 Gospel places, one route, one certificate rule
+- Holy Land prestige pack with 11 Gospel places, one route, one certificate rule
   and one pilgrim hito.
 - Oceania pack with 4 countries, 8 sanctuaries, one route, country certificate
   rules for Australia/New Zealand, fallback rules for Fiji/Papua New Guinea and
@@ -70,12 +89,12 @@ Recently completed:
 
 Next version should stay limited to three low-risk priorities:
 
-- Improve sanctuary detail hero imagery with a few stronger sacred photographic
-  categories, without per-sanctuary custom art.
-- Add a lightweight `My memories` / `My path` section using existing data:
-  latest visits, countries in progress, milestones and passport sharing.
+- Build and upload the next AAB with `My path`, share polish and analytics.
+- Create the first focused Play Store acquisition door: title/short description
+  and one custom listing around a concrete Catholic pilgrim-passport intent.
+  Use `docs/PLAY_STORE_GROWTH_ACTIONS_2026-06-20.md` as the execution sheet.
 - Do a small visual-detail pass across spacing, long translated strings, buttons,
-  empty states and navigation icons.
+  empty states and navigation icons only after the release-critical checks pass.
 
 Avoid for the next version:
 
@@ -87,6 +106,11 @@ Avoid for the next version:
 
 ## Growth and visibility
 
+- Current Play Console baseline on 2026-06-20: 16 users with the app downloaded,
+  9 device acquisitions in the last 28 days, 5 first opens, 13 monthly active
+  users, 1 retained at 7 days, and 32.76% default listing conversion.
+- Interpretation: the urgent issue is discovery/distribution, not yet proof of
+  product rejection. Conversion is plausible; traffic is tiny.
 - Prepare a small sharing loop: complete route/country, see beautiful result,
   share/save image.
 - Turn each visit into memory plus contribution: private note for the user,
@@ -113,7 +137,8 @@ Avoid for the next version:
 
 ## External admin
 
-- Update old Stripe product copy if it still says `23 countries / 111 sanctuaries`.
+- Stripe product copy is current as of 2026-06-20. Keep the existing Payment Link
+  for copy-only updates.
 - Keep the Google Play product ID unchanged: `peregrin_premium_all`.
 - Keep emergency Premium codes available unless there is a deliberate replacement
   plan.

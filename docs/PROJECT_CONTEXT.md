@@ -26,9 +26,9 @@ not reopen broad risky refactors unless there is a clear reason.
 ## Current release baseline
 
 - Last built AAB: `android/app/build/outputs/bundle/release/app-release.aab`
-- Current Android version in repo: `versionCode 60`, `versionName 1.0.59`
+- Current Android version in repo: `versionCode 62`, `versionName 1.0.61`
 - Latest production checkpoint before later updates: `afe049c`
-- Current repo/web/Android content total: 62 countries, 208 sanctuaries, 16 routes
+- Current repo/web/Android content total: 62 countries, 209 sanctuaries, 16 routes
 - Latest built AAB includes the Asia/Africa pack and the passport stamp visual
   polish.
 
@@ -73,22 +73,23 @@ Before the next app bundle:
 - Keep payment code, billing code and release mechanics stable unless a real
   bug appears.
 
-## Known external caveat
+## External admin status
 
-Stripe Dashboard may still have old product copy mentioning `23 countries / 111
-sanctuaries`. This is external Stripe metadata and should be edited manually in
-Stripe Dashboard, not by creating a new payment link or changing payment code.
+Stripe Dashboard product copy was updated manually and verified on the public
+Checkout page on 2026-06-20. The active Payment Link should keep pointing to the
+same Stripe product/payment flow; do not create a new payment link or change
+payment code for copy-only updates.
 
-Recommended Stripe product description:
+Current Stripe product description:
 
 ```text
-Unlock all 62 countries, 208 sanctuaries, every certificate, route and achievement. One-time payment, yours forever.
+Unlock all 62 countries, 209 sanctuaries, every certificate, route and achievement. One-time payment, yours forever.
 ```
 
-Spanish equivalent if needed:
+The public Spanish Checkout copy was verified as:
 
 ```text
-Desbloquea los 62 países, 208 santuarios, todos los certificados, rutas y logros. Pago único, tuyo para siempre.
+Desbloquea los 62 países, 209 santuarios, todos los certificados, rutas y logros. Pago único, tuyo para siempre.
 ```
 
 ## Product direction after production
