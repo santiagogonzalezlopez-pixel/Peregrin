@@ -8,8 +8,18 @@
     }
   }
 
+  function requestPlayReview(trigger, params={}){
+    if(typeof window.maybeRequestPlayReview === "function"){
+      window.maybeRequestPlayReview(trigger, params);
+    }
+  }
+
   function shareKindKey(kind){
     return kind === "visitStamp" ? "stamp" : kind;
+  }
+
+  function playReviewTrigger(kind, action){
+    return `${shareKindKey(kind)}_${action}`;
   }
 
   function shareAnalyticsData(entity={}, kind="route"){
@@ -1856,6 +1866,7 @@
         if(!savedNativeFile?.ok) savedNativeFile = await saveNative(dataUrl, fileName);
         await shareImage(dataUrl, fileName, savedNativeFile, {...entity, __readyToast: readyToast, __downloadedToast: downloadedToast});
         trackShareEvent(`${shareKindKey(kind)}_share_done`, analyticsData);
+        requestPlayReview(playReviewTrigger(kind, "share"), analyticsData);
       }finally{
         setBusy(false);
       }
@@ -1867,6 +1878,7 @@
         trackShareEvent(`${shareKindKey(kind)}_download_tap`, analyticsData);
         savedNativeFile = await downloadForUser(dataUrl, fileName, savedNativeFile, kind);
         trackShareEvent(`${shareKindKey(kind)}_download_done`, analyticsData);
+        requestPlayReview(playReviewTrigger(kind, "download"), analyticsData);
       }finally{
         setBusy(false);
       }

@@ -12,6 +12,12 @@
     }
   }
 
+  function requestPlayReview(trigger, params={}){
+    if(typeof window.maybeRequestPlayReview === "function"){
+      window.maybeRequestPlayReview(trigger, params);
+    }
+  }
+
   function roundedRect(ctx, x, y, width, height, radius, fillStyle, strokeStyle, lineWidth=1){
     ctx.beginPath();
     ctx.moveTo(x + radius, y);
@@ -547,6 +553,7 @@
         }
         await shareCertificateImage(dataUrl, fileName, savedNativeFile);
         trackCertificateEvent("certificate_share_done", analyticsData);
+        requestPlayReview("certificate_share", analyticsData);
       }finally{
         actionInProgress = false;
         setButtonsBusy(false);
@@ -560,6 +567,7 @@
         trackCertificateEvent("certificate_download_tap", analyticsData);
         savedNativeFile = await downloadCertificateImageForUser(dataUrl, fileName, savedNativeFile);
         trackCertificateEvent("certificate_download_done", analyticsData);
+        requestPlayReview("certificate_download", analyticsData);
       }finally{
         actionInProgress = false;
         setButtonsBusy(false);

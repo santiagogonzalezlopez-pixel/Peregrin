@@ -7,6 +7,7 @@ public class MainActivity extends BridgeActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     registerPlugin(PeregrinBillingPlugin.class);
+    registerPlugin(PeregrinReviewPlugin.class);
     super.onCreate(savedInstanceState);
   }
 }

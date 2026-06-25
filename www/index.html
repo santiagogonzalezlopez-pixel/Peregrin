@@ -984,6 +984,22 @@ const EMERGENCY_PREMIUM_CODES = ['PEREGRIN-388066-6291','PEREGRIN-PREMIUM-2026']
 const EMERGENCY_PREMIUM_CODE = EMERGENCY_PREMIUM_CODES[0];
 const PAYMENT_INTENT_FLAG = 'peregrin_stripe_checkout_started';
 const PAYMENT_INTENT_MAX_AGE_MS = 1000 * 60 * 90;
+const PLAY_REVIEW_STORAGE_KEY = 'peregrin_play_review_state';
+const PLAY_REVIEW_COOLDOWN_MS = 1000 * 60 * 60 * 24 * 120;
+const PLAY_REVIEW_MIN_VISITS = 3;
+const PLAY_REVIEW_TRIGGERS = new Set([
+  'visit_registered',
+  'route_share',
+  'route_download',
+  'achievement_share',
+  'achievement_download',
+  'passport_share',
+  'passport_download',
+  'stamp_share',
+  'stamp_download',
+  'certificate_share',
+  'certificate_download'
+]);
 const ANALYTICS_ENABLED = true;
 const ANALYTICS_SESSION_ID = (() => {
   try{
@@ -999,6 +1015,8 @@ let markerClusterGroups=null, markerClusterById={}, markerLeaderLines={};
 let shouldReturnHomeOnResume=false;
 let googlePlayPurchaseListenerAttached=false;
 let nativeBackButtonListenerAttached=false;
+let playReviewRequestInFlight=false;
+let playReviewAttemptedThisSession=false;
 let analyticsSequence=0;
 const analyticsSessionFlags={};
 const SUPPORTED_LANGS = [
@@ -1084,6 +1102,85 @@ function resolveAssetUrl(path){
 function getGooglePlayBillingPlugin(){
   return getCapacitorPlugin('PeregrinBilling');
 }
+
+function getPlayReviewPlugin(){
+  return getCapacitorPlugin('PeregrinReview');
+}
+
+function getPlayReviewState(){
+  try{
+    const raw = localStorage.getItem(PLAY_REVIEW_STORAGE_KEY);
+    return raw ? JSON.parse(raw) || {} : {};
+  }catch(e){
+    return {};
+  }
+}
+
+function savePlayReviewState(nextState){
+  try{
+    localStorage.setItem(PLAY_REVIEW_STORAGE_KEY, JSON.stringify(nextState));
+  }catch(e){}
+}
+
+function hasEnoughPlayReviewExperience(trigger){
+  if(
+    trigger === 'route_share' ||
+    trigger === 'route_download' ||
+    trigger === 'achievement_share' ||
+    trigger === 'achievement_download' ||
+    trigger === 'certificate_share' ||
+    trigger === 'certificate_download'
+  ){
+    return true;
+  }
+  return getVisitCount() >= PLAY_REVIEW_MIN_VISITS;
+}
+
+function getPlayReviewBlockReason(trigger){
+  if(!PLAY_REVIEW_TRIGGERS.has(trigger)) return 'unsupported_trigger';
+  if(!isNativeAppRuntime()) return 'not_native';
+  if(!getPlayReviewPlugin()) return 'plugin_unavailable';
+  if(playReviewRequestInFlight || playReviewAttemptedThisSession) return 'session_throttle';
+  if(!hasEnoughPlayReviewExperience(trigger)) return 'not_enough_experience';
+  const state = getPlayReviewState();
+  const lastAttemptAt = Number(state.lastAttemptAt || 0);
+  if(lastAttemptAt && Date.now() - lastAttemptAt < PLAY_REVIEW_COOLDOWN_MS) return 'cooldown';
+  return '';
+}
+
+async function maybeRequestPlayReview(trigger, params={}){
+  const reason = getPlayReviewBlockReason(trigger);
+  if(reason){
+    if(reason !== 'not_native' && reason !== 'not_enough_experience' && reason !== 'cooldown'){
+      trackEvent('play_review_skipped', {source:trigger, outcome:reason});
+    }
+    return false;
+  }
+  const Review = getPlayReviewPlugin();
+  const state = getPlayReviewState();
+  const nextState = {
+    ...state,
+    lastAttemptAt: Date.now(),
+    lastTrigger: trigger,
+    attempts: Number(state.attempts || 0) + 1
+  };
+  savePlayReviewState(nextState);
+  playReviewRequestInFlight = true;
+  playReviewAttemptedThisSession = true;
+  trackEvent('play_review_request_start', Object.assign({source:trigger}, params || {}));
+  try{
+    const result = await Review.requestReview();
+    trackEvent('play_review_request_done', {source:trigger, outcome:result?.completed ? 'completed' : 'unknown'});
+    return true;
+  }catch(e){
+    trackEvent('play_review_request_failed', {source:trigger, errorCode:e?.code || e?.message || 'request_failed'});
+    console.warn('play review request failed:', e);
+    return false;
+  }finally{
+    playReviewRequestInFlight = false;
+  }
+}
+window.maybeRequestPlayReview = maybeRequestPlayReview;
 
 function attachGooglePlayPurchaseListener(){
   if(googlePlayPurchaseListenerAttached) return;
@@ -1933,6 +2030,7 @@ function countVisitedCountriesInRegion(visitedCountries, region){
 function toggleVisit(id){
   const s=sanctuaries.find(x=>x.id===id);
   if(!isCountryUnlocked(s.country)){openPremiumModal();return;}
+  let registeredVisit=false;
   if(visits[id]){
     delete visits[id];
     trackEvent('visit_removed', {sanctuaryId:id, countryId:s.country});
@@ -1942,8 +2040,12 @@ function toggleVisit(id){
     visits[id]=new Date().toISOString().split('T')[0];
     trackEvent('visit_registered', {sanctuaryId:id, countryId:s.country});
     showToast(t('visitToast')(sd(s).name));
+    registeredVisit=true;
   }
   saveVisits();refreshAll();updateMarkerStyles();
+  if(registeredVisit){
+    setTimeout(() => maybeRequestPlayReview('visit_registered', {sanctuaryId:id, countryId:s.country}), 900);
+  }
 }
 
 function getRank(){
@@ -3356,7 +3458,7 @@ if('serviceWorker' in navigator){
     window.__peregrinSwRefreshing = true;
     window.location.reload();
   });
-  navigator.serviceWorker.register('sw.js?v=35').then(reg => reg.update?.()).catch(()=>{});
+  navigator.serviceWorker.register('sw.js?v=43').then(reg => reg.update?.()).catch(()=>{});
 }
 
 // ===================== INIT =====================
