@@ -1,6 +1,6 @@
 # Peregrin project context
 
-Last updated: 2026-06-18
+Last updated: 2026-06-27
 
 ## Current milestone
 
@@ -14,6 +14,30 @@ the shareable pilgrim passport.
 
 Treat this moment as a production checkpoint: future work should improve the app,
 not reopen broad risky refactors unless there is a clear reason.
+
+## Growth mandate - 2026-06-27
+
+Peregrin has already been in production for months and had reached 17 downloads
+by 2026-06-27. The next phase is not pre-launch hygiene. The mission is to make
+Peregrin known, memorable and shareable.
+
+Operating mandate:
+
+- Treat growth, distribution and public visibility as first-class product work.
+- Aim for a real viral loop: discover a holy place, register a pilgrimage,
+  receive a beautiful stamp/certificate/passport moment, share it, and bring the
+  next pilgrim in.
+- Be willing to test paid Google Play acquisition once the listing, screenshots,
+  analytics events and first-use path are ready enough to measure.
+- Prefer concrete audience wedges over generic marketing: Spain/Camino,
+  Guadalupe/Mexico, Philippines/Visita Iglesia, Rome, Lourdes/Fatima/Marian
+  pilgrimage, and WYD/Korea 2027.
+- Do not confuse adding more content with growth. The core question is how to
+  get real Catholics, pilgrims, parishes, creators and pilgrimage communities to
+  see, install, open, share and remember Peregrin.
+
+Cuatro should remember this posture: we are going for visibility and momentum,
+not just another tidy release.
 
 ## Source of truth
 
