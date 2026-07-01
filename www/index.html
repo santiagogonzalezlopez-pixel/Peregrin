@@ -14,10 +14,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-functions-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-functions-compat.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -133,6 +133,11 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .home-stat strong{display:block;font-family:'Crimson Pro',serif;font-size:23px;line-height:1;color:var(--gold-light);margin-bottom:4px;}
 .home-stat span{display:block;font-size:9.5px;text-transform:uppercase;letter-spacing:1px;color:rgba(253,245,230,0.62);white-space:nowrap;}
 .home-note{position:relative;z-index:2;border-left:3px solid var(--gold);padding:10px 0 10px 12px;color:rgba(253,245,230,0.74);font-size:12.5px;line-height:1.55;}
+.home-insight{position:relative;z-index:2;border:1px solid rgba(232,201,122,.22);border-radius:14px;background:rgba(255,255,255,.1);padding:14px;backdrop-filter:blur(14px);box-shadow:0 12px 26px rgba(0,0,0,.16);}
+.home-insight-kicker{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold-light);font-weight:900;margin-bottom:5px;}
+.home-insight-title{font-family:'Crimson Pro',serif;font-size:19px;line-height:1.12;font-weight:800;color:var(--cream);margin-bottom:5px;}
+.home-insight-meta{font-size:12px;line-height:1.45;color:rgba(253,245,230,.72);margin-bottom:11px;}
+.home-insight-btn{width:100%;border:1px solid rgba(253,245,230,.22);border-radius:12px;background:rgba(253,245,230,.12);color:var(--cream);font-family:'Jost',sans-serif;font-size:12px;font-weight:900;padding:10px 12px;cursor:pointer;}
 @media(max-width:380px){
   .home-hero{padding:16px 14px 20px;gap:12px;}
   .home-title{font-size:32px;}
@@ -239,6 +244,11 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
 .temple-search-meta{font-size:11.5px;color:var(--brown-light);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .temple-search-lock{font-size:12px;font-weight:800;text-transform:uppercase;color:var(--brown-light);}
 .temple-search-empty{padding:16px;text-align:center;font-size:13px;color:var(--brown-light);}
+.temple-search-filters{display:flex;gap:8px;overflow-x:auto;margin:-8px -20px 16px;padding:2px 20px 4px;scrollbar-width:none;}
+.temple-search-filters::-webkit-scrollbar{display:none;}
+.temple-search-filter{flex:0 0 auto;border:1px solid rgba(197,150,58,.26);border-radius:999px;background:rgba(255,255,255,.78);color:var(--brown-light);font-family:'Jost',sans-serif;font-size:12px;font-weight:800;padding:8px 12px;cursor:pointer;box-shadow:0 6px 16px rgba(62,39,35,.06);}
+.temple-search-filter.active{background:var(--burgundy);border-color:var(--burgundy);color:var(--cream);box-shadow:0 9px 20px rgba(114,47,55,.18);}
+.temple-search-summary{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin:-6px 2px 9px;}
 .cert-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px;background:linear-gradient(135deg,var(--gold),#b8842e);color:var(--brown);border:none;border-radius:14px;font-family:'Crimson Pro',serif;font-size:17px;font-weight:700;cursor:pointer;margin-top:8px;margin-bottom:30px;box-shadow:0 4px 16px rgba(197,150,58,0.4);transition:all 0.2s;}
 .cert-btn:active{transform:scale(0.98);}
 
@@ -540,9 +550,9 @@ body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--brown);he
     <div class="onb-purpose-body" id="onb-purpose-body">Peregrin is a Catholic pilgrimage passport that helps you discover sanctuaries, mark the holy places you have visited, follow sacred routes and keep an ordered memory of your journey. It is meant to accompany your real pilgrimage life with visits, milestones and personal country certificates gathered over time.</div>
   </div>
   <div class="onb-stats">
-    <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-sanctuaries-count">209</div><div class="onb-stat-label" id="onb-stat-sanctuaries-label">Sanctuaries</div></div>
+    <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-sanctuaries-count">231</div><div class="onb-stat-label" id="onb-stat-sanctuaries-label">Sanctuaries</div></div>
     <div class="onb-stat-div"></div>
-    <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-countries-count">62</div><div class="onb-stat-label" id="onb-stat-countries-label">Countries</div></div>
+    <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-countries-count">69</div><div class="onb-stat-label" id="onb-stat-countries-label">Countries</div></div>
     <div class="onb-stat-div"></div>
     <div class="onb-stat"><div class="onb-stat-num" id="onb-stat-continents-count">5</div><div class="onb-stat-label" id="onb-stat-continents-label">Continents</div></div>
   </div>
@@ -659,7 +669,7 @@ const i18n = {
     premiumLater:'Maybe later', premiumUnlockRegion:'Access', premiumUnlockAll:'Open full access',
     premiumPriceEurope:'€2.99', premiumPriceAmericas:'€2.99', premiumPriceAsia:'€2.99', premiumPriceAll:'€2.99',
     premiumLabelEurope:'Europe', premiumLabelAmericas:'Americas', premiumLabelAsia:'Asia', premiumLabelAll:'All countries',
-    premiumSubEurope:'16 countries · 92 sanctuaries', premiumSubAmericas:'18 countries · 46 sanctuaries', premiumSubAsia:'12 countries · 50 sanctuaries', premiumSubAll:'62 countries · 209 sanctuaries · Full pilgrim memory',
+    premiumSubEurope:'20 countries · 108 sanctuaries', premiumSubAmericas:'19 countries · 50 sanctuaries', premiumSubAsia:'14 countries · 52 sanctuaries', premiumSubAll:'69 countries · 231 sanctuaries · Full pilgrim memory',
     premiumOnetime:'One-time payment · Yours forever', premiumGooglePlayNote:'Secure one-time payment with Google Play', premiumAlreadyUnlocked:'Full access active', premiumActivatedToast:'Premium activated. Thank you!',
     premiumRestoreCta:'Restore purchase', premiumRestoreChecking:'Checking your purchase…', premiumRestoreNone:'No pending Premium purchase found.',
     premiumCodeCta:'Use premium code', premiumCodePrompt:'Enter your premium code:', premiumCodeInvalid:'Invalid premium code.', premiumCodeApplied:'Premium activated with code.',
@@ -695,8 +705,8 @@ const i18n = {
     onbPurposeTitle:'What Peregrin is', onbPurposeBody:'Peregrin is a Catholic pilgrimage passport that helps you discover sanctuaries, mark the holy places you have visited, follow sacred routes and keep an ordered memory of your journey. It is designed to accompany your real pilgrimage life with visits, milestones and personal country certificates gathered over time.',
     onbStatSanctuaries:'Sanctuaries', onbStatCountries:'Countries', onbStatContinents:'Continents',
     onbCta:'Begin your pilgrimage ✦',
-    homeKicker:'', homeTitle:'Sacred atlas', homeCopy:'', homePrimary:'Open map', homeRoutes:'Routes', homePassport:'Passport', homeNote:'', homeStatSanctuaries:'Sanctuaries', homeStatCountries:'Countries', homeStatRoutes:'Routes',
-    navWorld:'World',editName:'Edit my name', editNamePrompt:'Enter your pilgrim name:', viewIntro:'View intro', mapHelpCta:'Peregrin', aboutTitle:'What is Peregrin?', aboutBody:'Peregrin is a digital pilgrimage passport for Catholic pilgrims. It helps you discover sanctuaries, register your visits and keep the memory of your journey with routes, milestones and personal certificates.', pageTitle:'Peregrin — Your pilgrim passport', pilgrimFallback:'Pilgrim', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium activated locally', testerPremiumOff:'Premium deactivated locally', mapFilterCountry:'Showing only this country', mapFilterRoute:'Showing only this route', mapFilterShowAll:'Show all', routeTapHint:'Tap to see this route on the map', routeFirstStop:'First stop', commentsTitle:'Pilgrim comments', commentsPlaceholder:'Share a tip, a practical note or a short impression for other pilgrims...', commentsHint:'Visible to other signed-in pilgrims.', commentsSubmit:'Post comment', commentsLoading:'Loading comments...', commentsEmpty:'No comments yet. Be the first to leave one.', commentsUnavailable:'Comments are not available right now.', commentsPosted:'Comment posted', commentsUpdated:'Comment updated', commentsDeleted:'Comment deleted', commentsEdited:'edited', commentsEdit:'Edit', commentsDelete:'Delete', commentsEditPrompt:'Edit your comment:', commentsDeleteConfirm:'Delete this comment?', commentsTooShort:'Write at least 3 characters.', commentsSignIn:'Sign in to leave comments.', commentsNoLinks:'Links are not allowed in comments for now.', commentsReport:'Report', commentsReported:'Comment reported. Thank you.', commentsSlowDown:(seconds)=>`Please wait ${seconds}s before posting again.`, journalDelete:'Delete note', journalDeleteConfirm:'Delete this private note?', journalDeleted:'Private note deleted', createdBy:'Created with faith by', feedbackMsg:'Suggestions and feedback always welcome',
+    homeKicker:'', homeTitle:'Sacred atlas', homeCopy:'', homePrimary:'Open map', homeRoutes:'Routes', homePassport:'Passport', homeNote:'', homeStatSanctuaries:'Sanctuaries', homeStatCountries:'Countries', homeStatRoutes:'Routes', homeNextTitle:'Suggested next step', homeNextEmpty:'Begin with a real pilgrimage memory', homeNextEmptyMeta:'Search a sanctuary you have truly visited, open its profile and keep your first stamp.', homeNextCountry:'Continue a country path', homeNextRoute:'Continue a route', homeNextMilestone:'Next milestone nearby', homeNextPath:'Review your pilgrim path', homeNextOpen:'Open this step', homeNextPathCta:'Open my path',
+    navWorld:'World',editName:'Edit my name', editNamePrompt:'Enter your pilgrim name:', viewIntro:'View intro', mapHelpCta:'Peregrin', aboutTitle:'What is Peregrin?', aboutBody:'Peregrin is a digital pilgrimage passport for Catholic pilgrims. It helps you discover sanctuaries, register your visits and keep the memory of your journey with routes, milestones and personal certificates.', pageTitle:'Peregrin — Your pilgrim passport', pilgrimFallback:'Pilgrim', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium activated locally', testerPremiumOff:'Premium deactivated locally', mapFilterCountry:'Showing only this country', mapFilterRoute:'Showing only this route', mapFilterShowAll:'Show all', routeTapHint:'Tap to see this route on the map', routeFirstStop:'First stop', searchFilterAll:'All', searchFilterVisited:'Visited', searchFilterUnvisited:'Not visited', searchFilterOpen:'Available', searchFilterMarian:'Marian', searchFilterChrist:'Christ', searchFilterCathedral:'Cathedrals', searchFilterMonastery:'Monasteries', searchResultsCount:(n,shown=n)=>shown<n?`${shown} of ${n} results`:`${n} results`, commentsTitle:'Pilgrim comments', commentsPlaceholder:'Share a tip, a practical note or a short impression for other pilgrims...', commentsHint:'Visible to other signed-in pilgrims.', commentsSubmit:'Post comment', commentsLoading:'Loading comments...', commentsEmpty:'No comments yet. Be the first to leave one.', commentsUnavailable:'Comments are not available right now.', commentsPosted:'Comment posted', commentsUpdated:'Comment updated', commentsDeleted:'Comment deleted', commentsEdited:'edited', commentsEdit:'Edit', commentsDelete:'Delete', commentsEditPrompt:'Edit your comment:', commentsDeleteConfirm:'Delete this comment?', commentsTooShort:'Write at least 3 characters.', commentsSignIn:'Sign in to leave comments.', commentsNoLinks:'Links are not allowed in comments for now.', commentsReport:'Report', commentsReported:'Comment reported. Thank you.', commentsSlowDown:(seconds)=>`Please wait ${seconds}s before posting again.`, journalDelete:'Delete note', journalDeleteConfirm:'Delete this private note?', journalDeleted:'Private note deleted', createdBy:'Created with faith by', feedbackMsg:'Suggestions and feedback always welcome',
   },
   es: {
     appSubtitle:'Tu pasaporte peregrino', navHome:'Inicio', navMap:'Mapa', navCountries:'Países',
@@ -732,7 +742,7 @@ const i18n = {
     premiumLater:'Quizás más adelante', premiumUnlockRegion:'Acceder', premiumUnlockAll:'Acceder a todo',
     premiumPriceEurope:'2,99 €', premiumPriceAmericas:'2,99 €', premiumPriceAsia:'2,99 €', premiumPriceAll:'2,99 €',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'América', premiumLabelAsia:'Asia', premiumLabelAll:'Todos los países',
-    premiumSubEurope:'16 pa\u00edses · 92 santuarios', premiumSubAmericas:'18 pa\u00edses · 46 santuarios', premiumSubAsia:'12 pa\u00edses · 50 santuarios', premiumSubAll:'62 países · 209 santuarios · Memoria peregrina completa',
+    premiumSubEurope:'20 pa\u00edses · 108 santuarios', premiumSubAmericas:'19 pa\u00edses · 50 santuarios', premiumSubAsia:'14 pa\u00edses · 52 santuarios', premiumSubAll:'69 países · 231 santuarios · Memoria peregrina completa',
     premiumOnetime:'Pago único · Tuyo para siempre', premiumGooglePlayNote:'Pago único seguro con Google Play', premiumAlreadyUnlocked:'Acceso completo activo', premiumActivatedToast:'Premium activado. ¡Gracias!',
     premiumRestoreCta:'Restaurar compra', premiumRestoreChecking:'Comprobando tu compra…', premiumRestoreNone:'No se ha encontrado ninguna compra Premium pendiente.',
     premiumCodeCta:'Tengo un código Premium', premiumCodePrompt:'Introduce tu código Premium:', premiumCodeInvalid:'Código Premium no válido.', premiumCodeApplied:'Premium activado con código.',
@@ -768,8 +778,8 @@ const i18n = {
     onbPurposeTitle:'Qué es Peregrin', onbPurposeBody:'Peregrin es un pasaporte católico de peregrinación que te ayuda a descubrir santuarios, marcar los lugares santos que has visitado, seguir rutas sagradas y guardar una memoria ordenada de tu camino. Está pensado para acompañar tu vida real de peregrino con visitas, hitos y certificados personales por país que vas reuniendo con el tiempo.',
     onbStatSanctuaries:'Santuarios', onbStatCountries:'Países', onbStatContinents:'Continentes',
     onbCta:'Comenzar mi peregrinación ✦',
-    homeKicker:'', homeTitle:'Atlas sagrado', homeCopy:'', homePrimary:'Ver mapa', homeRoutes:'Rutas', homePassport:'Pasaporte', homeNote:'', homeStatSanctuaries:'Santuarios', homeStatCountries:'Países', homeStatRoutes:'Rutas',
-    navWorld:'Mundo',editName:'Editar mi nombre', editNamePrompt:'Introduce tu nombre de peregrino:', viewIntro:'Ver introducción', mapHelpCta:'Peregrin', aboutTitle:'¿Qué es Peregrin?', aboutBody:'Peregrin es un pasaporte digital de peregrinación católica. Te ayuda a descubrir santuarios, registrar tus visitas y guardar la memoria de tu camino con rutas, hitos y certificados personales.', pageTitle:'Peregrin — Tu pasaporte peregrino', pilgrimFallback:'Peregrino', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium activado en local', testerPremiumOff:'Premium desactivado en local', mapFilterCountry:'Mostrando solo este país', mapFilterRoute:'Mostrando solo esta ruta', mapFilterShowAll:'Ver todo', routeTapHint:'Toca para verla en el mapa', routeFirstStop:'Primera parada', commentsTitle:'Comentarios de peregrinos', commentsPlaceholder:'Comparte un consejo, una nota práctica o una impresión breve para otros peregrinos...', commentsHint:'Visible para otros peregrinos con sesión iniciada.', commentsSubmit:'Publicar comentario', commentsLoading:'Cargando comentarios...', commentsEmpty:'Todavía no hay comentarios. Sé el primero en dejar uno.', commentsUnavailable:'Los comentarios no están disponibles ahora mismo.', commentsPosted:'Comentario publicado', commentsUpdated:'Comentario actualizado', commentsDeleted:'Comentario borrado', commentsEdited:'editado', commentsEdit:'Editar', commentsDelete:'Borrar', commentsEditPrompt:'Edita tu comentario:', commentsDeleteConfirm:'¿Borrar este comentario?', commentsTooShort:'Escribe al menos 3 caracteres.', commentsSignIn:'Inicia sesión para dejar comentarios.', commentsNoLinks:'Por ahora no se permiten enlaces en los comentarios.', commentsReport:'Reportar', commentsReported:'Comentario reportado. Gracias.', commentsSlowDown:(seconds)=>`Espera ${seconds}s antes de volver a comentar.`, journalDelete:'Borrar nota', journalDeleteConfirm:'¿Borrar esta nota privada?', journalDeleted:'Nota privada borrada', createdBy:'Creado con fe por', feedbackMsg:'Sugerencias y comentarios siempre bienvenidos',
+    homeKicker:'', homeTitle:'Atlas sagrado', homeCopy:'', homePrimary:'Ver mapa', homeRoutes:'Rutas', homePassport:'Pasaporte', homeNote:'', homeStatSanctuaries:'Santuarios', homeStatCountries:'Países', homeStatRoutes:'Rutas', homeNextTitle:'Siguiente paso sugerido', homeNextEmpty:'Empieza con una memoria peregrina real', homeNextEmptyMeta:'Busca un santuario que hayas visitado de verdad, abre su ficha y guarda tu primer sello.', homeNextCountry:'Continúa un camino por país', homeNextRoute:'Continúa una ruta', homeNextMilestone:'Próximo hito cercano', homeNextPath:'Revisa tu camino peregrino', homeNextOpen:'Abrir este paso', homeNextPathCta:'Abrir mi camino',
+    navWorld:'Mundo',editName:'Editar mi nombre', editNamePrompt:'Introduce tu nombre de peregrino:', viewIntro:'Ver introducción', mapHelpCta:'Peregrin', aboutTitle:'¿Qué es Peregrin?', aboutBody:'Peregrin es un pasaporte digital de peregrinación católica. Te ayuda a descubrir santuarios, registrar tus visitas y guardar la memoria de tu camino con rutas, hitos y certificados personales.', pageTitle:'Peregrin — Tu pasaporte peregrino', pilgrimFallback:'Peregrino', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium activado en local', testerPremiumOff:'Premium desactivado en local', mapFilterCountry:'Mostrando solo este país', mapFilterRoute:'Mostrando solo esta ruta', mapFilterShowAll:'Ver todo', routeTapHint:'Toca para verla en el mapa', routeFirstStop:'Primera parada', searchFilterAll:'Todo', searchFilterVisited:'Visitados', searchFilterUnvisited:'Sin visitar', searchFilterOpen:'Disponibles', searchFilterMarian:'Marianos', searchFilterChrist:'Cristo', searchFilterCathedral:'Catedrales', searchFilterMonastery:'Monasterios', searchResultsCount:(n,shown=n)=>shown<n?`${shown} de ${n} resultados`:`${n} resultados`, commentsTitle:'Comentarios de peregrinos', commentsPlaceholder:'Comparte un consejo, una nota práctica o una impresión breve para otros peregrinos...', commentsHint:'Visible para otros peregrinos con sesión iniciada.', commentsSubmit:'Publicar comentario', commentsLoading:'Cargando comentarios...', commentsEmpty:'Todavía no hay comentarios. Sé el primero en dejar uno.', commentsUnavailable:'Los comentarios no están disponibles ahora mismo.', commentsPosted:'Comentario publicado', commentsUpdated:'Comentario actualizado', commentsDeleted:'Comentario borrado', commentsEdited:'editado', commentsEdit:'Editar', commentsDelete:'Borrar', commentsEditPrompt:'Edita tu comentario:', commentsDeleteConfirm:'¿Borrar este comentario?', commentsTooShort:'Escribe al menos 3 caracteres.', commentsSignIn:'Inicia sesión para dejar comentarios.', commentsNoLinks:'Por ahora no se permiten enlaces en los comentarios.', commentsReport:'Reportar', commentsReported:'Comentario reportado. Gracias.', commentsSlowDown:(seconds)=>`Espera ${seconds}s antes de volver a comentar.`, journalDelete:'Borrar nota', journalDeleteConfirm:'¿Borrar esta nota privada?', journalDeleted:'Nota privada borrada', createdBy:'Creado con fe por', feedbackMsg:'Sugerencias y comentarios siempre bienvenidos',
   },
   fr: {
     appSubtitle:'Votre passeport de pèlerin', navHome:'Accueil', navMap:'Carte', navCountries:'Pays',
@@ -805,7 +815,7 @@ const i18n = {
     premiumLater:'Peut-être plus tard', premiumUnlockRegion:'Accéder', premiumUnlockAll:'Accéder à tout',
     premiumPriceEurope:'2,99 €', premiumPriceAmericas:'2,99 €', premiumPriceAsia:'2,99 €', premiumPriceAll:'2,99 €',
     premiumLabelEurope:'Europe', premiumLabelAmericas:'Amériques', premiumLabelAsia:'Asie', premiumLabelAll:'Tous les pays',
-    premiumSubEurope:'16 pays · 92 sanctuaires', premiumSubAmericas:'18 pays · 46 sanctuaires', premiumSubAsia:'12 pays · 50 sanctuaires', premiumSubAll:'62 pays · 209 sanctuaires · Mémoire pèlerine complète',
+    premiumSubEurope:'20 pays · 108 sanctuaires', premiumSubAmericas:'19 pays · 50 sanctuaires', premiumSubAsia:'14 pays · 52 sanctuaires', premiumSubAll:'69 pays · 231 sanctuaires · Mémoire pèlerine complète',
     premiumOnetime:'Paiement unique · À vous pour toujours', premiumGooglePlayNote:'Paiement unique sécurisé avec Google Play', premiumAlreadyUnlocked:'Accès complet actif', premiumActivatedToast:'Premium activé. Merci !',
     premiumRestoreCta:'Restaurer l’achat', premiumRestoreChecking:'Vérification de votre achat…', premiumRestoreNone:'Aucun achat Premium en attente trouvé.',
     premiumCodeCta:'J’ai un code Premium', premiumCodePrompt:'Entrez votre code Premium :', premiumCodeInvalid:'Code Premium invalide.', premiumCodeApplied:'Premium activé avec code.',
@@ -841,8 +851,8 @@ const i18n = {
     onbPurposeTitle:'Qu’est-ce que Peregrin ?', onbPurposeBody:'Peregrin est un passeport catholique de pèlerinage qui vous aide à découvrir des sanctuaires, marquer les lieux saints déjà visités, suivre des routes sacrées et garder une mémoire ordonnée de votre chemin. Il est pensé pour accompagner votre vie réelle de pèlerin avec des visites, des jalons et des certificats personnels par pays recueillis au fil du temps.',
     onbStatSanctuaries:'Sanctuaires', onbStatCountries:'Pays', onbStatContinents:'Continents',
     onbCta:'Commencer mon pèlerinage ✦',
-    homeKicker:'', homeTitle:'Atlas sacré', homeCopy:'', homePrimary:'Ouvrir la carte', homeRoutes:'Itinéraires', homePassport:'Passeport', homeNote:'', homeStatSanctuaries:'Sanctuaires', homeStatCountries:'Pays', homeStatRoutes:'Itinéraires',
-    navWorld:'Monde',editName:'Modifier mon nom', editNamePrompt:'Entrez votre nom de pèlerin :', viewIntro:'Voir l’introduction', mapHelpCta:'Peregrin', aboutTitle:'Qu’est-ce que Peregrin ?', aboutBody:'Peregrin est un passeport numérique de pèlerinage catholique. Il vous aide à découvrir des sanctuaires, enregistrer vos visites et garder la mémoire de votre chemin avec des itinéraires, jalons et certificats personnels.', pageTitle:'Peregrin — Votre passeport de pèlerin', pilgrimFallback:'Pèlerin', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium activé en local', testerPremiumOff:'Premium désactivé en local', mapFilterCountry:'Affichage de ce pays uniquement', mapFilterRoute:'Affichage de cet itinéraire uniquement', mapFilterShowAll:'Tout afficher', routeTapHint:'Touchez pour voir cet itinéraire sur la carte', routeFirstStop:'Première étape', commentsTitle:'Commentaires des pèlerins', commentsPlaceholder:'Partagez un conseil, une note pratique ou une brève impression pour les autres pèlerins...', commentsHint:'Visible aux autres pèlerins connectés.', commentsSubmit:'Publier', commentsLoading:'Chargement des commentaires...', commentsEmpty:'Aucun commentaire pour le moment. Soyez le premier à en laisser un.', commentsUnavailable:'Les commentaires ne sont pas disponibles pour le moment.', commentsPosted:'Commentaire publié', commentsUpdated:'Commentaire mis à jour', commentsDeleted:'Commentaire supprimé', commentsEdited:'modifié', commentsEdit:'Modifier', commentsDelete:'Supprimer', commentsEditPrompt:'Modifiez votre commentaire :', commentsDeleteConfirm:'Supprimer ce commentaire ?', commentsTooShort:'Écrivez au moins 3 caractères.', commentsSignIn:'Connectez-vous pour laisser un commentaire.', commentsNoLinks:'Les liens ne sont pas autorisés dans les commentaires pour le moment.', commentsReport:'Signaler', commentsReported:'Commentaire signalé. Merci.', commentsSlowDown:(seconds)=>`Attendez ${seconds}s avant de publier à nouveau.`, journalDelete:'Supprimer la note', journalDeleteConfirm:'Supprimer cette note privée ?', journalDeleted:'Note privée supprimée', createdBy:'Créé avec foi par', feedbackMsg:'Suggestions et commentaires toujours bienvenus',
+    homeKicker:'', homeTitle:'Atlas sacré', homeCopy:'', homePrimary:'Ouvrir la carte', homeRoutes:'Itinéraires', homePassport:'Passeport', homeNote:'', homeStatSanctuaries:'Sanctuaires', homeStatCountries:'Pays', homeStatRoutes:'Itinéraires', homeNextTitle:'Prochaine étape suggérée', homeNextEmpty:'Commencez par une vraie mémoire de pèlerinage', homeNextEmptyMeta:'Cherchez un sanctuaire que vous avez vraiment visité, ouvrez sa fiche et gardez votre premier tampon.', homeNextCountry:'Continuer un chemin par pays', homeNextRoute:'Continuer un itinéraire', homeNextMilestone:'Prochain jalon proche', homeNextPath:'Relire votre chemin de pèlerin', homeNextOpen:'Ouvrir cette étape', homeNextPathCta:'Ouvrir mon chemin',
+    navWorld:'Monde',editName:'Modifier mon nom', editNamePrompt:'Entrez votre nom de pèlerin :', viewIntro:'Voir l’introduction', mapHelpCta:'Peregrin', aboutTitle:'Qu’est-ce que Peregrin ?', aboutBody:'Peregrin est un passeport numérique de pèlerinage catholique. Il vous aide à découvrir des sanctuaires, enregistrer vos visites et garder la mémoire de votre chemin avec des itinéraires, jalons et certificats personnels.', pageTitle:'Peregrin — Votre passeport de pèlerin', pilgrimFallback:'Pèlerin', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium activé en local', testerPremiumOff:'Premium désactivé en local', mapFilterCountry:'Affichage de ce pays uniquement', mapFilterRoute:'Affichage de cet itinéraire uniquement', mapFilterShowAll:'Tout afficher', routeTapHint:'Touchez pour voir cet itinéraire sur la carte', routeFirstStop:'Première étape', searchFilterAll:'Tout', searchFilterVisited:'Visités', searchFilterUnvisited:'Non visités', searchFilterOpen:'Disponibles', searchFilterMarian:'Mariaux', searchFilterChrist:'Christ', searchFilterCathedral:'Cathédrales', searchFilterMonastery:'Monastères', searchResultsCount:(n,shown=n)=>shown<n?`${shown} sur ${n} résultats`:`${n} résultats`, commentsTitle:'Commentaires des pèlerins', commentsPlaceholder:'Partagez un conseil, une note pratique ou une brève impression pour les autres pèlerins...', commentsHint:'Visible aux autres pèlerins connectés.', commentsSubmit:'Publier', commentsLoading:'Chargement des commentaires...', commentsEmpty:'Aucun commentaire pour le moment. Soyez le premier à en laisser un.', commentsUnavailable:'Les commentaires ne sont pas disponibles pour le moment.', commentsPosted:'Commentaire publié', commentsUpdated:'Commentaire mis à jour', commentsDeleted:'Commentaire supprimé', commentsEdited:'modifié', commentsEdit:'Modifier', commentsDelete:'Supprimer', commentsEditPrompt:'Modifiez votre commentaire :', commentsDeleteConfirm:'Supprimer ce commentaire ?', commentsTooShort:'Écrivez au moins 3 caractères.', commentsSignIn:'Connectez-vous pour laisser un commentaire.', commentsNoLinks:'Les liens ne sont pas autorisés dans les commentaires pour le moment.', commentsReport:'Signaler', commentsReported:'Commentaire signalé. Merci.', commentsSlowDown:(seconds)=>`Attendez ${seconds}s avant de publier à nouveau.`, journalDelete:'Supprimer la note', journalDeleteConfirm:'Supprimer cette note privée ?', journalDeleted:'Note privée supprimée', createdBy:'Créé avec foi par', feedbackMsg:'Suggestions et commentaires toujours bienvenus',
   },
   it: {
     appSubtitle:'Il tuo passaporto del pellegrino', navHome:'Inizio', navMap:'Mappa', navCountries:'Paesi',
@@ -878,7 +888,7 @@ const i18n = {
     premiumLater:'Forse più tardi', premiumUnlockRegion:'Accedi', premiumUnlockAll:'Accedi a tutto',
     premiumPriceEurope:'€ 2,99', premiumPriceAmericas:'€ 2,99', premiumPriceAsia:'€ 2,99', premiumPriceAll:'€ 2,99',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'Americhe', premiumLabelAsia:'Asia', premiumLabelAll:'Tutti i paesi',
-    premiumSubEurope:'16 paesi · 92 santuari', premiumSubAmericas:'18 paesi · 46 santuari', premiumSubAsia:'12 paesi · 50 santuari', premiumSubAll:'62 paesi · 209 santuari · Memoria pellegrina completa',
+    premiumSubEurope:'20 paesi · 108 santuari', premiumSubAmericas:'19 paesi · 50 santuari', premiumSubAsia:'14 paesi · 52 santuari', premiumSubAll:'69 paesi · 231 santuari · Memoria pellegrina completa',
     premiumOnetime:'Pagamento unico · Tuo per sempre', premiumGooglePlayNote:'Pagamento unico sicuro con Google Play', premiumAlreadyUnlocked:'Accesso completo attivo', premiumActivatedToast:'Premium attivato. Grazie!',
     premiumRestoreCta:'Ripristina acquisto', premiumRestoreChecking:'Verifica dell’acquisto…', premiumRestoreNone:'Nessun acquisto Premium in attesa trovato.',
     premiumCodeCta:'Ho un codice Premium', premiumCodePrompt:'Inserisci il tuo codice Premium:', premiumCodeInvalid:'Codice Premium non valido.', premiumCodeApplied:'Premium attivato con codice.',
@@ -914,8 +924,8 @@ const i18n = {
     onbPurposeTitle:'Che cos’è Peregrin?', onbPurposeBody:'Peregrin è un passaporto cattolico di pellegrinaggio che ti aiuta a scoprire santuari, segnare i luoghi santi che hai visitato, seguire itinerari sacri e custodire una memoria ordinata del tuo cammino. È pensato per accompagnare la tua vita reale di pellegrino con visite, traguardi e certificati personali per paese raccolti nel tempo.',
     onbStatSanctuaries:'Santuari', onbStatCountries:'Paesi', onbStatContinents:'Continenti',
     onbCta:'Iniziare il mio pellegrinaggio ✦',
-    homeKicker:'', homeTitle:'Atlante sacro', homeCopy:'', homePrimary:'Apri la mappa', homeRoutes:'Itinerari', homePassport:'Passaporto', homeNote:'', homeStatSanctuaries:'Santuari', homeStatCountries:'Paesi', homeStatRoutes:'Itinerari',
-    navWorld:'Mondo',editName:'Modifica il mio nome', editNamePrompt:'Inserisci il tuo nome di pellegrino:', viewIntro:'Vedi introduzione', mapHelpCta:'Peregrin', aboutTitle:'Che cos’è Peregrin?', aboutBody:'Peregrin è un passaporto digitale di pellegrinaggio cattolico. Ti aiuta a scoprire santuari, registrare le visite e custodire il ricordo del tuo cammino con itinerari, traguardi e certificati personali.', pageTitle:'Peregrin — Il tuo passaporto del pellegrino', pilgrimFallback:'Pellegrino', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium attivato in locale', testerPremiumOff:'Premium disattivato in locale', mapFilterCountry:'Mostra solo questo paese', mapFilterRoute:'Mostra solo questo itinerario', mapFilterShowAll:'Mostra tutto', routeTapHint:'Tocca per vedere l’itinerario sulla mappa', routeFirstStop:'Prima tappa', commentsTitle:'Commenti dei pellegrini', commentsPlaceholder:'Condividi un consiglio, una nota pratica o una breve impressione per altri pellegrini...', commentsHint:'Visibile agli altri pellegrini con accesso.', commentsSubmit:'Pubblica', commentsLoading:'Caricamento commenti...', commentsEmpty:'Ancora nessun commento. Sii il primo a lasciarne uno.', commentsUnavailable:'I commenti non sono disponibili in questo momento.', commentsPosted:'Commento pubblicato', commentsUpdated:'Commento aggiornato', commentsDeleted:'Commento eliminato', commentsEdited:'modificato', commentsEdit:'Modifica', commentsDelete:'Elimina', commentsEditPrompt:'Modifica il tuo commento:', commentsDeleteConfirm:'Eliminare questo commento?', commentsTooShort:'Scrivi almeno 3 caratteri.', commentsSignIn:'Accedi per lasciare commenti.', commentsNoLinks:'Per ora i link non sono consentiti nei commenti.', commentsReport:'Segnala', commentsReported:'Commento segnalato. Grazie.', commentsSlowDown:(seconds)=>`Attendi ${seconds}s prima di pubblicare di nuovo.`, journalDelete:'Elimina nota', journalDeleteConfirm:'Eliminare questa nota privata?', journalDeleted:'Nota privata eliminata', createdBy:'Creato con fede da', feedbackMsg:'Suggerimenti e commenti sempre benvenuti',
+    homeKicker:'', homeTitle:'Atlante sacro', homeCopy:'', homePrimary:'Apri la mappa', homeRoutes:'Itinerari', homePassport:'Passaporto', homeNote:'', homeStatSanctuaries:'Santuari', homeStatCountries:'Paesi', homeStatRoutes:'Itinerari', homeNextTitle:'Prossimo passo suggerito', homeNextEmpty:'Inizia con una vera memoria di pellegrinaggio', homeNextEmptyMeta:'Cerca un santuario che hai davvero visitato, apri la scheda e custodisci il primo timbro.', homeNextCountry:'Continua un cammino per paese', homeNextRoute:'Continua un itinerario', homeNextMilestone:'Prossimo traguardo vicino', homeNextPath:'Rivedi il tuo cammino pellegrino', homeNextOpen:'Apri questo passo', homeNextPathCta:'Apri il mio cammino',
+    navWorld:'Mondo',editName:'Modifica il mio nome', editNamePrompt:'Inserisci il tuo nome di pellegrino:', viewIntro:'Vedi introduzione', mapHelpCta:'Peregrin', aboutTitle:'Che cos’è Peregrin?', aboutBody:'Peregrin è un passaporto digitale di pellegrinaggio cattolico. Ti aiuta a scoprire santuari, registrare le visite e custodire il ricordo del tuo cammino con itinerari, traguardi e certificati personali.', pageTitle:'Peregrin — Il tuo passaporto del pellegrino', pilgrimFallback:'Pellegrino', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium attivato in locale', testerPremiumOff:'Premium disattivato in locale', mapFilterCountry:'Mostra solo questo paese', mapFilterRoute:'Mostra solo questo itinerario', mapFilterShowAll:'Mostra tutto', routeTapHint:'Tocca per vedere l’itinerario sulla mappa', routeFirstStop:'Prima tappa', searchFilterAll:'Tutto', searchFilterVisited:'Visitati', searchFilterUnvisited:'Non visitati', searchFilterOpen:'Disponibili', searchFilterMarian:'Mariani', searchFilterChrist:'Cristo', searchFilterCathedral:'Cattedrali', searchFilterMonastery:'Monasteri', searchResultsCount:(n,shown=n)=>shown<n?`${shown} di ${n} risultati`:`${n} risultati`, commentsTitle:'Commenti dei pellegrini', commentsPlaceholder:'Condividi un consiglio, una nota pratica o una breve impressione per altri pellegrini...', commentsHint:'Visibile agli altri pellegrini con accesso.', commentsSubmit:'Pubblica', commentsLoading:'Caricamento commenti...', commentsEmpty:'Ancora nessun commento. Sii il primo a lasciarne uno.', commentsUnavailable:'I commenti non sono disponibili in questo momento.', commentsPosted:'Commento pubblicato', commentsUpdated:'Commento aggiornato', commentsDeleted:'Commento eliminato', commentsEdited:'modificato', commentsEdit:'Modifica', commentsDelete:'Elimina', commentsEditPrompt:'Modifica il tuo commento:', commentsDeleteConfirm:'Eliminare questo commento?', commentsTooShort:'Scrivi almeno 3 caratteri.', commentsSignIn:'Accedi per lasciare commenti.', commentsNoLinks:'Per ora i link non sono consentiti nei commenti.', commentsReport:'Segnala', commentsReported:'Commento segnalato. Grazie.', commentsSlowDown:(seconds)=>`Attendi ${seconds}s prima di pubblicare di nuovo.`, journalDelete:'Elimina nota', journalDeleteConfirm:'Eliminare questa nota privata?', journalDeleted:'Nota privata eliminata', createdBy:'Creato con fede da', feedbackMsg:'Suggerimenti e commenti sempre benvenuti',
   },
   pt: {
     appSubtitle:'O seu passaporte de peregrino', navHome:'Início', navMap:'Mapa', navCountries:'Países',
@@ -951,7 +961,7 @@ const i18n = {
     premiumLater:'Talvez mais tarde', premiumUnlockRegion:'Aceder', premiumUnlockAll:'Aceder a tudo',
     premiumPriceEurope:'€2,99', premiumPriceAmericas:'€2,99', premiumPriceAsia:'€2,99', premiumPriceAll:'€2,99',
     premiumLabelEurope:'Europa', premiumLabelAmericas:'Américas', premiumLabelAsia:'Ásia', premiumLabelAll:'Todos os países',
-    premiumSubEurope:'16 pa\u00edses · 92 santu\u00e1rios', premiumSubAmericas:'18 pa\u00edses · 46 santu\u00e1rios', premiumSubAsia:'12 pa\u00edses · 50 santu\u00e1rios', premiumSubAll:'62 países · 209 santuários · Memória peregrina completa',
+    premiumSubEurope:'20 pa\u00edses · 108 santu\u00e1rios', premiumSubAmericas:'19 pa\u00edses · 50 santu\u00e1rios', premiumSubAsia:'14 pa\u00edses · 52 santu\u00e1rios', premiumSubAll:'69 países · 231 santuários · Memória peregrina completa',
     premiumOnetime:'Pagamento único · Seu para sempre', premiumGooglePlayNote:'Pagamento único seguro com Google Play', premiumAlreadyUnlocked:'Acesso completo ativo', premiumActivatedToast:'Premium ativado. Obrigado!',
     premiumRestoreCta:'Restaurar compra', premiumRestoreChecking:'A verificar a sua compra…', premiumRestoreNone:'Não foi encontrada nenhuma compra Premium pendente.',
     premiumCodeCta:'Tenho um código Premium', premiumCodePrompt:'Introduza o seu código Premium:', premiumCodeInvalid:'Código Premium inválido.', premiumCodeApplied:'Premium ativado com código.',
@@ -987,8 +997,8 @@ const i18n = {
     onbPurposeTitle:'O que é o Peregrin?', onbPurposeBody:'O Peregrin é um passaporte católico de peregrinação que o ajuda a descobrir santuários, marcar os lugares santos que já visitou, seguir rotas sagradas e guardar uma memória organizada do seu caminho. Foi pensado para acompanhar a sua vida real de peregrino com visitas, marcos e certificados pessoais por país reunidos ao longo do tempo.',
     onbStatSanctuaries:'Santuários', onbStatCountries:'Países', onbStatContinents:'Continentes',
     onbCta:'Começar a minha peregrinação ✦',
-    homeKicker:'', homeTitle:'Atlas sagrado', homeCopy:'', homePrimary:'Abrir mapa', homeRoutes:'Rotas', homePassport:'Passaporte', homeNote:'', homeStatSanctuaries:'Santuários', homeStatCountries:'Países', homeStatRoutes:'Rotas',
-    navWorld:'Mundo',editName:'Editar o meu nome', editNamePrompt:'Introduza o seu nome de peregrino:', viewIntro:'Ver introdução', mapHelpCta:'Peregrin', aboutTitle:'O que é o Peregrin?', aboutBody:'Peregrin é um passaporte digital de peregrinação católica. Ajuda-o a descobrir santuários, registar as suas visitas e guardar a memória do seu caminho com rotas, marcos e certificados pessoais.', pageTitle:'Peregrin — O seu passaporte de peregrino', pilgrimFallback:'Peregrino', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium ativado localmente', testerPremiumOff:'Premium desativado localmente', mapFilterCountry:'A mostrar apenas este país', mapFilterRoute:'A mostrar apenas esta rota', mapFilterShowAll:'Ver tudo', routeTapHint:'Toque para ver esta rota no mapa', routeFirstStop:'Primeira paragem', commentsTitle:'Comentários de peregrinos', commentsPlaceholder:'Partilhe uma dica, uma nota prática ou uma impressão breve para outros peregrinos...', commentsHint:'Visível para outros peregrinos com sessão iniciada.', commentsSubmit:'Publicar comentário', commentsLoading:'A carregar comentários...', commentsEmpty:'Ainda não há comentários. Seja o primeiro a deixar um.', commentsUnavailable:'Os comentários não estão disponíveis neste momento.', commentsPosted:'Comentário publicado', commentsUpdated:'Comentário atualizado', commentsDeleted:'Comentário eliminado', commentsEdited:'editado', commentsEdit:'Editar', commentsDelete:'Eliminar', commentsEditPrompt:'Edite o seu comentário:', commentsDeleteConfirm:'Eliminar este comentário?', commentsTooShort:'Escreva pelo menos 3 caracteres.', commentsSignIn:'Inicie sessão para deixar comentários.', commentsNoLinks:'Por agora não são permitidos links nos comentários.', commentsReport:'Reportar', commentsReported:'Comentário reportado. Obrigado.', commentsSlowDown:(seconds)=>`Espere ${seconds}s antes de voltar a comentar.`, journalDelete:'Eliminar nota', journalDeleteConfirm:'Eliminar esta nota privada?', journalDeleted:'Nota privada eliminada', createdBy:'Criado com fé por', feedbackMsg:'Sugestões e comentários sempre bem-vindos',
+    homeKicker:'', homeTitle:'Atlas sagrado', homeCopy:'', homePrimary:'Abrir mapa', homeRoutes:'Rotas', homePassport:'Passaporte', homeNote:'', homeStatSanctuaries:'Santuários', homeStatCountries:'Países', homeStatRoutes:'Rotas', homeNextTitle:'Próximo passo sugerido', homeNextEmpty:'Comece com uma memória peregrina real', homeNextEmptyMeta:'Procure um santuário que visitou de verdade, abra a ficha e guarde o seu primeiro selo.', homeNextCountry:'Continuar um caminho por país', homeNextRoute:'Continuar uma rota', homeNextMilestone:'Próximo marco próximo', homeNextPath:'Rever o seu caminho peregrino', homeNextOpen:'Abrir este passo', homeNextPathCta:'Abrir o meu caminho',
+    navWorld:'Mundo',editName:'Editar o meu nome', editNamePrompt:'Introduza o seu nome de peregrino:', viewIntro:'Ver introdução', mapHelpCta:'Peregrin', aboutTitle:'O que é o Peregrin?', aboutBody:'Peregrin é um passaporte digital de peregrinação católica. Ajuda-o a descobrir santuários, registar as suas visitas e guardar a memória do seu caminho com rotas, marcos e certificados pessoais.', pageTitle:'Peregrin — O seu passaporte de peregrino', pilgrimFallback:'Peregrino', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium ativado localmente', testerPremiumOff:'Premium desativado localmente', mapFilterCountry:'A mostrar apenas este país', mapFilterRoute:'A mostrar apenas esta rota', mapFilterShowAll:'Ver tudo', routeTapHint:'Toque para ver esta rota no mapa', routeFirstStop:'Primeira paragem', searchFilterAll:'Tudo', searchFilterVisited:'Visitados', searchFilterUnvisited:'Não visitados', searchFilterOpen:'Disponíveis', searchFilterMarian:'Marianos', searchFilterChrist:'Cristo', searchFilterCathedral:'Catedrais', searchFilterMonastery:'Mosteiros', searchResultsCount:(n,shown=n)=>shown<n?`${shown} de ${n} resultados`:`${n} resultados`, commentsTitle:'Comentários de peregrinos', commentsPlaceholder:'Partilhe uma dica, uma nota prática ou uma impressão breve para outros peregrinos...', commentsHint:'Visível para outros peregrinos com sessão iniciada.', commentsSubmit:'Publicar comentário', commentsLoading:'A carregar comentários...', commentsEmpty:'Ainda não há comentários. Seja o primeiro a deixar um.', commentsUnavailable:'Os comentários não estão disponíveis neste momento.', commentsPosted:'Comentário publicado', commentsUpdated:'Comentário atualizado', commentsDeleted:'Comentário eliminado', commentsEdited:'editado', commentsEdit:'Editar', commentsDelete:'Eliminar', commentsEditPrompt:'Edite o seu comentário:', commentsDeleteConfirm:'Eliminar este comentário?', commentsTooShort:'Escreva pelo menos 3 caracteres.', commentsSignIn:'Inicie sessão para deixar comentários.', commentsNoLinks:'Por agora não são permitidos links nos comentários.', commentsReport:'Reportar', commentsReported:'Comentário reportado. Obrigado.', commentsSlowDown:(seconds)=>`Espere ${seconds}s antes de voltar a comentar.`, journalDelete:'Eliminar nota', journalDeleteConfirm:'Eliminar esta nota privada?', journalDeleted:'Nota privada eliminada', createdBy:'Criado com fé por', feedbackMsg:'Sugestões e comentários sempre bem-vindos',
   }
 };
 if(window.PEREGRIN_PREMIUM_I18N){
@@ -1039,7 +1049,7 @@ const ANALYTICS_SESSION_ID = (() => {
 const AUTH_EMAIL_STORAGE_KEY = 'peregrin_last_email';
 const AUTH_LANG_STORAGE_KEY = 'peregrin_preferred_lang';
 const LAUNCH_ALL_COUNTRIES_UNLOCKED = false;
-let visits={}, unlockedRegions=[], currentLang='en', currentScreen='home', currentCountry='be', map=null, markers={}, activeRouteFilter=null, activeCountryFilter=null, pilgrimName='', sanctuarySearchQuery='';
+let visits={}, unlockedRegions=[], currentLang='en', currentScreen='home', currentCountry='be', map=null, markers={}, activeRouteFilter=null, activeCountryFilter=null, pilgrimName='', sanctuarySearchQuery='', sanctuarySearchFilter='all';
 let markerClusterGroups=null, markerClusterById={}, markerLeaderLines={};
 let shouldReturnHomeOnResume=false;
 let googlePlayPurchaseListenerAttached=false;
@@ -2690,25 +2700,74 @@ function getCountryForSanctuary(s){
   return countries.find(c=>c.id===s.country);
 }
 
+const SANCTUARY_SEARCH_FILTERS = [
+  {id:'all', label:'searchFilterAll'},
+  {id:'visited', label:'searchFilterVisited'},
+  {id:'unvisited', label:'searchFilterUnvisited'},
+  {id:'open', label:'searchFilterOpen'},
+  {id:'marian', label:'searchFilterMarian'},
+  {id:'christ', label:'searchFilterChrist'},
+  {id:'cathedral', label:'searchFilterCathedral'},
+  {id:'monastery', label:'searchFilterMonastery'}
+];
+
+function getSanctuarySearchText(s,d,country){
+  const countryNames = country ? [cn(country), country.name, country.nameEs, country.nameFr, country.nameIt, country.namePt] : [];
+  return normalizeSearchValue([
+    s.name, d.name, s.type, d.type, s.city, d.city, s.province, d.province,
+    s.description, d.description, s.history, d.history, getSanctuaryVisualText(s),
+    ...countryNames
+  ].filter(Boolean).join(' '));
+}
+
+function matchesSanctuarySearchFilter(item, filter){
+  const {s,haystack} = item;
+  const active = filter || 'all';
+  if(active==='visited') return isVisited(s.id);
+  if(active==='unvisited') return !isVisited(s.id);
+  if(active==='open') return isCountryUnlocked(s.country);
+  if(active==='marian') return hasSanctuaryCue(haystack, ['marian', 'mary', 'our lady', 'virgin', 'senora', 'vierge', 'madonna', 'senhora', 'annunciation', 'anunciacion', 'visitation', 'carmel', 'guadalupe', 'fatima', 'lourdes']);
+  if(active==='christ') return hasSanctuaryCue(haystack, ['christ', 'cristo', 'christus', 'jesus', 'jesucristo', 'cristo redentor', 'sacred heart', 'sagrado corazon', 'sacre coeur', 'crucifix', 'crucificado']);
+  if(active==='cathedral') return hasSanctuaryCue(haystack, ['cathedral', 'catedral', 'cathedrale', 'cattedrale', 'seu ']);
+  if(active==='monastery') return hasSanctuaryCue(haystack, ['monastery', 'monasterio', 'monastere', 'mosteiro', 'abbey', 'abadia', 'abbazia', 'cloister', 'carmelite', 'benedictine', 'cartuja']);
+  return true;
+}
+
 function getSanctuarySearchResults(query){
   const normalized = normalizeSearchValue(query);
-  if(!normalized) return [];
+  const activeFilter = sanctuarySearchFilter || 'all';
+  if(!normalized && activeFilter==='all') return [];
   const terms = normalized.split(/\s+/).filter(Boolean);
   return sanctuaries.map(s=>{
     const d = sd(s);
     const country = getCountryForSanctuary(s);
-    const countryNames = country ? [cn(country), country.name, country.nameEs, country.nameFr, country.nameIt, country.namePt] : [];
-    const haystack = normalizeSearchValue([
-      s.name, d.name, s.type, d.type, s.city, d.city, s.province, d.province,
-      ...countryNames
-    ].filter(Boolean).join(' '));
+    const haystack = getSanctuarySearchText(s,d,country);
     const nameStarts = normalizeSearchValue(d.name || s.name).startsWith(normalized);
     const cityStarts = normalizeSearchValue(d.city || s.city).startsWith(normalized);
-    return {s,d,country,haystack,starts:nameStarts || cityStarts};
+    const countryStarts = normalizeSearchValue(country ? cn(country) : '').startsWith(normalized);
+    const unlocked = isCountryUnlocked(s.country);
+    return {s,d,country,haystack,starts:normalized && (nameStarts || cityStarts || countryStarts),unlocked};
   })
-  .filter(item=>terms.every(term=>item.haystack.includes(term)))
-  .sort((a,b)=>Number(b.starts)-Number(a.starts) || a.d.name.localeCompare(b.d.name))
-  .slice(0,20);
+  .filter(item=>terms.every(term=>item.haystack.includes(term)) && matchesSanctuarySearchFilter(item, activeFilter))
+  .sort((a,b)=>
+    Number(b.starts)-Number(a.starts) ||
+    Number(b.unlocked)-Number(a.unlocked) ||
+    Number(isVisited(b.s.id))-Number(isVisited(a.s.id)) ||
+    a.d.name.localeCompare(b.d.name)
+  );
+}
+
+function handleExploreFilter(filter){
+  sanctuarySearchFilter = SANCTUARY_SEARCH_FILTERS.some(item=>item.id===filter) ? filter : 'all';
+  renderExplore();
+  setTimeout(()=>{
+    const input = document.getElementById('temple-search-input');
+    if(input){
+      input.focus();
+      const len = input.value.length;
+      input.setSelectionRange(len, len);
+    }
+  },0);
 }
 
 function handleExploreSearch(value){
@@ -2727,6 +2786,15 @@ function handleExploreSearch(value){
 function clearExploreSearch(){
   sanctuarySearchQuery = '';
   renderExplore();
+}
+
+function renderTempleSearchFilters(){
+  const active = sanctuarySearchFilter || 'all';
+  return `<div class="temple-search-filters">
+    ${SANCTUARY_SEARCH_FILTERS.map(filter=>`
+      <button class="temple-search-filter ${active===filter.id?'active':''}" type="button" onclick="handleExploreFilter('${filter.id}')">${escapeHtml(t(filter.label))}</button>
+    `).join('')}
+  </div>`;
 }
 
 function openSearchResult(id){
@@ -2749,6 +2817,8 @@ function openSearchResult(id){
 function renderTempleSearch(){
   const query = sanctuarySearchQuery || '';
   const results = getSanctuarySearchResults(query);
+  const visibleResults = results.slice(0,20);
+  const activeFilter = sanctuarySearchFilter || 'all';
   const searchIcon = `<svg class="temple-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.7-3.7"/></svg>`;
   const box = `
     <div class="temple-search">
@@ -2756,9 +2826,10 @@ function renderTempleSearch(){
       <input id="temple-search-input" class="temple-search-input" type="search" value="${escapeHtml(query)}" placeholder="${escapeHtml(t('searchPlaceholder'))}" oninput="handleExploreSearch(this.value)" autocomplete="off">
       ${query ? `<button class="temple-search-clear" type="button" onclick="clearExploreSearch()" aria-label="${escapeHtml(t('searchClear'))}">×</button>` : ''}
     </div>`;
-  if(!query.trim()) return box;
-  const resultHtml = results.length
-    ? results.map(({s,d,country})=>{
+  const filters = renderTempleSearchFilters();
+  if(!query.trim() && activeFilter==='all') return `${box}${filters}`;
+  const resultHtml = visibleResults.length
+    ? visibleResults.map(({s,d,country})=>{
         const unlocked = isCountryUnlocked(s.country);
         const meta = [d.city, d.province, country ? cn(country) : ''].filter(Boolean).join(' · ');
         return `<div class="temple-search-result ${unlocked?'':'locked'}" onclick="openSearchResult(${s.id})">
@@ -2771,7 +2842,8 @@ function renderTempleSearch(){
         </div>`;
       }).join('')
     : `<div class="temple-search-empty">${escapeHtml(t('searchNoResults'))}</div>`;
-  return `${box}<div class="temple-search-results">${resultHtml}</div>`;
+  const summary = `<div class="temple-search-summary">${escapeHtml(t('searchResultsCount')(results.length, visibleResults.length))}</div>`;
+  return `${box}${filters}${summary}<div class="temple-search-results">${resultHtml}</div>`;
 }
 
 function getCommentLocale(){
@@ -3022,6 +3094,66 @@ function showToast(msg,duration){
 // ===================== RENDER =====================
 function refreshAll(){renderHome();renderExplore();renderPassport();renderPath();renderAchievements();renderRoutes();renderProfile();}
 
+function getHomeInsight(){
+  if(getVisitCount()===0){
+    return {
+      label:t('homeNextTitle'),
+      title:t('homeNextEmpty'),
+      meta:t('homeNextEmptyMeta'),
+      cta:t('homeNextOpen'),
+      action:"switchScreen('countries')"
+    };
+  }
+  const countryProgress = getPathCountryProgress()[0];
+  if(countryProgress){
+    return {
+      label:t('homeNextCountry'),
+      title:cn(countryProgress.country),
+      meta:`${countryProgress.visited}/${countryProgress.total} ${t('visited').toLowerCase()} · ${countryProgress.percent}%`,
+      cta:t('homeNextOpen'),
+      action:`focusCountry('${countryProgress.country.id}')`
+    };
+  }
+  const routeProgress = getPathRouteProgress()[0];
+  if(routeProgress){
+    const rd = routeProgress.route[currentLang] || routeProgress.route.en;
+    return {
+      label:t('homeNextRoute'),
+      title:rd.name,
+      meta:`${routeProgress.visited}/${routeProgress.total} ${t('routeVisited')} · ${routeProgress.percent}%`,
+      cta:t('homeNextOpen'),
+      action:`showRouteOnMap(${routeProgress.index})`
+    };
+  }
+  const milestone = getPathNextMilestones()[0];
+  if(milestone){
+    return {
+      label:t('homeNextMilestone'),
+      title:milestone.local.name,
+      meta:`${milestone.percent}% · ${milestone.local.desc}`,
+      cta:t('homeNextPathCta'),
+      action:"switchScreen('path')"
+    };
+  }
+  return {
+    label:t('homeNextTitle'),
+    title:t('homeNextPath'),
+    meta:getRank(),
+    cta:t('homeNextPathCta'),
+    action:"switchScreen('path')"
+  };
+}
+
+function renderHomeInsight(){
+  const insight = getHomeInsight();
+  return `<div class="home-insight">
+    <div class="home-insight-kicker">${escapeHtml(insight.label)}</div>
+    <div class="home-insight-title">${escapeHtml(insight.title)}</div>
+    <div class="home-insight-meta">${escapeHtml(insight.meta)}</div>
+    <button class="home-insight-btn" type="button" onclick="${insight.action}">${escapeHtml(insight.cta)}</button>
+  </div>`;
+}
+
 function renderHome(){
   const container=document.querySelector('.home-screen');
   if(!container) return;
@@ -3044,6 +3176,7 @@ function renderHome(){
         <div class="home-stat"><strong>${countries.length}</strong><span>${t('homeStatCountries')}</span></div>
         <div class="home-stat"><strong>${routes.length}</strong><span>${t('homeStatRoutes')}</span></div>
       </div>
+      ${renderHomeInsight()}
       ${t('homeNote') ? `<div class="home-note">${t('homeNote')}</div>` : ''}
     </div>`;
 }
@@ -3511,7 +3644,7 @@ if('serviceWorker' in navigator){
     window.__peregrinSwRefreshing = true;
     window.location.reload();
   });
-  navigator.serviceWorker.register('sw.js?v=44').then(reg => reg.update?.()).catch(()=>{});
+  navigator.serviceWorker.register('sw.js?v=46').then(reg => reg.update?.()).catch(()=>{});
 }
 
 // ===================== INIT =====================

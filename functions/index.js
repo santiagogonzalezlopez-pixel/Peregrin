@@ -216,15 +216,15 @@ async function sendPremiumCodeEmail(email, session) {
   await transporter.sendMail({
     from: SMTP_FROM,
     to: email,
-    subject: "Peregrin Premium - codigo de acceso",
+    subject: "Peregrin Premium - código de acceso",
     text: [
       "Gracias por tu pago de Peregrin Premium.",
       "",
-      "Tu acceso deberia activarse automaticamente. Si la app sigue bloqueada, abre Peregrin, pulsa \"Tengo un codigo Premium\" e introduce:",
+      "Tu acceso debería activarse automáticamente. Si la app sigue bloqueada, abre Peregrin, pulsa \"Tengo un código Premium\" e introduce:",
       "",
       PRIMARY_PREMIUM_FALLBACK_CODE,
       "",
-      "Codigo alternativo, por si hiciera falta:",
+      "Código alternativo, por si hiciera falta:",
       ACTIVE_PREMIUM_FALLBACK_CODES.find((code) => code !== PRIMARY_PREMIUM_FALLBACK_CODE) || PRIMARY_PREMIUM_FALLBACK_CODE,
       "",
       "Si necesitas ayuda, responde a este correo o escribe a " + SUPPORT_EMAIL + ".",
