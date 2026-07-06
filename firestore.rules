@@ -180,8 +180,12 @@ service cloud.firestore {
     match /users/{userId} {
       allow read: if isOwner(userId);
       allow create: if isOwner(userId)
-        && request.resource.data.keys().hasOnly(mutableUserFields())
-        && validUserFields(request.resource.data);
+        && request.resource.data.keys().hasOnly(mutableUserFields().concat(premiumUserFields()))
+        && validUserFields(request.resource.data)
+        && (
+          request.resource.data.keys().hasOnly(mutableUserFields())
+          || validPremiumUnlock(request.resource.data)
+        );
       allow update: if isOwner(userId)
         && changedOnlyMutableOrPremium()
         && validUserFields(request.resource.data)

@@ -408,18 +408,19 @@ async function verifyProductPurchase(androidPublisher, purchaseToken) {
   }
 }
 
-async function consumeIfNeeded(androidPublisher, purchase) {
-  if (purchase.consumptionState === 1) return true;
+async function acknowledgeIfNeeded(androidPublisher, purchase) {
+  if (purchase.acknowledgementState === 1) return true;
 
   try {
-    await androidPublisher.purchases.products.consume({
+    await androidPublisher.purchases.products.acknowledge({
       packageName: PACKAGE_NAME,
       productId: PREMIUM_PRODUCT_ID,
       token: purchase.purchaseToken,
+      requestBody: {},
     });
     return true;
   } catch (error) {
-    logger.error("google_play_purchase_consume_failed", {
+    logger.error("google_play_purchase_acknowledge_failed", {
       code: error.code,
       message: error.message,
       errors: error.errors,
@@ -516,12 +517,12 @@ exports.verifyGooglePlayPurchase = onCall(
       );
     });
 
-    const consumed = await consumeIfNeeded(androidPublisher, purchase);
-    if (consumed) {
+    const acknowledged = await acknowledgeIfNeeded(androidPublisher, purchase);
+    if (acknowledged) {
       await purchaseRef.set(
         {
-          consumptionState: 1,
-          consumedAt: admin.firestore.FieldValue.serverTimestamp(),
+          acknowledgementState: 1,
+          acknowledgedAt: admin.firestore.FieldValue.serverTimestamp(),
         },
         {merge: true}
       );
@@ -532,7 +533,7 @@ exports.verifyGooglePlayPurchase = onCall(
       productId: PREMIUM_PRODUCT_ID,
       orderId,
       purchaseTime,
-      consumed,
+      acknowledged,
     };
   }
 );

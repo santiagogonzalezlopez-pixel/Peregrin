@@ -94,7 +94,7 @@
       scopeAmericas: "Americas",
       scopeAfrica: "Africa",
       scopeAsia: "Asia",
-      scopeOceania: "Oceânia",
+      scopeOceania: "Oceania",
       scopeMixed: "Pilgrim route"
     },
     es: {
