@@ -1019,10 +1019,10 @@ function cn(c){ if(currentLang==='en') return c.name; return c['name'+currentLan
 // Local developer premium access. Limited to browser localhost during development.
 const TESTER_ACCESS_FLAG = 'peregrin_beta_tester_access';
 const TESTER_ACCESS_CODE = 'PEREGRIN-FAMILIA-2026';
-const EMERGENCY_PREMIUM_CODES = ['PEREGRIN-388066-6291','PEREGRIN-PREMIUM-2026'];
-const EMERGENCY_PREMIUM_CODE = EMERGENCY_PREMIUM_CODES[0];
 const PAYMENT_INTENT_FLAG = 'peregrin_stripe_checkout_started';
 const PAYMENT_INTENT_MAX_AGE_MS = 1000 * 60 * 90;
+const STRIPE_WEBHOOK_WAIT_ATTEMPTS = 6;
+const STRIPE_WEBHOOK_WAIT_MS = 1500;
 const PLAY_REVIEW_STORAGE_KEY = 'peregrin_play_review_state';
 const PLAY_REVIEW_COOLDOWN_MS = 1000 * 60 * 60 * 24 * 120;
 const PLAY_REVIEW_MIN_VISITS = 3;
@@ -1232,7 +1232,7 @@ function attachGooglePlayPurchaseListener(){
         await verifyGooglePlayPremium(result, 'google_play_restore');
       }catch(verifyError){
         console.error('google play listener server verification failed:', verifyError);
-        await grantEmergencyPremiumAfterGooglePlayCharge(result, 'listener_verification_failed');
+        await handleGooglePlayVerificationFailure(result, 'listener_verification_failed');
       }
       trackEvent('premium_purchase_success', {provider:'google_play', source:'listener'});
       closePremiumModal();
@@ -1833,7 +1833,12 @@ async function grantPremiumFromStripeReturn(paymentIntent){
   const user = window._currentUser;
   if(!user || !isRecentPaymentIntent(paymentIntent)) throw new Error('invalid_stripe_payment_return');
   if(paymentIntent.uid && paymentIntent.uid !== user.uid) throw new Error('stripe_payment_user_mismatch');
-  await grantPremiumAccess('code', {premiumCode: EMERGENCY_PREMIUM_CODE});
+  for(let attempt=0; attempt<STRIPE_WEBHOOK_WAIT_ATTEMPTS; attempt++){
+    await window._loadUserData(user.uid);
+    if(hasFullPremiumAccess()) return true;
+    if(attempt<STRIPE_WEBHOOK_WAIT_ATTEMPTS-1) await new Promise(resolve=>setTimeout(resolve, STRIPE_WEBHOOK_WAIT_MS));
+  }
+  return false;
 }
 
 async function handlePremiumCodeUnlock(){
@@ -1958,11 +1963,11 @@ async function verifyGooglePlayPremium(result, source){
   return response.data;
 }
 
-async function grantEmergencyPremiumAfterGooglePlayCharge(result, reason){
+async function handleGooglePlayVerificationFailure(result, reason){
   const payload = googlePlayPurchasePayload(result);
   if(!payload.purchaseToken) throw new Error('missing_google_play_purchase_token');
-  await grantPremiumAccess('code', {premiumCode: EMERGENCY_PREMIUM_CODE});
-  console.warn('google play emergency premium fallback used:', reason);
+  console.warn('google play server verification failed after charge:', reason);
+  throw new Error('google_play_verification_pending');
 }
 
 async function handleGooglePlayPurchase(region){
@@ -1979,7 +1984,7 @@ async function handleGooglePlayPurchase(region){
         await verifyGooglePlayPremium(result, 'google_play');
       }catch(verifyError){
         console.error('google play server verification failed after charge:', verifyError);
-        await grantEmergencyPremiumAfterGooglePlayCharge(result, 'purchase_verification_failed');
+        await handleGooglePlayVerificationFailure(result, 'purchase_verification_failed');
       }
       trackEvent('premium_purchase_success', {provider:'google_play', region, source:'purchase'});
       closePremiumModal();
@@ -2009,7 +2014,7 @@ async function restoreGooglePlayPremium(showMessages=false){
         await verifyGooglePlayPremium(result, 'google_play_restore');
       }catch(verifyError){
         console.error('google play server verification failed during restore:', verifyError);
-        await grantEmergencyPremiumAfterGooglePlayCharge(result, 'restore_verification_failed');
+        await handleGooglePlayVerificationFailure(result, 'restore_verification_failed');
       }
       trackEvent('premium_restore_success', {provider:'google_play'});
       closePremiumModal();
@@ -3738,8 +3743,8 @@ _auth.onAuthStateChanged(async user=>{
     if(paymentSuccess && !hasFullPremiumAccess()){
       try{
         if(isRecentPaymentIntent(paymentIntent)) showToast(t('paymentActivating'),3000);
-        await grantPremiumFromStripeReturn(paymentIntent);
-        trackEvent('premium_purchase_success', {provider:'stripe', region:paymentIntent?.region || 'all', source:'stripe_return'});
+        const stripePremiumActive = await grantPremiumFromStripeReturn(paymentIntent);
+        trackEvent(stripePremiumActive ? 'premium_purchase_success' : 'premium_purchase_pending', {provider:'stripe', region:paymentIntent?.region || 'all', source:'stripe_return'});
         try{ sessionStorage.removeItem(PAYMENT_INTENT_FLAG); }catch(e){}
       }catch(e){
         trackEvent('premium_purchase_failed', {provider:'stripe', region:paymentIntent?.region || 'all', source:'stripe_return', errorCode:e?.code||e?.message||'stripe_return_failed'});
