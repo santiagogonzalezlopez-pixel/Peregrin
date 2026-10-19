@@ -68,6 +68,7 @@ test('certificates still require real completed visits, never a payment',()=>{
 test('web and Android contain no path that can start or verify a purchase',()=>{
   assert.doesNotMatch(html,/buy\.stripe\.com|purchasePremium|restorePremium|httpsCallable|firebase-functions-compat|PREMIUM_PRICE_EUR|handleRegionPurchase/);
   assert.doesNotMatch(fs.readFileSync(path.join(root,'android/app/build.gradle'),'utf8'),/billingclient/);
+  assert.doesNotMatch(fs.readFileSync(path.join(root,'android/app/src/main/AndroidManifest.xml'),'utf8'),/com\.android\.vending\.BILLING/);
   assert.doesNotMatch(fs.readFileSync(path.join(root,'android/app/src/main/java/com/peregrin/app/MainActivity.java'),'utf8'),/PeregrinBilling/);
 });
 test('free access preserves account data loading without writing paid flags',()=>{
