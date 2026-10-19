@@ -115,6 +115,14 @@ the project. Reactivate billing before claiming that purchase activation works.
 Then verify the Stripe webhook configuration and both purchase verification
 endpoints. A changed price is not evidence of a successful Premium activation.
 
+Stripe initially had no event destinations configured. The live destination
+`we_1USKaARtrJ0ahZ4DGyN6GjC0` was created for
+`https://us-central1-peregrin-d7611.cloudfunctions.net/stripeWebhook`, subscribing
+only to `checkout.session.completed` and
+`checkout.session.async_payment_succeeded` (snapshot payloads). Its signing
+secret still needs to be configured securely as `STRIPE_WEBHOOK_SECRET` on the
+server after billing is restored. Do not copy secret values into this repository.
+
 ## Stripe webhook status
 
 Existing deployed functions seen on 2026-05-21:
