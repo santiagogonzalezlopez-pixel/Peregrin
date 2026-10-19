@@ -17,7 +17,6 @@
 <script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/12.15.0/firebase-functions-compat.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -658,28 +657,28 @@ const i18n = {
     removeVisit:'Visited — Remove visit', viewDetails:'View full details',
     howToGet:'How to get there', howToGetFull:'How to get there — Google Maps', moreInfoFull:'More information — Google search',
     descLabel:'Description', histLabel:'History', prayerLabel:"Pilgrim's Prayer",
-    lockBtn:'Open with Premium', certBtn:'Generate certificate',
+     certBtn:'Generate certificate',
     certDownloaded:'Certificate downloaded', certSaved:'Certificate saved on your device', certReady:'Certificate ready to share', certFailed:'We could not prepare the certificate.', certTitle:'Certificate of Pilgrimage', certPreviewTitle:'Your certificate is ready', certPreviewHint:'Review it here first, then share or download it whenever you want.', certShareBtn:'Share certificate', certDownloadBtn:'Download image', certCloseBtn:'Close',
     certText1:'This personal certificate records that', certText2:'has completed the pilgrimage path for',
     certText3:'sacred places in', certIssued:'Issued on',
-    premiumTitle:'Peregrin Premium', premiumSub:'Keep a richer memory of your pilgrimage: every country, route, certificate, milestone and shareable passport in one place.',
-    premiumCountries:'Full world access beyond the free starter', premiumCert:'Pilgrimage certificate per country',
-    premiumRoutes:'All pilgrimage routes', premiumBadges:'All milestones',
-    premiumGuides:'Full sacred routes and pilgrim guides', premiumJournal:'Private notes for your journey', premiumMemory:'Certificates, milestones and shareable passport',
-    premiumLater:'Maybe later', premiumUnlockRegion:'Access', premiumUnlockAll:'Open full access',
-    premiumLabelEurope:'Europe', premiumLabelAmericas:'Americas', premiumLabelAsia:'Asia', premiumLabelAll:'All countries',
-    premiumSubEurope:'20 countries · 108 sanctuaries', premiumSubAmericas:'19 countries · 50 sanctuaries', premiumSubAsia:'14 countries · 52 sanctuaries', premiumSubAll:'69 countries · 231 sanctuaries · Full pilgrim memory',
-    premiumOnetime:'One-time payment · Yours forever', premiumGooglePlayNote:'Secure one-time payment with Google Play', premiumAlreadyUnlocked:'Full access active', premiumActivatedToast:'Premium activated. Thank you!',
-    premiumRestoreCta:'Restore purchase', premiumRestoreChecking:'Checking your purchase…', premiumRestoreNone:'No pending Premium purchase found.',
-    premiumCodeCta:'Use premium code', premiumCodePrompt:'Enter your premium code:', premiumCodeInvalid:'Invalid premium code.', premiumCodeApplied:'Premium activated with code.',
-    premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Keep every route, certificate, milestone and passport memory in one place.',
-    testerAccessLabel:'Local access', testerAccessHint:'Only on this device during development', testerUnlockBtn:'Activate local access', testerDisableBtn:'Disable local access',
-    testerUnlockPrompt:'Enter the local access code:', testerUnlockEnabled:'Local access enabled on this device.',
-    testerUnlockRemoved:'Local access removed from this device.', testerUnlockInvalid:'Incorrect local access code.',
-    discoverPremium:'Discover Premium', certsAvailable:'Certificates available',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     certsAvailable:'Certificates available',
     language:'Language', countriesTitle:'Countries',
-    searchPlaceholder:'Search shrine, city, country...', searchNoResults:'No sanctuary found', searchClear:'Clear search', searchLocked:'Premium',
-    unlockPremium:'Premium — keep the full pilgrim memory',
+    searchPlaceholder:'Search shrine, city, country...', searchNoResults:'No sanctuary found', searchClear:'Clear search',
+
     rank0:'New Pilgrim', rank1:'First Step', rank5:'Walker of Faith',
     rank10:'Devoted Pilgrim', rank30:'Advanced Pilgrim', rank50:'Master Pilgrim',
     visitToast: n => `${n} registered`,
@@ -692,12 +691,12 @@ const i18n = {
     authErrTooMany:'Too many attempts. Wait a moment and try again.', authErrDisabled:'Email sign-in is not enabled for this app.',
     authErrRegisterGeneric:'We could not create the account. Please try again.', authErrGeneric:'Sign in error. Please try again.', resetEmailMissing:'Enter your email address first.',
     resetEmailSent:'We sent you an email to reset your password.', resetEmailError:'We could not send the reset email. Check the address and try again.',
-    premiumUnavailable:'Premium purchases are temporarily unavailable.',
-    premiumUnavailableDetail:'Premium purchases are available in the Android app through Google Play.',
-    billingUnavailable:'Google Play Billing is not available on this device.', billingFailed:'We could not complete the purchase. Please try again.',
-    billingCancelled:'Purchase cancelled.', profileSaveFailed:'We could not save the name. Please try again.',
-    paymentReturnInvalid:'We could not validate your payment return. If you were charged, contact elnuevoeuropeo@gmail.com.',
-    paymentActivating:'Activating Premium…', paymentManualReview:'We could not activate Premium yet. Use the Premium code from your email or contact elnuevoeuropeo@gmail.com.',
+
+
+
+     profileSaveFailed:'We could not save the name. Please try again.',
+
+
     onbStep1:'1 of 3',onbStep2:'2 of 3',onbStep3:'3 of 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Discover sacred places',onbTitle2:'Keep pilgrim stamps',onbTitle3:'Preserve your pilgrimage memory',onbDesc1:'Explore an interactive map of Catholic sanctuaries across Europe, the Americas, Africa, Asia and Oceania.',onbDesc2:'Register your visits and keep a personal pilgrim passport with the stamps of your journey.',onbDesc3:'When a country path is complete, download a beautiful personal pilgrimage certificate with your name.',onbNext:'Next',onbStart:'Begin my pilgrimage',onbSkip:'Skip',
     onbBadgeRoutes:'✨ Sacred routes', onbBadgeCertificates:'📜 Beautiful certificates',
     onbTagline:'The Pilgrim Passport', onbCopy:'Sacred places, living routes and beautifully kept milestones for every pilgrim journey.',
@@ -705,7 +704,7 @@ const i18n = {
     onbStatSanctuaries:'Sanctuaries', onbStatCountries:'Countries', onbStatContinents:'Continents',
     onbCta:'Begin your pilgrimage ✦',
     homeKicker:'', homeTitle:'Sacred atlas', homeCopy:'', homePrimary:'Open map', homeRoutes:'Routes', homePassport:'Passport', homeNote:'', homeStatSanctuaries:'Sanctuaries', homeStatCountries:'Countries', homeStatRoutes:'Routes', homeNextTitle:'Suggested next step', homeNextEmpty:'Begin with a real pilgrimage memory', homeNextEmptyMeta:'Search a sanctuary you have truly visited, open its profile and keep your first stamp.', homeNextCountry:'Continue a country path', homeNextRoute:'Continue a route', homeNextMilestone:'Next milestone nearby', homeNextPath:'Review your pilgrim path', homeNextOpen:'Open this step', homeNextPathCta:'Open my path',
-    navWorld:'World',editName:'Edit my name', editNamePrompt:'Enter your pilgrim name:', viewIntro:'View intro', mapHelpCta:'Peregrin', aboutTitle:'What is Peregrin?', aboutBody:'Peregrin is a digital pilgrimage passport for Catholic pilgrims. It helps you discover sanctuaries, register your visits and keep the memory of your journey with routes, milestones and personal certificates.', pageTitle:'Peregrin — Your pilgrim passport', pilgrimFallback:'Pilgrim', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium activated locally', testerPremiumOff:'Premium deactivated locally', mapFilterCountry:'Showing only this country', mapFilterRoute:'Showing only this route', mapFilterShowAll:'Show all', routeTapHint:'Tap to see this route on the map', routeFirstStop:'First stop', searchFilterAll:'All', searchFilterVisited:'Visited', searchFilterUnvisited:'Not visited', searchFilterOpen:'Available', searchFilterMarian:'Marian', searchFilterChrist:'Christ', searchFilterCathedral:'Cathedrals', searchFilterMonastery:'Monasteries', searchResultsCount:(n,shown=n)=>shown<n?`${shown} of ${n} results`:`${n} results`, commentsTitle:'Pilgrim comments', commentsPlaceholder:'Share a tip, a practical note or a short impression for other pilgrims...', commentsHint:'Visible to other signed-in pilgrims.', commentsSubmit:'Post comment', commentsLoading:'Loading comments...', commentsEmpty:'No comments yet. Be the first to leave one.', commentsUnavailable:'Comments are not available right now.', commentsPosted:'Comment posted', commentsUpdated:'Comment updated', commentsDeleted:'Comment deleted', commentsEdited:'edited', commentsEdit:'Edit', commentsDelete:'Delete', commentsEditPrompt:'Edit your comment:', commentsDeleteConfirm:'Delete this comment?', commentsTooShort:'Write at least 3 characters.', commentsSignIn:'Sign in to leave comments.', commentsNoLinks:'Links are not allowed in comments for now.', commentsReport:'Report', commentsReported:'Comment reported. Thank you.', commentsSlowDown:(seconds)=>`Please wait ${seconds}s before posting again.`, journalDelete:'Delete note', journalDeleteConfirm:'Delete this private note?', journalDeleted:'Private note deleted', createdBy:'Created with faith by', feedbackMsg:'Suggestions and feedback always welcome',
+    navWorld:'World',editName:'Edit my name', editNamePrompt:'Enter your pilgrim name:', viewIntro:'View intro', mapHelpCta:'Peregrin', aboutTitle:'What is Peregrin?', aboutBody:'Peregrin is a digital pilgrimage passport for Catholic pilgrims. It helps you discover sanctuaries, register your visits and keep the memory of your journey with routes, milestones and personal certificates.', pageTitle:'Peregrin — Your pilgrim passport', pilgrimFallback:'Pilgrim',     mapFilterCountry:'Showing only this country', mapFilterRoute:'Showing only this route', mapFilterShowAll:'Show all', routeTapHint:'Tap to see this route on the map', routeFirstStop:'First stop', searchFilterAll:'All', searchFilterVisited:'Visited', searchFilterUnvisited:'Not visited', searchFilterOpen:'Available', searchFilterMarian:'Marian', searchFilterChrist:'Christ', searchFilterCathedral:'Cathedrals', searchFilterMonastery:'Monasteries', searchResultsCount:(n,shown=n)=>shown<n?`${shown} of ${n} results`:`${n} results`, commentsTitle:'Pilgrim comments', commentsPlaceholder:'Share a tip, a practical note or a short impression for other pilgrims...', commentsHint:'Visible to other signed-in pilgrims.', commentsSubmit:'Post comment', commentsLoading:'Loading comments...', commentsEmpty:'No comments yet. Be the first to leave one.', commentsUnavailable:'Comments are not available right now.', commentsPosted:'Comment posted', commentsUpdated:'Comment updated', commentsDeleted:'Comment deleted', commentsEdited:'edited', commentsEdit:'Edit', commentsDelete:'Delete', commentsEditPrompt:'Edit your comment:', commentsDeleteConfirm:'Delete this comment?', commentsTooShort:'Write at least 3 characters.', commentsSignIn:'Sign in to leave comments.', commentsNoLinks:'Links are not allowed in comments for now.', commentsReport:'Report', commentsReported:'Comment reported. Thank you.', commentsSlowDown:(seconds)=>`Please wait ${seconds}s before posting again.`, journalDelete:'Delete note', journalDeleteConfirm:'Delete this private note?', journalDeleted:'Private note deleted', createdBy:'Created with faith by', feedbackMsg:'Suggestions and feedback always welcome',
   },
   es: {
     appSubtitle:'Tu pasaporte peregrino', navHome:'Inicio', navMap:'Mapa', navCountries:'Países',
@@ -730,28 +729,28 @@ const i18n = {
     removeVisit:'Visitado — Quitar visita', viewDetails:'Ver ficha completa',
     howToGet:'Cómo llegar', howToGetFull:'Cómo llegar — Google Maps', moreInfoFull:'Más información — Google',
     descLabel:'Descripción', histLabel:'Historia', prayerLabel:'Oración del peregrino',
-    lockBtn:'Abrir con Premium', certBtn:'Generar certificado',
+     certBtn:'Generar certificado',
     certDownloaded:'Certificado descargado', certSaved:'Certificado guardado en tu dispositivo', certReady:'Certificado listo para compartir', certFailed:'No hemos podido preparar el certificado.', certTitle:'Certificado de peregrinación', certPreviewTitle:'Tu certificado está listo', certPreviewHint:'Revísalo primero aquí; después, compártelo o descárgalo cuando quieras.', certShareBtn:'Compartir certificado', certDownloadBtn:'Descargar imagen', certCloseBtn:'Cerrar',
     certText1:'Este certificado personal acredita que', certText2:'ha completado el camino de peregrinación de',
     certText3:'lugares sagrados de', certIssued:'Emitido el',
-    premiumTitle:'Peregrin Premium', premiumSub:'Guarda una memoria más completa de tu peregrinación: todos los países, rutas, certificados, hitos y tu pasaporte compartible en un solo lugar.',
-    premiumCountries:'Acceso mundial completo más allá del inicio gratuito', premiumCert:'Certificado de peregrinación por país',
-    premiumRoutes:'Todas las rutas de peregrinación', premiumBadges:'Todos los hitos',
-    premiumGuides:'Rutas sagradas y guías peregrinas completas', premiumJournal:'Notas privadas para tu camino', premiumMemory:'Certificados, hitos y pasaporte compartible',
-    premiumLater:'Quizás más adelante', premiumUnlockRegion:'Acceder', premiumUnlockAll:'Acceder a todo',
-    premiumLabelEurope:'Europa', premiumLabelAmericas:'América', premiumLabelAsia:'Asia', premiumLabelAll:'Todos los países',
-    premiumSubEurope:'20 pa\u00edses · 108 santuarios', premiumSubAmericas:'19 pa\u00edses · 50 santuarios', premiumSubAsia:'14 pa\u00edses · 52 santuarios', premiumSubAll:'69 países · 231 santuarios · Memoria peregrina completa',
-    premiumOnetime:'Pago único · Tuyo para siempre', premiumGooglePlayNote:'Pago único seguro con Google Play', premiumAlreadyUnlocked:'Acceso completo activo', premiumActivatedToast:'Premium activado. ¡Gracias!',
-    premiumRestoreCta:'Restaurar compra', premiumRestoreChecking:'Comprobando tu compra…', premiumRestoreNone:'No se ha encontrado ninguna compra Premium pendiente.',
-    premiumCodeCta:'Tengo un código Premium', premiumCodePrompt:'Introduce tu código Premium:', premiumCodeInvalid:'Código Premium no válido.', premiumCodeApplied:'Premium activado con código.',
-    premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Guarda rutas, certificados, hitos y tu pasaporte peregrino en un solo lugar.',
-    testerAccessLabel:'Acceso local', testerAccessHint:'Solo en este dispositivo durante el desarrollo', testerUnlockBtn:'Activar acceso local', testerDisableBtn:'Desactivar acceso local',
-    testerUnlockPrompt:'Introduce el código de acceso local:', testerUnlockEnabled:'Acceso local activado en este dispositivo.',
-    testerUnlockRemoved:'Acceso local eliminado de este dispositivo.', testerUnlockInvalid:'Código de acceso local incorrecto.',
-    discoverPremium:'Descubrir Premium', certsAvailable:'Certificados disponibles',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     certsAvailable:'Certificados disponibles',
     language:'Idioma', countriesTitle:'Países',
-    searchPlaceholder:'Buscar templo, ciudad, país...', searchNoResults:'No aparece ningún santuario', searchClear:'Borrar búsqueda', searchLocked:'Premium',
-    unlockPremium:'Premium — guarda toda la memoria peregrina',
+    searchPlaceholder:'Buscar templo, ciudad, país...', searchNoResults:'No aparece ningún santuario', searchClear:'Borrar búsqueda',
+
     rank0:'Nuevo peregrino', rank1:'Primer paso', rank5:'Caminante de la fe',
     rank10:'Peregrino devoto', rank30:'Peregrino avanzado', rank50:'Peregrino maestro',
     visitToast: n => `${n} registrado`,
@@ -764,12 +763,12 @@ const i18n = {
     authErrTooMany:'Demasiados intentos. Espera un momento e inténtalo de nuevo.', authErrDisabled:'El inicio de sesión por email no está activado para esta app.',
     authErrRegisterGeneric:'No hemos podido crear la cuenta. Inténtalo de nuevo.', authErrGeneric:'Error al iniciar sesión. Inténtalo de nuevo.', resetEmailMissing:'Introduce primero tu correo electrónico.',
     resetEmailSent:'Te hemos enviado un email para restablecer la contraseña.', resetEmailError:'No hemos podido enviar el email. Revisa la dirección e inténtalo de nuevo.',
-    premiumUnavailable:'Las compras Premium están temporalmente desactivadas.',
-    premiumUnavailableDetail:'Las compras Premium están disponibles en la app Android con Google Play.',
-    billingUnavailable:'Google Play Billing no está disponible en este dispositivo.', billingFailed:'No hemos podido completar la compra. Inténtalo de nuevo.',
-    billingCancelled:'Compra cancelada.', profileSaveFailed:'No hemos podido guardar el nombre. Inténtalo de nuevo.',
-    paymentReturnInvalid:'No hemos podido validar el retorno del pago. Si se te ha cobrado, escribe a elnuevoeuropeo@gmail.com.',
-    paymentActivating:'Activando Premium…', paymentManualReview:'Aún no hemos podido activar Premium. Usa el código Premium de tu email o escribe a elnuevoeuropeo@gmail.com.',
+
+
+
+     profileSaveFailed:'No hemos podido guardar el nombre. Inténtalo de nuevo.',
+
+
     onbStep1:'1 de 3',onbStep2:'2 de 3',onbStep3:'3 de 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Descubre lugares sagrados',onbTitle2:'Guarda sellos peregrinos',onbTitle3:'Conserva la memoria de tu camino',onbDesc1:'Explora un mapa interactivo de santuarios católicos en Europa, América, África, Asia y Oceanía.',onbDesc2:'Registra tus visitas y guarda un pasaporte peregrino personal con los sellos de tu camino.',onbDesc3:'Cuando completes el camino de un país, descarga un certificado personal de peregrinación con tu nombre.',onbNext:'Siguiente',onbStart:'Comenzar mi peregrinación',onbSkip:'Saltar',
     onbBadgeRoutes:'✨ Rutas sagradas', onbBadgeCertificates:'📜 Certificados cuidados',
     onbTagline:'El Pasaporte del Peregrino', onbCopy:'Lugares sagrados, rutas vivas y recuerdos bien guardados para cada peregrinación.',
@@ -777,7 +776,7 @@ const i18n = {
     onbStatSanctuaries:'Santuarios', onbStatCountries:'Países', onbStatContinents:'Continentes',
     onbCta:'Comenzar mi peregrinación ✦',
     homeKicker:'', homeTitle:'Atlas sagrado', homeCopy:'', homePrimary:'Ver mapa', homeRoutes:'Rutas', homePassport:'Pasaporte', homeNote:'', homeStatSanctuaries:'Santuarios', homeStatCountries:'Países', homeStatRoutes:'Rutas', homeNextTitle:'Siguiente paso sugerido', homeNextEmpty:'Empieza con una memoria peregrina real', homeNextEmptyMeta:'Busca un santuario que hayas visitado de verdad, abre su ficha y guarda tu primer sello.', homeNextCountry:'Continúa un camino por país', homeNextRoute:'Continúa una ruta', homeNextMilestone:'Próximo hito cercano', homeNextPath:'Revisa tu camino peregrino', homeNextOpen:'Abrir este paso', homeNextPathCta:'Abrir mi camino',
-    navWorld:'Mundo',editName:'Editar mi nombre', editNamePrompt:'Introduce tu nombre de peregrino:', viewIntro:'Ver introducción', mapHelpCta:'Peregrin', aboutTitle:'¿Qué es Peregrin?', aboutBody:'Peregrin es un pasaporte digital de peregrinación católica. Te ayuda a descubrir santuarios, registrar tus visitas y guardar la memoria de tu camino con rutas, hitos y certificados personales.', pageTitle:'Peregrin — Tu pasaporte peregrino', pilgrimFallback:'Peregrino', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium activado en local', testerPremiumOff:'Premium desactivado en local', mapFilterCountry:'Mostrando solo este país', mapFilterRoute:'Mostrando solo esta ruta', mapFilterShowAll:'Ver todo', routeTapHint:'Toca para verla en el mapa', routeFirstStop:'Primera parada', searchFilterAll:'Todo', searchFilterVisited:'Visitados', searchFilterUnvisited:'Sin visitar', searchFilterOpen:'Disponibles', searchFilterMarian:'Marianos', searchFilterChrist:'Cristo', searchFilterCathedral:'Catedrales', searchFilterMonastery:'Monasterios', searchResultsCount:(n,shown=n)=>shown<n?`${shown} de ${n} resultados`:`${n} resultados`, commentsTitle:'Comentarios de peregrinos', commentsPlaceholder:'Comparte un consejo, una nota práctica o una impresión breve para otros peregrinos...', commentsHint:'Visible para otros peregrinos con sesión iniciada.', commentsSubmit:'Publicar comentario', commentsLoading:'Cargando comentarios...', commentsEmpty:'Todavía no hay comentarios. Sé el primero en dejar uno.', commentsUnavailable:'Los comentarios no están disponibles ahora mismo.', commentsPosted:'Comentario publicado', commentsUpdated:'Comentario actualizado', commentsDeleted:'Comentario borrado', commentsEdited:'editado', commentsEdit:'Editar', commentsDelete:'Borrar', commentsEditPrompt:'Edita tu comentario:', commentsDeleteConfirm:'¿Borrar este comentario?', commentsTooShort:'Escribe al menos 3 caracteres.', commentsSignIn:'Inicia sesión para dejar comentarios.', commentsNoLinks:'Por ahora no se permiten enlaces en los comentarios.', commentsReport:'Reportar', commentsReported:'Comentario reportado. Gracias.', commentsSlowDown:(seconds)=>`Espera ${seconds}s antes de volver a comentar.`, journalDelete:'Borrar nota', journalDeleteConfirm:'¿Borrar esta nota privada?', journalDeleted:'Nota privada borrada', createdBy:'Creado con fe por', feedbackMsg:'Sugerencias y comentarios siempre bienvenidos',
+    navWorld:'Mundo',editName:'Editar mi nombre', editNamePrompt:'Introduce tu nombre de peregrino:', viewIntro:'Ver introducción', mapHelpCta:'Peregrin', aboutTitle:'¿Qué es Peregrin?', aboutBody:'Peregrin es un pasaporte digital de peregrinación católica. Te ayuda a descubrir santuarios, registrar tus visitas y guardar la memoria de tu camino con rutas, hitos y certificados personales.', pageTitle:'Peregrin — Tu pasaporte peregrino', pilgrimFallback:'Peregrino',     mapFilterCountry:'Mostrando solo este país', mapFilterRoute:'Mostrando solo esta ruta', mapFilterShowAll:'Ver todo', routeTapHint:'Toca para verla en el mapa', routeFirstStop:'Primera parada', searchFilterAll:'Todo', searchFilterVisited:'Visitados', searchFilterUnvisited:'Sin visitar', searchFilterOpen:'Disponibles', searchFilterMarian:'Marianos', searchFilterChrist:'Cristo', searchFilterCathedral:'Catedrales', searchFilterMonastery:'Monasterios', searchResultsCount:(n,shown=n)=>shown<n?`${shown} de ${n} resultados`:`${n} resultados`, commentsTitle:'Comentarios de peregrinos', commentsPlaceholder:'Comparte un consejo, una nota práctica o una impresión breve para otros peregrinos...', commentsHint:'Visible para otros peregrinos con sesión iniciada.', commentsSubmit:'Publicar comentario', commentsLoading:'Cargando comentarios...', commentsEmpty:'Todavía no hay comentarios. Sé el primero en dejar uno.', commentsUnavailable:'Los comentarios no están disponibles ahora mismo.', commentsPosted:'Comentario publicado', commentsUpdated:'Comentario actualizado', commentsDeleted:'Comentario borrado', commentsEdited:'editado', commentsEdit:'Editar', commentsDelete:'Borrar', commentsEditPrompt:'Edita tu comentario:', commentsDeleteConfirm:'¿Borrar este comentario?', commentsTooShort:'Escribe al menos 3 caracteres.', commentsSignIn:'Inicia sesión para dejar comentarios.', commentsNoLinks:'Por ahora no se permiten enlaces en los comentarios.', commentsReport:'Reportar', commentsReported:'Comentario reportado. Gracias.', commentsSlowDown:(seconds)=>`Espera ${seconds}s antes de volver a comentar.`, journalDelete:'Borrar nota', journalDeleteConfirm:'¿Borrar esta nota privada?', journalDeleted:'Nota privada borrada', createdBy:'Creado con fe por', feedbackMsg:'Sugerencias y comentarios siempre bienvenidos',
   },
   fr: {
     appSubtitle:'Votre passeport de pèlerin', navHome:'Accueil', navMap:'Carte', navCountries:'Pays',
@@ -802,28 +801,28 @@ const i18n = {
     removeVisit:'Visité — Retirer la visite', viewDetails:'Voir la fiche complète',
     howToGet:"S'y rendre", howToGetFull:"S'y rendre — Google Maps", moreInfoFull:'Plus d’informations — Google',
     descLabel:'Description', histLabel:'Histoire', prayerLabel:'Prière du pèlerin',
-    lockBtn:'Ouvrir avec Premium', certBtn:'Générer le certificat',
+     certBtn:'Générer le certificat',
     certDownloaded:'Certificat téléchargé', certSaved:'Certificat enregistré sur votre appareil', certReady:'Certificat prêt à être partagé', certFailed:'Nous n’avons pas pu préparer le certificat.', certTitle:'Certificat de pèlerinage', certPreviewTitle:'Votre certificat est prêt', certPreviewHint:'Vérifiez-le d’abord ici, puis partagez-le ou téléchargez-le quand vous le souhaitez.', certShareBtn:'Partager le certificat', certDownloadBtn:'Télécharger l’image', certCloseBtn:'Fermer',
     certText1:'Ce certificat personnel atteste que', certText2:'a accompli le chemin de pèlerinage de',
     certText3:'lieux sacrés en', certIssued:'Délivré le',
-    premiumTitle:'Peregrin Premium', premiumSub:'Gardez une mémoire plus complète de votre pèlerinage : tous les pays, itinéraires, certificats, jalons et votre passeport partageable au même endroit.',
-    premiumCountries:'Accès mondial complet au-delà du départ gratuit', premiumCert:'Certificat de pèlerinage par pays',
-    premiumRoutes:'Tous les itinéraires de pèlerinage', premiumBadges:'Tous les jalons',
-    premiumGuides:'Itinéraires sacrés et guides complets', premiumJournal:'Notes privées pour votre chemin', premiumMemory:'Certificats, jalons et passeport partageable',
-    premiumLater:'Peut-être plus tard', premiumUnlockRegion:'Accéder', premiumUnlockAll:'Accéder à tout',
-    premiumLabelEurope:'Europe', premiumLabelAmericas:'Amériques', premiumLabelAsia:'Asie', premiumLabelAll:'Tous les pays',
-    premiumSubEurope:'20 pays · 108 sanctuaires', premiumSubAmericas:'19 pays · 50 sanctuaires', premiumSubAsia:'14 pays · 52 sanctuaires', premiumSubAll:'69 pays · 231 sanctuaires · Mémoire pèlerine complète',
-    premiumOnetime:'Paiement unique · À vous pour toujours', premiumGooglePlayNote:'Paiement unique sécurisé avec Google Play', premiumAlreadyUnlocked:'Accès complet actif', premiumActivatedToast:'Premium activé. Merci !',
-    premiumRestoreCta:'Restaurer l’achat', premiumRestoreChecking:'Vérification de votre achat…', premiumRestoreNone:'Aucun achat Premium en attente trouvé.',
-    premiumCodeCta:'J’ai un code Premium', premiumCodePrompt:'Entrez votre code Premium :', premiumCodeInvalid:'Code Premium invalide.', premiumCodeApplied:'Premium activé avec code.',
-    premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Gardez itinéraires, certificats, jalons et passeport pèlerin au même endroit.',
-    testerAccessLabel:'Accès local', testerAccessHint:'Seulement sur cet appareil en développement', testerUnlockBtn:'Activer l’accès local', testerDisableBtn:'Désactiver l’accès local',
-    testerUnlockPrompt:'Entrez le code d’accès local :', testerUnlockEnabled:'Accès local activé sur cet appareil.',
-    testerUnlockRemoved:'Accès local supprimé de cet appareil.', testerUnlockInvalid:'Code d’accès local incorrect.',
-    discoverPremium:'Découvrir Premium', certsAvailable:'Certificats disponibles',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     certsAvailable:'Certificats disponibles',
     language:'Langue', countriesTitle:'Pays',
-    searchPlaceholder:'Rechercher sanctuaire, ville, pays...', searchNoResults:'Aucun sanctuaire trouvé', searchClear:'Effacer la recherche', searchLocked:'Premium',
-    unlockPremium:'Premium — garder toute la mémoire pèlerine',
+    searchPlaceholder:'Rechercher sanctuaire, ville, pays...', searchNoResults:'Aucun sanctuaire trouvé', searchClear:'Effacer la recherche',
+
     rank0:'Nouveau pèlerin', rank1:'Premier pas', rank5:'Marcheur de la foi',
     rank10:'Pèlerin dévoué', rank30:'Pèlerin avancé', rank50:'Pèlerin maître',
     visitToast: n => `${n} enregistré`,
@@ -836,12 +835,12 @@ const i18n = {
     authErrTooMany:'Trop de tentatives. Attendez un moment et réessayez.', authErrDisabled:'La connexion par e-mail n’est pas activée pour cette app.',
     authErrRegisterGeneric:'Nous n’avons pas pu créer le compte. Veuillez réessayer.', authErrGeneric:'Erreur de connexion. Veuillez réessayer.', resetEmailMissing:'Saisissez d abord votre adresse e-mail.',
     resetEmailSent:'Nous vous avons envoyé un e-mail pour réinitialiser votre mot de passe.', resetEmailError:'Impossible d envoyer l e-mail. Vérifiez l adresse et réessayez.',
-    premiumUnavailable:'Les achats Premium sont temporairement désactivés.',
-    premiumUnavailableDetail:'Les achats Premium sont disponibles dans l’app Android avec Google Play.',
-    billingUnavailable:'Google Play Billing n’est pas disponible sur cet appareil.', billingFailed:'Nous n’avons pas pu finaliser l’achat. Veuillez réessayer.',
-    billingCancelled:'Achat annulé.', profileSaveFailed:'Nous n’avons pas pu enregistrer le nom. Veuillez réessayer.',
-    paymentReturnInvalid:'Nous n’avons pas pu valider le retour du paiement. Si vous avez été débité, écrivez à elnuevoeuropeo@gmail.com.',
-    paymentActivating:'Activation de Premium…', paymentManualReview:'Nous n’avons pas encore pu activer Premium. Utilisez le code Premium reçu par e-mail ou écrivez à elnuevoeuropeo@gmail.com.',
+
+
+
+     profileSaveFailed:'Nous n’avons pas pu enregistrer le nom. Veuillez réessayer.',
+
+
     onbStep1:'1 sur 3',onbStep2:'2 sur 3',onbStep3:'3 sur 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Découvrez des lieux sacrés',onbTitle2:'Gardez vos tampons de pèlerin',onbTitle3:'Préservez la mémoire de votre chemin',onbDesc1:'Explorez une carte interactive des sanctuaires catholiques en Europe, dans les Amériques, en Afrique, en Asie et en Océanie.',onbDesc2:'Enregistrez vos visites et gardez un passeport de pèlerin personnel avec les tampons de votre chemin.',onbDesc3:'Quand le chemin d’un pays est terminé, téléchargez un certificat personnel de pèlerinage à votre nom.',onbNext:'Suivant',onbStart:'Commencer mon pèlerinage',onbSkip:'Passer',
     onbBadgeRoutes:'✨ Routes sacrées', onbBadgeCertificates:'📜 Beaux certificats',
     onbTagline:'Le Passeport du Pèlerin', onbCopy:'Lieux sacrés, routes vivantes et étapes précieusement gardées pour chaque pèlerinage.',
@@ -849,7 +848,7 @@ const i18n = {
     onbStatSanctuaries:'Sanctuaires', onbStatCountries:'Pays', onbStatContinents:'Continents',
     onbCta:'Commencer mon pèlerinage ✦',
     homeKicker:'', homeTitle:'Atlas sacré', homeCopy:'', homePrimary:'Ouvrir la carte', homeRoutes:'Itinéraires', homePassport:'Passeport', homeNote:'', homeStatSanctuaries:'Sanctuaires', homeStatCountries:'Pays', homeStatRoutes:'Itinéraires', homeNextTitle:'Prochaine étape suggérée', homeNextEmpty:'Commencez par une vraie mémoire de pèlerinage', homeNextEmptyMeta:'Cherchez un sanctuaire que vous avez vraiment visité, ouvrez sa fiche et gardez votre premier tampon.', homeNextCountry:'Continuer un chemin par pays', homeNextRoute:'Continuer un itinéraire', homeNextMilestone:'Prochain jalon proche', homeNextPath:'Relire votre chemin de pèlerin', homeNextOpen:'Ouvrir cette étape', homeNextPathCta:'Ouvrir mon chemin',
-    navWorld:'Monde',editName:'Modifier mon nom', editNamePrompt:'Entrez votre nom de pèlerin :', viewIntro:'Voir l’introduction', mapHelpCta:'Peregrin', aboutTitle:'Qu’est-ce que Peregrin ?', aboutBody:'Peregrin est un passeport numérique de pèlerinage catholique. Il vous aide à découvrir des sanctuaires, enregistrer vos visites et garder la mémoire de votre chemin avec des itinéraires, jalons et certificats personnels.', pageTitle:'Peregrin — Votre passeport de pèlerin', pilgrimFallback:'Pèlerin', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium activé en local', testerPremiumOff:'Premium désactivé en local', mapFilterCountry:'Affichage de ce pays uniquement', mapFilterRoute:'Affichage de cet itinéraire uniquement', mapFilterShowAll:'Tout afficher', routeTapHint:'Touchez pour voir cet itinéraire sur la carte', routeFirstStop:'Première étape', searchFilterAll:'Tout', searchFilterVisited:'Visités', searchFilterUnvisited:'Non visités', searchFilterOpen:'Disponibles', searchFilterMarian:'Mariaux', searchFilterChrist:'Christ', searchFilterCathedral:'Cathédrales', searchFilterMonastery:'Monastères', searchResultsCount:(n,shown=n)=>shown<n?`${shown} sur ${n} résultats`:`${n} résultats`, commentsTitle:'Commentaires des pèlerins', commentsPlaceholder:'Partagez un conseil, une note pratique ou une brève impression pour les autres pèlerins...', commentsHint:'Visible aux autres pèlerins connectés.', commentsSubmit:'Publier', commentsLoading:'Chargement des commentaires...', commentsEmpty:'Aucun commentaire pour le moment. Soyez le premier à en laisser un.', commentsUnavailable:'Les commentaires ne sont pas disponibles pour le moment.', commentsPosted:'Commentaire publié', commentsUpdated:'Commentaire mis à jour', commentsDeleted:'Commentaire supprimé', commentsEdited:'modifié', commentsEdit:'Modifier', commentsDelete:'Supprimer', commentsEditPrompt:'Modifiez votre commentaire :', commentsDeleteConfirm:'Supprimer ce commentaire ?', commentsTooShort:'Écrivez au moins 3 caractères.', commentsSignIn:'Connectez-vous pour laisser un commentaire.', commentsNoLinks:'Les liens ne sont pas autorisés dans les commentaires pour le moment.', commentsReport:'Signaler', commentsReported:'Commentaire signalé. Merci.', commentsSlowDown:(seconds)=>`Attendez ${seconds}s avant de publier à nouveau.`, journalDelete:'Supprimer la note', journalDeleteConfirm:'Supprimer cette note privée ?', journalDeleted:'Note privée supprimée', createdBy:'Créé avec foi par', feedbackMsg:'Suggestions et commentaires toujours bienvenus',
+    navWorld:'Monde',editName:'Modifier mon nom', editNamePrompt:'Entrez votre nom de pèlerin :', viewIntro:'Voir l’introduction', mapHelpCta:'Peregrin', aboutTitle:'Qu’est-ce que Peregrin ?', aboutBody:'Peregrin est un passeport numérique de pèlerinage catholique. Il vous aide à découvrir des sanctuaires, enregistrer vos visites et garder la mémoire de votre chemin avec des itinéraires, jalons et certificats personnels.', pageTitle:'Peregrin — Votre passeport de pèlerin', pilgrimFallback:'Pèlerin',     mapFilterCountry:'Affichage de ce pays uniquement', mapFilterRoute:'Affichage de cet itinéraire uniquement', mapFilterShowAll:'Tout afficher', routeTapHint:'Touchez pour voir cet itinéraire sur la carte', routeFirstStop:'Première étape', searchFilterAll:'Tout', searchFilterVisited:'Visités', searchFilterUnvisited:'Non visités', searchFilterOpen:'Disponibles', searchFilterMarian:'Mariaux', searchFilterChrist:'Christ', searchFilterCathedral:'Cathédrales', searchFilterMonastery:'Monastères', searchResultsCount:(n,shown=n)=>shown<n?`${shown} sur ${n} résultats`:`${n} résultats`, commentsTitle:'Commentaires des pèlerins', commentsPlaceholder:'Partagez un conseil, une note pratique ou une brève impression pour les autres pèlerins...', commentsHint:'Visible aux autres pèlerins connectés.', commentsSubmit:'Publier', commentsLoading:'Chargement des commentaires...', commentsEmpty:'Aucun commentaire pour le moment. Soyez le premier à en laisser un.', commentsUnavailable:'Les commentaires ne sont pas disponibles pour le moment.', commentsPosted:'Commentaire publié', commentsUpdated:'Commentaire mis à jour', commentsDeleted:'Commentaire supprimé', commentsEdited:'modifié', commentsEdit:'Modifier', commentsDelete:'Supprimer', commentsEditPrompt:'Modifiez votre commentaire :', commentsDeleteConfirm:'Supprimer ce commentaire ?', commentsTooShort:'Écrivez au moins 3 caractères.', commentsSignIn:'Connectez-vous pour laisser un commentaire.', commentsNoLinks:'Les liens ne sont pas autorisés dans les commentaires pour le moment.', commentsReport:'Signaler', commentsReported:'Commentaire signalé. Merci.', commentsSlowDown:(seconds)=>`Attendez ${seconds}s avant de publier à nouveau.`, journalDelete:'Supprimer la note', journalDeleteConfirm:'Supprimer cette note privée ?', journalDeleted:'Note privée supprimée', createdBy:'Créé avec foi par', feedbackMsg:'Suggestions et commentaires toujours bienvenus',
   },
   it: {
     appSubtitle:'Il tuo passaporto del pellegrino', navHome:'Inizio', navMap:'Mappa', navCountries:'Paesi',
@@ -874,28 +873,28 @@ const i18n = {
     removeVisit:'Visitato — Rimuovi visita', viewDetails:'Vedi scheda completa',
     howToGet:'Come arrivare', howToGetFull:'Come arrivare — Google Maps', moreInfoFull:'Maggiori informazioni — Google',
     descLabel:'Descrizione', histLabel:'Storia', prayerLabel:'Preghiera del pellegrino',
-    lockBtn:'Apri con Premium', certBtn:'Genera certificato',
+     certBtn:'Genera certificato',
     certDownloaded:'Certificato scaricato', certSaved:'Certificato salvato sul dispositivo', certReady:'Certificato pronto da condividere', certFailed:'Non siamo riusciti a preparare il certificato.', certTitle:'Certificato di pellegrinaggio', certPreviewTitle:'Il tuo certificato è pronto', certPreviewHint:'Controllalo prima qui, poi condividilo o scaricalo quando vuoi.', certShareBtn:'Condividi certificato', certDownloadBtn:'Scarica immagine', certCloseBtn:'Chiudi',
     certText1:'Il presente certificato personale attesta che', certText2:'ha completato il cammino di pellegrinaggio di',
     certText3:'luoghi sacri in', certIssued:'Rilasciato il',
-    premiumTitle:'Peregrin Premium', premiumSub:'Custodisci una memoria più completa del tuo pellegrinaggio: tutti i paesi, itinerari, certificati, traguardi e passaporto condivisibile in un solo luogo.',
-    premiumCountries:'Accesso mondiale completo oltre l\'inizio gratuito', premiumCert:'Certificato di pellegrinaggio per paese',
-    premiumRoutes:'Tutti gli itinerari di pellegrinaggio', premiumBadges:'Tutti i traguardi',
-    premiumGuides:'Itinerari sacri e guide complete', premiumJournal:'Note private per il tuo cammino', premiumMemory:'Certificati, traguardi e passaporto condivisibile',
-    premiumLater:'Forse più tardi', premiumUnlockRegion:'Accedi', premiumUnlockAll:'Accedi a tutto',
-    premiumLabelEurope:'Europa', premiumLabelAmericas:'Americhe', premiumLabelAsia:'Asia', premiumLabelAll:'Tutti i paesi',
-    premiumSubEurope:'20 paesi · 108 santuari', premiumSubAmericas:'19 paesi · 50 santuari', premiumSubAsia:'14 paesi · 52 santuari', premiumSubAll:'69 paesi · 231 santuari · Memoria pellegrina completa',
-    premiumOnetime:'Pagamento unico · Tuo per sempre', premiumGooglePlayNote:'Pagamento unico sicuro con Google Play', premiumAlreadyUnlocked:'Accesso completo attivo', premiumActivatedToast:'Premium attivato. Grazie!',
-    premiumRestoreCta:'Ripristina acquisto', premiumRestoreChecking:'Verifica dell’acquisto…', premiumRestoreNone:'Nessun acquisto Premium in attesa trovato.',
-    premiumCodeCta:'Ho un codice Premium', premiumCodePrompt:'Inserisci il tuo codice Premium:', premiumCodeInvalid:'Codice Premium non valido.', premiumCodeApplied:'Premium attivato con codice.',
-    premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Custodisci itinerari, certificati, traguardi e passaporto pellegrino in un solo luogo.',
-    testerAccessLabel:'Accesso locale', testerAccessHint:'Solo su questo dispositivo durante lo sviluppo', testerUnlockBtn:'Attiva accesso locale', testerDisableBtn:'Disattiva accesso locale',
-    testerUnlockPrompt:'Inserisci il codice di accesso locale:', testerUnlockEnabled:'Accesso locale attivato su questo dispositivo.',
-    testerUnlockRemoved:'Accesso locale rimosso da questo dispositivo.', testerUnlockInvalid:'Codice di accesso locale non corretto.',
-    discoverPremium:'Scopri Premium', certsAvailable:'Certificati disponibili',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     certsAvailable:'Certificati disponibili',
     language:'Lingua', countriesTitle:'Paesi',
-    searchPlaceholder:'Cerca santuario, città, paese...', searchNoResults:'Nessun santuario trovato', searchClear:'Cancella ricerca', searchLocked:'Premium',
-    unlockPremium:'Premium — custodisci tutta la memoria pellegrina',
+    searchPlaceholder:'Cerca santuario, città, paese...', searchNoResults:'Nessun santuario trovato', searchClear:'Cancella ricerca',
+
     rank0:'Nuovo pellegrino', rank1:'Primo passo', rank5:'Camminatore della fede',
     rank10:'Pellegrino devoto', rank30:'Pellegrino avanzato', rank50:'Pellegrino maestro',
     visitToast: n => `${n} registrato`,
@@ -908,12 +907,12 @@ const i18n = {
     authErrTooMany:'Troppi tentativi. Attendi un momento e riprova.', authErrDisabled:'L’accesso con e-mail non è attivo per questa app.',
     authErrRegisterGeneric:'Non siamo riusciti a creare l’account. Riprova.', authErrGeneric:'Errore di accesso. Riprova.', resetEmailMissing:'Inserisci prima il tuo indirizzo e-mail.',
     resetEmailSent:'Ti abbiamo inviato un e-mail per reimpostare la password.', resetEmailError:'Non siamo riusciti a inviare l e-mail. Controlla l indirizzo e riprova.',
-    premiumUnavailable:'Gli acquisti Premium sono temporaneamente disattivati.',
-    premiumUnavailableDetail:'Gli acquisti Premium sono disponibili nell’app Android con Google Play.',
-    billingUnavailable:'Google Play Billing non è disponibile su questo dispositivo.', billingFailed:'Non siamo riusciti a completare l’acquisto. Riprova.',
-    billingCancelled:'Acquisto annullato.', profileSaveFailed:'Non siamo riusciti a salvare il nome. Riprova.',
-    paymentReturnInvalid:'Non siamo riusciti a convalidare il ritorno del pagamento. Se ti è stato addebitato, scrivi a elnuevoeuropeo@gmail.com.',
-    paymentActivating:'Attivazione di Premium…', paymentManualReview:'Non siamo ancora riusciti ad attivare Premium. Usa il codice Premium ricevuto via e-mail o scrivi a elnuevoeuropeo@gmail.com.',
+
+
+
+     profileSaveFailed:'Non siamo riusciti a salvare il nome. Riprova.',
+
+
     onbStep1:'1 di 3',onbStep2:'2 di 3',onbStep3:'3 di 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Scopri luoghi sacri',onbTitle2:'Custodisci timbri del pellegrino',onbTitle3:'Conserva la memoria del tuo cammino',onbDesc1:'Esplora una mappa interattiva dei santuari cattolici in Europa, nelle Americhe, in Africa, in Asia e in Oceania.',onbDesc2:'Registra le tue visite e custodisci un passaporto del pellegrino con i timbri del tuo cammino.',onbDesc3:'Quando completi il cammino di un paese, scarica un certificato personale di pellegrinaggio con il tuo nome.',onbNext:'Avanti',onbStart:'Iniziare il mio pellegrinaggio',onbSkip:'Salta',
     onbBadgeRoutes:'✨ Vie sacre', onbBadgeCertificates:'📜 Certificati curati',
     onbTagline:'Il Passaporto del Pellegrino', onbCopy:'Luoghi sacri, percorsi vivi e tappe custodite con cura per ogni pellegrinaggio.',
@@ -921,7 +920,7 @@ const i18n = {
     onbStatSanctuaries:'Santuari', onbStatCountries:'Paesi', onbStatContinents:'Continenti',
     onbCta:'Iniziare il mio pellegrinaggio ✦',
     homeKicker:'', homeTitle:'Atlante sacro', homeCopy:'', homePrimary:'Apri la mappa', homeRoutes:'Itinerari', homePassport:'Passaporto', homeNote:'', homeStatSanctuaries:'Santuari', homeStatCountries:'Paesi', homeStatRoutes:'Itinerari', homeNextTitle:'Prossimo passo suggerito', homeNextEmpty:'Inizia con una vera memoria di pellegrinaggio', homeNextEmptyMeta:'Cerca un santuario che hai davvero visitato, apri la scheda e custodisci il primo timbro.', homeNextCountry:'Continua un cammino per paese', homeNextRoute:'Continua un itinerario', homeNextMilestone:'Prossimo traguardo vicino', homeNextPath:'Rivedi il tuo cammino pellegrino', homeNextOpen:'Apri questo passo', homeNextPathCta:'Apri il mio cammino',
-    navWorld:'Mondo',editName:'Modifica il mio nome', editNamePrompt:'Inserisci il tuo nome di pellegrino:', viewIntro:'Vedi introduzione', mapHelpCta:'Peregrin', aboutTitle:'Che cos’è Peregrin?', aboutBody:'Peregrin è un passaporto digitale di pellegrinaggio cattolico. Ti aiuta a scoprire santuari, registrare le visite e custodire il ricordo del tuo cammino con itinerari, traguardi e certificati personali.', pageTitle:'Peregrin — Il tuo passaporto del pellegrino', pilgrimFallback:'Pellegrino', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium attivato in locale', testerPremiumOff:'Premium disattivato in locale', mapFilterCountry:'Mostra solo questo paese', mapFilterRoute:'Mostra solo questo itinerario', mapFilterShowAll:'Mostra tutto', routeTapHint:'Tocca per vedere l’itinerario sulla mappa', routeFirstStop:'Prima tappa', searchFilterAll:'Tutto', searchFilterVisited:'Visitati', searchFilterUnvisited:'Non visitati', searchFilterOpen:'Disponibili', searchFilterMarian:'Mariani', searchFilterChrist:'Cristo', searchFilterCathedral:'Cattedrali', searchFilterMonastery:'Monasteri', searchResultsCount:(n,shown=n)=>shown<n?`${shown} di ${n} risultati`:`${n} risultati`, commentsTitle:'Commenti dei pellegrini', commentsPlaceholder:'Condividi un consiglio, una nota pratica o una breve impressione per altri pellegrini...', commentsHint:'Visibile agli altri pellegrini con accesso.', commentsSubmit:'Pubblica', commentsLoading:'Caricamento commenti...', commentsEmpty:'Ancora nessun commento. Sii il primo a lasciarne uno.', commentsUnavailable:'I commenti non sono disponibili in questo momento.', commentsPosted:'Commento pubblicato', commentsUpdated:'Commento aggiornato', commentsDeleted:'Commento eliminato', commentsEdited:'modificato', commentsEdit:'Modifica', commentsDelete:'Elimina', commentsEditPrompt:'Modifica il tuo commento:', commentsDeleteConfirm:'Eliminare questo commento?', commentsTooShort:'Scrivi almeno 3 caratteri.', commentsSignIn:'Accedi per lasciare commenti.', commentsNoLinks:'Per ora i link non sono consentiti nei commenti.', commentsReport:'Segnala', commentsReported:'Commento segnalato. Grazie.', commentsSlowDown:(seconds)=>`Attendi ${seconds}s prima di pubblicare di nuovo.`, journalDelete:'Elimina nota', journalDeleteConfirm:'Eliminare questa nota privata?', journalDeleted:'Nota privata eliminata', createdBy:'Creato con fede da', feedbackMsg:'Suggerimenti e commenti sempre benvenuti',
+    navWorld:'Mondo',editName:'Modifica il mio nome', editNamePrompt:'Inserisci il tuo nome di pellegrino:', viewIntro:'Vedi introduzione', mapHelpCta:'Peregrin', aboutTitle:'Che cos’è Peregrin?', aboutBody:'Peregrin è un passaporto digitale di pellegrinaggio cattolico. Ti aiuta a scoprire santuari, registrare le visite e custodire il ricordo del tuo cammino con itinerari, traguardi e certificati personali.', pageTitle:'Peregrin — Il tuo passaporto del pellegrino', pilgrimFallback:'Pellegrino',     mapFilterCountry:'Mostra solo questo paese', mapFilterRoute:'Mostra solo questo itinerario', mapFilterShowAll:'Mostra tutto', routeTapHint:'Tocca per vedere l’itinerario sulla mappa', routeFirstStop:'Prima tappa', searchFilterAll:'Tutto', searchFilterVisited:'Visitati', searchFilterUnvisited:'Non visitati', searchFilterOpen:'Disponibili', searchFilterMarian:'Mariani', searchFilterChrist:'Cristo', searchFilterCathedral:'Cattedrali', searchFilterMonastery:'Monasteri', searchResultsCount:(n,shown=n)=>shown<n?`${shown} di ${n} risultati`:`${n} risultati`, commentsTitle:'Commenti dei pellegrini', commentsPlaceholder:'Condividi un consiglio, una nota pratica o una breve impressione per altri pellegrini...', commentsHint:'Visibile agli altri pellegrini con accesso.', commentsSubmit:'Pubblica', commentsLoading:'Caricamento commenti...', commentsEmpty:'Ancora nessun commento. Sii il primo a lasciarne uno.', commentsUnavailable:'I commenti non sono disponibili in questo momento.', commentsPosted:'Commento pubblicato', commentsUpdated:'Commento aggiornato', commentsDeleted:'Commento eliminato', commentsEdited:'modificato', commentsEdit:'Modifica', commentsDelete:'Elimina', commentsEditPrompt:'Modifica il tuo commento:', commentsDeleteConfirm:'Eliminare questo commento?', commentsTooShort:'Scrivi almeno 3 caratteri.', commentsSignIn:'Accedi per lasciare commenti.', commentsNoLinks:'Per ora i link non sono consentiti nei commenti.', commentsReport:'Segnala', commentsReported:'Commento segnalato. Grazie.', commentsSlowDown:(seconds)=>`Attendi ${seconds}s prima di pubblicare di nuovo.`, journalDelete:'Elimina nota', journalDeleteConfirm:'Eliminare questa nota privata?', journalDeleted:'Nota privata eliminata', createdBy:'Creato con fede da', feedbackMsg:'Suggerimenti e commenti sempre benvenuti',
   },
   pt: {
     appSubtitle:'O seu passaporte de peregrino', navHome:'Início', navMap:'Mapa', navCountries:'Países',
@@ -946,28 +945,28 @@ const i18n = {
     removeVisit:'Visitado — Remover visita', viewDetails:'Ver ficha completa',
     howToGet:'Como chegar', howToGetFull:'Como chegar — Google Maps', moreInfoFull:'Mais informação — Google',
     descLabel:'Descrição', histLabel:'História', prayerLabel:'Oração do peregrino',
-    lockBtn:'Abrir com Premium', certBtn:'Gerar certificado',
+     certBtn:'Gerar certificado',
     certDownloaded:'Certificado descarregado', certSaved:'Certificado guardado no seu dispositivo', certReady:'Certificado pronto para partilhar', certFailed:'Não foi possível preparar o certificado.', certTitle:'Certificado de peregrinação', certPreviewTitle:'O seu certificado está pronto', certPreviewHint:'Reveja-o primeiro aqui e depois partilhe ou descarregue quando quiser.', certShareBtn:'Partilhar certificado', certDownloadBtn:'Descarregar imagem', certCloseBtn:'Fechar',
     certText1:'Este certificado pessoal atesta que', certText2:'concluiu o caminho de peregrinação de',
     certText3:'lugares sagrados em', certIssued:'Emitido em',
-    premiumTitle:'Peregrin Premium', premiumSub:'Guarde uma memória mais completa da sua peregrinação: todos os países, rotas, certificados, marcos e o seu passaporte partilhável num só lugar.',
-    premiumCountries:'Acesso mundial completo para além do início gratuito', premiumCert:'Certificado de peregrinação por país',
-    premiumRoutes:'Todas as rotas de peregrinação', premiumBadges:'Todos os marcos',
-    premiumGuides:'Rotas sagradas e guias completos', premiumJournal:'Notas privadas para o seu caminho', premiumMemory:'Certificados, marcos e passaporte partilhável',
-    premiumLater:'Talvez mais tarde', premiumUnlockRegion:'Aceder', premiumUnlockAll:'Aceder a tudo',
-    premiumLabelEurope:'Europa', premiumLabelAmericas:'Américas', premiumLabelAsia:'Ásia', premiumLabelAll:'Todos os países',
-    premiumSubEurope:'20 pa\u00edses · 108 santu\u00e1rios', premiumSubAmericas:'19 pa\u00edses · 50 santu\u00e1rios', premiumSubAsia:'14 pa\u00edses · 52 santu\u00e1rios', premiumSubAll:'69 países · 231 santuários · Memória peregrina completa',
-    premiumOnetime:'Pagamento único · Seu para sempre', premiumGooglePlayNote:'Pagamento único seguro com Google Play', premiumAlreadyUnlocked:'Acesso completo ativo', premiumActivatedToast:'Premium ativado. Obrigado!',
-    premiumRestoreCta:'Restaurar compra', premiumRestoreChecking:'A verificar a sua compra…', premiumRestoreNone:'Não foi encontrada nenhuma compra Premium pendente.',
-    premiumCodeCta:'Tenho um código Premium', premiumCodePrompt:'Introduza o seu código Premium:', premiumCodeInvalid:'Código Premium inválido.', premiumCodeApplied:'Premium ativado com código.',
-    premiumBannerTitle:'Peregrin Premium', premiumBannerSub:'Guarde rotas, certificados, marcos e passaporte peregrino num só lugar.',
-    testerAccessLabel:'Acesso local', testerAccessHint:'Apenas neste dispositivo durante o desenvolvimento', testerUnlockBtn:'Ativar acesso local', testerDisableBtn:'Desativar acesso local',
-    testerUnlockPrompt:'Introduza o código de acesso local:', testerUnlockEnabled:'Acesso local ativado neste dispositivo.',
-    testerUnlockRemoved:'Acesso local removido deste dispositivo.', testerUnlockInvalid:'Código de acesso local incorreto.',
-    discoverPremium:'Descobrir Premium', certsAvailable:'Certificados disponíveis',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     certsAvailable:'Certificados disponíveis',
     language:'Idioma', countriesTitle:'Países',
-    searchPlaceholder:'Procurar santuário, cidade, país...', searchNoResults:'Nenhum santuário encontrado', searchClear:'Limpar pesquisa', searchLocked:'Premium',
-    unlockPremium:'Premium — guarda toda a memória peregrina',
+    searchPlaceholder:'Procurar santuário, cidade, país...', searchNoResults:'Nenhum santuário encontrado', searchClear:'Limpar pesquisa',
+
     rank0:'Novo peregrino', rank1:'Primeiro passo', rank5:'Caminhante da fé',
     rank10:'Peregrino devoto', rank30:'Peregrino avançado', rank50:'Peregrino mestre',
     visitToast: n => `${n} registado`,
@@ -980,12 +979,12 @@ const i18n = {
     authErrTooMany:'Demasiadas tentativas. Aguarde um momento e tente novamente.', authErrDisabled:'A entrada por e-mail não está ativada para esta app.',
     authErrRegisterGeneric:'Não foi possível criar a conta. Tente novamente.', authErrGeneric:'Erro ao entrar. Tente novamente.', resetEmailMissing:'Introduza primeiro o seu endereço de e-mail.',
     resetEmailSent:'Enviámos um e-mail para repor a palavra-passe.', resetEmailError:'Não foi possível enviar o e-mail. Verifique o endereço e tente novamente.',
-    premiumUnavailable:'As compras Premium estão temporariamente desativadas.',
-    premiumUnavailableDetail:'As compras Premium estão disponíveis na app Android com Google Play.',
-    billingUnavailable:'O Google Play Billing não está disponível neste dispositivo.', billingFailed:'Não foi possível concluir a compra. Tente novamente.',
-    billingCancelled:'Compra cancelada.', profileSaveFailed:'Não foi possível guardar o nome. Tente novamente.',
-    paymentReturnInvalid:'Não conseguimos validar o regresso do pagamento. Se te foi cobrado, escreve para elnuevoeuropeo@gmail.com.',
-    paymentActivating:'A ativar Premium…', paymentManualReview:'Ainda não conseguimos ativar o Premium. Use o código Premium recebido por e-mail ou escreva para elnuevoeuropeo@gmail.com.',
+
+
+
+     profileSaveFailed:'Não foi possível guardar o nome. Tente novamente.',
+
+
     onbStep1:'1 de 3',onbStep2:'2 de 3',onbStep3:'3 de 3',onbIcon1:'🗺️',onbIcon2:'📍',onbIcon3:'📜',onbTitle1:'Descubra lugares sagrados',onbTitle2:'Guarde selos de peregrino',onbTitle3:'Guarde a memória do seu caminho',onbDesc1:'Explore um mapa interativo de santuários católicos na Europa, nas Américas, em África, na Ásia e na Oceânia.',onbDesc2:'Registe as suas visitas e guarde um passaporte de peregrino com os selos do seu caminho.',onbDesc3:'Quando completar o caminho de um país, descarregue um certificado pessoal de peregrinação com o seu nome.',onbNext:'Seguinte',onbStart:'Começar a minha peregrinação',onbSkip:'Saltar',
     onbBadgeRoutes:'✨ Rotas sagradas', onbBadgeCertificates:'📜 Belos certificados',
     onbTagline:'O Passaporte do Peregrino', onbCopy:'Lugares sagrados, rotas vivas e marcos bem guardados para cada peregrinação.',
@@ -993,7 +992,7 @@ const i18n = {
     onbStatSanctuaries:'Santuários', onbStatCountries:'Países', onbStatContinents:'Continentes',
     onbCta:'Começar a minha peregrinação ✦',
     homeKicker:'', homeTitle:'Atlas sagrado', homeCopy:'', homePrimary:'Abrir mapa', homeRoutes:'Rotas', homePassport:'Passaporte', homeNote:'', homeStatSanctuaries:'Santuários', homeStatCountries:'Países', homeStatRoutes:'Rotas', homeNextTitle:'Próximo passo sugerido', homeNextEmpty:'Comece com uma memória peregrina real', homeNextEmptyMeta:'Procure um santuário que visitou de verdade, abra a ficha e guarde o seu primeiro selo.', homeNextCountry:'Continuar um caminho por país', homeNextRoute:'Continuar uma rota', homeNextMilestone:'Próximo marco próximo', homeNextPath:'Rever o seu caminho peregrino', homeNextOpen:'Abrir este passo', homeNextPathCta:'Abrir o meu caminho',
-    navWorld:'Mundo',editName:'Editar o meu nome', editNamePrompt:'Introduza o seu nome de peregrino:', viewIntro:'Ver introdução', mapHelpCta:'Peregrin', aboutTitle:'O que é o Peregrin?', aboutBody:'Peregrin é um passaporte digital de peregrinação católica. Ajuda-o a descobrir santuários, registar as suas visitas e guardar a memória do seu caminho com rotas, marcos e certificados pessoais.', pageTitle:'Peregrin — O seu passaporte de peregrino', pilgrimFallback:'Peregrino', premiumBadge:'PREMIUM', betaTesterBadge:'LOCAL', testerPremiumOn:'Premium ativado localmente', testerPremiumOff:'Premium desativado localmente', mapFilterCountry:'A mostrar apenas este país', mapFilterRoute:'A mostrar apenas esta rota', mapFilterShowAll:'Ver tudo', routeTapHint:'Toque para ver esta rota no mapa', routeFirstStop:'Primeira paragem', searchFilterAll:'Tudo', searchFilterVisited:'Visitados', searchFilterUnvisited:'Não visitados', searchFilterOpen:'Disponíveis', searchFilterMarian:'Marianos', searchFilterChrist:'Cristo', searchFilterCathedral:'Catedrais', searchFilterMonastery:'Mosteiros', searchResultsCount:(n,shown=n)=>shown<n?`${shown} de ${n} resultados`:`${n} resultados`, commentsTitle:'Comentários de peregrinos', commentsPlaceholder:'Partilhe uma dica, uma nota prática ou uma impressão breve para outros peregrinos...', commentsHint:'Visível para outros peregrinos com sessão iniciada.', commentsSubmit:'Publicar comentário', commentsLoading:'A carregar comentários...', commentsEmpty:'Ainda não há comentários. Seja o primeiro a deixar um.', commentsUnavailable:'Os comentários não estão disponíveis neste momento.', commentsPosted:'Comentário publicado', commentsUpdated:'Comentário atualizado', commentsDeleted:'Comentário eliminado', commentsEdited:'editado', commentsEdit:'Editar', commentsDelete:'Eliminar', commentsEditPrompt:'Edite o seu comentário:', commentsDeleteConfirm:'Eliminar este comentário?', commentsTooShort:'Escreva pelo menos 3 caracteres.', commentsSignIn:'Inicie sessão para deixar comentários.', commentsNoLinks:'Por agora não são permitidos links nos comentários.', commentsReport:'Reportar', commentsReported:'Comentário reportado. Obrigado.', commentsSlowDown:(seconds)=>`Espere ${seconds}s antes de voltar a comentar.`, journalDelete:'Eliminar nota', journalDeleteConfirm:'Eliminar esta nota privada?', journalDeleted:'Nota privada eliminada', createdBy:'Criado com fé por', feedbackMsg:'Sugestões e comentários sempre bem-vindos',
+    navWorld:'Mundo',editName:'Editar o meu nome', editNamePrompt:'Introduza o seu nome de peregrino:', viewIntro:'Ver introdução', mapHelpCta:'Peregrin', aboutTitle:'O que é o Peregrin?', aboutBody:'Peregrin é um passaporte digital de peregrinação católica. Ajuda-o a descobrir santuários, registar as suas visitas e guardar a memória do seu caminho com rotas, marcos e certificados pessoais.', pageTitle:'Peregrin — O seu passaporte de peregrino', pilgrimFallback:'Peregrino',     mapFilterCountry:'A mostrar apenas este país', mapFilterRoute:'A mostrar apenas esta rota', mapFilterShowAll:'Ver tudo', routeTapHint:'Toque para ver esta rota no mapa', routeFirstStop:'Primeira paragem', searchFilterAll:'Tudo', searchFilterVisited:'Visitados', searchFilterUnvisited:'Não visitados', searchFilterOpen:'Disponíveis', searchFilterMarian:'Marianos', searchFilterChrist:'Cristo', searchFilterCathedral:'Catedrais', searchFilterMonastery:'Mosteiros', searchResultsCount:(n,shown=n)=>shown<n?`${shown} de ${n} resultados`:`${n} resultados`, commentsTitle:'Comentários de peregrinos', commentsPlaceholder:'Partilhe uma dica, uma nota prática ou uma impressão breve para outros peregrinos...', commentsHint:'Visível para outros peregrinos com sessão iniciada.', commentsSubmit:'Publicar comentário', commentsLoading:'A carregar comentários...', commentsEmpty:'Ainda não há comentários. Seja o primeiro a deixar um.', commentsUnavailable:'Os comentários não estão disponíveis neste momento.', commentsPosted:'Comentário publicado', commentsUpdated:'Comentário atualizado', commentsDeleted:'Comentário eliminado', commentsEdited:'editado', commentsEdit:'Editar', commentsDelete:'Eliminar', commentsEditPrompt:'Edite o seu comentário:', commentsDeleteConfirm:'Eliminar este comentário?', commentsTooShort:'Escreva pelo menos 3 caracteres.', commentsSignIn:'Inicie sessão para deixar comentários.', commentsNoLinks:'Por agora não são permitidos links nos comentários.', commentsReport:'Reportar', commentsReported:'Comentário reportado. Obrigado.', commentsSlowDown:(seconds)=>`Espere ${seconds}s antes de voltar a comentar.`, journalDelete:'Eliminar nota', journalDeleteConfirm:'Eliminar esta nota privada?', journalDeleted:'Nota privada eliminada', createdBy:'Criado com fé por', feedbackMsg:'Sugestões e comentários sempre bem-vindos',
   }
 };
 if(window.PEREGRIN_PREMIUM_I18N){
@@ -1002,17 +1001,16 @@ if(window.PEREGRIN_PREMIUM_I18N){
   });
 }
 
-// Buyer-facing one-time total. Stripe and Play Console must be configured separately.
-const PREMIUM_PRICE_EUR = 1;
-const PREMIUM_PRICE_KEYS = new Set(['premiumPriceEurope', 'premiumPriceAmericas', 'premiumPriceAsia', 'premiumPriceAll']);
-function formatPremiumPrice(lang){
-  const locale = ({en:'en-IE', es:'es-ES', fr:'fr-FR', it:'it-IT', pt:'pt-PT'})[lang] || 'en-IE';
-  return new Intl.NumberFormat(locale, {
-    style:'currency', currency:'EUR', minimumFractionDigits:0, maximumFractionDigits:2
-  }).format(PREMIUM_PRICE_EUR);
-}
+const APP_IS_FREE = true;
+const freeAccessTranslations = {
+  en:{freeAccessTitle:'Free access for everyone',freeAccessBody:'All countries, routes, guides, private notes and certificates are free. No purchase or subscription is needed.',freeAccessBadge:'FREE',freeAccessClose:'Continue exploring'},
+  es:{freeAccessTitle:'Acceso gratuito para todos',freeAccessBody:'Todos los países, rutas, guías, notas privadas y certificados son gratuitos. Sin compras ni suscripciones.',freeAccessBadge:'GRATUITA',freeAccessClose:'Seguir explorando'},
+  fr:{freeAccessTitle:'Accès gratuit pour tous',freeAccessBody:'Tous les pays, itinéraires, guides, notes privées et certificats sont gratuits. Aucun achat ni abonnement nécessaire.',freeAccessBadge:'GRATUIT',freeAccessClose:'Continuer à explorer'},
+  it:{freeAccessTitle:'Accesso gratuito per tutti',freeAccessBody:'Tutti i paesi, itinerari, guide, note private e certificati sono gratuiti. Nessun acquisto o abbonamento necessario.',freeAccessBadge:'GRATUITA',freeAccessClose:'Continua a esplorare'},
+  pt:{freeAccessTitle:'Acesso gratuito para todos',freeAccessBody:'Todos os países, rotas, guias, notas privadas e certificados são gratuitos. Sem compras nem subscrições.',freeAccessBadge:'GRATUITA',freeAccessClose:'Continuar a explorar'}
+};
+Object.entries(freeAccessTranslations).forEach(([lang,copy])=>Object.assign(i18n[lang],copy));
 function t(key){
-  if(PREMIUM_PRICE_KEYS.has(key)) return formatPremiumPrice(currentLang);
   const dict = i18n[currentLang] || i18n.en;
   if(Object.prototype.hasOwnProperty.call(dict, key)) return dict[key];
   if(Object.prototype.hasOwnProperty.call(i18n.en, key)) return i18n.en[key];
@@ -1021,13 +1019,6 @@ function t(key){
 function sd(s){ return (currentLang==='es' && s.es) ? s.es : (currentLang==='fr' && s.fr) ? s.fr : (currentLang==='it' && s.it) ? s.it : (currentLang==='pt' && s.pt) ? s.pt : s; }
 function cn(c){ if(currentLang==='en') return c.name; return c['name'+currentLang.charAt(0).toUpperCase()+currentLang.slice(1)] || c.name; }
 
-// Local developer premium access. Limited to browser localhost during development.
-const TESTER_ACCESS_FLAG = 'peregrin_beta_tester_access';
-const TESTER_ACCESS_CODE = 'PEREGRIN-FAMILIA-2026';
-const PAYMENT_INTENT_FLAG = 'peregrin_stripe_checkout_started';
-const PAYMENT_INTENT_MAX_AGE_MS = 1000 * 60 * 90;
-const STRIPE_WEBHOOK_WAIT_ATTEMPTS = 6;
-const STRIPE_WEBHOOK_WAIT_MS = 1500;
 const PLAY_REVIEW_STORAGE_KEY = 'peregrin_play_review_state';
 const PLAY_REVIEW_COOLDOWN_MS = 1000 * 60 * 60 * 24 * 120;
 const PLAY_REVIEW_MIN_VISITS = 3;
@@ -1053,11 +1044,10 @@ const ANALYTICS_SESSION_ID = (() => {
 })();
 const AUTH_EMAIL_STORAGE_KEY = 'peregrin_last_email';
 const AUTH_LANG_STORAGE_KEY = 'peregrin_preferred_lang';
-const LAUNCH_ALL_COUNTRIES_UNLOCKED = false;
+const LAUNCH_ALL_COUNTRIES_UNLOCKED = APP_IS_FREE;
 let visits={}, unlockedRegions=[], currentLang='en', currentScreen='home', currentCountry='be', map=null, markers={}, activeRouteFilter=null, activeCountryFilter=null, pilgrimName='', sanctuarySearchQuery='', sanctuarySearchFilter='all';
 let markerClusterGroups=null, markerClusterById={}, markerLeaderLines={};
 let shouldReturnHomeOnResume=false;
-let googlePlayPurchaseListenerAttached=false;
 let nativeBackButtonListenerAttached=false;
 let playReviewRequestInFlight=false;
 let playReviewAttemptedThisSession=false;
@@ -1128,9 +1118,6 @@ function getCapacitorPlugin(name){
   }
 }
 
-function normalizeAccessCode(value){
-  return (value||'').trim().toUpperCase().replace(/\s+/g,'-');
-}
 
 const ROUTE_IMAGE_FALLBACK = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 420'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23322f46'/%3E%3Cstop offset='100%25' stop-color='%2380503d'/%3E%3C/linearGradient%3E%3ClinearGradient id='stone' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%23f2dfbf'/%3E%3Cstop offset='100%25' stop-color='%23bc9164'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='420' fill='url(%23bg)'/%3E%3Crect x='190' y='118' width='820' height='242' rx='18' fill='%23684231'/%3E%3Crect x='270' y='92' width='660' height='268' rx='16' fill='%23805842'/%3E%3Cpath d='M458 340V214c0-83 62-138 142-138s142 55 142 138v126z' fill='url(%23stone)'/%3E%3Cpath d='M494 340V224c0-57 45-96 106-96s106 39 106 96v116z' fill='%23522f23'/%3E%3Crect x='562' y='195' width='76' height='145' rx='37' fill='%23201412'/%3E%3Ccircle cx='600' cy='116' r='24' fill='%23f0d27f'/%3E%3Cpath d='M600 87v58M572 113h56' stroke='%23644330' stroke-width='8' stroke-linecap='round'/%3E%3C/svg%3E";
 
@@ -1143,9 +1130,6 @@ function resolveAssetUrl(path){
   }
 }
 
-function getGooglePlayBillingPlugin(){
-  return getCapacitorPlugin('PeregrinBilling');
-}
 
 function getPlayReviewPlugin(){
   return getCapacitorPlugin('PeregrinReview');
@@ -1226,44 +1210,8 @@ async function maybeRequestPlayReview(trigger, params={}){
 }
 window.maybeRequestPlayReview = maybeRequestPlayReview;
 
-function attachGooglePlayPurchaseListener(){
-  if(googlePlayPurchaseListenerAttached) return;
-  const Billing = getGooglePlayBillingPlugin();
-  if(!Billing || typeof Billing.addListener !== 'function') return;
-  googlePlayPurchaseListenerAttached = true;
-  const listener = Billing.addListener('purchaseUpdated', async result => {
-    try{
-      try{
-        await verifyGooglePlayPremium(result, 'google_play_restore');
-      }catch(verifyError){
-        console.error('google play listener server verification failed:', verifyError);
-        await handleGooglePlayVerificationFailure(result, 'listener_verification_failed');
-      }
-      trackEvent('premium_purchase_success', {provider:'google_play', source:'listener'});
-      closePremiumModal();
-      showToast(t('premiumActivatedToast'));
-    }catch(e){
-      trackEvent('premium_purchase_failed', {provider:'google_play', source:'listener', errorCode:e?.code||e?.message||'listener_failed'});
-      console.error('google play purchase listener failed:', e);
-    }
-  });
-  if(listener && typeof listener.catch === 'function'){
-    listener.catch(e => {
-      googlePlayPurchaseListenerAttached = false;
-      console.error('google play purchase listener attach failed:', e);
-    });
-  }
-}
 
-function canUseGooglePlayBilling(){
-  const available = GOOGLE_PLAY_CHECKOUT_ENABLED && isNativeAppRuntime() && !!getGooglePlayBillingPlugin();
-  if(available) attachGooglePlayPurchaseListener();
-  return available;
-}
 
-function canOfferPremiumCheckout(){
-  return isNativeAppRuntime() ? canUseGooglePlayBilling() : PREMIUM_CHECKOUT_ENABLED;
-}
 
 function handleRouteBannerError(img){
   if(!img) return;
@@ -1272,25 +1220,11 @@ function handleRouteBannerError(img){
   img.classList.add('is-fallback');
 }
 
-function isValidPremiumAccessCode(value){
-  const normalized = normalizeAccessCode(value);
-  return normalized.length >= 6 && normalized.length <= 64;
-}
 
-function canUseTesterAccess(){
-  return ['localhost','127.0.0.1'].includes(window.location.hostname) && !isNativeAppRuntime();
-}
 
-function hasTesterAccess(){
-  if(!canUseTesterAccess()){
-    try{ localStorage.removeItem(TESTER_ACCESS_FLAG); }catch(e){}
-    return false;
-  }
-  try{ return localStorage.getItem(TESTER_ACCESS_FLAG)==='enabled'; }catch(e){ return false; }
-}
 
 function hasFullPremiumAccess(){
-  return hasTesterAccess() || unlockedRegions.includes('all');
+  return APP_IS_FREE;
 }
 
 function analyticsString(value, max=80){
@@ -1358,7 +1292,7 @@ const { countries, sanctuaries, routes, achievements, regionMap, certificateRule
 const routeGuides = window.PEREGRIN_ROUTE_GUIDES || {};
 
 function getRegion(cid){ for(const [r,ids] of Object.entries(regionMap)) if(ids.includes(cid)) return r; return null; }
-function isRegionUnlocked(region){ return LAUNCH_ALL_COUNTRIES_UNLOCKED || hasTesterAccess() || unlockedRegions.includes('all')||unlockedRegions.includes(region); }
+function isRegionUnlocked(region){ return APP_IS_FREE; }
 function areAllRegionsUnlocked(){
   const regions = Object.keys(regionMap || {});
   return regions.length>0 && regions.every(region=>isRegionUnlocked(region));
@@ -1811,276 +1745,17 @@ async function handleSignOut(){
   setAuthPasswordVisibility(false);
 }
 
-// ===================== PREMIUM =====================
-async function grantPremiumAccess(source, extraData={}){
-  const user = window._currentUser;
-  if(!user) throw new Error('premium requires authenticated user');
-  await window._fbSetDoc(user.uid,{
-    isPremium:true,
-    unlockedRegions:['all'],
-    premiumSource:source,
-    premiumUnlockedAt:new Date().toISOString(),
-    ...extraData
-  });
-  unlockedRegions=['all'];
-  refreshAll();
-  if(map) updateMarkerStyles();
-}
-
-function isRecentPaymentIntent(paymentIntent){
-  return !!paymentIntent
-    && typeof paymentIntent === 'object'
-    && Number.isFinite(paymentIntent.startedAt)
-    && Date.now() - paymentIntent.startedAt <= PAYMENT_INTENT_MAX_AGE_MS;
-}
-
-async function grantPremiumFromStripeReturn(paymentIntent){
-  const user = window._currentUser;
-  if(!user || !isRecentPaymentIntent(paymentIntent)) throw new Error('invalid_stripe_payment_return');
-  if(paymentIntent.uid && paymentIntent.uid !== user.uid) throw new Error('stripe_payment_user_mismatch');
-  for(let attempt=0; attempt<STRIPE_WEBHOOK_WAIT_ATTEMPTS; attempt++){
-    await window._loadUserData(user.uid);
-    if(hasFullPremiumAccess()) return true;
-    if(attempt<STRIPE_WEBHOOK_WAIT_ATTEMPTS-1) await new Promise(resolve=>setTimeout(resolve, STRIPE_WEBHOOK_WAIT_MS));
-  }
-  return false;
-}
-
-async function handlePremiumCodeUnlock(){
-  const code = prompt(t('premiumCodePrompt'), '');
-  if(code===null) return;
-  const normalized = normalizeAccessCode(code);
-  if(!isValidPremiumAccessCode(normalized)){
-    trackEvent('premium_code_failed', {errorCode:'invalid_format'});
-    showToast(t('premiumCodeInvalid'));
-    return;
-  }
-  try{
-    await grantPremiumAccess('code', {premiumCode: normalized});
-    trackEvent('premium_code_success');
-    closePremiumModal();
-    showToast(t('premiumCodeApplied'));
-  }catch(e){
-    trackEvent('premium_code_failed', {errorCode:e?.code||e?.message||'unlock_failed'});
-    console.error('premium code unlock failed:', e);
-    showToast(t('premiumCodeInvalid'));
-  }
-}
-
-function handleTesterAccessToggle(){
-  if(!canUseTesterAccess()) return;
-  if(hasTesterAccess()){
-    try{ localStorage.removeItem(TESTER_ACCESS_FLAG); }catch(e){}
-    refreshAll();
-    if(map) updateMarkerStyles();
-    closePremiumModal();
-    showToast(t('testerUnlockRemoved'));
-    return;
-  }
-  const code = prompt(t('testerUnlockPrompt'), '');
-  if(code===null) return;
-  if(code.trim()!==TESTER_ACCESS_CODE){
-    showToast(t('testerUnlockInvalid'));
-    return;
-  }
-  try{ localStorage.setItem(TESTER_ACCESS_FLAG,'enabled'); }catch(e){}
-  refreshAll();
-  if(map) updateMarkerStyles();
-  closePremiumModal();
-  showToast(t('testerUnlockEnabled'));
-}
-
+// All former paid features are available without a billing service.
+// Keep this informational dialog for existing navigation entry points.
 function openPremiumModal(){
-  trackEvent('premium_modal_open', {source:currentScreen});
-  const allUnlocked = hasFullPremiumAccess() || areAllRegionsUnlocked();
-  const testerAccessAvailable = canUseTesterAccess();
-  const testerEnabled = testerAccessAvailable && hasTesterAccess();
   document.getElementById('premium-card-content').innerHTML=`
     <div class="premium-cross">✦</div>
-    <div class="premium-title">${t('premiumTitle')}</div>
-    <div class="premium-sub">${t('premiumSub')}</div>
-    <div class="premium-feature"><span class="premium-feature-icon">◈</span><span>${t('premiumCountries')}</span></div>
-    <div class="premium-feature"><span class="premium-feature-icon">✦</span><span>${t('premiumGuides')}</span></div>
-    <div class="premium-feature"><span class="premium-feature-icon">✎</span><span>${t('premiumJournal')}</span></div>
-    <div class="premium-feature"><span class="premium-feature-icon">□</span><span>${t('premiumMemory')}</span></div>
-    ${allUnlocked
-      ? `<div class="premium-state-box success">✓ ${t('premiumAlreadyUnlocked')}</div>`
-      : canOfferPremiumCheckout()
-        ? `<div class="premium-checkout-note">${canUseGooglePlayBilling()?t('premiumGooglePlayNote'):t('premiumOnetime')}</div>
-           <button class="premium-cta" onclick="handleRegionPurchase('all')">✦ ${t('premiumUnlockAll')}<span id="premium-checkout-price">${isNativeAppRuntime() ? '' : ' — '+t('premiumPriceAll')}</span></button>`
-        : `<div class="premium-state-box">
-             <div class="premium-state-title">${t('premiumUnavailable')}</div>
-             <div class="premium-state-detail">${t('premiumUnavailableDetail')}</div>
-           </div>`
-    }
-     ${testerAccessAvailable
-       ? `<div class="premium-tester-panel">
-            <div class="premium-tester-copy">${t('testerAccessLabel')} · ${t('testerAccessHint')}</div>
-            <button class="premium-close" onclick="handleTesterAccessToggle()">${testerEnabled?t('testerDisableBtn'):t('testerUnlockBtn')}</button>
-          </div>`
-       : ''
-     }
-    ${!allUnlocked && canUseGooglePlayBilling() ? `<button class="premium-close" onclick="handleGooglePlayRestore()">${t('premiumRestoreCta')}</button>` : ''}
-     ${!allUnlocked ? `<button class="premium-close" onclick="handlePremiumCodeUnlock()">${t('premiumCodeCta')}</button>` : ''}
-    <button class="premium-close" onclick="closePremiumModal()">${t('premiumLater')}</button>`;
+    <div class="premium-title">${t('freeAccessTitle')}</div>
+    <div class="premium-sub">${t('freeAccessBody')}</div>
+    <button class="premium-close" onclick="closePremiumModal()">${t('freeAccessClose')}</button>`;
   document.getElementById('premium-modal').classList.add('open');
-  if(!allUnlocked && canUseGooglePlayBilling()) updateGooglePlayPrice();
-}
-async function updateGooglePlayPrice(){
-  const priceLabel = document.getElementById('premium-checkout-price');
-  const Billing = getGooglePlayBillingPlugin();
-  if(!priceLabel || typeof Billing?.getPremiumPrice !== 'function') return;
-  try{
-    const product = await Billing.getPremiumPrice({productId:GOOGLE_PLAY_PRODUCT_ID});
-    if(priceLabel.isConnected && product?.productId === GOOGLE_PLAY_PRODUCT_ID && product.formattedPrice){
-      priceLabel.textContent = ' — '+product.formattedPrice;
-    }
-  }catch(e){
-    // Checkout still opens the official purchase sheet if price lookup is unavailable.
-    console.warn('google play price unavailable:', e?.code || 'price_lookup_failed');
-  }
 }
 function closePremiumModal(){document.getElementById('premium-modal').classList.remove('open');}
-// ===================== PREMIUM CHECKOUT =====================
-const PREMIUM_CHECKOUT_ENABLED = true;
-const GOOGLE_PLAY_CHECKOUT_ENABLED = true;
-const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/00w8wR9glaZB2pt31yfEk02';
-const GOOGLE_PLAY_PRODUCT_ID = 'peregrin_premium_all';
-
-function googlePlayPurchasePayload(result){
-  return {
-    productId: result?.productId || GOOGLE_PLAY_PRODUCT_ID,
-    purchaseToken: result?.purchaseToken || '',
-    orderId: result?.orderId || '',
-    purchaseTime: String(result?.purchaseTime || '')
-  };
-}
-
-function isBillingCancelled(error){
-  const code = String(error?.code || error?.message || '');
-  return code.includes('USER_CANCELED') || code.includes('cancel');
-}
-
-async function verifyGooglePlayPremium(result, source){
-  if(typeof window._fbVerifyGooglePlayPurchase !== 'function'){
-    throw new Error('google_play_verification_unavailable');
-  }
-  const payload = googlePlayPurchasePayload(result);
-  if(!payload.purchaseToken){
-    throw new Error('missing_google_play_purchase_token');
-  }
-  const response = await window._fbVerifyGooglePlayPurchase({...payload, source});
-  if(!response?.data?.success){
-    throw new Error('google_play_verification_failed');
-  }
-  if(window._currentUser){
-    await window._loadUserData(window._currentUser.uid);
-  }else{
-    unlockedRegions=['all'];
-    refreshAll();
-    if(map) updateMarkerStyles();
-  }
-  return response.data;
-}
-
-async function handleGooglePlayVerificationFailure(result, reason){
-  const payload = googlePlayPurchasePayload(result);
-  if(!payload.purchaseToken) throw new Error('missing_google_play_purchase_token');
-  console.warn('google play server verification failed after charge:', reason);
-  throw new Error('google_play_verification_pending');
-}
-
-async function handleGooglePlayPurchase(region){
-  const Billing = getGooglePlayBillingPlugin();
-  if(!Billing || typeof Billing.purchasePremium !== 'function'){
-    trackEvent('premium_purchase_failed', {provider:'google_play', region, errorCode:'billing_unavailable'});
-    showToast(t('billingUnavailable'));
-    return;
-  }
-  try{
-    const result = await Billing.purchasePremium({productId:GOOGLE_PLAY_PRODUCT_ID, region});
-    if(result?.success){
-      try{
-        await verifyGooglePlayPremium(result, 'google_play');
-      }catch(verifyError){
-        console.error('google play server verification failed after charge:', verifyError);
-        await handleGooglePlayVerificationFailure(result, 'purchase_verification_failed');
-      }
-      trackEvent('premium_purchase_success', {provider:'google_play', region, source:'purchase'});
-      closePremiumModal();
-      showToast(t('premiumActivatedToast'));
-      return;
-    }
-    trackEvent('premium_purchase_failed', {provider:'google_play', region, errorCode:'empty_result'});
-    showToast(t('billingFailed'),6000);
-  }catch(e){
-    console.error('google play purchase failed:', e);
-    const cancelled = isBillingCancelled(e);
-    if(!cancelled && await restoreGooglePlayPremium(false)) return;
-    trackEvent(cancelled ? 'premium_purchase_cancelled' : 'premium_purchase_failed', {provider:'google_play', region, errorCode:e?.code||e?.message||'purchase_failed'});
-    showToast(cancelled ? t('billingCancelled') : t('billingFailed'),cancelled ? 3000 : 6000);
-  }
-}
-
-async function restoreGooglePlayPremium(showMessages=false){
-  const Billing = getGooglePlayBillingPlugin();
-  if(!Billing || typeof Billing.restorePremium !== 'function') return false;
-  trackEvent('premium_restore_start', {provider:'google_play'});
-  if(showMessages) showToast(t('premiumRestoreChecking'),3000);
-  try{
-    const result = await Billing.restorePremium({productId:GOOGLE_PLAY_PRODUCT_ID});
-    if(result?.success){
-      try{
-        await verifyGooglePlayPremium(result, 'google_play_restore');
-      }catch(verifyError){
-        console.error('google play server verification failed during restore:', verifyError);
-        await handleGooglePlayVerificationFailure(result, 'restore_verification_failed');
-      }
-      trackEvent('premium_restore_success', {provider:'google_play'});
-      closePremiumModal();
-      showToast(t('premiumActivatedToast'));
-      return true;
-    }
-    trackEvent('premium_restore_empty', {provider:'google_play'});
-    if(showMessages) showToast(t('premiumRestoreNone'),5000);
-  }catch(e){
-    trackEvent('premium_restore_failed', {provider:'google_play', errorCode:e?.code||e?.message||'restore_failed'});
-    console.error('google play restore failed:', e);
-    if(showMessages) showToast(t('billingFailed'),6000);
-  }
-  return false;
-}
-
-async function handleGooglePlayRestore(){
-  await restoreGooglePlayPremium(true);
-}
-
-async function handleRegionPurchase(region){
-  if(canUseGooglePlayBilling()){
-    trackEvent('premium_purchase_start', {provider:'google_play', region});
-    await handleGooglePlayPurchase(region);
-    return;
-  }
-  if(isNativeAppRuntime()){
-    trackEvent('premium_purchase_failed', {provider:'google_play', region, errorCode:'native_billing_unavailable'});
-    showToast(t('billingUnavailable'));
-    return;
-  }
-  if(!PREMIUM_CHECKOUT_ENABLED || !STRIPE_PAYMENT_LINK){
-    trackEvent('premium_purchase_failed', {provider:'stripe', region, errorCode:'checkout_unavailable'});
-    showToast(t('premiumUnavailable'));
-    return;
-  }
-  const uid = window._currentUser?.uid || '';
-  const params = new URLSearchParams();
-  if(uid) params.set('client_reference_id', uid);
-  if(window._currentUser?.email) params.set('prefilled_email', window._currentUser.email);
-  if(currentLang) params.set('locale', currentLang);
-  const sep = STRIPE_PAYMENT_LINK.includes('?') ? '&' : '?';
-  try{ sessionStorage.setItem(PAYMENT_INTENT_FLAG, JSON.stringify({uid, region, startedAt:Date.now()})); }catch(e){}
-  trackEvent('premium_purchase_start', {provider:'stripe', region});
-  window.location.href = STRIPE_PAYMENT_LINK + sep + params.toString();
-}
 
 // ===================== VISITS =====================
 function isVisited(id){return !!visits[id];}
@@ -3126,7 +2801,7 @@ function getHomeInsight(){
       title:t('homeNextEmpty'),
       meta:t('homeNextEmptyMeta'),
       cta:t('homeNextOpen'),
-      action:"switchScreen('countries')"
+      action:"switchScreen('explore')"
     };
   }
   const countryProgress = getPathCountryProgress()[0];
@@ -3559,21 +3234,17 @@ function renderProfile(){
   }).length;
   const user=window._currentUser;
   const container=document.querySelector('.profile-screen');
-  const hasPremium = hasFullPremiumAccess();
-  const hasTester = hasTesterAccess();
   container.innerHTML=`
     <div class="profile-card">
       <div class="profile-avatar">🧭</div>
       <div class="profile-name" id="profile-name-display">${escapeHtml(pilgrimName||user?.email?.split('@')[0]||t('pilgrimFallback'))}</div>
       <div class="profile-rank">${getRank()}</div>
-      ${hasPremium?`<div class="profile-premium-badge">✦ ${hasTester?t('betaTesterBadge'):t('premiumBadge')}</div>`:''}
+      <div class="profile-premium-badge">✦ ${t('freeAccessBadge')}</div>
     </div>
-    ${!LAUNCH_ALL_COUNTRIES_UNLOCKED && !hasPremium&&(!unlockedRegions.includes('all')&&unlockedRegions.length<3)?`
-      <div class="premium-banner">
-        <div class="premium-banner-title">${t('premiumBannerTitle')}</div>
-        <div class="premium-banner-sub">${t('premiumBannerSub')}</div>
-        <button class="premium-banner-btn" onclick="openPremiumModal()">${t('discoverPremium')}</button>
-      </div>`:''}
+    <div class="premium-banner">
+      <div class="premium-banner-title">${t('freeAccessTitle')}</div>
+      <div class="premium-banner-sub">${t('freeAccessBody')}</div>
+    </div>
     <div style="background:var(--white);border-radius:14px;padding:18px 18px 16px;margin-bottom:12px;box-shadow:var(--shadow);">
       <div style="font-family:'Crimson Pro',serif;font-size:20px;font-weight:600;color:var(--burgundy);margin-bottom:8px;">${t('aboutTitle')}</div>
       <div style="font-size:13.5px;line-height:1.65;color:var(--brown);">${t('aboutBody')}</div>
@@ -3596,7 +3267,7 @@ function renderProfile(){
       <div style="font-size:12px;color:var(--brown-light);margin-bottom:8px;">${t('feedbackMsg')}</div>
       <a href="mailto:elnuevoeuropeo@gmail.com" style="display:inline-block;background:var(--cream);border:1px solid var(--gold);color:var(--burgundy);font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;text-decoration:none;">elnuevoeuropeo@gmail.com</a>
     </div>
-    <div style="text-align:center;margin-top:16px;margin-bottom:20px;opacity:0.35;font-size:11px;font-style:italic;" id="dev-tap" onclick="handleDevTap()">
+    <div style="text-align:center;margin-top:16px;margin-bottom:20px;opacity:0.35;font-size:11px;font-style:italic;">
       Peregrin v2.0<br>${{en:'«Traveller, there is no path, the path is made by walking»',es:'«Caminante, no hay camino, se hace camino al andar»',fr:'«Voyageur, il n\'y a pas de chemin, le chemin se fait en marchant»',it:'«Viandante, non c\'è sentiero, il sentiero si fa camminando»',pt:'«Caminhante, não há caminho, o caminho faz-se ao andar»'}[currentLang]||'«Traveller, there is no path, the path is made by walking»'}
     </div>`;
 }
@@ -3643,24 +3314,6 @@ async function editPilgrimName(){
   }
 }
 
-// ===================== DEV MODE =====================
-let devTapCount=0, devTapTimer=null;
-function handleDevTap(){
-  const isLocalDev = canUseTesterAccess();
-  if(!isLocalDev) return;
-  devTapCount++;
-  if(devTapTimer) clearTimeout(devTapTimer);
-  devTapTimer=setTimeout(()=>devTapCount=0, 2000);
-  if(devTapCount>=5){
-    devTapCount=0;
-    if(unlockedRegions.includes('all')){unlockedRegions=[];}
-    else{unlockedRegions=['all'];}
-    showToast(t(unlockedRegions.length>0?'testerPremiumOn':'testerPremiumOff'));
-    refreshAll();
-    updateMarkerStyles();
-  }
-}
-
 // ===================== SERVICE WORKER =====================
 if('serviceWorker' in navigator){
   const hadServiceWorkerController = !!navigator.serviceWorker.controller;
@@ -3669,7 +3322,7 @@ if('serviceWorker' in navigator){
     window.__peregrinSwRefreshing = true;
     window.location.reload();
   });
-  navigator.serviceWorker.register('sw.js?v=47').then(reg => reg.update?.()).catch(()=>{});
+  navigator.serviceWorker.register('sw.js?v=49').then(reg => reg.update?.()).catch(()=>{});
 }
 
 // ===================== INIT =====================
@@ -3690,9 +3343,6 @@ firebase.initializeApp({
 });
 const _auth = firebase.auth();
 const _db   = firebase.firestore();
-const _functions = (typeof firebase.app === 'function' && typeof firebase.app().functions === 'function')
-  ? firebase.app().functions('europe-west1')
-  : firebase.functions('europe-west1');
 const _authReady = _auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(error => {
   console.error('auth persistence failed, falling back to session:', error);
   return _auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).catch(e => {
@@ -3726,7 +3376,6 @@ window._fbSendPasswordResetEmail = async (e) => {
 window._fbSignOut      = ()    => _auth.signOut();
 window._fbGetDoc       = (uid) => _db.collection('users').doc(uid).get();
 window._fbSetDoc       = (uid,d) => _db.collection('users').doc(uid).set(d,{merge:true});
-window._fbVerifyGooglePlayPurchase = (data) => _functions.httpsCallable('verifyGooglePlayPurchase')(data);
 window._fbAddAnalyticsEvent = (data) => _db.collection('analyticsEvents').add(data);
 window._fbGetJournalNote = (uid, sanctuaryId) => _db.collection('users').doc(uid).collection('journal').doc(String(sanctuaryId)).get();
 window._fbSetJournalNote = (uid, sanctuaryId, data) => _db.collection('users').doc(uid).collection('journal').doc(String(sanctuaryId)).set(data,{merge:true});
@@ -3751,36 +3400,14 @@ _auth.onAuthStateChanged(async user=>{
     refreshAll();
     returnToHomeView();
 
-    let paymentIntent = null;
-    try{
-      paymentIntent = JSON.parse(sessionStorage.getItem(PAYMENT_INTENT_FLAG) || 'null');
-    }catch(e){ paymentIntent = null; }
-    if(paymentSuccess){
-      history.replaceState({}, document.title, window.location.pathname);
-    }
     await window._loadUserData(user.uid);
     trackOncePerSession('app_open', 'app_open', {source:getAnalyticsPlatform()});
-    if(paymentSuccess && !hasFullPremiumAccess()){
-      try{
-        if(isRecentPaymentIntent(paymentIntent)) showToast(t('paymentActivating'),3000);
-        const stripePremiumActive = await grantPremiumFromStripeReturn(paymentIntent);
-        trackEvent(stripePremiumActive ? 'premium_purchase_success' : 'premium_purchase_pending', {provider:'stripe', region:paymentIntent?.region || 'all', source:'stripe_return'});
-        try{ sessionStorage.removeItem(PAYMENT_INTENT_FLAG); }catch(e){}
-      }catch(e){
-        trackEvent('premium_purchase_failed', {provider:'stripe', region:paymentIntent?.region || 'all', source:'stripe_return', errorCode:e?.code||e?.message||'stripe_return_failed'});
-        console.error('stripe payment return unlock failed:', e);
-      }
-    }
-    if(!hasFullPremiumAccess() && canUseGooglePlayBilling()){
-      await restoreGooglePlayPremium(false);
-    }
     returnToHomeView();
-
+    // Old payment-return bookmarks now open the same free app.
     if(paymentSuccess){
-      refreshAll();
-      if(map) updateMarkerStyles();
-      trackEvent('stripe_return_seen', {outcome:hasFullPremiumAccess() ? 'premium_active' : 'manual_review'});
-      showToast(hasFullPremiumAccess() ? t('premiumActivatedToast') : t('paymentManualReview'),6000);
+      history.replaceState({}, document.title, window.location.pathname);
+      try{ sessionStorage.removeItem('peregrin_stripe_checkout_started'); }catch(e){}
+      showToast(t('freeAccessBody'),6000);
     }
   } else {
     switchAuthTab('login');
@@ -3798,7 +3425,6 @@ _authReady.then(startAuthStateListener).catch(startAuthStateListener);
 <script src="certificates.js"></script>
 </body>
 </html>
-
 
 
 

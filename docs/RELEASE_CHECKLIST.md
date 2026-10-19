@@ -2,8 +2,8 @@
 
 Last updated: 2026-10-19
 
-Use this checklist before any production release. Payments and Premium are real
-money flows, so do not skip evidence steps.
+Use this checklist before any production release. Peregrin is fully free since
+2026-10-19. Preserve account data, private journal ownership and earned certificates.
 
 ## 1. Before changing anything
 
@@ -22,25 +22,15 @@ git status --short --branch
 npx.cmd firebase functions:list --project peregrin-d7611
 ```
 
-## 2. Premium invariants to preserve
+## 2. Free-access invariants
 
-These must remain true unless there is a deliberate migration:
-
-- `GOOGLE_PLAY_CHECKOUT_ENABLED` remains `true` for Android production.
-- Google Play product ID remains `peregrin_premium_all`.
-- Stripe Payment Link remains the current live link unless intentionally changed.
-- Both emergency codes remain valid:
-
-```text
-PEREGRIN-388066-6291
-PEREGRIN-PREMIUM-2026
-```
-
-- Premium activation and support-code validation remain server-side. Client
-  Firestore rules must not permit users to grant themselves Premium.
-- Android restore purchase still exists.
-- A returned Google Play token must be verified by the server before activation;
-  preserve restoration and the support path when verification is unavailable.
+- All countries, route guides, private journals and earned certificates are free.
+- No purchase, restore, payment link or support-code entry appears in the app.
+- Preserve existing accounts, visits and journal data.
+- Journal access requires the owner account; never allow access to other users.
+- Certificates still require the relevant real visits.
+- Keep Google Play purchase options and Stripe Payment Links inactive.
+- No payment Function deployment or Cloud billing upgrade is needed for free access.
 
 ## 3. Web checks
 
@@ -48,11 +38,12 @@ Before deploying web files:
 
 - Confirm changes are in `index.html`.
 - If Capacitor/Android must receive the change, also run `npm.cmd run cap:copy`.
-- Search for the expected payment markers:
+- Run the access and privacy tests:
 
 ```powershell
 npm.cmd test
-rg -n "PREMIUM_PRICE_EUR|verifyGooglePlayPremium|restoreGooglePlayPremium|00w8wR9glaZB2pt31yfEk02" index.html www/index.html
+npm.cmd run test:rules
+rg -n "APP_IS_FREE = true" index.html www/index.html
 ```
 
 - If deploying GitHub Pages, push to `origin/main` and verify the live page with a
@@ -79,21 +70,16 @@ Expected AAB:
 android/app/build/outputs/bundle/release/app-release.aab
 ```
 
-After building, inspect the AAB as a ZIP and verify that
-`base/assets/public/index.html` contains the production Premium markers:
+After building, inspect the AAB as a ZIP. The packaged web files must match `www`
+and contain `APP_IS_FREE = true`. Confirm the Android manifest has no Billing
+permission and the native Billing plugin/dependency is absent.
 
-```text
-PREMIUM_PRICE_EUR = 1
-getPremiumPrice
-verifyGooglePlayPremium
-restoreGooglePlayPremium
-00w8wR9glaZB2pt31yfEk02
-```
-
-Do not upload an AAB if those markers are missing.
-Do not restore the removed client-side emergency unlock as a way to pass a check.
+Do not upload an AAB that contains a payment path.
 
 ## 5. Firebase deploys
+
+Deploy the owner-only free journal rules before publishing the free app.
+Payment Functions below are historical; do not deploy them for this migration.
 
 Firestore rules deploy:
 
@@ -128,7 +114,7 @@ After uploading an AAB:
 - Confirm the release shows the new `versionCode`.
 - Confirm the release is sent to review or fully rolled out as intended.
 - Confirm managed publishing status.
-- Confirm the in-app product `peregrin_premium_all` is active and priced.
+- Confirm the purchase option for `peregrin_premium_all` remains inactive.
 - If beta/internal tracks are involved, confirm testers and production rollout are
   not mixed unintentionally.
 
@@ -137,23 +123,9 @@ After uploading an AAB:
 After the release is approved and available:
 
 - Check Play Console for crashes and ANRs.
-- Check Firebase logs:
-
-```powershell
-npx.cmd firebase functions:log --only verifyGooglePlayPurchase --project peregrin-d7611 -n 100
-```
-
-- Watch for:
-
-```text
-google_play_purchase_lookup_failed
-403
-unauthenticated
-already-exists
-```
-
-- If a real user reports "paid but not Premium", follow
-  `docs/PAYMENT_INCIDENT_RUNBOOK.md` immediately.
+- Open the live app and verify free-access copy, maps, guides and private notes.
+- Confirm the service worker version and deployed assets match the release.
+- For historical purchase issues, preserve receipts and direct users to the free update.
 
 ## 8. Commit and push
 

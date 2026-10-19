@@ -14,8 +14,8 @@ android {
         applicationId "com.peregrin.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 69
-        versionName "1.0.68"
+        versionCode 70
+        versionName "1.0.69"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -55,7 +55,6 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
     implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
     implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
-    implementation "com.android.billingclient:billing:8.3.0"
     implementation "com.google.android.play:review:2.0.2"
     implementation project(':capacitor-android')
     testImplementation "junit:junit:$junitVersion"

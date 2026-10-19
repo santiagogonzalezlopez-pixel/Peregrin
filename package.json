@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node --test tools/verify-premium.test.js",
+    "test": "node --test tools/verify-free-access.test.js",
+    "test:rules": "firebase emulators:exec --only auth,firestore --project demo-peregrin-free --config firebase.test.json \"node --test tools/verify-journal-rules.test.js\"",
     "cap:copy": "npx cap copy android",
     "cap:sync": "npx cap sync android",
     "android:bundle:release": "set \"JAVA_HOME=C:\\Program Files\\Android\\Android Studio\\jbr\" && set \"PATH=%JAVA_HOME%\\bin;%PATH%\" && cd android && gradlew.bat bundleRelease"

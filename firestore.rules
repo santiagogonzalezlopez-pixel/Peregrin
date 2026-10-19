@@ -9,11 +9,6 @@ service cloud.firestore {
       return signedIn() && request.auth.uid == userId;
     }
 
-    function isPremiumOwner(userId) {
-      return isOwner(userId)
-        && get(/databases/$(database)/documents/users/$(userId)).data.isPremium == true;
-    }
-
     function mutableUserFields() {
       return ['visits', 'lang', 'displayName', 'onboardingSeen'];
     }
@@ -196,8 +191,8 @@ service cloud.firestore {
       allow delete: if false;
 
       match /journal/{sanctuaryId} {
-        allow read: if isPremiumOwner(userId);
-        allow create, update: if isPremiumOwner(userId)
+        allow read: if isOwner(userId);
+        allow create, update: if isOwner(userId)
           && validJournalEntry(sanctuaryId, request.resource.data);
         allow delete: if isOwner(userId);
       }
