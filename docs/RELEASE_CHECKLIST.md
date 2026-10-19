@@ -1,6 +1,6 @@
 # Peregrin release checklist
 
-Last updated: 2026-05-21
+Last updated: 2026-10-19
 
 Use this checklist before any production release. Payments and Premium are real
 money flows, so do not skip evidence steps.
@@ -36,9 +36,11 @@ PEREGRIN-388066-6291
 PEREGRIN-PREMIUM-2026
 ```
 
-- Firestore rules still allow the emergency Premium codes.
+- Premium activation and support-code validation remain server-side. Client
+  Firestore rules must not permit users to grant themselves Premium.
 - Android restore purchase still exists.
-- Paid Google Play purchase with a returned token must not leave a user blocked.
+- A returned Google Play token must be verified by the server before activation;
+  preserve restoration and the support path when verification is unavailable.
 
 ## 3. Web checks
 
@@ -49,7 +51,8 @@ Before deploying web files:
 - Search for the expected payment markers:
 
 ```powershell
-rg -n "PEREGRIN-388066-6291|PEREGRIN-PREMIUM-2026|grantEmergencyPremiumAfterGooglePlayCharge|restoreGooglePlayPremium|bJeeVfbotaZBaVZgSofEk01" index.html www/index.html
+npm.cmd test
+rg -n "PREMIUM_PRICE_EUR|verifyGooglePlayPremium|restoreGooglePlayPremium|00w8wR9glaZB2pt31yfEk02" index.html www/index.html
 ```
 
 - If deploying GitHub Pages, push to `origin/main` and verify the live page with a
@@ -80,14 +83,15 @@ After building, inspect the AAB as a ZIP and verify that
 `base/assets/public/index.html` contains the production Premium markers:
 
 ```text
-PEREGRIN-388066-6291
-PEREGRIN-PREMIUM-2026
-grantEmergencyPremiumAfterGooglePlayCharge
+PREMIUM_PRICE_EUR = 1
+getPremiumPrice
+verifyGooglePlayPremium
 restoreGooglePlayPremium
-bJeeVfbotaZBaVZgSofEk01
+00w8wR9glaZB2pt31yfEk02
 ```
 
 Do not upload an AAB if those markers are missing.
+Do not restore the removed client-side emergency unlock as a way to pass a check.
 
 ## 5. Firebase deploys
 
@@ -162,4 +166,3 @@ git diff --stat
 
 Commit only the intended files, then push. Leave screenshots, local captures,
 keystores, secrets, and generated junk out of commits unless intentionally needed.
-

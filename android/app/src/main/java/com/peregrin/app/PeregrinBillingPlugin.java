@@ -65,6 +65,51 @@ public class PeregrinBillingPlugin extends Plugin implements PurchasesUpdatedLis
   }
 
   @PluginMethod
+  public void getPremiumPrice(PluginCall call) {
+    String productId = call.getString("productId", DEFAULT_PRODUCT_ID);
+    connect(new ReadyCallback() {
+      @Override
+      public void onReady() {
+        QueryProductDetailsParams params = QueryProductDetailsParams.newBuilder()
+          .setProductList(Collections.singletonList(
+            QueryProductDetailsParams.Product.newBuilder()
+              .setProductId(productId)
+              .setProductType(BillingClient.ProductType.INAPP)
+              .build()
+          ))
+          .build();
+        billingClient.queryProductDetailsAsync(params, (billingResult, productDetailsResult) -> {
+          if (billingResult.getResponseCode() != BillingClient.BillingResponseCode.OK) {
+            call.reject(billingResult.getDebugMessage(), String.valueOf(billingResult.getResponseCode()));
+            return;
+          }
+          List<ProductDetails> products = productDetailsResult.getProductDetailsList();
+          if (products != null) {
+            for (ProductDetails product : products) {
+              ProductDetails.OneTimePurchaseOfferDetails offer = product.getOneTimePurchaseOfferDetails();
+              if (productId.equals(product.getProductId()) && offer != null) {
+                JSObject result = new JSObject();
+                result.put("productId", product.getProductId());
+                result.put("formattedPrice", offer.getFormattedPrice());
+                result.put("currencyCode", offer.getPriceCurrencyCode());
+                result.put("priceAmountMicros", offer.getPriceAmountMicros());
+                call.resolve(result);
+                return;
+              }
+            }
+          }
+          call.reject("Premium price is not available in Google Play.", "PRODUCT_UNAVAILABLE");
+        });
+      }
+
+      @Override
+      public void onError(BillingResult billingResult) {
+        call.reject(billingResult.getDebugMessage(), String.valueOf(billingResult.getResponseCode()));
+      }
+    });
+  }
+
+  @PluginMethod
   public void purchasePremium(PluginCall call) {
     if (pendingPurchaseCall != null) {
       call.reject("A purchase is already in progress.", "PURCHASE_IN_PROGRESS");

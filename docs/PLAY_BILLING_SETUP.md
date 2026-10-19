@@ -1,6 +1,6 @@
 # Google Play Billing and Stripe setup
 
-Last updated: 2026-05-21
+Last updated: 2026-10-19
 
 Peregrin uses Google Play Billing inside the Android app and Stripe for the web.
 
@@ -9,12 +9,20 @@ Peregrin uses Google Play Billing inside the Android app and Stripe for the web.
 - Type: one-time product / in-app product
 - Product ID: `peregrin_premium_all`
 - Suggested name: `Peregrin Premium`
-- Intended buyer-facing price: `EUR 2.99`
-- Play Console price must be checked in the purchase sheet before release. If
-  Play adds Spanish VAT on top of the configured amount, do not leave the base
-  price at `EUR 2.99` while the app says `2.99`. Either use a tax-inclusive
-  pricing/template option for EU countries, or set the Spain base price to about
-  `EUR 2.47` so `2.47 + 21% VAT` rounds to `2.99`.
+- Intended buyer-facing price: `EUR 1.00`, paid once for permanent full access.
+- On 2026-10-19, the active `premium-all` purchase option was repriced using
+  EUR 1.00 as the conversion base for all territories and new territories.
+  All 33 territories billed in EUR were then individually set to a final
+  `1.00 EUR`; Play Console confirmed the changes were saved.
+- The bulk pricing tool adds tax and applies rounding. Entering `1.00 EUR`
+  there produced `1.19 EUR` in Spain. Use the individual price-cell editor
+  to set the exact final `1.00 EUR` and verify every EUR row before saving.
+- Android reads the localized price from Google Play using `getPremiumPrice`.
+  If the lookup fails, it shows the checkout button without an invented amount;
+  the official purchase sheet still supplies the final price.
+- Web price labels derive from `PREMIUM_PRICE_EUR` in `index.html`, formatted
+  for English, Spanish, French, Italian and Portuguese. Provider prices must
+  still be updated separately before publishing a new advertised price.
 - Benefit: permanent unlock for all countries, Premium guides, private journal,
   certificates, routes, and achievements
 
@@ -44,14 +52,10 @@ android/app/src/main/java/com/peregrin/app/PeregrinBillingPlugin.java
 - The app sends the token to Firebase Function `verifyGooglePlayPurchase`.
 - The Function validates the token with Google Play Developer API.
 - If Google confirms the purchase, Firebase marks the user Premium from the server.
-- The Function consumes the one-time product so the same Google Play account can buy
-  again for another Peregrin profile.
-- Version `1.0.30` adds:
-  - automatic restore on login when the user is not Premium,
-  - a visible "Restaurar compra" button in Android,
-  - a `purchaseUpdated` listener,
-  - emergency code unlock if Google Play returns a paid token but server
-    verification fails.
+- The Function acknowledges the non-consumable purchase, preserving restoration.
+- Automatic restore on login, the Android restore button and the
+  `purchaseUpdated` listener all use server verification. A returned token alone
+  does not unlock Premium when verification fails.
 
 ## Firebase / Google Play API
 
@@ -91,17 +95,25 @@ If Google Play verification fails with `403`, check:
 - Stripe Payment Link:
 
 ```text
-https://buy.stripe.com/bJeeVfbotaZBaVZgSofEk01
+https://buy.stripe.com/00w8wR9glaZB2pt31yfEk02
 ```
 
 - The app appends checkout context such as `client_reference_id`,
   `prefilled_email`, and `locale`.
-- When Stripe returns to the app with `payment=success` and the local checkout
-  session is recent, the app unlocks Premium internally using the primary emergency
-  code.
+- The active link charges exactly EUR 1.00 once. Its live checkout order summary
+  was verified on 2026-10-19 (`currency: eur`, `totalAmount: 100`). Both older
+  links were deactivated and their prices archived; EUR 1.00 is the default.
+- When Stripe returns with `payment=success`, the app checks the recent checkout
+  context for the same user and refreshes their server-owned Premium state.
+  The return URL alone does not unlock Premium.
 
-This fallback is intentional. It protects paid users from being blocked if the
-server-side Stripe webhook cannot match the payment to the Firebase user.
+## Service availability checked on 2026-10-19
+
+Google Cloud reports that the billing account's free trial has expired. The
+deployed webhook logs state that requests fail because billing is disabled for
+the project. Reactivate billing before claiming that purchase activation works.
+Then verify the Stripe webhook configuration and both purchase verification
+endpoints. A changed price is not evidence of a successful Premium activation.
 
 ## Stripe webhook status
 
@@ -145,12 +157,9 @@ PEREGRIN-388066-6291
 PEREGRIN-PREMIUM-2026
 ```
 
-The app accepts both. Firestore rules accept both. Use the first one as the support
-code for paid users who are blocked.
-
-The user normally does not see the emergency code in the Android paid flow. Version
-`1.0.30` applies it internally only after Google Play has returned a paid purchase
-token and server verification did not complete.
+The server validates support codes. Use the first one as the support code for
+paid users who are blocked. Codes do not bypass an unavailable verification
+server, and the client cannot grant itself Premium through Firestore.
 
 ## Deploy commands
 
@@ -179,8 +188,7 @@ all been checked.
 ## Security notes
 
 Firestore rules no longer allow a client to claim `premiumSource: google_play`
-directly. Google Play unlocks must come from the server. Client-side Premium code
-unlock remains available as a support fallback.
+directly. Google Play unlocks and support-code validation must come from the server.
 
 The app does not store the full purchase token in `users`; it stores a server-side
 hash. The full token is used only inside the Cloud Function to query Google Play.

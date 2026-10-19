@@ -82,7 +82,7 @@ For web users:
 Check whether the user paid through the current Stripe Payment Link:
 
 ```text
-https://buy.stripe.com/bJeeVfbotaZBaVZgSofEk01
+https://buy.stripe.com/00w8wR9glaZB2pt31yfEk02
 ```
 
 ## Firestore check

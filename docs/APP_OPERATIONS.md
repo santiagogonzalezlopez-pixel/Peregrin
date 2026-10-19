@@ -73,16 +73,17 @@ Android:
 - Server verification function: `verifyGooglePlayPurchase`.
 - Deployed function location: `europe-west1`.
 - The web client calls Firebase Functions in `europe-west1`.
-- Version `1.0.30` also has restore purchase and an emergency unlock fallback when
-  Google Play returns a paid purchase token but server verification fails.
+- Purchase and restore both require server verification. A returned token alone
+  does not activate Premium if verification fails.
 
 Web:
 
 - Payment provider: Stripe Payment Link.
-- Payment link: `https://buy.stripe.com/bJeeVfbotaZBaVZgSofEk01`
-- If the user returns from Stripe with a recent local checkout session and
-  `payment=success`, the app unlocks Premium through the emergency code internally.
-- The user does not normally need to type the code in this happy path.
+- Payment link: `https://buy.stripe.com/00w8wR9glaZB2pt31yfEk02`
+- The one-time charge and displayed web price are EUR 1.00.
+- After a recent checkout for the same user returns with `payment=success`, the
+  app refreshes the server-owned Premium state. The URL alone cannot unlock it.
+- See `docs/PLAY_BILLING_SETUP.md` for the billing outage found on 2026-10-19.
 
 Stripe webhook:
 
