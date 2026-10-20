@@ -1977,7 +1977,11 @@ function buildPopupContent(s){
 function initMap(){
   map=L.map('map',{zoomControl:false,tap:false,tapTolerance:15}).setView([25,15],3);
   L.control.zoom({position:'topright'}).addTo(map);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'© OpenStreetMap © CARTO',maxZoom:18}).addTo(map);
+  // CARTO now requires an API key. Standard OSM tiles use the browser's HTTP cache.
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom:18
+  }).addTo(map);
   sanctuaries.forEach(s=>{
     const marker=L.marker([s.lat,s.lng],{icon:createMarkerIcon(s,false,false)}).addTo(map);
     markers[s.id]=marker;
@@ -3322,7 +3326,7 @@ if('serviceWorker' in navigator){
     window.__peregrinSwRefreshing = true;
     window.location.reload();
   });
-  navigator.serviceWorker.register('sw.js?v=49').then(reg => reg.update?.()).catch(()=>{});
+  navigator.serviceWorker.register('sw.js?v=50').then(reg => reg.update?.()).catch(()=>{});
 }
 
 // ===================== INIT =====================

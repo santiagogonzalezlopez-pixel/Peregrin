@@ -1,5 +1,6 @@
 {
   "appId": "com.peregrin.app",
   "appName": "Peregrin",
-  "webDir": "www"
+  "webDir": "www",
+  "appendUserAgent": "Peregrin/1.0 (+https://peregrin-d7611.web.app)"
 }
